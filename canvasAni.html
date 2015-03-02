@@ -1,0 +1,138 @@
+<canvas id="miCanvas" width="145px" height="145px">
+ <span>Tu explorador es anciano, renovalo si queres ver la magia</span>
+</canvas>
+
+<script>
+var canvas;
+var contexto;
+var vaso;
+var animando = false;
+
+window.onload = iniciar();
+
+function iniciar(){
+    canvas = document.getElementById('miCanvas');
+    contexto = canvas.getContext('2d');  
+    
+    cargarImagen(function(){
+        canvas.addEventListener('click', function(e) {
+            animar();
+        });
+
+        dibujarFondo();
+        dibujarContorno();
+    });
+}
+
+function animar(){
+    
+    function loop(posX, posY) {
+        contexto.clearRect(0, 0, 145, 145);
+        
+        dibujarFondo();
+        
+        contexto.drawImage(vaso, posX, posY);
+        
+        dibujarContorno();
+        
+        if (posX > 0 || posY > 0) {
+            setTimeout(function(){
+                loop(posX-10, posY-10);
+            }, 40);
+        }
+        else { 
+            splash(function(){
+                dibujarEnfasis();
+                animando = false;
+            });
+        }
+    }
+    
+    if (!animando) {
+        animando = true;
+        loop(200, 200);
+    }
+}
+
+function dibujarFondo(){
+    contexto.save();
+
+    contexto.fillStyle = '#F0DB4F';
+    contexto.fillRect(0, 10, 145, 145);
+
+    contexto.restore();
+
+    contexto.save();
+  
+    contexto.scale(1.8, 2.4);  
+      
+    contexto.fillStyle = '#333';
+    contexto.font = 'bold 64px sans-serif';
+    contexto.textBaseline = 'top';
+    contexto.fillText('JS', 2, 5);
+    
+    contexto.restore();
+}
+
+function dibujarContorno(){
+    contexto.lineWidth = 3;
+    contexto.strokeStyle = 'black';
+    contexto.strokeRect(1, 10, 143, 134);
+}
+
+function dibujarTriangulo(coordenadas){
+    contexto.beginPath();  
+    contexto.moveTo(coordenadas[0].x, coordenadas[0].y);  
+    contexto.lineTo(coordenadas[1].x, coordenadas[1].y);  
+    contexto.lineTo(coordenadas[2].x, coordenadas[2].y);  
+    contexto.closePath();
+    contexto.fill();
+}
+
+function dibujarEnfasis(){
+    contexto.fillStyle = 'black';
+    
+    dibujarTriangulo([{x:80, y:25}, {x:115, y:10}, {x:125, y:10}]);
+    dibujarTriangulo([{x:100, y:50}, {x:145, y:75}, {x:145, y:80}]);
+    dibujarTriangulo([{x:25, y:35}, {x:0, y:50}, {x:0, y:55}]);
+    dibujarTriangulo([{x:25, y:55}, {x:0, y:100}, {x:0, y:110}]);
+}
+
+function splash(callback){
+    
+    function loop(opacidad, dir) {
+        if (opacidad === 1) dir *= -1;
+        opacidad += (0.2 * dir);
+        
+        console.log(opacidad + ' = 0.2 * ' + dir);
+        
+        contexto.clearRect(0, 0, 145, 145);
+
+        dibujarFondo();
+        contexto.drawImage(vaso, 0, 0);
+        dibujarContorno();
+        
+        if (opacidad > 0.1) {
+            contexto.save();
+            contexto.fillStyle = 'rgba(255,255,255,' + opacidad + ')';
+            contexto.fillRect(0, 0, 145, 145);
+            contexto.restore();
+        
+            setTimeout(function(){
+                loop(opacidad, dir);
+            }, 10);
+        }
+        else callback();
+    }
+    
+    loop(0, true);
+}
+
+function cargarImagen(callback) {
+    vaso = new Image();
+    vaso.onload = callback;
+    vaso.src = "glassup.png";
+}
+
+
+</script>

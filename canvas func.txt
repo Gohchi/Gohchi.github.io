@@ -1,0 +1,59 @@
+________________________________________________________________
+// TextWidth
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.font="30px Arial";
+var txt="Hello World"
+ctx.fillText("width:" + ctx.measureText(txt).width,10,50)
+ctx.fillText(txt,10,100);
+________________________________________________________________
+// Rotate
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.rotate(20*Math.PI/180);
+ctx.fillRect(50,20,100,50);
+________________________________________________________________
+// Alpha
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.fillStyle="red";
+ctx.fillRect(20,20,75,50);
+// Turn transparency on
+ctx.globalAlpha=0.2;
+ctx.fillStyle="blue"; 
+ctx.fillRect(50,50,75,50); 
+ctx.fillStyle="green"; 
+ctx.fillRect(80,80,75,50);
+________________________________________________________________
+// Gradient 
+
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+var gradient=ctx.createLinearGradient(0,0,170,0);
+gradient.addColorStop("0","magenta");
+gradient.addColorStop("0.5","blue");
+gradient.addColorStop("1.0","red");
+
+// Fill with gradient
+ctx.strokeStyle=gradient;
+ctx.lineWidth=5;
+ctx.strokeRect(20,20,150,100);
+
+!!
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+ctx.font="30px Verdana";
+// Create gradient
+var gradient=ctx.createLinearGradient(0,0,c.width,0);
+gradient.addColorStop("0","magenta");
+gradient.addColorStop("0.5","blue");
+gradient.addColorStop("1.0","red");
+// Fill with gradient
+ctx.strokeStyle=gradient;
+ctx.strokeText("Big smile!",10,50);
+
+createRadialGradient(x0,y0,r0,x1,y1,r1)
+
+
