@@ -1,18 +1,40 @@
-html {
-	margin: 20px;
-	background-color: #EDF5CB;
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+
+.welcome-message{
+	font-family: 'Press Start 2P', cursive;
 }
 
-body{
-	font-family: "HGelveticaNeue-Light", "Comic Sans MS";
-	font-weight: 300;
-	color: #333;
+button {
+	background: #14759c;
+	background-image: -webkit-linear-gradient(top, #14759c, #116388);
+	background-image: -moz-linear-gradient(top, #14759c, #116388);
+	background-image: -ms-linear-gradient(top, #14759c, #116388);
+	background-image: -o-linear-gradient(top, #14759c, #116388);
+	background-image: linear-gradient(to bottom, #14759c, #116388);
+	-webkit-border-radius: 8;
+	-moz-border-radius: 8;
+	border-radius: 8px;
+	font-family: Arial;
+	color: #ffffff;
+	font-family: 'Press Start 2P';	
+	font-size: 34px;
+	padding: 12px 20px 10px 20px;
+	border: solid #36bac9 4px;
+	text-decoration: none;
+	outline: 4px solid #0e404c;
+	/*outline-offset: -2px;*/
+	margin: 4px;
 }
 
-h1{
-	font-size: 50px;
+button:hover {
+	outline: 4px solid white;
+  text-decoration: none;
 }
 
-p{
-	font-size: 20px;
+.thanks {
+	color: white;
+	font-family: 'Press Start 2P';
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
 }
