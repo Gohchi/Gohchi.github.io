@@ -172,7 +172,6 @@ function onKeyDown(){
     timer = 0;
     asciiCon = 0;
     return;
-    break;
   case 8:
  //   drawBar(1,2,3,4,'green','blue');
     text = '';
