@@ -22,6 +22,7 @@ body {
 }
 .card {
   position: absolute;
+  color: white;
   top: 50px; left: 0; right: 0;
   margin: auto;
   width: 20px;
@@ -97,9 +98,10 @@ body {
 .side-text {
   font-size: 14px;
   text-align: center;
-  /*position: relative;*/
+  font-weight: bold;
+  color: black;
   margin: auto;
-  padding: 1px 0 0 8px;
+  padding: 0px 0 0 8px;
 }
 .top {
   transform: rotateX(-90deg) translateY(-100px);
