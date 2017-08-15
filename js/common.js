@@ -1,5 +1,4 @@
 window.document.addEventListener("keydown", onKeyDown, false);
-
 var playing = false;
 // temp
 var lLastDmgHero = 0;// {damange:0,critical:false};

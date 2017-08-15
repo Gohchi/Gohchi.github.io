@@ -1,4 +1,3 @@
-// 
 function CharaSprite(){
  this.base = "";	// parent?
  this.x = 10;		// y axis

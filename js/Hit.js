@@ -9,6 +9,7 @@ function hit(){
  this.v = [];
  this.critical = [];
  
+
  this.xv = [];
  this.yv = []; 
  this.value = [];
