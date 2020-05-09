@@ -282,13 +282,17 @@ var blue = 0.5, dblue = 0, cy=0, dcy = 0;
 function crazyGradient(cnvs){ 
  var ctx = cnvs.getContext('2d'); 
   
- if(dblue==0){
-  blue+=0.01;
-  if(blue>=0.999)dblue=1;
+  if(dblue==0){
+    blue+=0.01;
+    if(blue>=0.999)
+      dblue=1;
   }else{
-  blue-=0.01;
-  if(blue<=0.001)dblue=0; 
+    blue-=0.01;
+    if(blue<=0.001)dblue=0; 
   }
+  
+  if(blue < 0) blue = 0;
+  if(blue > 1) blue = 1;
    
  if(dcy==0){
   cy+=1;
