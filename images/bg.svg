@@ -23,8 +23,11 @@
         
         <g id="sky">
             <use x="18" y="144" xlink:href="#start0" />
+
             <use x="72" y="204" xlink:href="#start0" />
+            
             <use x="78" y="42" xlink:href="#start0" />
+            
             <use x="138" y="30" xlink:href="#start0" />
             <use x="144" y="72" xlink:href="#start0" />
             <use x="150" y="30" xlink:href="#start0" />
@@ -33,10 +36,25 @@
             <use x="174" y="24" xlink:href="#start0" />
             <use x="174" y="66" xlink:href="#start0" />
             <use x="198" y="150" xlink:href="#start0" />
+
             <use x="264" y="162" xlink:href="#start0" />
             <use x="282" y="150" xlink:href="#start0" />
             <use x="294" y="168" xlink:href="#start0" />
 
+            <use x="468" y="164" xlink:href="#start0" />
+            <use x="480" y="72" xlink:href="#start0" />
+            <use x="480" y="174" xlink:href="#start0" />
+            <use x="492" y="84" xlink:href="#start0" />
+
+            <use x="582" y="24" xlink:href="#start0" />
+            <use x="600" y="24" xlink:href="#start0" />
+            <use x="600" y="60" xlink:href="#start0" />
+
+            <use x="696" y="24" xlink:href="#start0b" />
+
+            <use x="870" y="42" xlink:href="#start0" />
+
+            <use x="954" y="108" xlink:href="#start0" />
         </g>
 
         <g id="buildings0base">
