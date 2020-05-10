@@ -1,387 +1,386 @@
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="overflow: hidden">
+  <head>
+    <title>A big piece of my story</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>
+      <span>Dev on train... or training to Dev?</span>
+    </h1>
+    <section>
+      <div class="game">
+        <div class="frame">
+          <div class="mat">
+            <div class="art">
+              <canvas id="miCanvasIT"  width="223px" height="266px">
+                <span>Tu explorador es anciano, renovalo si queres ver la magia</span>
+              </canvas> 
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- history -->
+      <div>
+        <span>
+          What is this weird thing here in the box? emm is a "project" which was progressing in my travel time to work. To be more specific, back then it took me 2 hours to travel from home to there (and back, 2 more hours). I had to walk 20-25 minutes to the train station, then 1 hour by train and finally 35-40 minutes on foot to the office again. There were no direct buses, nor did I earn as much money to travel like this on a daily basis.<br>
+          In that work we coded with old things, that's why I liked to read about new technologies. Always thinking of getting a better job. One of those things I read was HTML5, which was never referenced in college. And I thought that making a game (or something like that) would help me practice it.<br>
+          I tried to be neat, but it was complicated since I didn't have a mobile network or a good editor. I was writing all this from a BlackBerry, I don't remember exactly, but similar to the Q10.<br>
+          Those 2 hours a day by train and that QWERTY keyboard helped me advance my career and took me away from the tedium of the trip.<br>
+          This was the result. Obviously I never finished it. Maybe I never thought it would have to have an end. But what there is, is what it is ... and I think that as it is it makes it very clear how I spent that time (to which I do not want to return haha).<br>
+          <br>
+          Regarding the content, I tried to make some menus that are related. Instead of using WASD, I used ESFX ... I don't remember exactly why haha. J would be a kind of "A" button, and K is a "B" button.<br>
+          In parallel these commands changed the position of a point, which in turn manipulated the bezier curve. It is more than clear that I was trying many things.<br>
+          Selecting Start "starts the game". With S and F a bar is moved to the sides, something similar to an Arkanoid.<br>
+          The ball that can be stopped has another relative one. More tests haha.<br>
+          If the ball touches the bottom, it makes a somewhat random animation and "removes HP", also random. I liked those concepts. I remember playing Disgaea a lot back then ...<br>
+          You can also see some "sprites". I still didn't know that concept correctly. So they are made of several small rectangles.<br>
+          Above you can see "HP bars" and with the "B" button it makes another animation of values. Many random things.<br>
+          <br>
+          I almost forgot the clock. I also played a lot of MapleStory. I loved the UI of that game. So I tried to simulate both windows. The numbers are made with paths. I do not remember how long it took to do each number, but surely a long time haha.
+        </span>
+      </div>
+    </section>
+    </body>
+    <script src="js/menu.js"></script> 
+    <script src="js/dialog.js"></script> 
+    <script src="js/charasprite.js"></script>
+    <script src="js/objects.js"></script> 
+    <script src="js/keyboard.js"></script> 
+    <script src="js/common.js"></script> 
+    <script src="js/weapon.js"></script> 
+    <script src="js/haku.js"></script> 
+    <script src="js/hit.js"></script> 
+    <script src="js/slider.js"></script> 
+  <!--Maple-->
+    <script src="js/ms_menu.js"></script> 
+    <script>
 
-<style>
+    var c = document.getElementById('miCanvasIT');
+    var ctxppal = c.getContext('2d'); 
 
+    ctxppal.roundedRect = roundedRect; 
+    ctxppal.roundedStrokeRect = roundedStrokeRect;
+    ctxppal.roundedFillRect = roundedFillRect;
 
- ul {
-    list-style: none;
-    padding: 0;
-}
- /*
-canvas {
-    border: solid 1px gray;
-    float: left;
-    margin-right: 20px;
-}
+    var MSmnuInfo = new MS_Menu(ctxppal);
+    MSmnuInfo.moveTo(65,5);
+    MSmnuInfo.resize(155,60);
+    var date = new Date();
 
-label {
-    padding: 2px 8px;
-    border: solid 1px silver;
-    margin: 2px;
-    background: rgb(245, 245, 245);
-    display: inline-block;
-}
+    var haku = new haku();
+    haku.wpn.parent = haku;
+    haku.ctx = ctxppal;
+    var bar = new slider();
+    bar.ctx = ctxppal;
+    var hit = new hit();
+    hit.ctx = ctxppal;
 
-span {
-    font-weight: bold;
-    margin-left: 5px;
-}*/
+    var health = 100;
+    var dmghit;
 
-</style>
-<body style="width:100px">
-<ul><li>
-<!--canvas id="miCanvas" width="224px" height="80px">
- <span>Tu explorador es anciano, renovalo si queres ver la magia</span>
-</canvas-->
-</li><li>
- <canvas id="miCanvasIT"  width="223px" height="266px">
- <span>Tu explorador es anciano, renovalo si queres ver la magia</span>
-</canvas> 
- </li> </ul>
- </body>
- <script src="js/menu.js"></script> 
- <script src="js/dialog.js"></script> 
-  <script src="js/charasprite.js"></script>
-  <script src="js/objects.js"></script> 
- <script src="js/keyboard.js"></script> 
-<script src="js/common.js"></script> 
- <script src="js/weapon.js"></script> 
- <script src="js/haku.js"></script> 
- <script src="js/hit.js"></script> 
- <script src="js/slider.js"></script> 
- <!--Maple-->
- <script src="js/ms_menu.js"></script> 
-<script>
+    var xx = 100, yy = 80;
+    var qx = 0, qy = 0; 
 
-var c = document.getElementById('miCanvasIT');
-var ctxppal = c.getContext('2d'); 
- 
-ctxppal.roundedRect = roundedRect; 
-ctxppal.roundedStrokeRect = roundedStrokeRect;
-ctxppal.roundedFillRect = roundedFillRect;
+    hero.ctx = ctxppal;
+    mob.ctx = ctxppal;
 
-var MSmnuInfo = new MS_Menu(ctxppal);
-MSmnuInfo.moveTo(65,5);
-MSmnuInfo.resize(155,60);
-var date = new Date();
+    window.onload = function(){
+    loop();
+    }
+    function loop(){
 
-var haku = new haku();
-haku.wpn.parent = haku;
-haku.ctx = ctxppal;
-var bar = new slider();
-bar.ctx = ctxppal;
-var hit = new hit();
-hit.ctx = ctxppal;
+    var dir = 0;
+    var w = 60, h = 10;
+    var x = 1, y=10, x2=1, m=1.1;
+    var pxpfx2=0, lastx2=1;
+    window.setInterval(function(){
 
-var health = 100;
-var dmghit;
-
-var xx = 100, yy = 80;
-var qx = 0, qy = 0; 
-
-hero.ctx = ctxppal;
-mob.ctx = ctxppal;
- 
-window.onload = function(){
-  loop();
-}
-function loop(){
- 
- var dir = 0;
- var w = 60, h = 10;
- var x = 1, y=10, x2=1, m=1.1;
- var pxpfx2=0, lastx2=1;
- window.setInterval(function(){
-  
-  drawBackground();
- 
- 
- MSmnuInfo.min = dayHour;//getMin();
- if(lastSec!=0&&getSec()==0)
-  dayHour++;
-  
- if(dayHour>2) dayHour = 0;
-  lastSec = parseInt(getSec());
- MSmnuInfo.sec = lastSec;
- var t = {
-  ctx:ctxppal
-  ,x:120
-  ,y:120
- };
- 
-  
-if(playing){
- 
-  bar.draw();
-  hero.draw();
-  mob.draw();
-     
- haku.draw();
- var objx = {
-  x:(bar.x+bar.vx),
-  y:(bar.y+bar.vy), 
-  w:bar.w,
-  h:bar.h
- };
- var r1 = intToHex(random(15));
- var r2 = intToHex(random(15));
- var g1 = intToHex(random(15));
- var g2 = intToHex(random(15));
- var b1 = intToHex(random(15));
- var b2 = intToHex(random(15)); 
- if(haku.contact(objx)){ 
- /* bar.ctx.fillText(
-   r1+'-'+g1+'-'+b1
-   ,bar.x,bar.y
-  ); */
-  bar.color =
-   '#'+r1+r2+g1+g2+b1+b2; 
- }
- if(xx<0) xx=0;
- if(xx+w>223) xx = 223-w; 
-
-  if(haku.isOutBottom()){
-   dmghit = Math.round(Math.random(10)*100);
-   
-   haku.contactAni(
-    (dmghit>50)?1:0);
-    
-   hit.add(
-    dmghit
- 	,haku.x-10
- 	,haku.y
- 	,(dmghit>50)?1:0
- 	); 
- 	 
- 	health-= dmghit;
-  }
-
- if(health<0)health = 0;
- ctxppal.fillRect(
-  10,10,health/3,5
- );
- 
- if(health==0){
-  playing = false;
-  health = 600;
-  mnu.selected = false;
- } 
- 
-  drawLife(hero, ctxppal
-   , 10, 20);
-  drawLife(mob, ctxppal
-   , 10, 40); 
- }else{
-  
-   
-   /*
-  if(!isNaN(lLastDmgMob)){
-   ctxppal.fillStyle = 'red';
-  }else{
-   ctxppal.fillStyle = 'black';
-  }
-  ctxppal.fillText(
-   lLastDmgMob,  10, 50);
-    
-  if(!isNaN(lLastDmgHero)){
-   ctxppal.fillStyle = 'red';
-  }else{
-   ctxppal.fillStyle = 'black';
-  } 
-  ctxppal.fillText(
-   lLastDmgHero, 80, 50);  
-  */
-  mnu.draw();
-  
- ctxppal.save();
- 
- ////////////////////////////
- // BEGIN AREA TEST /////////
- //////////////////////////// 
- var qx1 = 100+qx;
- var qy1 = 150+qy;
- t.ctx.fillStyle = '#FF0000';
- t.ctx.fillRect(
-  qx1-2,qy1-2,4,4);
- t.ctx.beginPath();  
- t.ctx.moveTo(50,80);
- t.ctx.quadraticCurveTo(
-  qx1,qy1, 150,80
- );
- 
-  
- //t.ctx.closePath();
- t.ctx.stroke();
- 
- 
- MSmnuInfo.draw();
- 
- ////////////////////////////
- // END AREA TEST ///////////
- ////////////////////////////
- ctxppal.restore(); 
- }
- 
- hit.draw(); 
- },10); 
-}
-
-//Create menues
-var mnu = new Menu(10, 20);
-mnu.add('Start'); 
-mnu.add('Options');//, true); 
-mnu.add('Quit'); 
-mnu.setRows(3); 
- 
-
-var mnuS = new Menu(80, 50);
-//mnuS.add('BG Color');
-//mnuS.add('close'); 
-mnuS.setRows(2);
-
-//var mnuBG = new Menu(80,70);
-mnuS.add('Plane');
-mnuS.add('Linear');
-mnuS.add('Radial');
-mnuS.add('DayTime');
-mnuS.add('close'); 
-//mnuBG.setRows(3); 
-
-mnu.setAction(0, 'functionX', '');
-mnu.setAction(1, 'child',mnuS);
-mnu.setAction(2, 'alert','exit');
-
- 
-//mnuS.setAction(0,'child', mnuBG); 
-//mnuS.setAction(1,'action', 'close'); 
-
-mnuS.setAction(0,'function0',' setGradientMode(0)'); 
-mnuS.setAction(1,'function1',' setGradientMode(1)'); 
-mnuS.setAction(2,'function2',' setGradientMode(2)'); 
-mnuS.setAction(3,'function3',' setGradientMode(3)'); 
-mnuS.setAction(4,'action', 'close');
+    drawBackground();
 
 
-//---------------------------
+    MSmnuInfo.min = dayHour;//getMin();
+    if(lastSec!=0&&getSec()==0)
+    dayHour++;
 
-//Create Dialogs
-var dlg = new Dialog(15, 80);
-dlg.add('some text and some more for a while...');
-
-function drawBackground(){
-  var canvasIT = document.getElementById('miCanvasIT');
-  var ctxIT = canvasIT.getContext('2d');
-  //ctxIT.save();
-  ctxIT.globalAlpha = 0.2;
-  ctxIT.font = 'bold 18px Comic Sans MS';
-
-ctxIT.fillStyle = crazyGradient(canvasIT);
- // ctxIT.fillStyle = '#FFF';
-  ctxIT.fillRect(0, 0, canvasIT.width, canvasIT.height); 
-  ctxIT.globalAlpha = 1; 
-
-  ctxIT.fillStyle = 'black'; 
-  
-  ctxIT.lineWidth = 1;
-  ctxIT.strokeStyle = 'black';
-  ctxIT.strokeRect(
-   0, 0, canvasIT.width
-   ,canvasIT.height
-  );
-  
- mnu.setCtx(ctxIT); 
-}
-
-function instantText(text, textLine){
-}
-
-function dibujar(){
- //hero.initBaseStat(18); 
- 
-/*
-
-var student1 = new Student();
-student1.sayHello();
-student1.walk();
-student1.sayGoodBye();
-
-// check inheritance
-alert(student1 instanceof Person); // true 
-alert(student1 instanceof Student); // true
-   */ 
-    
-    
-    
-    var canvas = document.getElementById('miCanvas');
-    var ctx = canvas.getContext('2d');
-  
-    ctx.save();
-
-    ctx.fillStyle = '#F0DB4F';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.restore();
-  
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = 'black';
-    ctx.strokeRect(1, 1, canvas.width-2, canvas.height-2);
-
-    ctx.save();
-  
-    ctx.scale(1.8, 2.4);  
-      
-    ctx.fillStyle = '#333';
-    ctx.font = 'bold 45px Comic Sans MS';
-    ctx.textBaseline = 'top';
-   // ctx.fillText('...', 2, 5);
-    
-    ctx.restore();
-/* 
-    var vaso = new Image();
-    vaso.onload = function() {
-      ctx.drawImage(vaso, 0, 0);
+    if(dayHour>2) dayHour = 0;
+    lastSec = parseInt(getSec());
+    MSmnuInfo.sec = lastSec;
+    var t = {
+    ctx:ctxppal
+    ,x:120
+    ,y:120
     };
-    vaso.src = "glassup.png";
-*/
-    ctx.fillStyle = 'black';
-    /*
-    ctx.beginPath();  
-    ctx.moveTo(80,25);  
-    ctx.lineTo(115,0);  
-    ctx.lineTo(125,0);  
-    ctx.closePath(); 
-    ctx.fill(); 
-    
-    ctx.beginPath();  
-    ctx.moveTo(100,50);  
-    ctx.lineTo(223,75);  
-    ctx.lineTo(223,80);  
-    ctx.closePath();
-    ctx.fill(); 
-    
-    ctx.beginPath();  
-    ctx.moveTo(25,35);  
-    ctx.lineTo(0,50);  
-    ctx.lineTo(0,55);  
-    ctx.closePath();
-    ctx.fill(); 
-    
-    ctx.beginPath();  
-    ctx.moveTo(25,55);  
-    ctx.lineTo(0,100);  
-    ctx.lineTo(0,110);  
-    ctx.closePath();
-    ctx.fill(); 
-    */
-    
-}
 
-//dibujar(); 
-//instantText();
-</script>
-</body>
+
+    if(playing){
+
+    bar.draw();
+    hero.draw();
+    mob.draw();
+        
+    haku.draw();
+    var objx = {
+    x:(bar.x+bar.vx),
+    y:(bar.y+bar.vy), 
+    w:bar.w,
+    h:bar.h
+    };
+    var r1 = intToHex(random(15));
+    var r2 = intToHex(random(15));
+    var g1 = intToHex(random(15));
+    var g2 = intToHex(random(15));
+    var b1 = intToHex(random(15));
+    var b2 = intToHex(random(15)); 
+    if(haku.contact(objx)){ 
+    /* bar.ctx.fillText(
+      r1+'-'+g1+'-'+b1
+      ,bar.x,bar.y
+    ); */
+    bar.color =
+      '#'+r1+r2+g1+g2+b1+b2; 
+    }
+    if(xx<0) xx=0;
+    if(xx+w>223) xx = 223-w; 
+
+    if(haku.isOutBottom()){
+      dmghit = Math.round(Math.random(10)*100);
+      
+      haku.contactAni(
+      (dmghit>50)?1:0);
+      
+      hit.add(
+      dmghit
+    ,haku.x-10
+    ,haku.y
+    ,(dmghit>50)?1:0
+    ); 
+      
+    health-= dmghit;
+    }
+
+    if(health<0)health = 0;
+    ctxppal.fillRect(
+    10,10,health/3,5
+    );
+
+    if(health==0){
+    playing = false;
+    health = 600;
+    mnu.selected = false;
+    } 
+
+    drawLife(hero, ctxppal
+      , 10, 20);
+    drawLife(mob, ctxppal
+      , 10, 40); 
+    }else{
+
+      
+      /*
+    if(!isNaN(lLastDmgMob)){
+      ctxppal.fillStyle = 'red';
+    }else{
+      ctxppal.fillStyle = 'black';
+    }
+    ctxppal.fillText(
+      lLastDmgMob,  10, 50);
+      
+    if(!isNaN(lLastDmgHero)){
+      ctxppal.fillStyle = 'red';
+    }else{
+      ctxppal.fillStyle = 'black';
+    } 
+    ctxppal.fillText(
+      lLastDmgHero, 80, 50);  
+    */
+    mnu.draw();
+
+    ctxppal.save();
+
+    ////////////////////////////
+    // BEGIN AREA TEST /////////
+    //////////////////////////// 
+    var qx1 = 100+qx;
+    var qy1 = 150+qy;
+    t.ctx.fillStyle = '#FF0000';
+    t.ctx.fillRect(
+    qx1-2,qy1-2,4,4);
+    t.ctx.beginPath();  
+    t.ctx.moveTo(50,80);
+    t.ctx.quadraticCurveTo(
+    qx1,qy1, 150,80
+    );
+
+
+    //t.ctx.closePath();
+    t.ctx.stroke();
+
+
+    MSmnuInfo.draw();
+
+    ////////////////////////////
+    // END AREA TEST ///////////
+    ////////////////////////////
+    ctxppal.restore(); 
+    }
+
+    hit.draw(); 
+    },10); 
+    }
+
+    //Create menues
+    var mnu = new Menu(10, 20);
+    mnu.add('Start'); 
+    mnu.add('Options');//, true); 
+    mnu.add('Quit'); 
+    mnu.setRows(3); 
+
+
+    var mnuS = new Menu(80, 50);
+    //mnuS.add('BG Color');
+    //mnuS.add('close'); 
+    mnuS.setRows(2);
+
+    //var mnuBG = new Menu(80,70);
+    mnuS.add('Plane');
+    mnuS.add('Linear');
+    mnuS.add('Radial');
+    mnuS.add('DayTime');
+    mnuS.add('close'); 
+    //mnuBG.setRows(3); 
+
+    mnu.setAction(0, 'functionX', '');
+    mnu.setAction(1, 'child',mnuS);
+    mnu.setAction(2, 'alert','exit');
+
+
+    //mnuS.setAction(0,'child', mnuBG); 
+    //mnuS.setAction(1,'action', 'close'); 
+
+    mnuS.setAction(0,'function0',' setGradientMode(0)'); 
+    mnuS.setAction(1,'function1',' setGradientMode(1)'); 
+    mnuS.setAction(2,'function2',' setGradientMode(2)'); 
+    mnuS.setAction(3,'function3',' setGradientMode(3)'); 
+    mnuS.setAction(4,'action', 'close');
+
+
+    //---------------------------
+
+    //Create Dialogs
+    var dlg = new Dialog(15, 80);
+    dlg.add('some text and some more for a while...');
+
+    function drawBackground(){
+    var canvasIT = document.getElementById('miCanvasIT');
+    var ctxIT = canvasIT.getContext('2d');
+    //ctxIT.save();
+    ctxIT.globalAlpha = 0.2;
+    ctxIT.font = 'bold 18px Comic Sans MS';
+
+    ctxIT.fillStyle = crazyGradient(canvasIT);
+    // ctxIT.fillStyle = '#FFF';
+    ctxIT.fillRect(0, 0, canvasIT.width, canvasIT.height); 
+    ctxIT.globalAlpha = 1; 
+
+    ctxIT.fillStyle = 'black'; 
+
+    ctxIT.lineWidth = 1;
+    ctxIT.strokeStyle = 'black';
+    ctxIT.strokeRect(
+      0, 0, canvasIT.width
+      ,canvasIT.height
+    );
+
+    mnu.setCtx(ctxIT); 
+    }
+
+    function instantText(text, textLine){
+    }
+
+    function dibujar(){
+    //hero.initBaseStat(18); 
+
+    /*
+
+    var student1 = new Student();
+    student1.sayHello();
+    student1.walk();
+    student1.sayGoodBye();
+
+    // check inheritance
+    alert(student1 instanceof Person); // true 
+    alert(student1 instanceof Student); // true
+      */ 
+      
+      
+      
+      var canvas = document.getElementById('miCanvas');
+      var ctx = canvas.getContext('2d');
+
+      ctx.save();
+
+      ctx.fillStyle = '#F0DB4F';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.restore();
+
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'black';
+      ctx.strokeRect(1, 1, canvas.width-2, canvas.height-2);
+
+      ctx.save();
+
+      ctx.scale(1.8, 2.4);  
+        
+      ctx.fillStyle = '#333';
+      ctx.font = 'bold 45px Comic Sans MS';
+      ctx.textBaseline = 'top';
+      // ctx.fillText('...', 2, 5);
+      
+      ctx.restore();
+    /* 
+      var vaso = new Image();
+      vaso.onload = function() {
+        ctx.drawImage(vaso, 0, 0);
+      };
+      vaso.src = "glassup.png";
+    */
+      ctx.fillStyle = 'black';
+      /*
+      ctx.beginPath();  
+      ctx.moveTo(80,25);  
+      ctx.lineTo(115,0);  
+      ctx.lineTo(125,0);  
+      ctx.closePath(); 
+      ctx.fill(); 
+      
+      ctx.beginPath();  
+      ctx.moveTo(100,50);  
+      ctx.lineTo(223,75);  
+      ctx.lineTo(223,80);  
+      ctx.closePath();
+      ctx.fill(); 
+      
+      ctx.beginPath();  
+      ctx.moveTo(25,35);  
+      ctx.lineTo(0,50);  
+      ctx.lineTo(0,55);  
+      ctx.closePath();
+      ctx.fill(); 
+      
+      ctx.beginPath();  
+      ctx.moveTo(25,55);  
+      ctx.lineTo(0,100);  
+      ctx.lineTo(0,110);  
+      ctx.closePath();
+      ctx.fill(); 
+      */
+      
+    }
+
+    //dibujar(); 
+    //instantText();
+    </script>
+  </body>
 </html>

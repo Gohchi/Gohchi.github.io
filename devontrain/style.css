@@ -1,0 +1,55 @@
+body {
+  background-image: url('images/nz01.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-color: #8dcef4;
+  backdrop-filter: contrast(20%) blur(3px) brightness(150%);
+  font-size: 20px;
+  font-family: monospace;
+  padding: 50px;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+section {
+  position: relative;
+  width: 100%;
+  padding: 50px;
+} 
+
+.game {
+  float: left;
+  margin: 20px;
+}
+.frame {
+  position: relative;
+  width: 323px;
+  height: 400px;
+  /* padding-bottom: 82.5%; */
+  background: black;
+  box-shadow: 0 10px 7px -5px rgba(0, 0, 0, 0.3);
+}
+.mat {
+  position: absolute;
+  background: white;
+  top: 3.0303%; bottom: 3.0303%; left: 2.5%; right: 2.5%;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5) inset;
+}
+.art {
+  position: absolute;
+  top: 16.129%; bottom: 16.129%; left: 13.158%; right: 13.158%;
+}
+.art:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 223px;
+  height: 266px;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5) inset;
+}
