@@ -132,9 +132,33 @@
             <use x="120" y="40" xlink:href="#pierLightsH" />
         </g>
 
+        <g id="bridge">
+            <!-- main bar -->
+            <rect y="50" width="140" height="18" fill="#005373" /> 
+            
+            <!-- tiny bars -->
+            <rect x="12" y="16" width="6" height="34" fill="#005373" />
+            <rect x="30" y="28" width="6" height="22" fill="#005373" />
+            <rect x="54" y="28" width="6" height="22" fill="#005373" />
+            <rect x="78" y="28" width="6" height="22" fill="#005373" />
+            <rect x="102" y="28" width="6" height="22" fill="#005373" />
+            <rect x="126" y="16" width="6" height="34" fill="#005373" />
+
+            <rect y="9" width="12" height="6" fill="#005373" />
+            <rect x="6" y="14" width="12" height="6" fill="#005373" />
+            <rect x="12" y="19" width="18" height="6" fill="#005373" />
+            <rect x="24" y="24" width="84" height="6" fill="#005373" />
+            <rect x="102" y="19" width="18" height="6" fill="#005373" />
+            <rect x="120" y="14" width="12" height="6" fill="#005373" />
+            <rect x="126" y="9" width="13" height="6" fill="#005373" />
+
+            <!-- floor -->
+            <rect x="138" width="18" height="105" fill="#005373" />
+        </g>
+
         <rect id="river" width="1000" height="240" fill="#01283f" />
 
-        <pattern id="bridgePart0" x="0" y="0" width=".2" height="1">
+        <pattern id="railingPart0" x="0" y="0" width=".2" height="1">
             <rect x="0" y="0" width="24" height="180" fill="#000" /> <!-- wider bar -->
             <rect x="54" y="0" width="12" height="138" fill="#000" />
             <rect x="100" y="0" width="12" height="138" fill="#000" />
@@ -143,7 +167,7 @@
             <rect x="244" y="0" width="12" height="138" fill="#000" />
         </pattern>
 
-        <g id="bridgePart">    
+        <g id="railingPart">    
             <rect x="0" y="0" width="20" height="180" fill="#000" />
             <rect x="60" y="0" width="10" height="152" fill="#000" />
             <rect x="100" y="0" width="10" height="152" fill="#000" />
@@ -152,12 +176,12 @@
             <rect x="220" y="0" width="10" height="152" fill="#000" />
         </g>
         
-        <g id="bridge">
+        <g id="railing">
             <!-- top bar -->
             <rect x="0" y="0" width="1000" height="28" fill="#000" />
             
             <!-- vertical bars -->
-            <rect fill="url(#bridgePart0)" stroke="black" x="-208" y="26" width="1440" height="180"/>
+            <rect fill="url(#railingPart0)" stroke="black" x="-208" y="26" width="1440" height="180"/>
 
             <!-- bottom bar -->
             <rect x="0" y="164" width="1000" height="20" fill="#000" />
@@ -180,7 +204,10 @@
     <use x="0" y="414" xlink:href="#river" />
     <use x="402" y="368" xlink:href="#pier" />
 
-    <use x="0" y="428" xlink:href="#bridge" />
+    <use x="0" y="310" xlink:href="#bridge" />
+    
+
+    <use x="0" y="428" xlink:href="#railing" />
 
     <!-- <use x="-20" y="116" xlink:href="#lamppost" /> -->
 
