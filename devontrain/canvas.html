@@ -3,8 +3,13 @@
     <title>A big piece of my story</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+		<script charset="utf-8" src="js/scripts.js"></script>
   </head>
   <body>
+    <header class="lang">
+      <button id="button-esp">ESP</button>
+      <button id="button-eng" class="selected">ENG</button>
+    </header>
     <h1>
       <span>Dev on train... or training to Dev?</span>
     </h1>
@@ -20,9 +25,26 @@
           </div>
         </div>
       </div>
-      <!-- history -->
       <div>
-        <span>
+        <span id="story-esp">
+          ¿Qué es esta cosa rara aquí en el cuadro? emm es una "proyecto" el cual fue avanzando en mi tiempo de viaje hacia el trabajo. Para ser más específico, en aquél entonces me tomaba 2 horas viajar desde casa hasta allí (y volver, 2 horas más).  Tenía que caminar uno 20-25 minutos hasta la estación de tren, luego 1 hora en tren y por último 35-40 minutos nuevamente a pié hasta la oficina. No habían autobuses directos, tampoco yo ganaba tanto dinero para viajar así a diario.<br>
+          En aquel trabajo programábamos con cosas antiguas, por eso me gustaba leer sobre nuevas tecnologías. Siempre pensando en conseguir un mejor trabajo. Una de esas cosas que leí fue HTML5, el cual en la facultad nunca hicieron referencia. Y pensé que hacer un juego (o algo así) me ayudaría a practicarlo.<br>
+          Traté de ser ordenado, pero era complicado, ya que no tenía red móvil ni un buen editor. Todo esto lo iba escribiendo desde un BlackBerry, no recuerdo exáctamente, pero similar al Q10.<br>
+          Esas 2 horas diarias en tren y ese teclado QWERTY me ayudaban a avanzar en mi carrera laboral y me alejaban de lo tedioso del viaje.<br>
+          Este fue el resultado. Obviamente nunca lo finalicé. Talvez nunca pensé en que tendría que tener un final. Pero lo que hay, es lo que es... y creo que así como está deja muy claro cómo yo pasaba ese tiempo (al que yo no quiera volver jaja).<br>
+          <br>
+          Respecto al contenido, intenté hacer unos menús que estén relacionados. En vez de usar WASD, usé ESFX... no recuerdo exáctamente porqué jaja. J sería una especie de botón "A", y K es un botón "B".<br>
+          En paralelo estos comandos cambiaban la posición de un punto, el cual a su vez manipulaba la curva del bezier. Está más que claro que estaba probando muchas cosas.<br>
+          Al seleccionar Start "comienza el juego". Con S y F se mueve una barra hacia los lados, algo parecido a un Arkanoid.<br>
+          La bola que se puede detener tiene otra relativa. Más pruebas jaja.<br>
+          Si la bola toca la parte inferior, esta hace una animación algo aleatoria y "quita HP", también aleatorio. Me gustaban esos conceptos. Recuerdo que jugaba mucho Disgaea en aquél entonces...<br>
+          También se pueden ver unos "sprites". Aun no conocía ese concepto correctamente. Así que están hechos con varios rectángulos pequeños.<br>
+          Arriba se pueden ver "barras de HP" y con el botón "B" hace otra animación de valores. Muchas cosas random.<br>
+          <br>
+          Casi olvido el reloj. También jugaba mucho MapleStory. Amaba la UI de ese juego. Por eso intenté simular ambas ventanas. Los números están hechos con paths. No recuerdo cuanto demoré en hacer cada número, pero seguro mucho tiempo jaja.<br>
+
+        </span>
+        <span id="story-eng" class="selected">
           What is this weird thing here in the box? emm is a "project" which was progressing in my travel time to work. To be more specific, back then it took me 2 hours to travel from home to there (and back, 2 more hours). I had to walk 20-25 minutes to the train station, then 1 hour by train and finally 35-40 minutes on foot to the office again. There were no direct buses, nor did I earn as much money to travel like this on a daily basis.<br>
           In that work we coded with old things, that's why I liked to read about new technologies. Always thinking of getting a better job. One of those things I read was HTML5, which was never referenced in college. And I thought that making a game (or something like that) would help me practice it.<br>
           I tried to be neat, but it was complicated since I didn't have a mobile network or a good editor. I was writing all this from a BlackBerry, I don't remember exactly, but similar to the Q10.<br>
@@ -86,7 +108,8 @@
     mob.ctx = ctxppal;
 
     window.onload = function(){
-    loop();
+      loop();
+      onLoad();
     }
     function loop(){
 

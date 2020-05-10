@@ -53,3 +53,37 @@ section {
   height: 266px;
   box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5) inset;
 }
+.lang button {
+  float: right;
+  padding: 10px;
+  margin: 0;
+  background: #ccc;
+  cursor: pointer;
+  border-top: solid 2px #eaeaea;
+  border-left: solid 2px #eaeaea;
+  border-bottom: solid 2px #777;
+  border-right: solid 2px #777;
+}
+.lang button.selected {
+  background: #bbb;
+  cursor: default;
+  border-top: solid 2px #777;
+  border-left: solid 2px #777;
+  border-bottom: solid 2px #eaeaea;
+  border-right: solid 2px #eaeaea;
+}
+#button-esp {
+  border-radius: 0 10px 10px 0;
+}
+#button-eng {
+  border-radius: 10px 0 0 10px;
+}
+#story-esp,
+#story-eng {
+  display: none;
+}
+
+#story-esp.selected,
+#story-eng.selected {
+  display: inline;
+}
