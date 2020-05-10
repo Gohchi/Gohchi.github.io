@@ -3,15 +3,22 @@ body, html {
     height: 100%;
 }
 body {
+  background-color: #15a6c7;
   background-image: url(https://s-media-cache-ak0.pinimg.com/originals/e4/e1/16/e4e11649ebd8e4acc7a0700d99cb90c9.gif);
-  height: 100%;
+  /* background-image: url(/images/bg.svg); */
+  /* -webkit-mask-image: url(/images/bg.svg);
+  mask-image: url(/images/bg.svg); */
+  /* height: 100%; */
   overflow: hidden;
   /* Center and scale the image nicely */
   background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
+  background-repeat: no-repeat;
   font-family:'Lato', sans-serif;
 }
+/* body * {
+  display: none;
+} */
 .wrap {
   top: 60px;
   right: 140px;
