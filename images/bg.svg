@@ -30,6 +30,7 @@
         </g>
 
         <rect id="anthenaLight" width="6" height="6" fill="#d04747" />
+
         <rect id="window" width="12" height="6" fill="#004667" />
 
         <pattern id="windowPat1" x="0" y="0" width=".333" height=".25"><use xlink:href="#window" /></pattern>
@@ -100,6 +101,37 @@
             <rect fill="url(#windowPat2)" x="186" y="36" width="72" height="90"/>
         </g>
 
+        <rect id="pierLight" width="6" height="12" fill="#004667" />
+
+        <g id="pierLightsV">
+            <use xlink:href="#pierLight" />
+            <use x="30" xlink:href="#pierLight" />
+            <use x="78" xlink:href="#pierLight" />
+            <use x="108" xlink:href="#pierLight" />
+            <use x="148" xlink:href="#pierLight" />
+            <use x="192" xlink:href="#pierLight" />
+            <use x="240" xlink:href="#pierLight" />
+            <use x="290" xlink:href="#pierLight" />
+            <use x="348" xlink:href="#pierLight" />
+            <use x="402" xlink:href="#pierLight" />
+        </g>
+        <g id="pierLightsH">
+            <rect width="6" height="6" fill="#004667" />
+            <rect x="12" width="12" height="6" fill="#004667" />
+            <rect x="30" width="18" height="6" fill="#004667" />
+            <rect x="54" width="24" height="6" fill="#004667" />
+            <rect x="84" width="72" height="6" fill="#004667" />
+            <rect x="162" width="108" height="6" fill="#004667" />
+            <rect x="276" width="60" height="6" fill="#004667" />
+            <rect x="342" width="102" height="6" fill="#004667" />
+            <rect x="450" width="28" height="6" fill="#004667" />
+        </g>
+        <g id="pier">
+            <rect width="598" height="48" fill="#01283f" />
+            <use x="162" y="22" xlink:href="#pierLightsV" />
+            <use x="120" y="40" xlink:href="#pierLightsH" />
+        </g>
+
         <rect id="river" width="1000" height="240" fill="#01283f" />
 
         <pattern id="bridgePart0" x="0" y="0" width=".2" height="1">
@@ -146,6 +178,7 @@
     <use x="654" y="138" xlink:href="#buildings0" />
 
     <use x="0" y="414" xlink:href="#river" />
+    <use x="402" y="368" xlink:href="#pier" />
 
     <use x="0" y="428" xlink:href="#bridge" />
 
