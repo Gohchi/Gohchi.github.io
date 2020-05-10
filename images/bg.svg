@@ -1,4 +1,4 @@
-<svg width="1000" height="600" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" 
+<svg width="1000" height="664" viewBox="0 0 1000 664" xmlns="http://www.w3.org/2000/svg" 
      xmlns:xlink="http://www.w3.org/1999/xlink">
     <style type="text/css">
         #a { animation: x .5s ease alternate infinite; }
@@ -12,8 +12,21 @@
         }
     </style>
     <defs>
+    
+        <rect id="river" width="1000" height="240" fill="#01283f" />
+
+
+        <pattern id="bridgePart0" x="0" y="0" width=".2" height="1">
+            <rect x="0" y="0" width="24" height="180" fill="#000" />
+            <rect x="54" y="0" width="12" height="138" fill="#000" />
+            <rect x="100" y="0" width="12" height="138" fill="#000" />
+            <rect x="152" y="0" width="12" height="138" fill="#000" />
+            <rect x="198" y="0" width="12" height="138" fill="#000" />
+            <rect x="244" y="0" width="12" height="138" fill="#000" />
+        </pattern>
+
         <g id="bridgePart">    
-            <rect x="0" y="0" width="20" height="152" fill="#000" />
+            <rect x="0" y="0" width="20" height="180" fill="#000" />
             <rect x="60" y="0" width="10" height="152" fill="#000" />
             <rect x="100" y="0" width="10" height="152" fill="#000" />
             <rect x="140" y="0" width="10" height="152" fill="#000" />
@@ -22,24 +35,29 @@
         </g>
         
         <g id="bridge">
+            <!-- top bar -->
             <rect x="0" y="0" width="1000" height="28" fill="#000" />
+            
+            <!-- vertical bars -->
+            <rect fill="url(#bridgePart0)" stroke="black" x="-208" y="26" width="1440" height="180"/>
 
-            <use x="-50" y="28" xlink:href="#bridgePart" />
-            <use x="222" y="28" xlink:href="#bridgePart" />
-            <use x="494" y="28" xlink:href="#bridgePart" />
-            <use x="766" y="28" xlink:href="#bridgePart" />
+            <!-- bottom bar -->
+            <rect x="0" y="164" width="1000" height="20" fill="#000" />
 
-            <rect x="0" y="180" width="1000" height="28" fill="#000" />
+            <!-- floor -->
+            <rect x="0" y="200" width="1000" height="26" fill="#000" />
         </g>
+
         <g id="lamppost">
-            <path d="M100 0 L140 0 L140 4 L145 4 L145 12 L100 12 L100 18 L80 18 L80 22 L74 22 L74 26 L70 26 L70 500 L60 500 L60 26 L62 26 L62 22 L64 22 L64 18 L66 18 L66 16 L70 16 L70 12 L80 12 L80 8 L90 8 L90 4 L100 4 Z" fill="#000324" /> <!-- fill="#000324"-->
+            <path d="M100 0 L140 0 L140 4 L145 4 L145 12 L100 12 L100 18 L80 18 L80 22 L74 22 L74 26 L70 26 L70 512 L60 512 L60 26 L62 26 L62 22 L64 22 L64 18 L66 18 L66 16 L70 16 L70 12 L80 12 L80 8 L90 8 L90 4 L100 4 Z" fill="#000324" /> <!-- fill="#000324"-->
             <path id="a" d="M110 16 L140 16 L140 26 L136 26 L136 30 L110 30 Z" fill="#000" />
         </g>
     </defs>
-    <rect x="52" y="33" width="100" height="11" fill="#000" />
-    <use x="0" y="340" xlink:href="#bridge" />
+    <rect x="0" y="0" width="1000" height="2" fill="#000" />
+    <use x="0" y="414" xlink:href="#river" />
 
+    <use x="0" y="428" xlink:href="#bridge" />
 
-    <use x="22" y="100" xlink:href="#lamppost" />
+    <use x="-20" y="116" xlink:href="#lamppost" />
 
 </svg>
