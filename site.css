@@ -19,6 +19,17 @@ body {
 /* body * {
   display: none;
 } */
+header {
+  box-shadow:
+    0 2px 1px hsla(0, 0%, 100%, 0.5) inset,
+    0 -2px 1px hsla(250, 70%, 5%, 0.3) inset,
+    0 -2px 6px hsla(0, 0%, 100%, 0.25);
+  backdrop-filter: blur(2px) brightness(140%);
+  padding: 15px;
+}
+header * {
+  margin: 0 15px;
+}
 .wrap {
   top: 60px;
   right: 140px;
