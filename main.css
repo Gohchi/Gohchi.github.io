@@ -20,13 +20,12 @@ button {
 	padding: 12px 20px 10px 20px;
 	border: solid #36bac9 4px;
 	text-decoration: none;
-	outline: 4px solid #0e404c;
-	/*outline-offset: -2px;*/
+	box-shadow: 0 0 3pt 2pt #0e404c;
 	margin: 4px;
 }
 
 button:hover {
-	outline: 4px solid white;
+	box-shadow: 0 0 3pt 2pt white;
   	text-decoration: none;
 	background: #1dbcfd;
 	border: solid #41ecff 4px;
