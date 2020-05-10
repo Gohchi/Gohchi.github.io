@@ -12,12 +12,55 @@
         }
     </style>
     <defs>
-    
+        <rect id="start0" width="6" height="6" fill="#1ec6ec" />
+        <rect id="start0b" width="6" height="6" fill="#fff" />
+
+        <rect id="anthenaLight" width="6" height="6" fill="#d04747" />
+        <rect id="window" width="12" height="6" fill="#004667" />
+
+        <pattern id="windowPat1" x="0" y="0" width=".333" height=".25"><use xlink:href="#window" /></pattern>
+        <pattern id="windowPat2" x="0" y="0" width=".25" height=".2"><use xlink:href="#window" /></pattern>
+        
+        <g id="sky">
+            <use x="18" y="144" xlink:href="#start0" />
+            <use x="72" y="204" xlink:href="#start0" />
+            <use x="78" y="42" xlink:href="#start0" />
+            <use x="138" y="30" xlink:href="#start0" />
+            <use x="144" y="72" xlink:href="#start0" />
+            <use x="150" y="30" xlink:href="#start0" />
+            <use x="162" y="66" xlink:href="#start0b" />
+            <use x="168" y="252" xlink:href="#start0" />
+            <use x="174" y="24" xlink:href="#start0" />
+            <use x="174" y="66" xlink:href="#start0" />
+            <use x="198" y="150" xlink:href="#start0" />
+            <use x="264" y="162" xlink:href="#start0" />
+            <use x="282" y="150" xlink:href="#start0" />
+            <use x="294" y="168" xlink:href="#start0" />
+
+        </g>
+
+        <g id="buildings0base">
+            <rect y="144" width="84" height="114" fill="#01283f" />
+            <rect x="83" y="126" width="98" height="132" fill="#01283f" />
+            <rect x="83" y="70" width="68" height="132" fill="#01283f" />
+            <rect x="180" width="76" height="258" fill="#01283f" />
+            <path d="M255 116 L316 116 L316 126 L338 126 L338 136 L346 136 L346 258 L255 258 Z" fill="#01283f" />
+        </g>
+        
+        <g id="buildings0">
+            <use x="0" y="20" xlink:href="#buildings0base" />
+            <use x="186" y="14" xlink:href="#anthenaLight" />
+            <rect x="240" width="6" height="22" fill="#01283f" />
+            <use x="246" y="14" xlink:href="#anthenaLight" />
+            <!-- <use x="186" y="36"  xlink:href="#window" /> -->
+            <rect fill="url(#windowPat1)" x="88" y="110" width="58" height="72"/>
+            <rect fill="url(#windowPat2)" x="186" y="36" width="72" height="90"/>
+        </g>
+
         <rect id="river" width="1000" height="240" fill="#01283f" />
 
-
         <pattern id="bridgePart0" x="0" y="0" width=".2" height="1">
-            <rect x="0" y="0" width="24" height="180" fill="#000" />
+            <rect x="0" y="0" width="24" height="180" fill="#000" /> <!-- wider bar -->
             <rect x="54" y="0" width="12" height="138" fill="#000" />
             <rect x="100" y="0" width="12" height="138" fill="#000" />
             <rect x="152" y="0" width="12" height="138" fill="#000" />
@@ -54,10 +97,15 @@
         </g>
     </defs>
     <rect x="0" y="0" width="1000" height="2" fill="#000" />
+    <use xlink:href="#sky" />
+
+
+    <use x="654" y="138" xlink:href="#buildings0" />
+
     <use x="0" y="414" xlink:href="#river" />
 
     <use x="0" y="428" xlink:href="#bridge" />
 
-    <use x="-20" y="116" xlink:href="#lamppost" />
+    <!-- <use x="-20" y="116" xlink:href="#lamppost" /> -->
 
 </svg>
