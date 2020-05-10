@@ -12,8 +12,22 @@
         }
     </style>
     <defs>
-        <rect id="start0" width="6" height="6" fill="#1ec6ec" />
-        <rect id="start0b" width="6" height="6" fill="#fff" />
+        <rect id="star0" width="6" height="6" fill="#1ec6ec" />
+        <rect id="star0b" width="6" height="6" fill="#fff" />
+        <g id="star1">
+            <use x="6" xlink:href="#star0" />
+            <use y="6" xlink:href="#star0" />
+            <use x="12" y="6" xlink:href="#star0" />
+            <use x="6" y="12" xlink:href="#star0" />
+            <use x="6" y="6" xlink:href="#star0b" />
+        </g>
+        <g id="star2">
+            <use x="12" xlink:href="#star0" />
+            <use y="12" xlink:href="#star0" />
+            <use x="24" y="12" xlink:href="#star0" />
+            <use x="12" y="24" xlink:href="#star0" />
+            <path d="M12 6 L18 6 L18 12 L24 12 L24 18 L18 18 L18 24 L12 24 L12 18 L6 18 L6 12 L12 12 Z" fill="white"/>
+        </g>
 
         <rect id="anthenaLight" width="6" height="6" fill="#d04747" />
         <rect id="window" width="12" height="6" fill="#004667" />
@@ -22,39 +36,50 @@
         <pattern id="windowPat2" x="0" y="0" width=".25" height=".2"><use xlink:href="#window" /></pattern>
         
         <g id="sky">
-            <use x="18" y="144" xlink:href="#start0" />
+            <use x="18" y="144" xlink:href="#star0" />
 
-            <use x="72" y="204" xlink:href="#start0" />
+            <use x="36" y="36" xlink:href="#star1" />
+
+            <use x="72" y="204" xlink:href="#star0" />
             
-            <use x="78" y="42" xlink:href="#start0" />
+            <use x="78" y="42" xlink:href="#star0" />
             
-            <use x="138" y="30" xlink:href="#start0" />
-            <use x="144" y="72" xlink:href="#start0" />
-            <use x="150" y="30" xlink:href="#start0" />
-            <use x="162" y="66" xlink:href="#start0b" />
-            <use x="168" y="252" xlink:href="#start0" />
-            <use x="174" y="24" xlink:href="#start0" />
-            <use x="174" y="66" xlink:href="#start0" />
-            <use x="198" y="150" xlink:href="#start0" />
+            <use x="138" y="30" xlink:href="#star0" />
+            <use x="144" y="72" xlink:href="#star0" />
+            <use x="150" y="30" xlink:href="#star0" />
+            <use x="162" y="66" xlink:href="#star0b" />
+            <use x="168" y="252" xlink:href="#star0" />
+            <use x="174" y="24" xlink:href="#star0" />
+            <use x="174" y="66" xlink:href="#star0" />
 
-            <use x="264" y="162" xlink:href="#start0" />
-            <use x="282" y="150" xlink:href="#start0" />
-            <use x="294" y="168" xlink:href="#start0" />
+            <use x="180" y="180" xlink:href="#star1" />
 
-            <use x="468" y="164" xlink:href="#start0" />
-            <use x="480" y="72" xlink:href="#start0" />
-            <use x="480" y="174" xlink:href="#start0" />
-            <use x="492" y="84" xlink:href="#start0" />
+            <use x="198" y="150" xlink:href="#star0" />
 
-            <use x="582" y="24" xlink:href="#start0" />
-            <use x="600" y="24" xlink:href="#start0" />
-            <use x="600" y="60" xlink:href="#start0" />
+            <use x="222" y="72" xlink:href="#star1" />
 
-            <use x="696" y="24" xlink:href="#start0b" />
+            <use x="264" y="162" xlink:href="#star0" />
+            <use x="282" y="150" xlink:href="#star0" />
+            <use x="294" y="168" xlink:href="#star0" />
 
-            <use x="870" y="42" xlink:href="#start0" />
+            <use x="324" y="78" xlink:href="#star1" />
 
-            <use x="954" y="108" xlink:href="#start0" />
+            <use x="468" y="164" xlink:href="#star0" />
+            <use x="480" y="72" xlink:href="#star0" />
+            <use x="480" y="174" xlink:href="#star0" />
+            <use x="492" y="84" xlink:href="#star0" />
+
+            <use x="582" y="24" xlink:href="#star0" />
+            <use x="600" y="24" xlink:href="#star0" />
+            <use x="600" y="60" xlink:href="#star0" />
+
+            <use x="624" y="78" xlink:href="#star2" />
+
+            <use x="696" y="24" xlink:href="#star0b" />
+
+            <use x="870" y="42" xlink:href="#star0" />
+
+            <use x="954" y="108" xlink:href="#star0" />
         </g>
 
         <g id="buildings0base">
