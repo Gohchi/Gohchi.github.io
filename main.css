@@ -26,7 +26,7 @@ button {
 
 button:hover {
 	box-shadow: 0 0 3pt 2pt white;
-  	text-decoration: none;
+	text-decoration: none;
 	background: #1dbcfd;
 	border: solid #41ecff 4px;
 	background-image: -webkit-linear-gradient(top, #1dbcfd, #027cb3);
@@ -34,6 +34,12 @@ button:hover {
 	background-image: -ms-linear-gradient(top, #1dbcfd, #027cb3);
 	background-image: -o-linear-gradient(top, #1dbcfd, #027cb3);
 	background-image: linear-gradient(to bottom, #1dbcfd, #027cb3);
+}
+button:active {
+	text-decoration: none;
+	background: white;
+	color: black;
+	border: solid black 4px;
 }
 
 .thanks {
@@ -57,4 +63,10 @@ li {
 img.icon {
 	width: 24px;
 	height: 24px;
+}
+
+#bg-toggle {
+  position: fixed;
+  bottom: 44px;
+  right: 8px;
 }
