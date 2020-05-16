@@ -2,17 +2,17 @@
   <head>
     <title>A big piece of my story</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://combinatronics.com/marcj/css-element-queries/master/src/ResizeSensor.js"></script>
+    <script src="https://combinatronics.com/marcj/css-element-queries/master/src/ElementQueries.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 		<script charset="utf-8" src="js/scripts.js"></script>
   </head>
   <body>
-    <header class="lang">
-      <button id="button-esp">ESP</button>
-      <button id="button-eng" class="selected">ENG</button>
+    <header>
+      <h1 class="title">Dev on train... or training to Dev?</h1>
     </header>
-    <h1>
-      <span>Dev on train... or training to Dev?</span>
-    </h1>
     <section>
       <div class="game">
         <div class="frame">
@@ -25,9 +25,9 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="stories">
         <span id="story-esp">
-          ¿Qué es esta cosa rara aquí en el cuadro? emm es una "proyecto" el cual fue avanzando en mi tiempo de viaje hacia el trabajo. Para ser más específico, en aquél entonces me tomaba 2 horas viajar desde casa hasta allí (y volver, 2 horas más).  Tenía que caminar uno 20-25 minutos hasta la estación de tren, luego 1 hora en tren y por último 35-40 minutos nuevamente a pié hasta la oficina. No habían autobuses directos, tampoco yo ganaba tanto dinero para viajar así a diario.<br>
+          ¿Qué es esta cosa rara aquí en el cuadro? emm es un... "proyecto" el cual fue avanzando en mi tiempo de viaje hacia el trabajo. Para ser más específico, en aquél entonces me tomaba 2 horas viajar desde casa hasta allí (y volver, 2 horas más).  Tenía que caminar uno 20-25 minutos hasta la estación de tren, luego 1 hora en tren y por último 35-40 minutos nuevamente a pié hasta la oficina. No habían autobuses directos, tampoco yo ganaba tanto dinero para viajar así a diario.<br>
           En aquel trabajo programábamos con cosas antiguas, por eso me gustaba leer sobre nuevas tecnologías. Siempre pensando en conseguir un mejor trabajo. Una de esas cosas que leí fue HTML5, el cual en la facultad nunca hicieron referencia. Y pensé que hacer un juego (o algo así) me ayudaría a practicarlo.<br>
           Traté de ser ordenado, pero era complicado, ya que no tenía red móvil ni un buen editor. Todo esto lo iba escribiendo desde un BlackBerry, no recuerdo exáctamente, pero similar al Q10.<br>
           Esas 2 horas diarias en tren y ese teclado QWERTY me ayudaban a avanzar en mi carrera laboral y me alejaban de lo tedioso del viaje.<br>
@@ -45,7 +45,7 @@
 
         </span>
         <span id="story-eng" class="selected">
-          What is this weird thing here in the frame? emm is a "project" which was progressing in my travel time to work. To be more specific, back then it took me 2 hours to travel from home to there (and back, 2 more hours). I had to walk 20-25 minutes to the train station, then 1 hour by train and finally 35-40 minutes on foot to the office again. There were no direct buses, nor did I earn as much money to travel like this on a daily basis.<br>
+          What is this weird thing here in the frame? emm is a... "project" which was progressing in my travel time to work. To be more specific, back then it took me 2 hours to travel from home to there (and back, 2 more hours). I had to walk 20-25 minutes to the train station, then 1 hour by train and finally 35-40 minutes on foot to the office again. There were no direct buses, nor did I earn as much money to travel like this on a daily basis.<br>
           In that work we coded with old things, that's why I liked to read about new technologies. Always thinking of getting a better job. One of those things I read was HTML5, which was never referenced in college. And I thought that making a game (or something like that) would help me practice it.<br>
           I tried to be neat, but it was complicated since I didn't have a mobile network or a good editor. I was writing all this from a BlackBerry, I don't remember exactly, but similar to the Q10.<br>
           Those 2 hours a day by train and that QWERTY keyboard helped me advance my career and took me away from the tedium of the trip.<br>
@@ -63,7 +63,10 @@
         </span>
       </div>
     </section>
-    </body>
+    <div class="lang">
+      <button id="button-eng" class="selected">ENG</button>
+      <button id="button-esp">ESP</button>
+    </div>
     <script src="js/menu.js"></script> 
     <script src="js/dialog.js"></script> 
     <script src="js/charasprite.js"></script>
