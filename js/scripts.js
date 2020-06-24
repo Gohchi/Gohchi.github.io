@@ -19,7 +19,7 @@ window.onload = function(){
 
 
 function openWin( name ){
-  window.open( name);
+  window.open( name );
 }
 
 function addProjectEvents( projects ){
