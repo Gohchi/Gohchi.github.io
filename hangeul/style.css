@@ -25,6 +25,16 @@ fieldset {
 #mobile-options {
   display: none;
 }
+
+#mobile-more-options {
+  display: none;
+  position: fixed;
+  bottom: 8vh;
+  left: 0;
+  width: 100%;
+  height: 8vh;
+}
+
 /* mobile */
 
 
@@ -40,14 +50,6 @@ fieldset {
 
   #hangeul {
     font-size: 12vw;
-  }
-  #mobile-more-options {
-    display: none;
-    position: fixed;
-    bottom: 8vh;
-    left: 0;
-    width: 100%;
-    height: 8vh;
   }
   #mobile-options {
     display: flex;
