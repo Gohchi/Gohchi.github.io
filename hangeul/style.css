@@ -1,0 +1,121 @@
+#content {
+  text-align: center;
+  padding-top: 10%;
+}
+#number {
+  font-size: 25em;
+  display: inline-block;
+}
+#hangeul {
+  font-size: 48px;
+}
+#options {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+}
+#options select {
+  font-size: 28px;
+}
+fieldset {
+  display: grid;
+}
+
+
+#mobile-options {
+  display: none;
+}
+/* mobile */
+
+
+@media (max-width: 900px) {
+
+  #options {
+    display: none;
+  }
+
+  #number{
+    font-size: 40vw;
+  }
+
+  #hangeul {
+    font-size: 12vw;
+  }
+  #mobile-more-options {
+    display: none;
+    position: fixed;
+    bottom: 8vh;
+    left: 0;
+    width: 100%;
+    height: 8vh;
+  }
+  #mobile-options {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8vh;
+  }
+  .bnav .tiny {
+    flex: 1
+  }
+  .bnav .small {
+    flex: 2
+  }
+  .bnav .big {
+    flex: 3
+  }
+
+  .bnav button {
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .bnav button.action1:hover {
+    background: rgba(0,0,0,0.15);
+  }
+
+  .bnav button.action1:active {
+    background: rgba(0,0,0,0.3);
+    top: 2px;
+  }
+
+  .bnav button.action0 {
+    background: #db3434;
+  }
+  .bnav button.action0:hover {
+    background: #e45757;
+  }
+  .bnav button.action0:active {
+    background: #9d1111;
+  }
+  .bnav button.action1 {
+    background: #3498db;
+  }
+  .bnav button.action1:hover {
+    background: #5eb5f0;
+  }
+  .bnav button.action1:active {
+    background: #146093;
+  }
+  .bnav button.action2 {
+    background: #34db85;
+  }
+  .bnav button.action2:hover {
+    background: #61fdac;
+  }
+  .bnav button.action2:active {
+    background: #209659;
+  }
+  .bnav button.action3 {
+    background: #df8a1b;
+  }
+  .bnav button.action3:hover {
+    background: #f8ad4b;
+  }
+  .bnav button.action3:active {
+    background: #ab6811;
+  }
+}
