@@ -27,8 +27,8 @@
         <option value=".5">.5</option>
         <option value=".2">.2</option>
       </select>
-      <label for="type"> Number type </label>
-      <select id="type">
+      <label for="number-type"> Number type </label>
+      <select id="number-type">
         <option value="0">하나</option>
         <option value="1" selected>일</option>
       </select>
@@ -43,6 +43,10 @@
   </div>
 
   <div id="mobile-more-options" class="bnav">
+    <select id="mobile-practice-type" class="small">
+      <option value="0">Practice: numbers</option>
+      <option value="1">Practice: vocabulary</option>
+    </select>
     <select id="mobile-voice" class="small">
       <option value="0">Voice type A</option>
       <option value="1" selected>Voice type B</option>
@@ -52,7 +56,7 @@
       <option value=".5">Voice rate: .5</option>
       <option value=".2">Voice rate: .2</option>
     </select>
-    <select id="mobile-type" class="small">
+    <select id="mobile-number-type" class="small">
       <option value="0">Number type: 하나</option>
       <option value="1" selected>Number type: 일</option>
     </select>
@@ -63,9 +67,50 @@
     <button class="action2 small" onclick="showDetails()">Show details</button>
     <button class="action3 big" onclick="getRandomNumber()">Next number</button>
   </div>
+  <div id="mobile-info-contentainer" class="hidden">
+    <div class="content">
+      <p>
+        <h1>
+          Welcome to my <b>mini korean trainer app</b>.
+        </h1>
+      </p>
+      <h3>Instructions</h3>
+      <p>
+        <h5>Numbers</h5>
+        <ul>
+          <li>Press <b>NEXT NUMBER</b> to get a random number based on the number type.</li>
+          <li>Press <b>SHOW DETAILS</b> to show the number's name in hangeul.</li>
+          <li>Press <b>PRONUNCIATION</b> to hear the pronunciation.</li>
+        </ul>
+        <h5>More options</h5>
+        <span>Press <b>MORE</b> button to show the advanced menu. On this menu you can change the following options.</span>
+        <ul>
+          <li>Practice type: You can change between <b>numbers</b> and <b>vocabulary</b>*.</li>
+          <li>Voice type (experimental): You can change between two types of synthesized voices.</li>
+          <li>Voice rate: You can change the voice speed.</li>
+          <li>Number type: You can change the number type between <b>Native Korean</b><sup>(1)</sup> and <b>Sino-Korean</b><sup>(2)</sup>.</li>
+        </ul>
+        <p>* not implemented yet.</p>
+        <p><sup>(1)</sup> the numbers shown are from 1-12</p>
+        <p><sup>(2)</sup> the numbers shown are from 1-9999</p>
+      </p>
+      <h3>Notes</h3>
+      <fieldset>
+        <legend>2020-07-04</legend>
+        <span>
+          I started practicing the Korean language 6 weeks ago. It was difficult for me to memorize the numbers, so I started to create a simple application to get random numbers.
+          The first thing I noticed was that I had to search my notes every time I forgot the name of a number. <br />
+          So I thought, if I take the number that's already on the screen and use a dictionary with the names, I could create the full name.<br />
+          Later I realized that sometimes I forgot the pronunciation. It was then that I found the tool to synthesize the voice.
+        </span>
+      </fieldset>
+    </div>
+  </div>
+  <div id="mobile-info" onclick="toggle('info-contentainer')">|||</div>
   <div id="content">
     <div id="number"> - </div>
-    <div id="hangeul"></div>
+    <div id="hangeul" onclick="toggleSyllables()"></div>
+    <div id="mobile-hangeulSyllables"></div>
   </div>
 </body>
 </html>
