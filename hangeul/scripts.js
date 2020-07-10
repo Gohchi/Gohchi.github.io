@@ -200,30 +200,55 @@ function toggleSyllables(){
   })
 }
 
-let callRef;
+// let callRef;
 function editNumber( el ){
-  const className = 'clicked';
-  if (!el.classList.contains(className)) {
-    el.classList.add(className);
+  const title = 'Edit number: ' + (getNumberType() == 'A' ? ' (1-12)' : '(1-9999)');
+  const modal = get('modal');
+  modal.querySelector('label').innerText = title;
+  toggle(modal);
+  const input = modal.querySelector('input');
+  input.value = el.innerText;
+  input.min = 1;
+  input.max = getNumberType() == 'A' ? 12 : 9999;
+  input.focus();
+
+  // const className = 'clicked';
+  // if (!el.classList.contains(className)) {
+  //   el.classList.add(className);
+  // }
+  // if (callRef) {
+  //   callRef = null;
+  //   const newNumber = prompt(title, el.innerText);
+  //   if(
+  //     newNumber                                                    // is not falsey
+  //     && !isNaN(newNumber)                                         // is a number
+  //     && (
+  //       (getNumberType() == 'A' && parseInt(newNumber) <= 12)      // Type A has a limit of 12
+  //       || (getNumberType() == 'B' && parseInt(newNumber) <= 9999) // Type B has a limit of 9999
+  //     )
+  //   ) {
+  //     clearDetails();
+  //     el.innerText = parseInt(newNumber);
+  //   }
+  //   return;
+  // }
+  // callRef = setTimeout(() => {
+  //   el.classList.remove(className);
+  //   callRef = null;
+  // }, 200);
+}
+
+function acceptNumber(){
+  const modal = get('modal');
+  const number = modal.querySelector('input').value;
+  if (
+    !isNaN(number)
+    && (
+      (getNumberType() == 'A' && parseInt(number) <= 12)      // Type A has a limit of 12
+      || (getNumberType() == 'B' && parseInt(number) <= 9999) // Type B has a limit of 9999
+    )
+  ) {
+    document.querySelector('#number').innerText = parseInt(number);
+    toggle(modal);
   }
-  if (callRef) {
-    callRef = null;
-    const newNumber = prompt('Edit number: ' + (getNumberType() == 'A' ? ' (1-12)' : '(1-9999)'), el.innerText);
-    if(
-      newNumber                                                    // is not falsey
-      && !isNaN(newNumber)                                         // is a number
-      && (
-        (getNumberType() == 'A' && parseInt(newNumber) <= 12)      // Type A has a limit of 12
-        || (getNumberType() == 'B' && parseInt(newNumber) <= 9999) // Type B has a limit of 9999
-      )
-    ) {
-      clearDetails();
-      el.innerText = parseInt(newNumber);
-    }
-    return;
-  }
-  callRef = setTimeout(() => {
-    el.classList.remove(className);
-    callRef = null;
-  }, 200);
 }

@@ -114,7 +114,18 @@
   </div>
   <div id="mobile-info" onclick="toggle('info-contentainer')">|||</div>
   <div id="content">
-    <div id="number" onclick="editNumber(this)"></div>
+    <div id="mobile-modal" class="modal hidden" onclick="toggle(this);">
+      <div class="modal-body" onclick="event.stopPropagation();">
+        <div class="modal-content">
+          <label>Edit number:</label>
+          <input type="number" class="number" />
+        </div>
+        <div class="modal-footer">
+          <label class="button" onclick="acceptNumber();">OK</label>
+        </div>
+      </div>
+    </div>
+    <div id="number" onclick="editNumber(this)">1</div>
     <div id="hangeul" onclick="toggleSyllables()"></div>
     <div id="mobile-hangeulSyllables"></div>
   </div>
