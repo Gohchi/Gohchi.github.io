@@ -95,17 +95,18 @@ function getNumberType(){
 
 function numberToText(num){
   if(isNaN(num)) return '';
-  
+
   if(getNumberType() == 'A')
     return numbersA[num];
 
-  debugger;
   const textNumber = num.toString().split('');
   let name = [];
   for(let i = textNumber.length - 1; i >= 0; i--){
     const n = textNumber[i];
     if(i < textNumber.length - 1){
-      name.unshift(numbersB['1' + '0'.repeat(textNumber.length - 1 - i)]);
+      if(n != '0'){
+        name.unshift(numbersB['1' + '0'.repeat(textNumber.length - 1 - i)]);
+      }
       if(n != '0' && n != '1'){
         name.unshift(numbersB[n]);
       }
@@ -159,6 +160,10 @@ function toggle( el ){
     el.classList.add("hidden");
   }
 }
+function clearDetails(){
+  set('hangeul', '');
+  get('hangeulSyllables').textContent = '';
+}
 // bottom actions --------------------------------------------------------------------------------
 
 function showMore(){
@@ -179,8 +184,7 @@ function showDetails(){
 
 function getRandomNumber(){
   set('number', randNum());
-  set('hangeul', '');
-  get('hangeulSyllables').textContent = '';
+  clearDetails();
 }
 
 // more actions --------------------------------------------------------------------------------
@@ -194,4 +198,32 @@ function toggleSyllables(){
     child.onclick = () => say(syllable);
     container.appendChild(child);
   })
+}
+
+let callRef;
+function editNumber( el ){
+  const className = 'clicked';
+  if (!el.classList.contains(className)) {
+    el.classList.add(className);
+  }
+  if (callRef) {
+    callRef = null;
+    const newNumber = prompt('Edit number: ' + (getNumberType() == 'A' ? ' (1-12)' : '(1-9999)'), el.innerText);
+    if(
+      newNumber                                                    // is not falsey
+      && !isNaN(newNumber)                                         // is a number
+      && (
+        (getNumberType() == 'A' && parseInt(newNumber) <= 12)      // Type A has a limit of 12
+        || (getNumberType() == 'B' && parseInt(newNumber) <= 9999) // Type B has a limit of 9999
+      )
+    ) {
+      clearDetails();
+      el.innerText = parseInt(newNumber);
+    }
+    return;
+  }
+  callRef = setTimeout(() => {
+    el.classList.remove(className);
+    callRef = null;
+  }, 200);
 }

@@ -49,10 +49,13 @@ fieldset {
     display: none;
   }
 
-  #number{
+  #number {
     font-size: 40vw;
     display: block;
     background: #df8a1b;
+  }
+  #number.clicked {
+    background: #d8af79;
   }
 
   #hangeul {
