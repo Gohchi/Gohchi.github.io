@@ -200,9 +200,8 @@ function toggleSyllables(){
   })
 }
 
-// let callRef;
 function editNumber( el ){
-  const title = 'Edit number: ' + (getNumberType() == 'A' ? ' (1-12)' : '(1-9999)');
+  const title = 'Edit number:\n' + (getNumberType() == 'A' ? ' (1-12)' : '(1-9999)');
   const modal = get('modal');
   modal.querySelector('label').innerText = title;
   toggle(modal);
@@ -211,31 +210,6 @@ function editNumber( el ){
   input.min = 1;
   input.max = getNumberType() == 'A' ? 12 : 9999;
   input.focus();
-
-  // const className = 'clicked';
-  // if (!el.classList.contains(className)) {
-  //   el.classList.add(className);
-  // }
-  // if (callRef) {
-  //   callRef = null;
-  //   const newNumber = prompt(title, el.innerText);
-  //   if(
-  //     newNumber                                                    // is not falsey
-  //     && !isNaN(newNumber)                                         // is a number
-  //     && (
-  //       (getNumberType() == 'A' && parseInt(newNumber) <= 12)      // Type A has a limit of 12
-  //       || (getNumberType() == 'B' && parseInt(newNumber) <= 9999) // Type B has a limit of 9999
-  //     )
-  //   ) {
-  //     clearDetails();
-  //     el.innerText = parseInt(newNumber);
-  //   }
-  //   return;
-  // }
-  // callRef = setTimeout(() => {
-  //   el.classList.remove(className);
-  //   callRef = null;
-  // }, 200);
 }
 
 function acceptNumber(){
@@ -249,6 +223,7 @@ function acceptNumber(){
     )
   ) {
     document.querySelector('#number').innerText = parseInt(number);
+    clearDetails();
     toggle(modal);
   }
 }
