@@ -94,9 +94,12 @@ function getNumberType(){
 }
 
 function numberToText(num){
+  if(isNaN(num)) return '';
+  
   if(getNumberType() == 'A')
     return numbersA[num];
 
+  debugger;
   const textNumber = num.toString().split('');
   let name = [];
   for(let i = textNumber.length - 1; i >= 0; i--){
@@ -183,7 +186,6 @@ function getRandomNumber(){
 // more actions --------------------------------------------------------------------------------
 
 function toggleSyllables(){
-  console.log('toggleSyllables');
   let container = get('hangeulSyllables');
   container.textContent = '';
   getNumberAsHangeul().split('').forEach(syllable => {
