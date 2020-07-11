@@ -206,7 +206,7 @@ label[for="menuinfo"] {
 @media (max-width: 500px) {
 
   #number {
-    font-size: 46vw;
+    font-size: 42vw;
   }
   #number.clicked {
     background: #d8af79;
