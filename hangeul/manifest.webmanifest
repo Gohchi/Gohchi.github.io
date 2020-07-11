@@ -1,0 +1,15 @@
+{
+  "background_color": "white",
+  "description": "A simple app to practice Hangeul.",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "name": "Practice Hangeul",
+  "short_name": "Hangeul",
+  "start_url": "/index.html"
+}
