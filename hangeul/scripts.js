@@ -225,7 +225,7 @@ function editNumber( el ){
 }
 
 function acceptNumber(){
-  const modal = getResponsive('modal');
+  const modal = get('modal');
   const number = modal.querySelector('input').value;
   if (
     !isNaN(number)
