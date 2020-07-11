@@ -3,7 +3,7 @@ self.addEventListener('install', function(e) {
     caches.open('hangeul-store').then(function(cache) {
       return cache.addAll([
         '/hangeul/',
-        '/hangeul/index.htm',
+        '/hangeul/index.html',
         '/hangeul/scripts.js',
         '/hangeul/style.css'
       ]);
