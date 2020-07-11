@@ -14,19 +14,11 @@ body {
   font-size: 18vh;
   background: #61fdac;
 }
-#options {
-  position: fixed;
-  left: 10px;
-  top: 10px;
-}
-#options select {
-  font-size: 28px;
-}
 fieldset {
   display: grid;
 }
 
-#mobile-options {
+#options {
   display: flex;
   position: fixed;
   bottom: 0;
@@ -144,15 +136,9 @@ fieldset {
   border-left: 1px solid #c2c2c2;
   border-right: 1px solid #c2c2c2;
 }
-#mobile-practice-type {
+#practice-type {
   padding: 6px;
 }
-/* label[for="menuinfo"] {
-  display: none;
-}
-#mobile-info-contentainer {
-  display: none;
-} */
 
 label[for="menuinfo"] {
   display: block;
@@ -177,14 +163,14 @@ label[for="menuinfo"] {
   color: white;
 }
 
-#mobile-info-contentainer {
+#info-contentainer {
   display: block;
   position: absolute;
   height: 100%;
   width: 100%;
 }
 
-#mobile-info-contentainer div.content {
+#info-contentainer div.content {
   font-family: monospace;
   overflow: auto;
   position: relative;
@@ -196,7 +182,7 @@ label[for="menuinfo"] {
   filter: drop-shadow(2px 4px 6px black);
 }
 
-#mobile-info-contentainer.hidden {
+#info-contentainer.hidden {
   display: none;
 }
 
@@ -218,10 +204,6 @@ label[for="menuinfo"] {
 
 
 @media (max-width: 500px) {
-
-  #options {
-    display: none;
-  }
 
   #number {
     font-size: 46vw;
@@ -246,7 +228,6 @@ label[for="menuinfo"] {
     transform: translateY(-27vw);
   }
 }
-
 
 /* modal */
 

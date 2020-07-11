@@ -155,17 +155,10 @@ function hide( el ){
 }
 
 function show( el ){
-  if(typeof el === 'string'){
-    el = getResponsive(el);
-  }
   el.classList.remove("hidden");
 }
 
 function toggle( el ){
-  if(typeof el === 'string'){
-    el = getResponsive(el);
-  }
-  
   if(el.classList.contains("hidden")){
     el.classList.remove("hidden");
   } else {

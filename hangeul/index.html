@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="manifest.webmanifest">
-  <title>Hangeul numbers</title>
+  <title>Practice Hangeul</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="style.css">
   <script charset="utf-8" src="scripts.js"></script>
@@ -25,7 +25,7 @@
       <option value="1" selected>Number type: 일</option>
     </select>
   </div>
-  <div id="mobile-options" class="bnav">
+  <div id="options" class="bnav">
     <button class="action0 tiny" onclick="showMore()">More</button>
     <button class="action1 small" onclick="sayMyName()">Pronunciation</button>
     <button class="action2 small" onclick="showDetails()">Show details</button>
@@ -35,14 +35,14 @@
   <input type="checkbox" id="menumodecontrol" hidden />
   <div id="menumode" class="menu">
     <div>Practice</div>
-    <select id="mobile-practice-type">
+    <select id="practice-type">
       <option value="0">numbers</option>
       <option value="1">vocabulary</option>
     </select>
     <label class="tab" for="menumodecontrol">|||</label>
   </div>
   <input type="checkbox" id="menuinfo" hidden />
-  <div id="mobile-info-contentainer" class="hidden">
+  <div id="info-contentainer" class="hidden">
     <div class="content">
       <p>
         <h1>
@@ -88,7 +88,6 @@
     </div>
   </div>
   <label for="menuinfo" class="menu">INFO</label>
-  <!-- <div id="mobile-info" class="menu" onclick="toggle('info-contentainer')">|||</div> -->
   <div id="content">
     <div id="modal" class="modal hidden" onclick="toggle(this);">
       <div class="modal-body" onclick="event.stopPropagation();">
