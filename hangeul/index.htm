@@ -43,10 +43,6 @@
   </div>
 
   <div id="mobile-more-options" class="bnav">
-    <select id="mobile-practice-type" class="small">
-      <option value="0">Practice: numbers</option>
-      <option value="1">Practice: vocabulary</option>
-    </select>
     <select id="mobile-voice" class="small">
       <option value="0">Voice type A</option>
       <option value="1" selected>Voice type B</option>
@@ -67,6 +63,23 @@
     <button class="action2 small" onclick="showDetails()">Show details</button>
     <button class="action3 big" onclick="getRandomNumber()">Next number</button>
   </div>
+  
+  <!-- <div id="mobile-mode" class="menu">
+    <select id="mobile-practice-type">
+      <option value="0">Practice: numbers</option>
+      <option value="1">Practice: vocabulary</option>
+    </select>
+  </div> -->
+  <input type="checkbox" id="menumodecontrol" hidden />
+  <div id="menumode" class="menu">
+    <div>Practice</div>
+    <select id="mobile-practice-type">
+      <option value="0">numbers</option>
+      <option value="1">vocabulary</option>
+    </select>
+    <label class="tab" for="menumodecontrol">|||</label>
+  </div>
+  <input type="checkbox" id="menuinfo" hidden />
   <div id="mobile-info-contentainer" class="hidden">
     <div class="content">
       <p>
@@ -112,7 +125,8 @@
       </fieldset>
     </div>
   </div>
-  <div id="mobile-info" onclick="toggle('info-contentainer')">|||</div>
+  <label for="menuinfo" class="menu">|||</label>
+  <!-- <div id="mobile-info" class="menu" onclick="toggle('info-contentainer')">|||</div> -->
   <div id="content">
     <div id="mobile-modal" class="modal hidden" onclick="toggle(this);">
       <div class="modal-body" onclick="event.stopPropagation();">

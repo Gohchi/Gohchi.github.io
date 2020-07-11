@@ -146,9 +146,8 @@ fieldset {
   background: #5eb5f0;
 }
 
-#mobile-info {
+.menu {
   border: 1px solid #c2c2c2;
-  width: 8vw;
   text-align: center;
   font-size: 5vw;
   font-family: monospace;
@@ -157,8 +156,6 @@ fieldset {
   background: #f4eeee;
   
   position: absolute;
-  right: 0;
-  top: 0;
 
   /* unselectable */
   user-select: none;
@@ -166,6 +163,10 @@ fieldset {
   -khtml-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
+}
+#mobile-info {
+  right: 0;
+  top: 0;
 }
 
 #mobile-info:active {
@@ -244,4 +245,38 @@ input.number {
   padding: 10px;
   margin: 20px 0;
   font-size: 32px;
+}
+
+#menumode {
+  left: 0;
+  top: 0;
+  transform: translateY(-78px);
+  transition-duration: 1s;
+}
+#menumodecontrol:checked + div {
+  transform: translateY(0);
+}
+
+#menumode .tab {
+  display: block;
+  position: absolute;
+  margin-top: 10px;
+  background: #f4eeee;
+  padding: 8px 20px 10px;
+  border-radius: 0 0 15px 15px;
+  border-bottom: 1px solid #c2c2c2;
+  border-left: 1px solid #c2c2c2;
+  border-right: 1px solid #c2c2c2;
+}
+
+
+#menuinfo:checked + div {
+  display: block;
+}
+#menuinfo + div {
+  display: none;
+}
+#menuinfo + div + label {
+  right: 0;
+  top: 0;
 }
