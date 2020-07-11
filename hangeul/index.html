@@ -10,51 +10,17 @@
   <script charset="utf-8" src="scripts.js"></script>
 </head>
 <body>
-  <div id="options">
-    <div id="info">
-      <p>Press ENTER to get a random number (하나 1-12 | 일 1-9999)</p>
-      <p>Press S to get the Hangeul name</p>
-      <p>Press D to get hear the pronunciation</p>
-    </div>
-    <fieldset>
-      <legend>options</legend>
-      <label for="voice"> Voice type </label>
-      <select id="voice">
-        <option value="0">A</option>
-        <option value="1" selected>B</option>
-      </select>
-      <label for="rate"> Voice rate </label>
-      <select id="rate">
-        <option value="1">1</option>
-        <option value=".5">.5</option>
-        <option value=".2">.2</option>
-      </select>
-      <label for="number-type"> Number type </label>
-      <select id="number-type">
-        <option value="0">하나</option>
-        <option value="1" selected>일</option>
-      </select>
-    </fieldset>
-    
-    <fieldset>
-      <legend>actions</legend>
-      <button onclick="getRandomNumber()">NEXT NUMBER</button>
-      <button onclick="showDetails()">SHOW DETAILS</button>
-      <button onclick="sayMyName()">PRONUNCIATION</button>
-    </fieldset>
-  </div>
-
-  <div id="mobile-more-options" class="bnav">
-    <select id="mobile-voice" class="small">
+  <div id="more-options" class="bnav">
+    <select id="voice" class="small">
       <option value="0">Voice type A</option>
       <option value="1" selected>Voice type B</option>
     </select>
-    <select id="mobile-rate" class="small">
+    <select id="rate" class="small">
       <option value="1">Voice rate: 1</option>
       <option value=".5">Voice rate: .5</option>
       <option value=".2">Voice rate: .2</option>
     </select>
-    <select id="mobile-number-type" class="small">
+    <select id="number-type" class="small">
       <option value="0">Number type: 하나</option>
       <option value="1" selected>Number type: 일</option>
     </select>
@@ -124,7 +90,7 @@
   <label for="menuinfo" class="menu">|||</label>
   <!-- <div id="mobile-info" class="menu" onclick="toggle('info-contentainer')">|||</div> -->
   <div id="content">
-    <div id="mobile-modal" class="modal hidden" onclick="toggle(this);">
+    <div id="modal" class="modal hidden" onclick="toggle(this);">
       <div class="modal-body" onclick="event.stopPropagation();">
         <div class="modal-content">
           <label>Edit number:</label>
@@ -137,7 +103,7 @@
     </div>
     <div id="number" onclick="editNumber(this)">1</div>
     <div id="hangeul" onclick="toggleSyllables()"></div>
-    <div id="mobile-hangeulSyllables"></div>
+    <div id="hangeulSyllables"></div>
   </div>
 </body>
 </html>

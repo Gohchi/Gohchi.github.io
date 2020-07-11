@@ -57,6 +57,9 @@ function loadVoices(){
 // tools --------------------------------------------------------------------------------
 
 function get(id){
+  return document.getElementById(id);
+}
+function getResponsive(id){
   if(isMobile()) id = 'mobile-' + id;
   return document.getElementById(id);
 }
@@ -153,14 +156,14 @@ function hide( el ){
 
 function show( el ){
   if(typeof el === 'string'){
-    el = get(el);
+    el = getResponsive(el);
   }
   el.classList.remove("hidden");
 }
 
 function toggle( el ){
   if(typeof el === 'string'){
-    el = get(el);
+    el = getResponsive(el);
   }
   
   if(el.classList.contains("hidden")){
@@ -222,7 +225,7 @@ function editNumber( el ){
 }
 
 function acceptNumber(){
-  const modal = get('modal');
+  const modal = getResponsive('modal');
   const number = modal.querySelector('input').value;
   if (
     !isNaN(number)
