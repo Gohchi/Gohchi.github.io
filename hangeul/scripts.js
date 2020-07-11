@@ -2,7 +2,9 @@
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
            .register('/hangeul/sw.js')
-           .then(function() { console.log('Service Worker Registered'); });
+           .then(function() {
+            // console.log('Service Worker Registered');
+           });
 }
 
 document.addEventListener("keydown", keyDownTextField, false);

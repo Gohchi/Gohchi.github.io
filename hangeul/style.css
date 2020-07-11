@@ -40,6 +40,17 @@ fieldset {
   height: 8vh;
 }
 
+#menumode {
+  display: none;
+}
+#menuinfo {
+  display: none;
+}
+#mobile-info-contentainer {
+  display: none;
+}
+
+
 /* mobile */
 
 
@@ -130,70 +141,110 @@ fieldset {
   .bnav button.action3:active {
     background: #ab6811;
   }
-}
 
-#mobile-hangeulSyllables {
-  display: flex;
-  left: 0;
-  width: 100%;
-  height: 8vh;
-}
-
-#mobile-hangeulSyllables button {
-  flex: 1;
-  font-size: 7vw;
-  border: 1px ridge;
-  background: #5eb5f0;
-}
-
-.menu {
-  border: 1px solid #c2c2c2;
-  text-align: center;
-  font-size: 5vw;
-  font-family: monospace;
-  font-weight: bold;
-  padding: 10px;
-  background: #f4eeee;
   
-  position: absolute;
+  #menumode {
+    display: block;
+    left: 0;
+    top: 0;
+    transform: translateY(-74px);
+    transition-duration: .2s;
+  }
+  #menumodecontrol:checked + div {
+    transform: translateY(0);
+  }
 
-  /* unselectable */
-  user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
-}
-#mobile-info {
-  right: 0;
-  top: 0;
-}
+  #menumode .tab {
+    display: block;
+    position: absolute;
+    margin-top: 10px;
+    background: #f4eeee;
+    padding: 8px 20px 10px;
+    border-radius: 0 0 15px 15px;
+    border-bottom: 1px solid #c2c2c2;
+    border-left: 1px solid #c2c2c2;
+    border-right: 1px solid #c2c2c2;
+  }
+  #mobile-practice-type {
+    padding: 6px;
+  }
 
-#mobile-info:active {
-  background: gray;
-  color: white;
-}
+  #menuinfo:checked + div {
+    display: block;
+  }
+  #menuinfo + div {
+    display: none;
+  }
+  #menuinfo + div + label {
+    right: 0;
+    top: 0;
+  }
 
-#mobile-info-contentainer {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
-
-#mobile-info-contentainer div.content {
-  font-family: monospace;
-  overflow: auto;
-  position: relative;
-  margin: 10px;
-  padding: 0 20px;
-  height: calc(100% - 22px);
-  border: 1px solid #c2c2c2;
-  background: #ddddddb5;
-  filter: drop-shadow(2px 4px 6px black);
-}
-
-#mobile-info-contentainer.hidden {
-  display: none;
+  #mobile-hangeulSyllables {
+    display: flex;
+    left: 0;
+    width: 100%;
+    height: 8vh;
+  }
+  
+  #mobile-hangeulSyllables button {
+    flex: 1;
+    font-size: 7vw;
+    border: 1px ridge;
+    background: #5eb5f0;
+  }
+  
+  .menu {
+    border: 1px solid #c2c2c2;
+    text-align: center;
+    font-size: 5vw;
+    font-family: monospace;
+    font-weight: bold;
+    padding: 10px;
+    background: #f4eeee;
+    
+    position: absolute;
+  
+    /* unselectable */
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+  }
+  #mobile-info {
+    right: 0;
+    top: 0;
+  }
+  
+  #mobile-info:active {
+    background: gray;
+    color: white;
+  }
+  
+  #mobile-info-contentainer {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  
+  #mobile-info-contentainer div.content {
+    font-family: monospace;
+    overflow: auto;
+    position: relative;
+    margin: 10px;
+    padding: 0 20px;
+    height: calc(100% - 22px);
+    border: 1px solid #c2c2c2;
+    background: #ddddddb5;
+    filter: drop-shadow(2px 4px 6px black);
+  }
+  
+  #mobile-info-contentainer.hidden {
+    display: none;
+  }
+  
 }
 
 
@@ -245,40 +296,4 @@ input.number {
   padding: 10px;
   margin: 20px 0;
   font-size: 32px;
-}
-
-#menumode {
-  left: 0;
-  top: 0;
-  transform: translateY(-85px);
-  transition-duration: 1s;
-}
-#menumodecontrol:checked + div {
-  transform: translateY(0);
-}
-
-#menumode .tab {
-  display: block;
-  position: absolute;
-  margin-top: 10px;
-  background: #f4eeee;
-  padding: 8px 20px 10px;
-  border-radius: 0 0 15px 15px;
-  border-bottom: 1px solid #c2c2c2;
-  border-left: 1px solid #c2c2c2;
-  border-right: 1px solid #c2c2c2;
-}
-#mobile-practice-type {
-  padding: 6px;
-}
-
-#menuinfo:checked + div {
-  display: block;
-}
-#menuinfo + div {
-  display: none;
-}
-#menuinfo + div + label {
-  right: 0;
-  top: 0;
 }
