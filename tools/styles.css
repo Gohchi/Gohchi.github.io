@@ -1,0 +1,51 @@
+body, input, select, button {
+  font-family: Verdana;
+
+  /*dark*/    
+  background-color: rgb(0 0 0 / 80%);
+  color: #d6d6d6;
+  text-shadow: 1px 1px 2px black, 0 0 2px black, 0 0 0.2em black;
+}
+canvas {
+  background-color: gray;
+  margin: 5px;
+}
+.separator {
+  display: inline;
+  border-left: 2px solid black;
+  margin: 0 10px;
+}
+.file-uploader {
+  cursor: pointer;
+  background-color: black;
+  padding: 5px 15px;
+}
+.file-uploader:active, button:active {
+  color: rgb(233, 233, 233);
+}
+.file-uploader:hover, button:hover {
+  background-color: rgb(36, 36, 36);
+}
+fieldset {
+  border-color: #141111;
+}
+fieldset legend {
+  color: #c97f1c;
+}
+button {
+  background-color: black;
+  padding: 5px 15px;
+  border: 0;
+  font-size: 16px;
+}
+button:disabled {
+  background-color: rgb(83, 83, 83);
+  color: rgb(165, 163, 163);
+  text-shadow: none;
+}
+select, input[type="number"] {
+  padding: 5px;
+}
+input[type="file"] {
+  display: none;
+}

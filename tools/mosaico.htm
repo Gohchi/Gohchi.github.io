@@ -4,59 +4,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> <!-- release -->
 
-    <style>
-      body, input, select, button {
-        font-family: Verdana;
-
-        /*dark*/    
-        background-color: rgb(0 0 0 / 80%);
-        color: #d6d6d6;
-        text-shadow: 1px 1px 2px black, 0 0 2px black, 0 0 0.2em black;
-      }
-      canvas {
-        background-color: gray;
-        margin: 5px;
-      }
-      .separator {
-        display: inline;
-        border-left: 2px solid black;
-        margin: 0 10px;
-      }
-      .file-uploader {
-        cursor: pointer;
-        background-color: black;
-        padding: 5px 15px;
-      }
-      .file-uploader:active, button:active {
-        color: rgb(233, 233, 233);
-      }
-      .file-uploader:hover, button:hover {
-        background-color: rgb(36, 36, 36);
-      }
-      fieldset {
-        border-color: #141111;
-      }
-      fieldset legend {
-        color: #c97f1c;
-      }
-      button {
-        background-color: black;
-        padding: 5px 15px;
-        border: 0;
-        font-size: 16px;
-      }
-      button:disabled {
-        background-color: rgb(83, 83, 83);
-        color: rgb(165, 163, 163);
-        text-shadow: none;
-      }
-      select, input[type="number"] {
-        padding: 5px;
-      }
-      input[type="file"] {
-        display: none;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div id="app">
@@ -96,6 +44,7 @@
       </fieldset>
       <fieldset>
         <legend>Acciones</legend>
+        <button v-on:click="clear">Limpiar</button>
         <button v-bind:disabled="!ready" v-on:click="refresh">Actualizar</button>
         <button @click="saveCanvas" disabled title="save using right click">Download</button>
         <label class="file-uploader">
@@ -110,100 +59,6 @@
         v-bind:style="showBorder ? styleCanvas : null"
       ></canvas>
     </div>
-    <script>
-
-      var app = new Vue({
-        el: '#app',
-        data: {
-          type: {
-            CUSTOM: { height: 248, width: 350 },
-            A4: { height: 2480, width: 3508 },
-            A3: { height: 4961, width: 3605 },
-          },
-          orientation: 'h',
-          customHeight: 248,
-          customWidth: 350,
-          // size: null,
-          message: 'Seleccione un tipo de hoja y cargue una imagen para armar el mosaico.',
-          ready: false,
-          showBorder: true,
-          internalSize: null,
-          sizeName: 'CUSTOM'
-        },
-        created: function () {
-          this.size = this.type.CUSTOM;
-          // this.size = this.type.A4;
-        },
-        computed: {
-          size: {
-            get: function(){
-              return this.internalSize
-                ? this.orientation == 'h' ? { width: this.internalSize.width, height: this.internalSize.height }
-                  : this.orientation == 'v' ? { width: this.internalSize.height, height: this.internalSize.width }
-                    : null
-                : null;
-            },
-            set: function(value) {
-              this.internalSize = value;
-            }
-          },
-          styleCanvas: function () {
-            return {
-              border: '2px dashed black'
-            }
-          }
-        },
-        methods: {
-          changeType: function(){
-            if( this.sizeName == 'CUSTOM' )
-              this.internalSize = { height: this.customHeight, width: this.customWidth };
-            else
-              this.internalSize = this.type[this.sizeName];
-
-            this.refresh();
-          },
-          refresh: function () {
-            var fn = () => {
-              this.ready = true;
-              var canvas = document.getElementById('canvas');
-              var ctx = canvas.getContext('2d');
-
-              var pattern = ctx.createPattern(img, 'repeat');
-              if( pattern ) {
-                ctx.fillStyle = pattern;
-                // ctx.fillRect(0, 0, 3508, 2480);
-                ctx.fillRect(0, 0, this.size.width, this.size.height);
-              }
-            }
-
-            var img = this.imageSizeHeight && this.imageSizeWidth
-              ? new Image( this.imageSizeWidth, this.imageSizeHeight ) : new Image();
-            setTimeout(() => {
-              var input = document.getElementById('file');
-              var file = input.files[0];
-              if (file) {
-                this.ready = true;
-                var reader  = new FileReader();
-
-                reader.onloadend = () => {
-                  img.src = reader.result;
-                  setTimeout(() => {
-                    fn();
-                  }, 0);
-                }
-
-                reader.readAsDataURL(file);
-              } else {
-                fn();
-              }
-            }, 0);
-
-          },
-          saveCanvas: function() {
-            var canvas = document.getElementById('canvas');
-          }
-        }
-      })
-    </script>
+    <script src="scripts.js"></script>
   </body>
 </html>
