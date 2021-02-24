@@ -4,60 +4,85 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> <!-- release -->
 
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div id="app">
-      <p>
-        {{ message }}
-      </p>
-      <fieldset>
-        <legend>Configuración de hoja</legend>
-        <label>Tipo
-          <select v-model="sizeName" @change="changeType">
-            <option v-bind:value="'A4'">A4</option>
-            <option v-bind:value="'A3'">A3</option>
-            <option v-bind:value="'CUSTOM'">CUSTOM</option>
-          </select>
-        </label>
-        <span v-if="size">({{ size.width }}x{{ size.height }})</span>
-        <div class="separator"></div>
-        <label>Orientación: 
-          <select v-model="orientation" @change="refresh">
-            <option v-bind:value="'h'">Horizontal</option>
-            <option v-bind:value="'v'">Vertical</option>
-          </select>
-        </label>
-        <div class="separator"></div>
-        <label><input type="checkbox" v-model="showBorder"> Mostrar borde</label>
-      </fieldset>
-      <fieldset v-if="sizeName == 'CUSTOM'">
-        <legend>Propiedades</legend>
-        <label>
-          Ancho:
-          <input type="number" min="1" v-model="customWidth" @keyup="changeType" @change="changeType" />
-        </label>
-        <label>
-          Alto:
-          <input type="number" min="1" v-model="customHeight" @keydown="changeType" />
-        </label>
-      </fieldset>
-      <fieldset>
-        <legend>Acciones</legend>
-        <button v-on:click="clear">Limpiar</button>
-        <button v-bind:disabled="!ready" v-on:click="refresh">Actualizar</button>
-        <button @click="saveCanvas" disabled title="save using right click">Download</button>
-        <label class="file-uploader">
-          <input type="file" id="file" v-on:change="refresh">
-          Cargar archivo
-        </label>
-      </fieldset>
-      <canvas id="canvas"
-        v-if="size"
-        v-bind:width="size.width"
-        v-bind:height="size.height"
-        v-bind:style="showBorder ? styleCanvas : null"
-      ></canvas>
+      <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+          <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <!-- <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">menu</button> -->
+            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Help" @click="showHelp=!showHelp">help</button>
+            <span class="mdc-top-app-bar__title">Mosaicos</span>
+          </section>
+          <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+            <div class="size-type-info">
+              <span class="mdc-top-app-bar__title size-info">Tipo: {{ sizeName }} ({{ size.width }}x{{ size.height }}) </span>
+            </div>
+            <div id="demo-menu" class="mdc-menu-surface--anchor">
+              <button id="button-sizes" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Size">photo_size_select_large</button>
+              <div id="menu-sizes" class="mdc-menu mdc-menu-surface">
+                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                  <component v-for="item in ['A4', 'A3', 'CUSTOM']">
+                    <li class="mdc-list-item" role="menuitem"
+                      v-bind:class="(sizeName==item ? 'mdc-list-item--selected' : null)"
+                      @click="sizeName=item; changeType();"
+                    >
+                      <span class="mdc-list-item__ripple"></span>
+                      <span class="mdc-list-item__text">{{ item }}</span>
+                    </li>
+                  </component>
+                </ul>
+              </div>
+            </div>
+            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Orientation"
+              @click="orientation = (orientation=='h' ? 'v': 'h')"
+            >rotate_90_degrees_ccw</button>
+            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Border"
+              @click="showBorder=!showBorder"
+            >{{ showBorder ? 'border_clear' : 'border_outer' }}</button>
+          </section>
+        </div>
+      </header>
+      <main class="mdc-top-app-bar--fixed-adjust">
+        <div v-if="showHelp">{{ message }}</div>
+        <button class="mdc-button foo-button">
+          <div class="mdc-button__ripple"></div>
+          <span class="mdc-button__label">Button</span>
+        </button>
+        <fieldset v-if="sizeName == 'CUSTOM'">
+          <legend>Propiedades</legend>
+          <label>
+            Ancho:
+            <input type="number" min="1" v-model="customWidth" @keyup="changeType" @change="changeType" />
+          </label>
+          <label>
+            Alto:
+            <input type="number" min="1" v-model="customHeight" @keydown="changeType" />
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend>Acciones</legend>
+          <button v-on:click="clear">Limpiar</button>
+          <button v-bind:disabled="!ready" v-on:click="refresh">Actualizar</button>
+          <button @click="saveCanvas" disabled title="save using right click">Download</button>
+          <label class="file-uploader">
+            <input type="file" id="file" v-on:change="refresh">
+            Cargar archivo
+          </label>
+        </fieldset>
+        <canvas id="canvas"
+          v-if="size"
+          v-bind:width="size.width"
+          v-bind:height="size.height"
+          v-bind:style="showBorder ? styleCanvas : null"
+        ></canvas>
+      </main>
     </div>
     <script src="scripts.js"></script>
   </body>

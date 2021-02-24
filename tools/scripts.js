@@ -15,7 +15,8 @@ var app = new Vue({
     ready: false,
     showBorder: true,
     internalSize: null,
-    sizeName: 'CUSTOM'
+    sizeName: 'CUSTOM',
+    showHelp: false
   },
   created: function () {
     this.size = this.type.CUSTOM;
@@ -95,3 +96,17 @@ var app = new Vue({
     }
   }
 });
+
+// configure menu
+{
+  const buttonEl = document.getElementById('button-sizes');
+  const menuEl = document.getElementById('menu-sizes');
+
+  const menu = new mdc.menu.MDCMenu(menuEl);
+  
+  buttonEl.addEventListener('click', (event) => {
+    menu.open = !menu.open;
+    menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
+    menu.setAnchorElement(buttonEl);
+  });
+}
