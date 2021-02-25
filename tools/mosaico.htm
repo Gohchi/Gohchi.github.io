@@ -21,9 +21,6 @@
             <span class="mdc-top-app-bar__title">Mosaicos</span>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-            <div class="size-type-info">
-              <span class="mdc-top-app-bar__title size-info">Tipo: {{ sizeName }} ({{ size.width }}x{{ size.height }}) </span>
-            </div>
             <div id="demo-menu" class="mdc-menu-surface--anchor">
               <button id="button-sizes" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Size">photo_size_select_large</button>
               <div id="menu-sizes" class="mdc-menu mdc-menu-surface">
@@ -46,42 +43,55 @@
             <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Border"
               @click="showBorder=!showBorder"
             >{{ showBorder ? 'border_clear' : 'border_outer' }}</button>
+            
+            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Refresh"
+              v-bind:disabled="!ready" @click="refresh"
+            >autorenew</button>
+            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Clear"
+              @click="clear"
+            >clear</button>
+            <label class="mdc-button mdc-button--outlined mdc-top-app-bar__action-item load-file-button">
+              <input type="file" id="file" v-on:change="refresh" style="display: none;">
+              <div class="mdc-button__ripple"></div>
+              <span class="mdc-button__label">Cargar</span>
+            </label>
           </section>
         </div>
       </header>
       <main class="mdc-top-app-bar--fixed-adjust">
-        <div v-if="showHelp">{{ message }}</div>
-        <button class="mdc-button foo-button">
-          <div class="mdc-button__ripple"></div>
-          <span class="mdc-button__label">Button</span>
-        </button>
-        <fieldset v-if="sizeName == 'CUSTOM'">
-          <legend>Propiedades</legend>
-          <label>
-            Ancho:
-            <input type="number" min="1" v-model="customWidth" @keyup="changeType" @change="changeType" />
-          </label>
-          <label>
-            Alto:
-            <input type="number" min="1" v-model="customHeight" @keydown="changeType" />
-          </label>
-        </fieldset>
-        <fieldset>
-          <legend>Acciones</legend>
-          <button v-on:click="clear">Limpiar</button>
-          <button v-bind:disabled="!ready" v-on:click="refresh">Actualizar</button>
-          <button @click="saveCanvas" disabled title="save using right click">Download</button>
-          <label class="file-uploader">
-            <input type="file" id="file" v-on:change="refresh">
-            Cargar archivo
-          </label>
-        </fieldset>
+        <div v-if="showHelp" style="padding: 20px;">{{ message }}</div>
         <canvas id="canvas"
           v-if="size"
           v-bind:width="size.width"
           v-bind:height="size.height"
           v-bind:style="showBorder ? styleCanvas : null"
         ></canvas>
+        <div class="size-type-info">
+          <span v-if="sizeName!='CUSTOM'" class="mdc-top-app-bar__title size-info">{{ sizeName }} ({{ size.width }}x{{ size.height }})</span>
+          
+          <component v-if="sizeName=='CUSTOM'" class="custom-sizes">
+            <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon mdc-text-field--with-trailing-icon">
+              <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__trailing"></span>
+              </span>
+              <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading">
+                {{ orientation=='h' ? 'swap_horiz' : 'swap_vert' }}
+              </i>
+              <input class="mdc-text-field__input" type="number" min="1" v-model="customWidth" @keyup="changeType" @change="changeType" />
+            </label>
+            <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon mdc-text-field--with-trailing-icon">
+              <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__trailing"></span>
+              </span>
+              <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading">
+                {{ orientation=='v' ? 'swap_horiz' : 'swap_vert' }}
+              </i>
+              <input class="mdc-text-field__input" type="number" min="1" v-model="customHeight" @keyup="changeType" />
+            </label>
+          </component>
+        </div>
       </main>
     </div>
     <script src="scripts.js"></script>

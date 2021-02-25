@@ -19,8 +19,8 @@ var app = new Vue({
     showHelp: false
   },
   created: function () {
-    this.size = this.type.CUSTOM;
-    // this.size = this.type.A4;
+    // this.size = this.type.CUSTOM;
+    this.size = this.type.A4;
   },
   computed: {
     size: {

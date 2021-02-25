@@ -17,7 +17,25 @@ canvas {
 }
 
 .size-type-info {
-  margin-right: 5px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: white;
+  border: 1px solid #a3a0a0;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 10px;
+}
+
+.custom-sizes > * {
+  width: 110px;
+  
+  background: white;
+  border-radius: 5px;
+}
+.mdc-button.load-file-button {
+  background: #00c0ff;
+  color: black;
 }
 
 @media all and (min-width:960px) and (max-width: 1024px) {
