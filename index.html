@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
+
+		<title>👾Portfolio</title>
+		<link rel="stylesheet" href="main.css">
+		<link rel="stylesheet" href="site.css">
+		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import { createApp } from 'vue';
+      import Book from './modules/Book.js';
+      import Element from './modules/Element.js';
+      
+      createApp({
+        components: {
+          Book,
+          Element
+        },
+        methods: {
+          openWindow(url) {
+            window.open(url);
+          }
+        },
+        data() {
+          return {
+            bgSvgMode: false,
+            showBook: window.innerWidth > 1200,
+            projects: [
+              { id: 'project01', url: 'https://github.com/Gohchi/', title: 'Go to Github♥', text: 'Check my repos!' },
+              { id: 'project02', url: 'https://slots-marshall-lee.vercel.app/', title: 'A simple slots game demo in Phaser 3.', text: 'SLOTS game made in Phaser 3' },
+              {
+                id: 'project03',
+                url: 'devontrain',
+                title: 'This is a very old project. Started in a tiny cellphone with a QWERTY keyboard on my long trips to my job. '
+                    + 'It\'s not a good memory at all. But it\'s experience.',
+                text: 'Show me the magic'
+              },
+              // { id: 'project04', url: 'metro/main.html' },
+              { id: 'project05', url: 'hangeul', title: 'A simple tool to practice numbers in Hangeul.', text: 'Hangeul - Number generator' },
+              { id: 'project06', url: 'tools', title: 'A simple tool to create a pattern from an image.', text: 'Mosaicos - Pattern generator' },
+            ]
+          }
+        }
+      }).mount('#app');
+    </script>
+	</head>
+	<body id="app">
+    <div class="app-wrapper" :class="{ svg: bgSvgMode }">
+
+      <div class="welcome-message">	
+        <header>
+          <h1>Hi. My name is Mart&iacute;n A. Farias</h1>
+          <p>Some projects...</p>
+        </header>
+        <ul>
+          <li
+            v-for="project in projects"
+            :key="project.id"
+          >
+            <button
+              :id="project.id"
+              :title="project.title"
+              @click="openWindow(project.url)"
+            >{{ project.text }}</button>
+          </li>
+        </ul>
+      </div>	
+        
+      <footer>
+        <button
+          @click="bgSvgMode=!bgSvgMode"
+          :title="bgSvgMode ? 'I couldn\' found the owner to give the credits :C' : 'Under construction hehe'"
+          class="button-toggle"
+        >
+          {{ bgSvgMode ? 'BG: SVG' : 'BG: GIF' }}
+        </button>
+        <button
+          @click="showBook=!showBook"
+          class="button-toggle"
+        >
+          {{ (showBook ? 'hide' : 'show') + ' book' }}
+        </button>
+        <p class="thanks">Thank you for visiting my site!</p>
+      </footer>
+      <book :show="showBook"></book>
+
+<!--       
+      <button @click="count++">
+        Count is: {{ count }}
+      </button> -->
+  <!-- 
+      <element title="1"></element>
+
+      <button-test></button-test> -->
+      
+    </div>
+	</body>
+</html>

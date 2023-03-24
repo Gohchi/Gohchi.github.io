@@ -13,6 +13,7 @@ body {
 #hangeul {
   font-size: 18vh;
   background: #61fdac;
+  cursor: pointer;
 }
 fieldset {
   display: grid;
@@ -198,6 +199,11 @@ label[for="menuinfo"] {
   font-size: 10vh;
   border: 1px ridge;
   background: #5eb5f0;
+  cursor: pointer;
+}
+
+#hangeul:active, #hangeulSyllables button:active {
+  font-weight: bold;
 }
 
 /* mobile */

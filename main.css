@@ -45,9 +45,9 @@ button:active {
 .thanks {
 	color: white;
 	font-family: 'Press Start 2P';
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
 }
 ul {
   list-style: none;
@@ -63,10 +63,4 @@ li {
 img.icon {
 	width: 24px;
 	height: 24px;
-}
-
-#bg-toggle {
-  position: fixed;
-  bottom: 44px;
-  right: 8px;
 }

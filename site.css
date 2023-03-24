@@ -1,21 +1,29 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900);
-body, html {
-    height: 100%;
-}
 body {
   background-color: #15a6c7;
-  background-image: url(https://s-media-cache-ak0.pinimg.com/originals/e4/e1/16/e4e11649ebd8e4acc7a0700d99cb90c9.gif);
-  /* -webkit-mask-image: url(/images/bg.svg);
-  mask-image: url(/images/bg.svg); */
-  /* height: 100%; */
-  overflow: hidden;
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   font-family:'Lato', sans-serif;
+  overflow-x: hidden;
 }
-body.svg {
+.app-wrapper {
+  height: 100%;
+  width: 100%;
+}
+.app-wrapper::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  background-image: url(https://s-media-cache-ak0.pinimg.com/originals/e4/e1/16/e4e11649ebd8e4acc7a0700d99cb90c9.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  /* opacity: 0.7; */
+  /* filter: blur(5px); */
+  /* transition: filter 1000ms linear; */
+  z-index: -1;
+}
+.app-wrapper.svg::before {
   background-image: url(/images/bg.svg);
 }
 /* body * {
@@ -32,6 +40,11 @@ header {
 header * {
   margin: 0 15px;
 }
+footer {
+  position: fixed;
+  bottom: 44px;
+  right: 8px;
+}
 .wrap {
   top: 60px;
   right: 140px;
@@ -39,6 +52,18 @@ header * {
   perspective: 1200px;
   font-family:'Lato', sans-serif;
   /*perspective: 1200px;*/
+}
+.book {
+  transition: transform 500ms ease-in-out;
+}
+.book.out {
+  transform: translateX(240px);
+}
+.book .clickable {
+  cursor: pointer;
+}
+.book .copy-content {
+  cursor: help;
 }
 .card {
   position: absolute;
@@ -59,10 +84,10 @@ header * {
   -o-user-select: none;
   user-select: none;
 }
-.card:hover {
+.card.viewfront {
   transform: rotateY(90deg);
 }
-.card:active {
+.card.viewback {
   transition: all 0.5s;
   transform: rotateY(270deg);
 }

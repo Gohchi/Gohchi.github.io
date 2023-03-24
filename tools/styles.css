@@ -1,5 +1,5 @@
 body, input, select, button {
-  font-family: Roboto;
+  /* font-family: Roboto; */
   margin: 0;
   /*dark*/    
   /* background-color: rgb(0 0 0 / 80%); */
@@ -37,9 +37,16 @@ canvas {
   background: #00c0ff;
   color: black;
 }
-
+/* 
 @media all and (min-width:960px) and (max-width: 1024px) {
   body {
     font-size: 5em;
   }
-}
+  
+  .mdc-top-app-bar__row {
+    height: 3em;
+  }
+  * {
+    font-size: 1em;
+  }
+} */
