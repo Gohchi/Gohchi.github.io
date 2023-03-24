@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
+
+		<title>Yu-Gi-Oh! Collection</title>
+		<link rel="stylesheet" href="styles.css">
+		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import { createApp, onMounted } from 'vue';
+      
+      createApp({
+        components: {
+        },
+        methods: {
+          openWindow(url) {
+            window.open(url);
+          }
+        },
+        setup() {
+          // const my_array = ref([]);
+          console.log(this);
+
+          onMounted(async () => {
+            let test = await fetch('https://yugiohprices.com/api/get_card_prices/Raigeki', {
+              headers: {
+                contentType: 'application/json'
+              },
+              // mode: 'cors'
+            });
+            console.log(test);
+          });
+
+          return { testData: [] }
+        },
+        data() {
+          return {
+            bgSvgMode: false,
+            showBook: window.innerWidth > 1200,
+            cards: [
+              { name: 'Raigeki' },
+            ]
+          }
+        }
+      }).mount('#app');
+    </script>
+	</head>
+	<body id="app">
+    <div class="app-wrapper" :class="{ svg: bgSvgMode }">
+      <ul>
+        <li 
+          v-for="card in cards"
+          :key="card.name"
+        >{{ card.name }}</li>
+      </ul>
+    </div>
+	</body>
+</html>
