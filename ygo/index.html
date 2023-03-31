@@ -29,12 +29,22 @@
           console.log(this);
 
           onMounted(async () => {
-            let test = await fetch('https://yugiohprices.com/api/get_card_prices/Raigeki', {
-              headers: {
-                contentType: 'application/json'
-              },
-              // mode: 'cors'
-            });
+            // let test = await fetch('https://yugiohprices.com/api/get_card_prices/Raigeki', {
+            //   headers: {
+            //     contentType: 'application/json'
+            //   },
+            //   // mode: 'cors'
+            // });
+            // const test = await fetch('http://ip-api.com/json')
+            //                     .then( response => response.json() )
+            //                     .then( data => console.log(data) );
+            const test = await fetch(
+                'https://api-gohchi.vercel.app/api.open-notify.org/iss-now.json',
+                //'https://api-gohchi.vercel.app/yugiohprices.com/api/price_for_print_tag/PSV-000',
+                {mode: 'cors'}
+              )
+              .then( response => response.json() )
+              .then( data => console.log(data) );
             console.log(test);
           });
 
