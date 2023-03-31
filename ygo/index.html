@@ -14,31 +14,34 @@
       }
     </script>
     <script type="module">
-      import { createApp, onMounted } from 'vue';
+      import { createApp, onMounted, ref } from 'vue';
       import { getAPI } from '/modules/Tools.js';
       
       createApp({
         components: {
         },
         methods: {
-          openWindow(url) {
-            window.open(url);
+          check() {
+            console.log(this);
           }
         },
         setup() {
-          // const my_array = ref([]);
-
-          onMounted(async () => {
-            // let test = await fetch('https://yugiohprices.com/api/get_card_prices/Raigeki', {
-            // const test = await fetch('http://ip-api.com/json')
-            const test = await getAPI(
-                'api.open-notify.org/iss-now.json',
-                //'yugiohprices.com/api/price_for_print_tag/PSV-000',
-              )
-              .then( data => console.log(data) );
-          });
-
-          return { testData: [] }
+          return {
+            cardRef: ref([])
+          };
+        },
+        mounted() {
+          /* Options API */
+          // console.log(this.$el);
+          getAPI(
+            //'http://ip-api.com/json'
+            'yugiohprices.com/api/get_card_prices/Raigeki',
+            //'yugiohprices.com/api/price_for_print_tag/PSV-000',
+          )
+          .then( ({ data }) => {
+            console.log(data);
+            this._.setupState.cardRef.value = data;
+          } );
         },
         data() {
           return {
@@ -60,6 +63,28 @@
           :key="card.name"
         >{{ card.name }}</li>
       </ul>
+      <table v-if="cardRef && cardRef.value">
+        <thead>
+          <tr>
+            <th>Pack</th>
+            <th>Tag</th>
+            <th>Rarity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            v-for="cardData in cardRef.value"
+            :key="cardData.name"
+          >
+            <td>{{ cardData.name }}</td>
+            <td>{{ cardData.print_tag }}</td>
+            <td>{{ cardData.rarity }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <button
+        @click="check()"
+      >check</button> -->
     </div>
 	</body>
 </html>
