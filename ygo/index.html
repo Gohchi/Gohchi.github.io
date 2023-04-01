@@ -28,11 +28,34 @@
           check() {
             console.log(this);
           },
+          getLevelOrRank( { type } ) {
+            return !type ? '-none'
+              : type.includes('Xyz') ? '-rank'
+              : '-level';
+          },
+          getBGByType( card ) {
+            if( !card ) return '-none';
+            const { type, card_type } = card;
+            const cardType = (type ?? card_type).toLowerCase();
+            return cardType.includes('fusion') ? '-fusion'
+              : cardType.includes('xyz') ? '-xyz'
+              : cardType.includes('synchro') ? '-synchro'
+              : cardType.includes('ritual') ? '-ritual'
+              : cardType.includes('trap') ? '-trap'
+              : cardType.includes('spell') ? '-spell'
+              : cardType.includes('pendulum') ? '-pendulum'
+              : cardType.includes('effect') ? '-effect'
+              : cardType.includes('normal') ? '-normal'
+              : '-token';
+          },
           selectCard( card ) {
             if( this.selectedCard === card )
               return;
 
+            this.getCardImage(card);
+
             this.selectedCard = undefined;
+            this.selectedCardData = undefined;
             setTimeout(() => {
               this.selectedCard = card;
             }, 0);
@@ -40,12 +63,24 @@
             getAPI('yugiohprices.com/api/card_data/' + card.name)
               .then( ({ data }) => {
                 console.log(data);
+                
+                if(!data) return;
+                
                 this.selectedCardData = data;
                 setTimeout(() => {
                   this.$refs.textRef.innerText = data.text;
                 }, 0);
               } );
           },
+          getCardImage( card ) {
+            this.selectedCardImage = undefined;
+            this.cardImageIsLoading = true;
+            getAPI('yugiohprices.com/api/card_image/' + card.name, 'image')
+              .then( ( blob ) => {
+                this.selectedCardImage = URL.createObjectURL(blob);
+                this.cardImageIsLoading = false;
+              } );
+          }
         },
         // setup() {
         //   return {
@@ -71,7 +106,9 @@
             showBook: window.innerWidth > 1200,
             cards: cards,
             selectedCard: undefined,
-            selectedCardData: undefined
+            selectedCardData: undefined,
+            selectedCardImage: undefined,
+            cardImageIsLoading: false
           }
         }
       }).mount('#app');
@@ -92,34 +129,47 @@
             :key="card.name"
             :class="{ 'card-selected': card === selectedCard }"
             @click="selectCard(card)"
-          >{{ card.name }}</div>
+          >
+          <div class="card-name">{{ card.name }}</div>
+          <div class="card-print-tag">{{ card.print_tag }}</div>
+          <div :class="{ ['card-rarity--'+card.rarity.toLowerCase()]: true }">{{ card.rarity }}</div>
+        </div>
         </fieldset>
 
-        <div class="card-image">
-          <a href="https://static-7.studiobebop.net/ygo_data/card_images/Raigeki.jpg" target="_blank" title="open in a new window">
-            <img src="https://static-7.studiobebop.net/ygo_data/card_images/Raigeki.jpg" />
+        <div v-if="selectedCard" class="card-image">
+          <a :href="cardImageIsLoading ? './assets/img/card-back.png' : selectedCardImage" target="_blank" title="open in a new window">
+            <img :src="cardImageIsLoading ? './assets/img/card-back.png' : selectedCardImage" />
           </a>
           <div class="card-image-info">*the image could not be the edition owned</div>
         </div>
-        <div v-if="selectedCard" class="card-data">
+        <div v-if="selectedCard" class="card-data" :class="{ ['card-type-'+getBGByType(selectedCardData)]: true }">
           <div class="card-content-top">
-            <div class="card-title bg-gray-gradient">
+            <div class="card-title card-background-by-type">
               {{ selectedCard.name }}
             </div>
             <div :class="{ ['card-attribute-' + selectedCardData.family]: true }" v-if="selectedCardData"></div>
           </div>
           <div class="card-content-middle" v-if="selectedCardData">
-            <div class="card-level-rank bg-black">
-              <div :class="{ 'card-level': !selectedCardData.type.includes('Xyz'), 'card-rank': !!selectedCardData.type.includes('Xyz') }" v-if="selectedCardData"></div>{{ selectedCardData.level }} CARD TYPE: {{ selectedCardData.card_type }} PRINT TAG: {{ selectedCard.print_tag }} RARITY: {{ selectedCard.rarity }}</div>
+            <div class="card-info bg-black">
+              <div :class="{ ['card-level-'+getLevelOrRank( selectedCardData )]: true }" v-if="selectedCardData.card_type === 'monster'"></div>
+              <div class="card-level-value" v-if="selectedCardData.card_type === 'monster'">{{ selectedCardData.level }}</div>
+              <div class="card-spell-type" v-if="selectedCardData.card_type === 'spell'">
+                {{ selectedCardData.property }} Spell
+              </div>
+              <div class="card-trap-type" v-if="selectedCardData.card_type === 'trap'">
+                {{ selectedCardData.property }} Trap
+              </div>
             </div>
-            <div class="card-attack-defense">
-              <div>ATK/{{ selectedCardData.atk }} DEF/{{ selectedCardData.def}}</div>
+            <div class="card-subtitle-base card-background-by-type"></div>
+            <div class="card-attack-defense" v-if="selectedCardData.card_type === 'monster'">
+              <div>ATK/{{ selectedCardData.atk }} DEF/{{ selectedCardData.def }}</div>
             </div>
           </div>
           <div class="card-content-bottom" v-if="selectedCardData">
-            <div class="card-type bg-black">
+            <div class="card-type bg-black" v-if="selectedCardData.card_type === 'monster'">
               [{{ selectedCardData.type }}]
             </div>
+            <div class="card-subtitle-base card-background-by-type" v-if="selectedCardData.card_type === 'monster'"></div>
             <div class="card-description">
               <!-- <div class="card-requirements">3 Level 6 LIGHT Machine-Type monsters</div> -->
               <div class="card-details" ref="textRef"></div>

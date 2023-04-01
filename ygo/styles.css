@@ -91,6 +91,7 @@ tbody tr:last-of-type {
   background-color: #090909d4;
 }
 .card-list .card-item {
+  position: relative;
   color: black;
   border: 1px solid #c8c8c8;
   padding: 20px;
@@ -118,8 +119,27 @@ tbody tr:last-of-type {
   border: 1px solid #999999;
 }
 
+.card-list .card-item .card-print-tag {
+  position: absolute;
+  bottom: 1px;
+  right: 7px;
+  font-size: 12px;
+}
+
+.card-list .card-item [class^="card-rarity-"] {
+  position: absolute;
+  top: 1px;
+  right: 7px;
+  font-size: 12px;
+}
 .card-image-info {
   font-size: 12px;
+}
+.card-image {
+  width: 300px;
+}
+.card-image img {
+  width: 100%;
 }
 
 .card-data {
@@ -157,8 +177,113 @@ tbody tr:last-of-type {
   position: relative;
   padding: 16px;
   border: 1px solid #959595;
-  background-color: #090909d4;
+  /* background-color: #090909d4; */
 }
+
+.card-background-by-type {
+  background-size: cover;
+  background-position: center;
+  /* background-attachment: fixed; */
+}
+
+.card-subtitle-base {
+  height: 5px;
+}
+.card-type--effect .card-title.card-background-by-type {
+  background: linear-gradient(to right, #3c2902e6 0%, #000000b5 1%, #b47800cc) 0 0,
+              linear-gradient(to bottom, #ff6a00ba, #291d0069 30%) 0 0,
+              linear-gradient(to top, #ff6a00ba, #291d0069 30%) 0 0,
+              linear-gradient(to bottom, #ffde00, #ffb4009e 30%) 0 0,
+              linear-gradient(to top, #ffde00, #ffb4009e 30%) 0 0;
+}
+.card-type--effect .card-background-by-type {
+  background-image: linear-gradient(to right, #583603c9, #ffa305e0);
+}
+.card-type--normal .card-title.card-background-by-type {
+  background: linear-gradient(to right, #2e2f00e6 0%, #000000b5 1%, #b4a500cc) 0 0,
+              linear-gradient(to bottom, #ffdd00ba, #291d0069 30%) 0 0,
+              linear-gradient(to top, #ffb300ba, #291d0069 30%) 0 0,
+              linear-gradient(to bottom, #fffb00, #fff8009e 30%) 0 0,
+              linear-gradient(to top, #fffb00, #fff8009e 30%) 0 0;
+}
+.card-type--normal .card-background-by-type {
+  background-image: linear-gradient(to right, #ffdd008c, #edff05e8);
+}
+.card-type--ritual .card-title.card-background-by-type {
+  background: linear-gradient(to right, #00132fe6 0%, #000000b5 1%, #005fb4cc) 0 0,
+              linear-gradient(to bottom, #0050ffba, #291d0069 30%) 0 0, 
+              linear-gradient(to top, #0050ffba, #291d0069 30%) 0 0, 
+              linear-gradient(to bottom, #0065ff, #0060ff9e 30%) 0 0,
+              linear-gradient(to top, #0065ff, #0060ff9e 30%) 0 0;
+}
+.card-type--ritual .card-background-by-type {
+  background-image: linear-gradient(to right, #118bd7e0, #0036ffde);
+}
+.card-type--fusion .card-title.card-background-by-type {
+  background: linear-gradient(to right, #2a0132e6 0%, #000000b5 1%, #8600b4cc) 0 0, linear-gradient(to bottom, #c200ffba, #291d0069 30%) 0 0, linear-gradient(to top, #c200ffba, #291d0069 30%) 0 0, linear-gradient(to bottom, #cf00ff, #c200ffba 30%) 0 0, linear-gradient(to top, #cf00ff, #c200ffba 30%) 0 0;
+}
+.card-type--fusion .card-background-by-type {
+  background-image: linear-gradient(to right, #9318f4b8, #dc00ffeb);
+}
+.card-type--token .card-title.card-background-by-type {
+  background: linear-gradient(to right, #262626e6 0%, #000000b5 1%, #505050cc) 0 0,
+              linear-gradient(to bottom, #ffffffba, #291d0069 30%) 0 0,
+              linear-gradient(to top, #ffffffba, #291d0069 30%) 0 0,
+              linear-gradient(to bottom, #898989, #ffffffba 30%) 0 0,
+              linear-gradient(to top, #898989, #ffffffba 30%) 0 0;
+}
+.card-type--token .card-background-by-type {
+  background-image: linear-gradient(to right,#ffffff66, #3e3d3df5);
+}
+.card-type--trap .card-title.card-background-by-type {
+  background: linear-gradient(to right, #32011be6 0%, #000000b5 1%, #b40087cc) 0 0,
+              linear-gradient(to bottom, #ff0077ba, #291d0069 30%) 0 0,
+              linear-gradient(to top, #ff0077ba, #291d0069 30%) 0 0,
+              linear-gradient(to bottom, #ff008c, #ff0077ba 30%) 0 0,
+              linear-gradient(to top, #ff008c, #ff0077ba 30%) 0 0;
+}
+.card-type--trap .card-background-by-type {
+  background-image: linear-gradient(to right, #780034d4, #db0084f0);
+}
+.card-type--spell .card-title.card-background-by-type {
+  background: linear-gradient(to right, #002f23e6 0%, #000000b5 1%, #00b47ecc) 0 0,
+              linear-gradient(to bottom, #00ffa5ba, #291d0069 30%) 0 0,
+              linear-gradient(to top, #00ffa5ba, #291d0069 30%) 0 0,
+              linear-gradient(to bottom, #00ffcc, #00ffae9e 30%) 0 0,
+              linear-gradient(to top, #00ffcc, #00ffae9e 30%) 0 0;
+}
+.card-type--spell .card-background-by-type {
+  background-image: linear-gradient(to right,#00db9d5e, #00ffa5ed);
+}
+.card-type--synchro .card-title.card-background-by-type {
+  background: linear-gradient(to right, #303132e6 0%, #000000b5 1%, #c6c6c6cc) 0 0, linear-gradient(to bottom, #ffffffba, #291d0069 30%) 0 0, linear-gradient(to top, #ffffffba, #291d0069 30%) 0 0, linear-gradient(to bottom, #ffffff, #ffffff9e 30%) 0 0, linear-gradient(to top, #ffffff, #ffffff9e 30%) 0 0;
+}
+.card-type--synchro .card-background-by-type {
+  background-image: linear-gradient(to right, #ffffff8f, #ffffffe8);
+}
+.card-type--xyz .card-title.card-background-by-type {
+  background: linear-gradient(to right, #0e0e0ed4 0%, #000000b5 1%, #211616cc) 0 0,
+              linear-gradient(to bottom, #000000bf, #291d0069 30%) 0 0,
+              linear-gradient(to top, #000000bf, #291d0069 30%) 0 0,
+              linear-gradient(to bottom, #fafafa, #000000ba 30%) 0 0,
+              linear-gradient(to top, #fafafa, #000000ba 30%) 0 0
+}
+.card-type--xyz .card-background-by-type {
+  background-image: linear-gradient(to right, #000000b8, #000000c4);
+}
+.card-type--pendulum .card-title.card-background-by-type {
+  background: linear-gradient(to right, #975f0061 0%, #f4590042 1%, #ffa305bf 49%, #e4ffae9e 50%, #00ffa5a1 51%, #b4ffe48c 100%);
+}
+.card-type--pendulum .card-background-by-type {
+  /* background-image: linear-gradient(to bottom, #ffffff38 0%, #ffa305bf 49%, #e4ffae9e 50%, #00ffa5a1 51%, #b4ffe48c 100%); */
+  background: linear-gradient(to right, #975f0061 0%, #f4590042 1%, #ffa305bf 49%, #e4ffae9e 50%, #00ffa5a1 51%, #b4ffe48c 100%);
+}
+.bg-gray-gradient {
+  background: linear-gradient(to right, black, #575757a3) 0 0, 
+              linear-gradient(to bottom, #a3a3a3, #00000042) 0 0, 
+              linear-gradient(to top, #bdbdbd, #000000) 0 0;
+}
+
 
 .card-details {
   position: fixed;
@@ -177,20 +302,23 @@ tbody tr:last-of-type {
   font-family: "YGO Names";
   font-size: 28px;
 }
-.card-title, .card-level-rank, .card-type {
+.card-title, .card-info, .card-type {
   padding: 5px;
 }
 
-.card-level, .card-rank {
+.card-level-value {
+  display: inline-block;
+}
+.card-level--level, .card-level--rank, .card-level--none {
   width: 24px;
   height: 24px;
   background-size: 24px;
   display: inline-block;
 }
-.card-level {
+.card-level--level {
   background-image: url(./assets/img/Level_Star.svg);
 }
-.card-rank {
+.card-level--rank {
   background-image: url(./assets/img/Rank_Star.svg);
 }
 
@@ -240,12 +368,6 @@ tbody tr:last-of-type {
 .bg-black {
   background-color: black;
 }
-.bg-gray-gradient {
-  background: linear-gradient(to right, black, #575757a3) 0 0, 
-              linear-gradient(to bottom, #a3a3a3, #00000042) 0 0, 
-              linear-gradient(to top, #bdbdbd, #000000) 0 0;
-}
-
 .layout {
   display: flex;
   flex-direction: column;
@@ -265,6 +387,7 @@ tbody tr:last-of-type {
 
 .layout-content {
   overflow: auto;
+  overflow-y: hidden;
   flex-grow: 1;
   display: flex;
   gap: 10px;

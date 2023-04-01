@@ -1,13 +1,18 @@
 [
   {
-    "name": "Cyber Dragon",
+    "name": "Red-Eyes Black Dragon",
     "print_tag": "SDCR-EN026",
     "rarity": "Common"
   },
   {
+    "name": "Cyber Dragon",
+    "print_tag": "SDCR-EN026",
+    "rarity": "Rare"
+  },
+  {
     "name": "Cyber End Dragon",
     "print_tag": "SDCR-EN026",
-    "rarity": "Common"
+    "rarity": "Ultra-Rare"
   },
   {
     "name": "Cyber Dragon Nova",
@@ -20,19 +25,14 @@
     "rarity": "Common"
   },
   {
-    "name": "Mystical Space Typhoon",
-    "print_tag": "YS12-SP024",
+    "name": "Scrap-Iron Scarecrow",
+    "print_tag": "5DS1-EN032",
     "rarity": "Common"
   },
   {
-    "name": "Mystical Space Typhoon",
-    "print_tag": "SY2-030",
-    "rarity": "Common"
-  },
-  {
-    "name": "Swords of Revealing Light",
-    "print_tag": "EGS1-EN021",
-    "rarity": "Common"
+    "name": "Junk Destroyer",
+    "print_tag": "LC5D-EN039",
+    "rarity": "Super-Rare"
   },
   {
     "name": "Swords of Revealing Light",
@@ -40,23 +40,8 @@
     "rarity": "Common"
   },
   {
-    "name": "Swords of Revealing Light",
-    "print_tag": "EGS1-EN021",
-    "rarity": "Common"
-  },
-  {
-    "name": "Swords of Revealing Light",
-    "print_tag": "EGS1-EN021",
-    "rarity": "Common"
-  },
-  {
-    "name": "Swords of Revealing Light",
-    "print_tag": "EGS1-EN021",
-    "rarity": "Common"
-  },
-  {
-    "name": "Swords of Revealing Light",
-    "print_tag": "EGS1-EN021",
-    "rarity": "Common"
+    "name": "CXyz Dark Fairy Cheer Girl",
+    "print_tag": "LTGY-EN047",
+    "rarity": "Rare"
   }
 ]
