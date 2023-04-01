@@ -2,10 +2,12 @@
 <html lang="en">
 	<head>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
+    <meta charset="UTF-8">
 
 		<title>Yu-Gi-Oh! Collection</title>
 		<link rel="stylesheet" href="styles.css">
 		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
     <script type="importmap">
       {
         "imports": {
@@ -16,13 +18,24 @@
     <script type="module">
       import { createApp, onMounted, ref } from 'vue';
       import { getAPI } from '/modules/Tools.js';
+      import cards from './cards.json' assert {type: 'json'};
       
+      console.log(cards);
       createApp({
         components: {
         },
         methods: {
           check() {
             console.log(this);
+          },
+          selectCard( card ) {
+            if( this.selectedCard === card )
+              return;
+
+            this.selectedCard = undefined;
+            setTimeout(() => {
+              this.selectedCard = card;
+            }, 0);
           }
         },
         setup() {
@@ -32,37 +45,84 @@
         },
         mounted() {
           /* Options API */
-          // console.log(this.$el);
-          getAPI(
-            //'http://ip-api.com/json'
-            'yugiohprices.com/api/get_card_prices/Raigeki',
-            //'yugiohprices.com/api/price_for_print_tag/PSV-000',
-          )
-          .then( ({ data }) => {
-            console.log(data);
-            this._.setupState.cardRef.value = data;
-          } );
+          // getAPI(
+          //   //'http://ip-api.com/json'
+          //   'yugiohprices.com/api/get_card_prices/Raigeki',
+          //   //'yugiohprices.com/api/price_for_print_tag/PSV-000',
+          // )
+          // .then( ({ data }) => {
+          //   console.log(data);
+          //   this._.setupState.cardRef.value = data;
+          // } );
         },
         data() {
           return {
             bgSvgMode: false,
             showBook: window.innerWidth > 1200,
-            cards: [
-              { name: 'Raigeki' },
-            ]
+            cards: cards,
+            selectedCard: undefined
           }
         }
       }).mount('#app');
     </script>
 	</head>
 	<body id="app">
-    <div class="app-wrapper" :class="{ svg: bgSvgMode }">
-      <ul>
-        <li 
-          v-for="card in cards"
-          :key="card.name"
-        >{{ card.name }}</li>
-      </ul>
+    <div class="layout" :class="{ svg: bgSvgMode }">
+      <div class="layout-header" v-if="true">
+        Welcome to my Yu-Gi-Oh! TCG Collection
+      </div>
+
+      <div class="layout-content">
+
+        <fieldset class="card-list">
+          <legend>Card list:</legend>
+          <div class="card-item"
+            v-for="card in cards"
+            :key="card.name"
+            :class="{ 'card-selected': card === selectedCard }"
+            @click="selectCard(card)"
+          >{{ card.name }}</div>
+        </fieldset>
+
+        <div class="card-image">
+          <a href="https://static-7.studiobebop.net/ygo_data/card_images/Raigeki.jpg" target="_blank" title="open in a new window">
+            <img src="https://static-7.studiobebop.net/ygo_data/card_images/Raigeki.jpg" />
+          </a>
+          <div class="card-image-info">*the image could not be the edition owned</div>
+        </div>
+        <div v-if="selectedCard" class="card-data">
+          <div class="card-content-top">
+            <div class="card-title bg-gray-gradient">
+              {{ selectedCard.name }}
+            </div>
+            <div class="card-element">
+              {{ selectedCard.element }}
+            </div>
+          </div>
+          <div class="card-content-middle">
+            <div class="card-level-rank bg-black">
+              <div>LV8 {{ selectedCard.print_tag }} {{ selectedCard.rarity }}</div>
+            </div>
+            <div class="card-attack-defense">
+              <div>1000 1000</div>
+            </div>
+          </div>
+          <div class="card-content-bottom">
+            <div class="card-type bg-black">
+              [Machine/Xyz/Effect]
+            </div>
+            <div class="card-description">
+              <div class="card-requirements">3 Level 6 LIGHT Machine-Type monsters</div>
+              <div class="card-details">Once per turn, you can also Xyz Summon "Cyber Dragon Infinity" by using "Cyber Dragon Nova" you control as material. (Transfer its materials to this card.) Gains 200 ATK for each material attached to it. Once per turn: You can target 1 face-up Attack Position monster on the field; attach it to this card as material. Once per turn, when a card or effect is activated (Quick Effect): You can detach 1 material from this card; negate the activation, and if you do, destroy it.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-footer">
+        Thanks to <a href="http://yugiohprices.com" target="_blank">yugiohprices.com</a> for their amazing data source. &#128151;
+      </div>
+
+
       <table v-if="cardRef && cardRef.value">
         <thead>
           <tr>

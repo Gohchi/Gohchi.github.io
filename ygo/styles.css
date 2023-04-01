@@ -1,56 +1,53 @@
-body, input, select, button {
-  /* font-family: Roboto; */
+/* font source/notes: https://www.cardmaker.net/forums/topic/308603-fonts-for-yu-gi-oh-card-making-with-multilingual-support/*/
+@font-face {
+  font-family: "YGO Names";
+  src: url(./assets/fonts/Yu-Gi-Oh!\ Matrix\ Regular\ Small\ Caps\ 1.ttf) format("truetype");
+}
+@font-face {
+  font-family: "YGO Names (Old)";
+  src: url(./assets/fonts/Yu-Gi-Oh!\ Matrix\ Regular\ Small\ Caps\ 2.ttf) format("truetype");
+}
+@font-face {
+  font-family: "YGO Effect Texts";
+  src: url(./assets/fonts/Yu-Gi-Oh!\ Matrix\ Book.ttf) format("truetype");
+}
+@font-face {
+  font-family: "YGO Attributes, Types, Spell and Trap";
+  src: url(./assets/fonts/Yu-Gi-Oh!\ ITC\ Stone\ Serif\ Small\ Caps\ Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "YGO Normal Monster Lore";
+  src: url(./assets/fonts/Yu-Gi-Oh!\ ITC\ Stone\ Serif\ LT\ Italic.ttf) format("truetype");
+}
+@font-face {
+  font-family: "YGO First or Unlimited Edition";
+  src: url(./assets/fonts/Stone\ Serif\ Semibold.ttf) format("truetype");
+}
+:root {
+  --corner-color: #adadad;
+  --corner-size: 2.5px;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+body {
+  position: absolute;
+  font-family: "YGO Effect Texts";
+  height: 100%;
+  width: 100%;
   margin: 0;
-  /*dark*/    
-  /* background-color: rgb(0 0 0 / 80%); */
-  /* color: #d6d6d6; */
-  /* text-shadow: 1px 1px 2px black, 0 0 2px black, 0 0 0.2em black; */
-}
-canvas {
-  background-color: gray;
-  margin: 5px;
-}
-.separator {
-  display: inline;
-  border-left: 2px solid black;
-  margin: 0 10px;
+  color: white;
+  background: url(./assets/img/xyz-bg.png) 0 0 repeat;
+  background-size: cover;
 }
 
-.size-type-info {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background: white;
-  border: 1px solid #a3a0a0;
-  border-radius: 5px;
-  display: inline-block;
-  padding: 10px;
+a {
+  color: #ad93ff;
+  /* text-decoration: none; */
 }
-
-.custom-sizes > * {
-  width: 110px;
-  
-  background: white;
-  border-radius: 5px;
-}
-.mdc-button.load-file-button {
-  background: #00c0ff;
-  color: black;
-}
-/* 
-@media all and (min-width:960px) and (max-width: 1024px) {
-  body {
-    font-size: 5em;
-  }
-  
-  .mdc-top-app-bar__row {
-    height: 3em;
-  }
-  * {
-    font-size: 1em;
-  }
-} */
-
 
 table {
   border-collapse: collapse;
@@ -81,4 +78,155 @@ tbody tr:nth-of-type(even) {
 
 tbody tr:last-of-type {
   border-bottom: 2px solid #f1c179;
+}
+
+
+.card-list {
+  overflow-y: auto;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #090909d4;
+}
+.card-list .card-item {
+  color: black;
+  border: 1px solid #c8c8c8;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+  background-color: #fffae1;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 100ms linear, box-shadow 100ms linear;
+}
+.card-list .card-item:hover {
+  box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.7);
+  transform: translate(-2px, -2px);
+}
+.card-list .card-item:not(.card-selected):active {
+  color: white;
+  background-color: black;
+  box-shadow: initial;
+  transform: initial;
+}
+.card-list .card-item.card-selected {
+  background-color: white;
+  box-shadow: initial;
+  transform: initial;
+  border: 1px solid #999999;
+}
+
+.card-image-info {
+  font-size: 12px;
+}
+
+.card-data {
+  flex-grow: 1;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  animation: fadeIn 500ms;
+}
+
+[class^="card-content"]:last-child {
+  flex-grow: 1;
+}
+[class^="card-content"]::after {
+  content: "";
+  position: absolute;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  top: -1px;
+  left: -1px;
+  background: linear-gradient(to right, var(--corner-color) var(--corner-size), transparent var(--corner-size)) 0 0,
+              linear-gradient(to right, var(--corner-color) var(--corner-size), transparent var(--corner-size)) 0 100%,
+              linear-gradient(to left, var(--corner-color) var(--corner-size), transparent var(--corner-size)) 100% 0, 
+              linear-gradient(to left, var(--corner-color) var(--corner-size), transparent var(--corner-size)) 100% 100%, 
+              linear-gradient(to bottom, var(--corner-color) var(--corner-size), transparent var(--corner-size)) 0 0, 
+              linear-gradient(to bottom, var(--corner-color) var(--corner-size), transparent var(--corner-size)) 100% 0, 
+              linear-gradient(to top, var(--corner-color) var(--corner-size), transparent var(--corner-size)) 0 100%, 
+              linear-gradient(to top, var(--corner-color) var(--corner-size), transparent var(--corner-size)) 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+  pointer-events: none;
+}
+
+[class^="card-content"] {
+  position: relative;
+  padding: 16px;
+  border: 1px solid #959595;
+  background-color: #090909d4;
+}
+
+.card-details {
+  position: fixed;
+  padding: 0 40px 0 0;
+}
+
+.card-requirements {
+  margin: 10px 0;
+}
+
+.card-type {
+  font-family: "YGO Attributes, Types, Spell and Trap";
+}
+
+.card-title {
+  font-family: "YGO Names";
+  font-size: 28px;
+}
+.card-title, .card-level-rank, .card-type {
+  padding: 5px;
+}
+
+
+.bg-black {
+  background-color: black;
+}
+.bg-gray-gradient {
+  background: linear-gradient(to right, black, #575757a3) 0 0, 
+              linear-gradient(to bottom, #a3a3a3, #00000042) 0 0, 
+              linear-gradient(to top, #bdbdbd, #000000) 0 0;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: calc(100% - 20px);
+  padding: 10px;
+}
+
+.layout-header {
+  font-family: "YGO Names";
+  font-size: 42px;
+  text-align: center;
+  padding: 10px;
+  backdrop-filter: blur(2px) brightness(1000%);
+  background-color: #000000b8;
+}
+
+.layout-content {
+  overflow: auto;
+  flex-grow: 1;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.layout-footer {
+  font-family: "YGO Names";
+  text-align: center;
+  padding: 10px;
+  background-color: #8080801c;
+  border-radius: 8px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .layout-menu, .layout-content {
+    width: 100%;
+  }
 }
