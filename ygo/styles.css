@@ -442,4 +442,10 @@ tbody tr:last-of-type {
   .layout-footer {
     flex-direction: column;
   }
+  .card-description {
+    display: contents;
+  }
+  .card-prices {
+    min-height: 300px;
+  }
 }
