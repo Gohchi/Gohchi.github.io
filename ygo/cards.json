@@ -1,5 +1,20 @@
 [
   {
+    "name": "Cyber Dragon",
+    "print_tag": "SDCR-EN026",
+    "rarity": "Common"
+  },
+  {
+    "name": "Cyber End Dragon",
+    "print_tag": "SDCR-EN026",
+    "rarity": "Common"
+  },
+  {
+    "name": "Cyber Dragon Nova",
+    "print_tag": "SDCR-EN026",
+    "rarity": "Common"
+  },
+  {
     "name": "Mystical Space Typhoon",
     "print_tag": "SDCR-EN026",
     "rarity": "Common"

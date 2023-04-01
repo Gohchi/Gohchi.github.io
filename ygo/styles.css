@@ -165,9 +165,9 @@ tbody tr:last-of-type {
   padding: 0 40px 0 0;
 }
 
-.card-requirements {
+/* .card-requirements {
   margin: 10px 0;
-}
+} */
 
 .card-type {
   font-family: "YGO Attributes, Types, Spell and Trap";
@@ -181,6 +181,61 @@ tbody tr:last-of-type {
   padding: 5px;
 }
 
+.card-level, .card-rank {
+  width: 24px;
+  height: 24px;
+  background-size: 24px;
+  display: inline-block;
+}
+.card-level {
+  background-image: url(./assets/img/Level_Star.svg);
+}
+.card-rank {
+  background-image: url(./assets/img/Rank_Star.svg);
+}
+
+[class^="card-attribute-"] {
+  background-image: url(./assets/img/attributes.png);
+  width: 30px;
+  height: 30px;
+  background-size: 90px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
+  z-index: 1;
+  transition: transform 1s, z-index 1s;
+}
+[class^="card-attribute-"]:hover {
+  transform: scale(10) translate(-12px, 12px);
+}
+.card-attribute-wind {
+  background-position: 0px 0px;
+}
+.card-attribute-water {
+  background-position: 0px 30px;
+}
+.card-attribute-earth {
+  background-position: 0px 60px;
+}
+.card-attribute-fire {
+  background-position: 30px 0px;
+}
+.card-attribute-dark {
+  background-position: 30px 30px;
+}
+.card-attribute-light {
+  background-position: 30px 60px;
+}
+.card-attribute-divine {
+  background-position: 60px 0px;
+}
+.card-attribute-spell {
+  background-position: 60px 30px;
+}
+.card-attribute-trap {
+  background-position: 60px 60px;
+}
 
 .bg-black {
   background-color: black;
@@ -217,11 +272,16 @@ tbody tr:last-of-type {
 }
 
 .layout-footer {
+  display: flex;
   font-family: "YGO Names";
   text-align: center;
   padding: 10px;
   background-color: #8080801c;
   border-radius: 8px;
+}
+
+.layout-footer > * {
+  flex: 1;
 }
 
 

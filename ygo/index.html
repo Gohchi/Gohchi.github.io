@@ -16,7 +16,7 @@
       }
     </script>
     <script type="module">
-      import { createApp, onMounted, ref } from 'vue';
+      import { createApp, onMounted } from 'vue';
       import { getAPI } from '/modules/Tools.js';
       import cards from './cards.json' assert {type: 'json'};
       
@@ -36,13 +36,23 @@
             setTimeout(() => {
               this.selectedCard = card;
             }, 0);
-          }
+
+            getAPI('yugiohprices.com/api/card_data/' + card.name)
+              .then( ({ data }) => {
+                console.log(data);
+                this.selectedCardData = data;
+                setTimeout(() => {
+                  this.$refs.textRef.innerText = data.text;
+                }, 0);
+              } );
+          },
         },
-        setup() {
-          return {
-            cardRef: ref([])
-          };
-        },
+        // setup() {
+        //   return {
+        //     cardRef: ref([]),
+        //     textRef: ref({})
+        //   };
+        // },
         mounted() {
           /* Options API */
           // getAPI(
@@ -60,7 +70,8 @@
             bgSvgMode: false,
             showBook: window.innerWidth > 1200,
             cards: cards,
-            selectedCard: undefined
+            selectedCard: undefined,
+            selectedCardData: undefined
           }
         }
       }).mount('#app');
@@ -95,31 +106,30 @@
             <div class="card-title bg-gray-gradient">
               {{ selectedCard.name }}
             </div>
-            <div class="card-element">
-              {{ selectedCard.element }}
-            </div>
+            <div :class="{ ['card-attribute-' + selectedCardData.family]: true }" v-if="selectedCardData"></div>
           </div>
-          <div class="card-content-middle">
+          <div class="card-content-middle" v-if="selectedCardData">
             <div class="card-level-rank bg-black">
-              <div>LV8 {{ selectedCard.print_tag }} {{ selectedCard.rarity }}</div>
+              <div :class="{ 'card-level': !selectedCardData.type.includes('Xyz'), 'card-rank': !!selectedCardData.type.includes('Xyz') }" v-if="selectedCardData"></div>{{ selectedCardData.level }} CARD TYPE: {{ selectedCardData.card_type }} PRINT TAG: {{ selectedCard.print_tag }} RARITY: {{ selectedCard.rarity }}</div>
             </div>
             <div class="card-attack-defense">
-              <div>1000 1000</div>
+              <div>ATK/{{ selectedCardData.atk }} DEF/{{ selectedCardData.def}}</div>
             </div>
           </div>
-          <div class="card-content-bottom">
+          <div class="card-content-bottom" v-if="selectedCardData">
             <div class="card-type bg-black">
-              [Machine/Xyz/Effect]
+              [{{ selectedCardData.type }}]
             </div>
             <div class="card-description">
-              <div class="card-requirements">3 Level 6 LIGHT Machine-Type monsters</div>
-              <div class="card-details">Once per turn, you can also Xyz Summon "Cyber Dragon Infinity" by using "Cyber Dragon Nova" you control as material. (Transfer its materials to this card.) Gains 200 ATK for each material attached to it. Once per turn: You can target 1 face-up Attack Position monster on the field; attach it to this card as material. Once per turn, when a card or effect is activated (Quick Effect): You can detach 1 material from this card; negate the activation, and if you do, destroy it.</div>
+              <!-- <div class="card-requirements">3 Level 6 LIGHT Machine-Type monsters</div> -->
+              <div class="card-details" ref="textRef"></div>
             </div>
           </div>
         </div>
       </div>
       <div class="layout-footer">
-        Thanks to <a href="http://yugiohprices.com" target="_blank">yugiohprices.com</a> for their amazing data source. &#128151;
+        <span>Thankks to <a href="https://www.deviantart.com/aaiki/art/Hi-Res-Yugioh-Attributes-836887394" target="_blank">aaiki</a> for the Hi-Res Attribute icons</span>
+        <span>Thanks to <a href="http://yugiohprices.com" target="_blank">yugiohprices.com</a> for their amazing data source. &#128151;</span>
       </div>
 
 
