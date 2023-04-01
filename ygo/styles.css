@@ -387,7 +387,7 @@ tbody tr:last-of-type {
 
 .layout-content {
   overflow: auto;
-  overflow-y: hidden;
+  overflow-x: hidden;
   flex-grow: 1;
   display: flex;
   gap: 10px;
@@ -409,7 +409,21 @@ tbody tr:last-of-type {
 
 
 @media screen and (max-width: 600px) {
-  .layout-menu, .layout-content {
+  .layout-content {
+    flex-direction: column;
+  }
+
+  .card-list {
+    min-height: 300px
+  }
+  .card-image {
     width: 100%;
+  }
+  .card-details {
+    position: initial;
+    padding: 0;
+  }
+  .layout-footer {
+    flex-direction: column;
   }
 }

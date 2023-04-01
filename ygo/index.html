@@ -108,7 +108,8 @@
             selectedCard: undefined,
             selectedCardData: undefined,
             selectedCardImage: undefined,
-            cardImageIsLoading: false
+            cardImageIsLoading: false,
+            showCredits: false
           }
         }
       }).mount('#app');
@@ -178,8 +179,9 @@
         </div>
       </div>
       <div class="layout-footer">
-        <span>Thankks to <a href="https://www.deviantart.com/aaiki/art/Hi-Res-Yugioh-Attributes-836887394" target="_blank">aaiki</a> for the Hi-Res Attribute icons</span>
-        <span>Thanks to <a href="http://yugiohprices.com" target="_blank">yugiohprices.com</a> for their amazing data source. &#128151;</span>
+        <span v-if="!showCredits" @click="showCredits=true">Top to watch the credits</span>
+        <span v-if="showCredits">Thankks to <a href="https://www.deviantart.com/aaiki/art/Hi-Res-Yugioh-Attributes-836887394" target="_blank">aaiki</a> for the Hi-Res Attribute icons.</span>
+        <span v-if="showCredits">Thanks to <a href="http://yugiohprices.com" target="_blank">yugiohprices.com</a> for their amazing data source. &#128151;</span>
       </div>
 
 
