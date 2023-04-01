@@ -40,8 +40,9 @@ body {
   width: 100%;
   margin: 0;
   color: white;
-  background: url(./assets/img/xyz-bg.png) 0 0 repeat;
+  background-image: url(./assets/img/xyz-bg.png);
   background-size: cover;
+  background-attachment: fixed;
 }
 
 a {
@@ -409,6 +410,9 @@ tbody tr:last-of-type {
 
 
 @media screen and (max-width: 600px) {
+  body {
+    background-image: url(./assets/img/xyz-bg-v.png);
+  }
   .layout-content {
     flex-direction: column;
   }
