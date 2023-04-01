@@ -154,7 +154,7 @@ tbody tr:last-of-type {
 [class^="card-content"]:last-child {
   flex-grow: 1;
 }
-[class^="card-content"]::after {
+[class^="card-content"]::after, .card-prices::after {
   content: "";
   position: absolute;
   width: calc(100% + 2px);
@@ -174,7 +174,7 @@ tbody tr:last-of-type {
   pointer-events: none;
 }
 
-[class^="card-content"] {
+[class^="card-content"], .card-prices {
   position: relative;
   padding: 16px;
   border: 1px solid #959595;
@@ -286,9 +286,8 @@ tbody tr:last-of-type {
 }
 
 
-.card-details {
-  position: fixed;
-  padding: 0 40px 0 0;
+.card-description {
+  position: absolute;
 }
 
 /* .card-requirements {
@@ -366,6 +365,23 @@ tbody tr:last-of-type {
   background-position: 60px 60px;
 }
 
+.card-prices {
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.card-price-item {
+  border: 1px solid #c8c8c8;
+  padding: 20px;
+  border-radius: 6px;
+}
+.card-owned-price {
+  padding-bottom: 10px;
+  border-color: yellow;
+}
+
 .bg-black {
   background-color: black;
 }
@@ -422,10 +438,6 @@ tbody tr:last-of-type {
   }
   .card-image {
     width: 100%;
-  }
-  .card-details {
-    position: initial;
-    padding: 0;
   }
   .layout-footer {
     flex-direction: column;
