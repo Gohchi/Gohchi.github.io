@@ -1,0 +1,1783 @@
+{
+  "id": "646acc2cc977128d1503d3ef",
+  "address": null,
+  "badges": {
+    "attachmentsByType": {
+      "trello": {
+        "board": 0,
+        "card": 0
+      }
+    },
+    "location": false,
+    "votes": 0,
+    "viewingMemberVoted": false,
+    "subscribed": false,
+    "fogbugz": "",
+    "checkItems": 24,
+    "checkItemsChecked": 13,
+    "checkItemsEarliestDue": null,
+    "comments": 0,
+    "attachments": 0,
+    "description": true,
+    "due": null,
+    "dueComplete": false,
+    "start": null
+  },
+  "checkItemStates": [
+    {
+      "idCheckItem": "646acdd171474f6fdf81703f",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "646ace574d4b545c6d5e2236",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "646ace830f200f3aabb378b2",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "646acf6cfcc3d165a95981fd",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "646acf9ff0f902a75647cd0c",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "654934c7ac7e4bbcb9d01a97",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "65493598cba74c91a213c441",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "6549360888ad91eed5e42055",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "65493633626855d14011d578",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "6549389d805ae14252a2ba5a",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "654938d278ecbcaf22f280f9",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "654938f89332ad13b8b5f3af",
+      "state": "complete"
+    },
+    {
+      "idCheckItem": "65493901f6b6539dcfcd7f48",
+      "state": "complete"
+    }
+  ],
+  "closed": false,
+  "coordinates": null,
+  "creationMethod": null,
+  "dueComplete": false,
+  "dateLastActivity": "2023-11-08T01:45:47.296Z",
+  "desc": "# Biblioteca de Ciencia Ficción\n\n(Serie azul y plata)\n\n### Editorial: Hyspamérica (Argentina)\n\nInfo: [https://tercerafundacion.net/biblioteca/ver/coleccion/3836](https://tercerafundacion.net/biblioteca/ver/coleccion/3836 \"‌\")",
+  "descData": {
+    "emoji": {}
+  },
+  "due": null,
+  "dueReminder": null,
+  "email": "marshallin+2rxuga148m720uu5uj8+30gvnmaaan7vld4dxpr+0nld85ovfb@boards.trello.com",
+  "idBoard": "5c8b1949778ff84355cf2ec8",
+  "idChecklists": [
+    "646acc7d3e770ed10aef1516"
+  ],
+  "idLabels": [],
+  "idList": "5c8b250b8368911e93f4fe11",
+  "idMembers": [],
+  "idMembersVoted": [],
+  "idOrganization": "607d8d7496054d56d8cb7d38",
+  "idShort": 48,
+  "idAttachmentCover": null,
+  "labels": [],
+  "limits": {
+    "attachments": {
+      "perCard": {
+        "status": "ok",
+        "disableAt": 1000,
+        "warnAt": 800
+      }
+    },
+    "checklists": {
+      "perCard": {
+        "status": "ok",
+        "disableAt": 500,
+        "warnAt": 400
+      }
+    },
+    "stickers": {
+      "perCard": {
+        "status": "ok",
+        "disableAt": 70,
+        "warnAt": 56
+      }
+    }
+  },
+  "locationName": null,
+  "manualCoverAttachment": true,
+  "name": "Biblioteca de Ciencia Ficción",
+  "nodeId": "ari:cloud:trello::card/workspace/607d8d7496054d56d8cb7d38/646acc2cc977128d1503d3ef",
+  "pos": 294911,
+  "shortLink": "jGWkp7uy",
+  "shortUrl": "https://trello.com/c/jGWkp7uy",
+  "staticMapUrl": null,
+  "start": null,
+  "subscribed": false,
+  "url": "https://trello.com/c/jGWkp7uy/48-biblioteca-de-ciencia-ficci%C3%B3n",
+  "cover": {
+    "idAttachment": null,
+    "color": null,
+    "idUploadedBackground": "646ad0cf65db8124109e09f0",
+    "size": "full",
+    "brightness": "dark",
+    "scaled": [
+      {
+        "_id": "646ad0cf65db8124109e09f1",
+        "id": "646ad0cf65db8124109e09f1",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/123x100/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 5508,
+        "height": 100,
+        "width": 123
+      },
+      {
+        "_id": "646ad0cf65db8124109e09f2",
+        "id": "646ad0cf65db8124109e09f2",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/236x192/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 9588,
+        "height": 192,
+        "width": 236
+      },
+      {
+        "_id": "646ad0cf65db8124109e09f3",
+        "id": "646ad0cf65db8124109e09f3",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x391/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 22871,
+        "height": 391,
+        "width": 480
+      },
+      {
+        "_id": "646ad0cf65db8124109e09f4",
+        "id": "646ad0cf65db8124109e09f4",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/960x783/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 62000,
+        "height": 783,
+        "width": 960
+      },
+      {
+        "_id": "646ad0cf65db8124109e09f5",
+        "id": "646ad0cf65db8124109e09f5",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1024x835/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 68234,
+        "height": 835,
+        "width": 1024
+      },
+      {
+        "_id": "646ad0cf65db8124109e09f7",
+        "id": "646ad0cf65db8124109e09f7",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1280x1044/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 94861,
+        "height": 1044,
+        "width": 1280
+      },
+      {
+        "_id": "646ad0cf65db8124109e09f8",
+        "id": "646ad0cf65db8124109e09f8",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1920x1565/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 174748,
+        "height": 1565,
+        "width": 1920
+      },
+      {
+        "_id": "646ad0cf65db8124109e09f9",
+        "id": "646ad0cf65db8124109e09f9",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1963x1600/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 180895,
+        "height": 1600,
+        "width": 1963
+      },
+      {
+        "_id": "646ad0cf65db8124109e09f6",
+        "id": "646ad0cf65db8124109e09f6",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2048x1670/5e8161035cc847f85cb18f3d34b71212/photo-1595524288414-a7fda0a12d0c.jpg",
+        "bytes": 192634,
+        "height": 1670,
+        "width": 2048
+      },
+      {
+        "_id": "646ad0cf65db8124109e09fa",
+        "id": "646ad0cf65db8124109e09fa",
+        "scaled": true,
+        "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/original/87ca035f809b2b3d771c46961a6cb431/photo-1595524288414-a7fda0a12d0c",
+        "bytes": 419531,
+        "height": 2048,
+        "width": 2512
+      }
+    ],
+    "edgeColor": "#060608",
+    "sharedSourceUrl": "https://images.unsplash.com/flagged/photo-1595524288414-a7fda0a12d0c?ixid=M3w3MDY2fDB8MXxzZWFyY2h8MXx8c2NpZml8ZW58MXx8fHwxNjg0NzIxODI4fDA&ixlib=rb-4.0.3&w=2560&h=2048&q=90",
+    "idPlugin": null
+  },
+  "isTemplate": false,
+  "cardRole": null,
+  "checklists": [
+    {
+      "id": "646acc7d3e770ed10aef1516",
+      "name": "Must have",
+      "idBoard": "5c8b1949778ff84355cf2ec8",
+      "idCard": "646acc2cc977128d1503d3ef",
+      "pos": 16384,
+      "limits": {
+        "checkItems": {
+          "perChecklist": {
+            "status": "ok",
+            "disableAt": 200,
+            "warnAt": 160
+          }
+        }
+      },
+      "checkItems": [
+        {
+          "id": "646accb2f007c3b9a59bb4c5",
+          "name": "23 - Metrópolis (1925) Thea von Harbou",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 195615,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acd23468f7a1b26667872",
+          "name": "91 - El hombre en el castillo (1962) Philip K. Dick",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 400770,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acd602433154ce4ebb40a",
+          "name": "72 - ¿Sueñan los androides con ovejas eléctricas? (1968) Philip K. Dick",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 335234,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acd93cfb7475017733b10",
+          "name": "53 - Los robots (1986) Isaac Asimov",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 269698,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acdd171474f6fdf81703f",
+          "name": "1 - El fin de la Eternidad (1955) Isaac Asimov",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 8565.5,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646ace574d4b545c6d5e2236",
+          "name": "2 - 2001. Una odisea espacial (1968) Arthur C. Clarke",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 12848.25,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646ace830f200f3aabb378b2",
+          "name": "5 - Mundo Anillo (1970) Larry Niven",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 14989.625,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acecd464a61694d3f4819",
+          "name": "7 - El sol desnudo (1956) Isaac Asimov",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 85162,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acee70029a5956272da3f",
+          "name": "8 - Fahrenheit 451 (1953) Ray Bradbury",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 102177,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acf0b5db0d747a0e73153",
+          "name": "13 - Bóvedas de acero (1953) Isaac Asimov",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 119528,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acf2b1f48d99574a148f0",
+          "name": "15 - Un mundo feliz (1932) Aldous Huxley",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 136639,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acf6cfcc3d165a95981fd",
+          "name": "16 - Empotrados (1973) Ian Watson",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 153424,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acf9ff0f902a75647cd0c",
+          "name": "17 - Ubik (1969) Philip K. Dick",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 170594,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acfc1abc437746ea2cb13",
+          "name": "22 - Ojo en el cielo (1957) Philip K. Dick",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 187068,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "646acff0a485e7dbf8d200c0",
+          "name": "29 - El hombre del bicentenario (1976) Isaac Asimov",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 204162,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "654934c7ac7e4bbcb9d01a97",
+          "name": "3 - Tropas del espacio (1959) Robert A. Heinlein",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 13918.9375,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "65493598cba74c91a213c441",
+          "name": "4 - Estación de tránsito (1963) Clifford D. Simak",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 14454.28125,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "6549360888ad91eed5e42055",
+          "name": "6 - El planeta de los simios (1963) Pierre Boulle",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 15524.96875,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "65493633626855d14011d578",
+          "name": "14 - Un caso de conciencia (1958) James Blish",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 128083.5,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "6549389d805ae14252a2ba5a",
+          "name": "20 - Los amantes (1961) Philip Jose Farmer",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 178831,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "654938d278ecbcaf22f280f9",
+          "name": "35 - Computer connection (1975) Alfred Bester",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 236930,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "654938f89332ad13b8b5f3af",
+          "name": "48 - La edad de oro de la ciencia ficción I - Isaac Asimov",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 253314,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "65493901f6b6539dcfcd7f48",
+          "name": "50 - La edad de oro de la ciencia ficción III - Isaac Asimov",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 261506,
+          "state": "complete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        },
+        {
+          "id": "654ae7abd242df92e26d9e31",
+          "name": "49 - La edad de oro de la ciencia ficción II - Isaac Asimov",
+          "nameData": {
+            "emoji": {}
+          },
+          "pos": 257410,
+          "state": "incomplete",
+          "due": null,
+          "dueReminder": null,
+          "idMember": null,
+          "idChecklist": "646acc7d3e770ed10aef1516"
+        }
+      ],
+      "creationMethod": null
+    }
+  ],
+  "customFieldItems": [],
+  "members": [],
+  "pluginData": [],
+  "actions": [
+    {
+      "id": "654939195a09b8c44b869b70",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "card": {
+          "desc": "# Biblioteca de Ciencia Ficción\n\n(Serie azul y plata)\n\n### Editorial: Hyspamérica (Argentina)\n\nInfo: [https://tercerafundacion.net/biblioteca/ver/coleccion/3836](https://tercerafundacion.net/biblioteca/ver/coleccion/3836 \"‌\")",
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "old": {
+          "desc": "# Biblioteca de Ciencia Ficción\n\n(Serie azul)\n\n### Editorial: Hyspamérica (Argentina)\n\nInfo: [https://tercerafundacion.net/biblioteca/ver/coleccion/3836](https://tercerafundacion.net/biblioteca/ver/coleccion/3836 \"‌\")"
+        },
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "list": {
+          "id": "5c8b250b8368911e93f4fe11",
+          "name": "Colecciones"
+        }
+      },
+      "appCreator": null,
+      "type": "updateCard",
+      "date": "2023-11-06T19:06:01.393Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "65493909dbfe36576c52f826",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "65493901f6b6539dcfcd7f48",
+          "name": "50 - La edad de oro de la ciencia ficción III - Isaac Asimov",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T19:05:45.426Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "65493909c651b6a3ce3f8a74",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "654938f89332ad13b8b5f3af",
+          "name": "48 - La edad de oro de la ciencia ficción I - Isaac Asimov",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T19:05:45.159Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "654938dbe3c8e98f5d9f9658",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "654938d278ecbcaf22f280f9",
+          "name": "35 - Computer connection (1975) Alfred Bester",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T19:04:59.227Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "654938b44da330dc17021595",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "6549389d805ae14252a2ba5a",
+          "name": "20 - Los amantes (1961) Philip Jose Farmer",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T19:04:20.565Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "65493659b367395d7c8fd2a1",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "646acf9ff0f902a75647cd0c",
+          "name": "17 - Ubik (1986) Philip K. Dick",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T18:54:17.640Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "6549364f97c5a4e8bc41900a",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "65493633626855d14011d578",
+          "name": "14 - Un caso de conciencia (1958) James Blish",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T18:54:07.487Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "6549361d4bea287cfa32d466",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "646aceac295887613dce393d",
+          "name": "6 - El planeta de los simios (1986) Pierre Boulle",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T18:53:17.164Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "65493609de0cdb6cfc38071b",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "6549360888ad91eed5e42055",
+          "name": "6 - El planeta de los simios (1963) Pierre Boulle",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T18:52:57.252Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "6549359b147dfd38988b9fe0",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "65493598cba74c91a213c441",
+          "name": "4 - Estación de tránsito (1963) Clifford D. Simak",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T18:51:07.827Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "654934cd4a14e77e50813eb7",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "654934c7ac7e4bbcb9d01a97",
+          "name": "3 - Tropas del espacio",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-11-06T18:47:41.330Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646ad1b4a37199708a67fcdc",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "card": {
+          "desc": "# Biblioteca de Ciencia Ficción\n\n(Serie azul)\n\n### Editorial: Hyspamérica (Argentina)\n\nInfo: [https://tercerafundacion.net/biblioteca/ver/coleccion/3836](https://tercerafundacion.net/biblioteca/ver/coleccion/3836 \"‌\")",
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "old": {
+          "desc": "# Biblioteca de Ciencia Ficción\n\n(Serie azul)\n\n### Editorial: Hyspamérica (Argentina)"
+        },
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "list": {
+          "id": "5c8b250b8368911e93f4fe11",
+          "name": "Colecciones"
+        }
+      },
+      "appCreator": null,
+      "type": "updateCard",
+      "date": "2023-05-22T02:21:40.026Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646ad0cf65db8124109e0a06",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "old": {
+          "cover": {
+            "color": null,
+            "idAttachment": null,
+            "idUploadedBackground": "646ad0c058ce9f49b1bb4ada",
+            "size": "full",
+            "brightness": "dark",
+            "plugin": null,
+            "url": "https://images.unsplash.com/photo-1577579566473-0fe27da2d1f2?ixid=M3w3MDY2fDB8MXxzZWFyY2h8MTEzfHxzY2lmaXxlbnwxfHx8fDE2ODQ3MjE4NDR8MA&ixlib=rb-4.0.3&w=2560&h=2048&q=90"
+          }
+        },
+        "card": {
+          "cover": {
+            "color": null,
+            "idAttachment": null,
+            "idUploadedBackground": "646ad0cf65db8124109e09f0",
+            "size": "full",
+            "brightness": "dark",
+            "plugin": null
+          },
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "list": {
+          "id": "5c8b250b8368911e93f4fe11",
+          "name": "Colecciones"
+        },
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        }
+      },
+      "appCreator": null,
+      "type": "updateCard",
+      "date": "2023-05-22T02:17:51.561Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646ad0c26941dfa3d5352c0a",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "old": {
+          "cover": {
+            "color": null,
+            "idAttachment": null,
+            "idUploadedBackground": "646ad0c058ce9f49b1bb4ada",
+            "size": "normal",
+            "brightness": "dark",
+            "plugin": null
+          }
+        },
+        "card": {
+          "cover": {
+            "color": null,
+            "idAttachment": null,
+            "idUploadedBackground": "646ad0c058ce9f49b1bb4ada",
+            "size": "full",
+            "brightness": "dark",
+            "plugin": null
+          },
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "list": {
+          "id": "5c8b250b8368911e93f4fe11",
+          "name": "Colecciones"
+        },
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        }
+      },
+      "appCreator": null,
+      "type": "updateCard",
+      "date": "2023-05-22T02:17:38.605Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646ad0c058ce9f49b1bb4ae5",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "old": {
+          "cover": {
+            "color": null,
+            "idAttachment": null,
+            "idUploadedBackground": null,
+            "size": "normal",
+            "brightness": "dark",
+            "plugin": null
+          }
+        },
+        "card": {
+          "cover": {
+            "color": null,
+            "idAttachment": null,
+            "idUploadedBackground": "646ad0c058ce9f49b1bb4ada",
+            "size": "normal",
+            "brightness": "dark",
+            "plugin": null
+          },
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "list": {
+          "id": "5c8b250b8368911e93f4fe11",
+          "name": "Colecciones"
+        },
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        }
+      },
+      "appCreator": null,
+      "type": "updateCard",
+      "date": "2023-05-22T02:17:36.101Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646ad06fe4452c57bcbd9d44",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "646acd934139c35db7d73ef8",
+          "name": "Isaac Asimov",
+          "state": "incomplete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-05-22T02:16:15.072Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646ad06b549c387ab5176734",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "646acd934139c35db7d73ef8",
+          "name": "Isaac Asimov",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-05-22T02:16:11.274Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646acf6ef5a5e741a5aa1092",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "646acf6cfcc3d165a95981fd",
+          "name": "16 - Empotrados (1986) Ian Watson",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-05-22T02:11:58.072Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646ace85c2a71662590eb8c5",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "646ace830f200f3aabb378b2",
+          "name": "5 - Mundo Anillo (1986) Larry Niven",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-05-22T02:08:05.727Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646ace5a6f5ce279eef573bc",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "646ace574d4b545c6d5e2236",
+          "name": "02 - 2001. Una odisea espacial (1985) Arthur C. Clarke",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-05-22T02:07:22.270Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646acddbd624c37c1d67d866",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "checkItem": {
+          "id": "646acdd171474f6fdf81703f",
+          "name": "01 - El fin de la Eternidad (1986) Isaac Asimov",
+          "state": "complete",
+          "textData": {
+            "emoji": {}
+          }
+        }
+      },
+      "appCreator": null,
+      "type": "updateCheckItemStateOnCard",
+      "date": "2023-05-22T02:05:15.896Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646acc7d3e770ed10aef1544",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "checklist": {
+          "id": "646acc7d3e770ed10aef1516",
+          "name": "Must have"
+        },
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        }
+      },
+      "appCreator": null,
+      "type": "addChecklistToCard",
+      "date": "2023-05-22T01:59:25.080Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646acc6d5c2ac3477020d547",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "card": {
+          "desc": "# Biblioteca de Ciencia Ficción\n\n(Serie azul)\n\n### Editorial: Hyspamérica (Argentina)",
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "old": {
+          "desc": ""
+        },
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        },
+        "list": {
+          "id": "5c8b250b8368911e93f4fe11",
+          "name": "Colecciones"
+        }
+      },
+      "appCreator": null,
+      "type": "updateCard",
+      "date": "2023-05-22T01:59:09.774Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    },
+    {
+      "id": "646acc2cc977128d1503d3f9",
+      "idMemberCreator": "5c8585048cf225196b3fbfd4",
+      "data": {
+        "card": {
+          "id": "646acc2cc977128d1503d3ef",
+          "name": "Biblioteca de Ciencia Ficción",
+          "idShort": 48,
+          "shortLink": "jGWkp7uy"
+        },
+        "list": {
+          "id": "5c8b250b8368911e93f4fe11",
+          "name": "Colecciones"
+        },
+        "board": {
+          "id": "5c8b1949778ff84355cf2ec8",
+          "name": "Tycho",
+          "shortLink": "uNyscKvI"
+        }
+      },
+      "appCreator": null,
+      "type": "createCard",
+      "date": "2023-05-22T01:58:04.845Z",
+      "limits": null,
+      "memberCreator": {
+        "id": "5c8585048cf225196b3fbfd4",
+        "activityBlocked": false,
+        "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3",
+        "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+        "fullName": "Martín Farias",
+        "idMemberReferrer": null,
+        "initials": "MF",
+        "nonPublic": {
+          "fullName": "Martín Farias",
+          "initials": "MF",
+          "avatarUrl": "https://trello-members.s3.amazonaws.com/5c8585048cf225196b3fbfd4/825d7c9e6bcc647a53f2a5956c7a21a3",
+          "avatarHash": "825d7c9e6bcc647a53f2a5956c7a21a3"
+        },
+        "nonPublicAvailable": true,
+        "username": "marshallin"
+      }
+    }
+  ]
+}
