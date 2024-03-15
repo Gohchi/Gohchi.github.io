@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
+
+		<title>👾Portfolio</title>
+		<!-- <link rel="stylesheet" href="../site.css"> -->
+		<link rel="shortcut icon" type="image/png" href="../favicon.png"/>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .credits {
+        color: white;
+        position: fixed;
+        bottom: 8px;
+        left: 8px;
+        font-family: monospace;
+        font-size: 10px;
+
+        & > span {
+          color: #61cdff;
+        }
+      }
+    </style>
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "../modules/threejs/three.module.js",
+					"three/addons/": "../modules/threejs/jsm/"
+				}
+			}
+		</script>
+    <script type="module">
+      import { init } from '../modules/Portrait.js';
+			
+      init('portrait');
+    </script>
+	</head>
+	<body>
+    <div id="portrait"></div>
+    <a class="credits" href="https://www.artstation.com/a/36575987">Background by <span>Maxime Galland</span></a>
+	</body>
+</html>
