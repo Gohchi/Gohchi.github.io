@@ -32,7 +32,7 @@
         data() {
           return {
             bgSvgMode: false,
-            showBook: window.innerWidth > 1200,
+            showBook: false, //window.innerWidth > 1200,
             projects: [
               { id: 'project01', url: 'https://github.com/Gohchi/', title: 'Go to Github♥', text: 'Check my repos!' },
               { id: 'project02', url: 'https://slots-marshall-lee.vercel.app/', title: 'A simple slots game demo in Phaser 3.', text: 'SLOTS game made in Phaser 3' },
@@ -76,7 +76,7 @@
       </div>	
         
       <footer>
-        <button
+        <!-- <button
           @click="bgSvgMode=!bgSvgMode"
           :title="bgSvgMode ? 'I couldn\' found the owner to give the credits :C' : 'Under construction hehe'"
           class="button-toggle"
@@ -88,7 +88,7 @@
           class="button-toggle"
         >
           {{ (showBook ? 'hide' : 'show') + ' book' }}
-        </button>
+        </button> -->
         <p class="thanks">Thank you for visiting my site!</p>
       </footer>
       <book :show="showBook"></book>

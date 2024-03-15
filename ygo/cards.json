@@ -1,11 +1,26 @@
 [
   {
+    "name": "Cyber Dragon Infinity",
+    "print_tag": "SDCR-EN026",
+    "rarity": "Common"
+  },
+  {
     "name": "Red-Eyes Black Dragon",
     "print_tag": "SDCR-EN026",
     "rarity": "Common"
   },
   {
     "name": "Cyber Dragon",
+    "print_tag": "SDCR-EN026",
+    "rarity": "Rare"
+  },
+  {
+    "name": "Cyber Dragon Vier",
+    "print_tag": "SDCR-EN026",
+    "rarity": "Rare"
+  },
+  {
+    "name": "Cyber Dragon Nachster",
     "print_tag": "SDCR-EN026",
     "rarity": "Rare"
   },
