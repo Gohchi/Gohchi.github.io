@@ -23,28 +23,18 @@ export function init(id) {
 
     return { ambientLight, mainLight };
   }
+  
+  const loader = new GLTFLoader().setPath(RESOURCES_PATH);
+  loader.load('Portrait.glb', async function (gltf) {
+    const model = gltf.scene;
 
-  new THREE.TextureLoader()
-    .setPath(RESOURCES_PATH)
-    .load( "HDR-PROXY-Jupiter-sky.png", function ( texture ) {
-      texture.mapping = THREE.EquirectangularReflectionMapping;
+    await renderer.compileAsync(model, camera, scene);
 
-      scene.background = texture;
-      scene.environment = texture;
-      render();
+    const { ambientLight, mainLight } = createLights();
+    scene.add(ambientLight, mainLight, model);
 
-      const loader = new GLTFLoader().setPath(RESOURCES_PATH);
-      loader.load('Portrait.glb', async function (gltf) {
-        const model = gltf.scene;
-    
-        await renderer.compileAsync(model, camera, scene);
-    
-        const { ambientLight, mainLight } = createLights();
-        scene.add(ambientLight, mainLight, model);
-    
-        render();
-      });
-    });
+    render();
+  });
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
