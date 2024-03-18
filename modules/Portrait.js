@@ -10,9 +10,9 @@ export function init(id) {
   const container = document.getElementById(id);
   document.body.appendChild(container);
 
-  camera = new THREE.PerspectiveCamera(1.5, window.innerWidth / window.innerHeight, 1, 2000);
+  camera = new THREE.PerspectiveCamera(1, window.innerWidth / window.innerHeight, 15, 1000);
   camera.position.set(4, 6, 18);
-
+  window.cam = camera;
   scene = new THREE.Scene();
   
   function createLights() {
@@ -39,7 +39,7 @@ export function init(id) {
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  // renderer.setClearColor(0x000000, 0); // the default
+  renderer.setClearColor(0x000000, 0); // the default
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1;
   container.appendChild(renderer.domElement);
