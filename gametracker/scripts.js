@@ -1,30 +1,30 @@
-let defaultClasses = {
-  'warrior': 3,
-  'valkyrie': 4,
-  'magician': 1,
-  'witch': 1,
-  'clergy': 1,
-  'cleric': 1,
-  'martial-artist': 1,
-  'fight-mistress': 1,
-  'ranger': 1,
-  'archer': 1,
-  'gunner': 1,
-  'gunslinger': 1,
-  'ninja': 1,
-  'kunoichi': 1,
-  'samurai': 1,
-  'samurai-girl': 0,
-  'armor-knight': 1,
-  'thief': 1,
-  'wiseman': 1,
-  'beast-master': 1,
-  'unknown01': 0,
-  'sorcerer': 1,
-  'unknown02': 0,
-  'magic-knight': 1,
-  'unknown03': 0,
-  'cheerleader': 1,
+const defaultClasses = {
+  'warrior': 0,
+  'valkyrie': 0,
+  'magician': 0,
+  'witch': 0,
+  'clergy': 0,
+  'cleric': 0,
+  'martial-artist': 0,
+  'fight-mistress': 0,
+  'ranger': 0,
+  'archer': 0,
+  'gunner': 0,
+  'gunslinger': 0,
+  'ninja': 0,
+  'kunoichi': 0,
+  'samurai': 0,
+  'lady-samurai': 0,
+  'armor-knight': 0,
+  'thief': 0,
+  'wiseman': 0,
+  'beast-master': 0,
+  'brute-warrior': 0,
+  'sorcerer': 0,
+  'masked-hero': 0,
+  'magic-knight': 0,
+  'majin': 0,
+  'cheerleader': 0,
   'angel': 0,
 };
 
@@ -33,6 +33,10 @@ const items = document.getElementById('items');
 
 update();
 
+function clearData() {
+  localStorage.removeItem('classes');
+  update();
+}
 function save(classes) {
   localStorage.setItem('classes', JSON.stringify(classes));
 }
@@ -50,10 +54,11 @@ function clear() {
 }
 
 function update() {
+  clear();
 
   let offset = 0;
 
-  const classes = load() ?? defaultClasses;
+  const classes = load() ?? {...defaultClasses};
 
   for (const cls of Object.entries(classes)) {
     const [className, unlocked] = cls;
@@ -72,7 +77,6 @@ function update() {
           classes[className] = i + 1;
         }
         save(classes);
-        clear();
         update();
       };
       

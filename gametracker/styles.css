@@ -44,7 +44,7 @@ body {
     }
   }
 
-  &.samurai-girl,
+  &.lady-samurai,
   &.armor-knight,
   &.thief {
     > .subclass {
@@ -54,21 +54,21 @@ body {
   
   &.wiseman,
   &.beast-master,
-  &.unknown01 {
+  &.brute-warrior {
     > .subclass {
       background-position-y: -891px;
     }
   }
   
   &.sorcerer,
-  &.unknown02,
+  &.masked-hero,
   &.magic-knight {
     > .subclass {
       background-position-y: -972px;
     }
   }
   
-  &.unknown03,
+  &.majin,
   &.cheerleader,
   &.angel {
     > .subclass {
