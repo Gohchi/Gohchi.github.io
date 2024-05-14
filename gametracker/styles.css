@@ -12,6 +12,7 @@ body {
       background-position-y: -405px;
     }
   }
+
   &.witch,
   &.clergy,
   &.cleric {
@@ -139,4 +140,63 @@ body {
     }
   }
   
+}
+
+
+.class {
+  &.sludge,
+  &.orc,
+  &.winged-warrior {
+    > .subclass {
+      background-position-y: -1216px;
+    }
+  }
+  
+  &.shroom,
+  &.spirit,
+  &.slumber-cat {
+    > .subclass {
+      background-position-y: -1297px;
+    }
+  }
+  
+  &.prinny,
+  &.undead,
+  &.marionette {
+    > .subclass {
+      background-position-y: -1378px;
+    }
+  }
+
+  &.flora-beast,
+  &.aqua-demon,
+  &.roc {
+    > .subclass {
+      background-position-y: -1458px;
+    }
+  }
+
+  &.death,
+  &.mystic-beast,
+  &.holy-dragon {
+    > .subclass {
+      background-position-y: -1540px;
+    }
+  }
+
+  &.succubus,
+  &.dragon-zombie,
+  &.wood-golem {
+    > .subclass {
+      background-position-y: -1621px;
+    }
+  }
+  
+  &.riffle-demon,
+  &.fire-demon,
+  &.felynn {
+    > .subclass {
+      background-position-y: -1701px;
+    }
+  }
 }

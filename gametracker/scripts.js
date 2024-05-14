@@ -26,6 +26,28 @@ const defaultClasses = {
   'majin': 0,
   'cheerleader': 0,
   'angel': 0,
+
+  'sludge': 0,
+  'orc': 0,
+  'winged-warrior': 0,
+  'shroom': 0,
+  'spirit': 0,
+  'slumber-cat': 0,
+  'prinny': 0,
+  'undead': 0,
+  'marionette': 0,
+  'flora-beast': 0,
+  'aqua-demon': 0,
+  'roc': 0,
+  'death': 0,
+  'mystic-beast': 0,
+  'holy-dragon': 0,
+  'succubus': 0,
+  'dragon-zombie': 0,
+  'wood-golem': 0,
+  'riffle-demon': 0,
+  'fire-demon': 0,
+  'felynn': 0,
 };
 
 const template = document.getElementById('class');
