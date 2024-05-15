@@ -73,7 +73,7 @@ body {
   &.cheerleader,
   &.angel {
     > .subclass {
-      background-position-y: -1054px;
+      background-position-y: -1053px;
     }
   }
 
@@ -148,7 +148,7 @@ body {
   &.orc,
   &.winged-warrior {
     > .subclass {
-      background-position-y: -1216px;
+      background-position-y: -1215px;
     }
   }
   
@@ -156,7 +156,7 @@ body {
   &.spirit,
   &.slumber-cat {
     > .subclass {
-      background-position-y: -1297px;
+      background-position-y: -1296px;
     }
   }
   
@@ -164,7 +164,7 @@ body {
   &.undead,
   &.marionette {
     > .subclass {
-      background-position-y: -1378px;
+      background-position-y: -1377px;
     }
   }
 
@@ -180,7 +180,7 @@ body {
   &.mystic-beast,
   &.holy-dragon {
     > .subclass {
-      background-position-y: -1540px;
+      background-position-y: -1539px;
     }
   }
 
@@ -188,7 +188,7 @@ body {
   &.dragon-zombie,
   &.wood-golem {
     > .subclass {
-      background-position-y: -1621px;
+      background-position-y: -1620px;
     }
   }
   
@@ -197,6 +197,36 @@ body {
   &.felynn {
     > .subclass {
       background-position-y: -1701px;
+    }
+  }
+
+  &.dragon {
+    > .subclass {
+      background-position-y: -1783px;
+    }
+  }
+
+  &.offset1.factory-desco > .subclass {
+    &:nth-child(1) {
+      background-position-x: calc(-81px * 2);
+    }
+    &:nth-child(2) {
+      background-position-x: calc(-81px * 3);
+    }
+    &:nth-child(3) {
+      background-position-x: calc(-81px * 4);
+    }
+    &:nth-child(4) {
+      background-position-x: calc(-81px * 5);
+    }
+    &:nth-child(5) {
+      background-position-x: calc(-81px * 6);
+    }
+  }
+  &.factory-desco {
+    > .subclass {
+      background-position-y: -324px;
+      background-position-y: -324px;
     }
   }
 }

@@ -48,6 +48,8 @@ const defaultClasses = {
   'riffle-demon': 0,
   'fire-demon': 0,
   'felynn': 0,
+  'dragon': 0,
+  'factory-desco': 0,
 };
 
 const template = document.getElementById('class');
@@ -69,6 +71,8 @@ function load() {
   if (data) {
     return JSON.parse(data);
   }
+
+  return {};
 }
 
 function clear() {
@@ -80,7 +84,7 @@ function update() {
 
   let offset = 0;
 
-  const classes = load() ?? {...defaultClasses};
+  const classes = { ...defaultClasses, ...load() };
 
   for (const cls of Object.entries(classes)) {
     const [className, unlocked] = cls;
