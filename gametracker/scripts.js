@@ -57,16 +57,24 @@ const items = document.getElementById('items');
 
 update();
 
+function trackerChanged(e) {
+  // console.log(e.target.value);
+}
+
 function clearData() {
-  localStorage.removeItem('classes');
-  update();
+  if (confirm('Are you sure?')) {
+    localStorage.removeItem('D3-classes');
+    localStorage.removeItem('classes'); // legacy
+    update();
+  }
 }
 function save(classes) {
-  localStorage.setItem('classes', JSON.stringify(classes));
+  localStorage.setItem('D3-classes', JSON.stringify(classes));
 }
 
 function load() {
-  const data = localStorage.getItem('classes');
+  const data = localStorage.getItem('classes') // legacy
+               ?? localStorage.getItem('D3-classes');
 
   if (data) {
     return JSON.parse(data);

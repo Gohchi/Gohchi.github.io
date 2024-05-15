@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Tracker</title>
+  <title>Disgaea - Game Tracker</title>
+  <link rel="shortcut icon" type="image/png" href="img/favicon-prinny.ico"/>
   <link rel="stylesheet" href="styles.css">
   <script defer src="scripts.js"></script>
 </head>
@@ -12,6 +13,11 @@
 <body>
   <div id="actions">
     <button onclick="clearData()">Clear Data</button>
+    <select onchange="trackerChanged(event)">
+      <!-- <option value="D1">Disgaea 1</option>
+      <option value="D2">Disgaea 2</option> -->
+      <option value="D3">Disgaea 3</option>
+    </select>
   </div>
   <div id="items">
   </div>
