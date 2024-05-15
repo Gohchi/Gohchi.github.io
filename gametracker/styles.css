@@ -2,6 +2,12 @@ body {
   background: url(https://pm1.aminoapps.com/6507/896f7bf94ec73f5b673c359bf571607db6e92551_hq.jpg);
 }
 
+#items { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .class {
   display: flex;
 
