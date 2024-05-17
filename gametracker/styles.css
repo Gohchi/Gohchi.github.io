@@ -1,3 +1,7 @@
+:root {
+  --bg-pos-x: -61.1px;
+}
+
 body {
   background: url(https://pm1.aminoapps.com/6507/896f7bf94ec73f5b673c359bf571607db6e92551_hq.jpg);
 }
@@ -6,8 +10,26 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 64px;
 }
 
+#actions {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  width: calc(100% - 32px);
+  height: 38px;
+  top: 0;
+  gap: 5px;
+  background-color: white;
+  padding: 10px;
+
+  .class-desc {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
 .class {
   display: flex;
 
@@ -15,7 +37,7 @@ body {
   &.valkyrie,
   &.magician {
     > .subclass {
-      background-position-y: -405px;
+      background-position-y: -305px;
     }
   }
 
@@ -23,7 +45,7 @@ body {
   &.clergy,
   &.cleric {
     > .subclass {
-      background-position-y: -486px;
+      background-position-y: -366.5px;
     }
   }
 
@@ -31,7 +53,7 @@ body {
   &.fight-mistress,
   &.ranger {
     > .subclass {
-      background-position-y: -567px;
+      background-position-y: -427px;
     }
   }
   
@@ -39,7 +61,7 @@ body {
   &.gunner,
   &.gunslinger {
     > .subclass {
-      background-position-y: -648px;
+      background-position-y: -488.5px;
     }
   }
   
@@ -47,7 +69,7 @@ body {
   &.kunoichi,
   &.samurai {
     > .subclass {
-      background-position-y: -729px;
+      background-position-y: -550px;
     }
   }
 
@@ -55,7 +77,7 @@ body {
   &.armor-knight,
   &.thief {
     > .subclass {
-      background-position-y: -810px;
+      background-position-y: -611px;
     }
   }
   
@@ -63,7 +85,7 @@ body {
   &.beast-master,
   &.brute-warrior {
     > .subclass {
-      background-position-y: -891px;
+      background-position-y: -671.6px;
     }
   }
   
@@ -71,7 +93,7 @@ body {
   &.masked-hero,
   &.magic-knight {
     > .subclass {
-      background-position-y: -972px;
+      background-position-y: -733px;
     }
   }
   
@@ -79,70 +101,80 @@ body {
   &.cheerleader,
   &.angel {
     > .subclass {
-      background-position-y: -1053px;
+      background-position-y: -794px;
     }
   }
 
 
   &.offset1 > .subclass {
     &:nth-child(1) {
-      background-position-x: calc(-81px * 6);
+      background-position-x: calc(var(--bg-pos-x) * 6);
     }
     &:nth-child(2) {
-      background-position-x: calc(-81px * 7);
+      background-position-x: calc(var(--bg-pos-x) * 7);
     }
     &:nth-child(3) {
-      background-position-x: calc(-81px * 8);
+      background-position-x: calc(var(--bg-pos-x) * 8);
     }
     &:nth-child(4) {
-      background-position-x: calc(-81px * 9);
+      background-position-x: calc(var(--bg-pos-x) * 9);
     }
     &:nth-child(5) {
-      background-position-x: calc(-81px * 10);
+      background-position-x: calc(var(--bg-pos-x) * 10);
+    }
+    &:nth-child(6) {
+      background-position-x: calc(var(--bg-pos-x) * 11);
     }
   }
   
   &.offset2 > .subclass {
     &:nth-child(1) {
-      background-position-x: calc(-81px * 12);
+      background-position-x: calc(var(--bg-pos-x) * 12);
     }
     &:nth-child(2) {
-      background-position-x: calc(-81px * 13);
+      background-position-x: calc(var(--bg-pos-x) * 13);
     }
     &:nth-child(3) {
-      background-position-x: calc(-81px * 14);
+      background-position-x: calc(var(--bg-pos-x) * 14);
     }
     &:nth-child(4) {
-      background-position-x: calc(-81px * 15);
+      background-position-x: calc(var(--bg-pos-x) * 15);
     }
     &:nth-child(5) {
-      background-position-x: calc(-81px * 16);
+      background-position-x: calc(var(--bg-pos-x) * 16);
+    }
+    &:nth-child(6) {
+      background-position-x: calc(var(--bg-pos-x) * 17);
     }
   }
 
 
   > .subclass {
     cursor: pointer;
-    height: 82px;
-    width: 82px;
+    height: 62px;
+    width: 62px;
     /* outline: 1px solid; */
     background-image: url(./img/D3.png);
+    background-size: 1100px;
 
     &:not(.unlocked) {
       filter: grayscale(1);
     }
 
     &:nth-child(2) {
-      background-position-x: -81px;
+      background-position-x: var(--bg-pos-x);
     }
     &:nth-child(3) {
-      background-position-x: calc(-81px * 2);
+      background-position-x: calc(var(--bg-pos-x) * 2);
     }
     &:nth-child(4) {
-      background-position-x: calc(-81px * 3);
+      background-position-x: calc(var(--bg-pos-x) * 3);
     }
     &:nth-child(5) {
-      background-position-x: calc(-81px * 4);
+      background-position-x: calc(var(--bg-pos-x) * 4);
+    }
+    &:nth-child(6) {
+      background-position-x: calc(var(--bg-pos-x) * 5);
     }
   }
   
@@ -154,7 +186,7 @@ body {
   &.orc,
   &.winged-warrior {
     > .subclass {
-      background-position-y: -1215px;
+      background-position-y: -916px;
     }
   }
   
@@ -162,7 +194,7 @@ body {
   &.spirit,
   &.slumber-cat {
     > .subclass {
-      background-position-y: -1296px;
+      background-position-y: -977px;
     }
   }
   
@@ -170,7 +202,7 @@ body {
   &.undead,
   &.marionette {
     > .subclass {
-      background-position-y: -1377px;
+      background-position-y: -1038px;
     }
   }
 
@@ -178,7 +210,7 @@ body {
   &.aqua-demon,
   &.roc {
     > .subclass {
-      background-position-y: -1458px;
+      background-position-y: -1099px;
     }
   }
 
@@ -186,7 +218,7 @@ body {
   &.mystic-beast,
   &.holy-dragon {
     > .subclass {
-      background-position-y: -1539px;
+      background-position-y: -1160px;
     }
   }
 
@@ -194,7 +226,7 @@ body {
   &.dragon-zombie,
   &.wood-golem {
     > .subclass {
-      background-position-y: -1620px;
+      background-position-y: -1221px;
     }
   }
   
@@ -202,37 +234,39 @@ body {
   &.fire-demon,
   &.felynn {
     > .subclass {
-      background-position-y: -1701px;
+      background-position-y: -1282px;
     }
   }
 
   &.dragon {
     > .subclass {
-      background-position-y: -1783px;
+      background-position-y: -1344px;
     }
   }
 
   &.offset1.factory-desco > .subclass {
     &:nth-child(1) {
-      background-position-x: calc(-81px * 2);
+      background-position-x: calc(var(--bg-pos-x) * 1);
     }
     &:nth-child(2) {
-      background-position-x: calc(-81px * 3);
+      background-position-x: calc(var(--bg-pos-x) * 2);
     }
     &:nth-child(3) {
-      background-position-x: calc(-81px * 4);
+      background-position-x: calc(var(--bg-pos-x) * 3);
     }
     &:nth-child(4) {
-      background-position-x: calc(-81px * 5);
+      background-position-x: calc(var(--bg-pos-x) * 4);
     }
     &:nth-child(5) {
-      background-position-x: calc(-81px * 6);
+      background-position-x: calc(var(--bg-pos-x) * 5);
+    }
+    &:nth-child(6) {
+      background-position-x: calc(var(--bg-pos-x) * 6);
     }
   }
   &.factory-desco {
     > .subclass {
-      background-position-y: -324px;
-      background-position-y: -324px;
+      background-position-y: -1649.7px;
     }
   }
 }
