@@ -1,4 +1,4 @@
-const defaultClasses = {
+const DEFAULT_CLASSES = {
   'warrior': 0,
   'valkyrie': 0,
   'magician': 0,
@@ -52,8 +52,66 @@ const defaultClasses = {
   'factory-desco': 0,
 };
 
+const SUB_CLASSES = {
+  'warrior': ['Fighter', 'Warrior', 'Destroyer', 'Gladiator', 'Warlord', 'Battle Master'],
+  'valkyrie': ['Lady Fighter', 'Lady Warrior', 'Valkyrie', 'Minerva Lass', 'Freya', 'Iron Maiden'],
+  'magician': ['Red Skull', 'Green Skull', 'Blue Skull', 'Star Skull', 'Prism Skull', 'Galaxy Skull'],
+  'witch': ['Red Mage', 'Green Mage', 'Blue Mage', 'Star Mage', 'Prism Mage', 'Galaxy Mage'],
+  'clergy': ['Heretic', 'Zealot', 'Martyr', 'Pilgrim', 'Farvashi', 'Anti-Messiah'],
+  'cleric': ['Healer', 'Acolyte', 'Priest', 'Bishop', 'Cardinal', 'Saint'],
+  'martial-artist': ['Fury Fatalist', 'Fight Artist', 'Champ of Fighters', 'Viper Fighter', 'Lethal Combatant', 'Boulevard Fighter'],
+  'fight-mistress': ['Wind Spinner', 'Thunder Fist', 'Storm Bringer', 'Sky Faller', 'Star Warrior', 'God Buster'],
+  'ranger': ['Ranger', 'Chaser', 'Strider', 'Hawkeye', 'Enforcer', 'Sagittarius'],
+  'archer': ['Archer', 'Hunter', 'Shooter', 'Bow Master', 'Cupid', 'Freischutz'],
+  'gunner': ['Gunner', 'Sniper', 'Outlaw', 'Hitman', 'Bullseye', 'Desperado'],
+  'gunslinger': [],
+  'ninja': [],
+  'kunoichi': [],
+  'samurai': [],
+  'lady-samurai': [],
+  'armor-knight': [],
+  'thief': [],
+  'wiseman': [],
+  'beast-master': [],
+  'brute-warrior': [],
+  'sorcerer': [],
+  'masked-hero': [],
+  'magic-knight': [],
+  'majin': [],
+  'cheerleader': [],
+  'angel': [],
+
+  'sludge': [],
+  'orc': [],
+  'winged-warrior': [],
+  'shroom': [],
+  'spirit': [],
+  'slumber-cat': [],
+  'prinny': [],
+  'undead': [],
+  'marionette': [],
+  'flora-beast': [],
+  'aqua-demon': [],
+  'roc': [],
+  'death': [],
+  'mystic-beast': [],
+  'holy-dragon': [],
+  'succubus': [],
+  'dragon-zombie': [],
+  'wood-golem': [],
+  'riffle-demon': [],
+  'fire-demon': [],
+  'felynn': [],
+  'dragon': [],
+  'factory-desco': [],
+};
+
 const template = document.getElementById('class');
 const items = document.getElementById('items');
+const subclass = document.getElementById('subclass');
+const markButton = document.getElementById('mark-button');
+
+let selected;
 
 update();
 
@@ -92,26 +150,26 @@ function update() {
 
   let offset = 0;
 
-  const classes = { ...defaultClasses, ...load() };
+  const classes = { ...DEFAULT_CLASSES, ...load() };
 
   for (const cls of Object.entries(classes)) {
-    const [className, unlocked] = cls;
+    const [CLASS_NAME, unlocked] = cls;
 
     const clon = template.content.cloneNode(true);
     const item = clon.children[0];
-    item.classList.add(className);
+    item.classList.add(CLASS_NAME);
     item.classList.add('offset'+(offset%3));
     
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
       const subitem = item.children[i];
       subitem.onclick = () => {
-        if (classes[className] >= i + 1) { 
-          classes[className] = i;
-        } else {
-          classes[className] = i + 1;
-        }
-        save(classes);
-        update();
+        selected = {
+          className: CLASS_NAME,
+          level: i,
+        };
+        subclass.innerText = SUB_CLASSES[CLASS_NAME][i];
+
+        markButton.innerText = subitem.classList.contains('unlocked') ? 'Unmark' : 'Mark';
       };
       
       if (i < unlocked) {
@@ -126,4 +184,21 @@ function update() {
 
 function change() {
   localStorage.setItem('classes', classes);
+}
+
+function markUnmark() {
+  if (!selected) return;
+
+  const classes = { ...DEFAULT_CLASSES, ...load() };
+
+  const { className, level } = selected;
+  if (classes[className] >= level + 1) { 
+    markButton.innerText = 'Mark';
+    classes[className] = level;
+  } else {
+    markButton.innerText = 'Unmark';
+    classes[className] = level + 1;
+  }
+  save(classes);
+  update();
 }
