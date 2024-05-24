@@ -99,7 +99,7 @@ body {
   
   &.majin,
   &.cheerleader,
-  &.angel {
+  &.celestial-host {
     > .subclass {
       background-position-y: -794px;
     }
