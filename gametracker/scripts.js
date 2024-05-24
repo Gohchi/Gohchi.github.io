@@ -81,29 +81,29 @@ const SUB_CLASSES = {
   'cheerleader': ['Brand New Idol', 'Summer Idol', 'Celestial Idol', 'Dream Idol', 'Brilliant Idol', 'Idol Master'],
   'celestial-host': ['Angel', 'Angel Cadet', 'Angel Soldier', 'Crusader', 'Avenger', 'Paladin'],
 
-  'sludge': [],
-  'orc': [],
-  'winged-warrior': [],
-  'shroom': [],
-  'spirit': [],
-  'slumber-cat': [],
-  'prinny': [],
-  'undead': [],
-  'marionette': [],
-  'flora-beast': [],
-  'aqua-demon': [],
-  'roc': [],
-  'death': [],
-  'mystic-beast': [],
-  'holy-dragon': [],
-  'succubus': [],
-  'dragon-zombie': [],
-  'wood-golem': [],
-  'riffle-demon': [],
-  'fire-demon': [],
-  'felynn': [],
-  'dragon': [],
-  'factory-desco': [],
+  'sludge': ['Green Slime', 'Red Blob', 'Blue Gelatin', 'Ochre Jelly', 'Grey Ooze', 'Black Pudding'],
+  'orc': ['Petite Orc', 'Orc Captain', 'Head Orc', 'Orc Master', 'Orc King', 'Shadow Orc'],
+  'winged-warrior': ['Mothman', 'Messenger', 'Watcher', 'Observer', 'Spy', 'Unknown'],
+  'shroom': ['Eryngi', 'Matango', 'Champinion', 'Fungus', 'Wonderspore', 'Eyrndom'],
+  'spirit': ['Ghost', 'Boggart', 'Specter', 'Wraith', 'Fiend', 'Phantom'],
+  'slumber-cat': ['Catsaber', 'Warcat', 'Cait Sith', 'Grimalkin', 'Elbaccie', 'Lord Cat God'],
+  'prinny': ['Private Prinny', 'Captain Prinny', 'Colonel Prinny', 'General Prinny', 'Prinny King', 'Prinny God'],
+  'undead': ['Zombie', 'Ghoul', 'Corpse', 'Ghast', 'Wight', 'Zombie King'],
+  'marionette': ['Marionette', 'Killer Puppet', 'Assassin Doll', 'Death Coppelia', 'Mad Jester', 'Hells Crown'],
+  'flora-beast': ['Alraune', 'Nemophila', 'Pharbitis', 'Belladonna', 'Photinia', 'Parthenocissus'],
+  'aqua-demon': ['Warslug', 'Vodianoi', 'Sea Monk', 'Aqua Fighter', 'Charybdis', 'Dagon'],
+  'roc': ['Cockatrice', 'Basilcrow', 'Peryton', 'Malphas', 'Foolfool', 'Abraxas'],
+  'death': ['Chernobog', 'Death', 'Tezcatilipoca', 'Mrtyu', 'Samael', 'Thanatos'],
+  'mystic-beast': ['Cu Sith', 'Hell Hound', 'Black Dog', 'Garm', 'Orthros', 'Fenrir'],
+  'holy-dragon': ['White Dragon', 'Dragon King', 'Saint Dragon', 'Heaven Dragon', 'Terra Dragon', 'Divine Dragon'],
+  'succubus': ['Empusa', 'Lilim', 'Succubus', 'Carmilla', 'Hecate', 'Lilith'],
+  'dragon-zombie': ['Skeletal Dragon', 'Death Dragon', 'Curse Dragon', 'Mystic Dragon', 'Dark Dragon', 'Hell Dragon'],
+  'wood-golem': ['Wood Giant', 'Tree Folk', 'Forest Guardian', 'Green Giant', 'Gaia Titan', 'Dreadnaught'],
+  'riffle-demon': ['Baciel', 'Gambiel', 'Adnachiel', 'Verchiel', 'Ambriel', 'Malchidael'],
+  'fire-demon': ['Ifrit', 'Satana', 'Marid', 'Flamberg', 'Slust', 'Agni'],
+  'felynn': ['Nekomata', 'Bowmaw', 'Tail Ring', 'Casperleague', 'Ovinig', 'Bastet'],
+  'dragon': ['Dragon', 'Fafnir', 'Nidhogg', 'Ahzi Dahaka', 'Tiamat', 'Bahamut'],
+  'factory-desco': ['Factory Desco', 'Factory Des Z', 'Factory Des ZZ', 'Factory Des V', 'Factory Des W', 'Factory Des X'],
 };
 
 const template = document.getElementById('class');
@@ -126,6 +126,7 @@ function clearData() {
     update();
   }
 }
+
 function save(classes) {
   localStorage.setItem('D3-classes', JSON.stringify(classes));
 }
