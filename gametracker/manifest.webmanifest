@@ -1,0 +1,15 @@
+{
+  "background_color": "white",
+  "description": "Game tracker - currently only for Disgaea 3",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "img/favicon-prinny.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ],
+  "name": "Disgaea - Game Tracker",
+  "short_name": "GameTracker",
+  "start_url": "/gametracker/index.html"
+}
