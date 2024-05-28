@@ -1,3 +1,7 @@
+// import common.js
+registerServiceWorker('/gametracker/sw.js');
+
+
 const DEFAULT_CLASSES = {
   'warrior': 0,
   'valkyrie': 0,
