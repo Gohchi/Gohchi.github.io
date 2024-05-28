@@ -136,7 +136,17 @@ function load() {
                ?? localStorage.getItem('D3-classes');
 
   if (data) {
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+
+    const classes = Object.keys(DEFAULT_CLASSES);
+    const filtered = Object.entries(parsed)
+      .filter(([key]) => classes.includes(key))
+      .reduce((res, [key, value]) => {
+        res[key] = value;
+        return res;
+      }, {});
+
+    return filtered;
   }
 
   return {};
