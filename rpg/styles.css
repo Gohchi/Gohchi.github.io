@@ -1,0 +1,40 @@
+html {
+  height: 100%;  
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 16px);
+
+  > #game {
+    flex: 1;
+    border: 1px solid red;
+
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      flex: 1;
+    }
+  }
+}
+
+#game div {
+  border: 1px solid blue;
+}
+
+.characters,
+.battle-info {
+  display: flex;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.info {
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+}

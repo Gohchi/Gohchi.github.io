@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo - RPG</title>
+  <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="scripts.js"></script>
+</head>
+
+<body>
+  <div id="menu">
+    <Input id="name" type="text" placeholder="name" />
+    <select id="color">
+      <option value="blue">Blue</option>
+      <option value="red">Red</option>
+      <option value="green">Green</option>
+    </select>
+    <button onclick="startGame()">START</button>
+  </div>
+
+  <div id="game">
+    <div class="characters">
+      <div class="hero">HERO</div>
+      <div class="space"></div>
+      <div class="mob">MOB</div>
+    </div>
+    <div class="battle-info">
+      <div class="info">
+        <div class="name">Character name - Hero</div>
+        <div class="hp-mp">
+          <div>HP 2352 / 5034</div>
+          <div>MP 43 / 240</div>
+        </div>
+        <div class="stats">
+          <table>
+            <tbody>
+              <tr>
+                <th colspan="4">Stats</th>
+                <th colspan="2">Element Resistance</th>
+              </tr>
+              <tr>
+                <td>ATK</td>
+                <td>123</td>
+                <td>INT</td>
+                <td>32</td>
+                <td>Fire</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>DEF</td>
+                <td>234</td>
+                <td>RES</td>
+                <td>10</td>
+                <td>Wind</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>SPD</td>
+                <td>80</td>
+                <td>HIT</td>
+                <td>90</td>
+                <td>Ice</td>
+                <td>10</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="action-log">
+        <div>
+          <button>ATTACK</button>
+          <button>MAGIC</button>
+          <button>DEFEND</button>
+        </div>
+        <div class="log">
+          log...
+        </div>
+      </div>
+      <div class="info">INFO 2</div>
+    </div>
+  </div>
+</body>
+
+</html>
