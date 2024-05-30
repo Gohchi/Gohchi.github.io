@@ -18,18 +18,18 @@
       <option value="red">Red</option>
       <option value="green">Green</option>
     </select>
-    <button onclick="startGame()">START</button>
+    <button onclick="registerGame()">START</button>
   </div>
 
   <div id="game" class="hidden">
     <div class="characters">
-      <div class="hero">HERO</div>
+      <div id="hero">HERO</div>
       <div class="space"></div>
       <div class="mob">MOB</div>
     </div>
     <div class="battle-info">
       <div class="info">
-        <div class="name">Character name - Hero</div>
+        <div class="name">Character name - <span id="hero-name"></span></div>
         <div class="hp-mp">
           <div>HP 2352 / 5034</div>
           <div>MP 43 / 240</div>

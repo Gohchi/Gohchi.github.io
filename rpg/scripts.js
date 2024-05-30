@@ -7,11 +7,24 @@ if (resultado) {
   const menuEl = document.getElementById('menu');
 
   menuEl.classList.add('hidden');
+
+  startGame();
 }
 
 
 
+
 function startGame() {
+  const urlParams = new URLSearchParams(location.search);
+
+  const heroEl = document.getElementById('hero');
+  heroEl.style.backgroundColor = urlParams.get('color');
+
+  const heroNameEl = document.getElementById('hero-name');
+  heroNameEl.innerText = urlParams.get('name');
+}
+
+function registerGame() {
   const nameElement = document.getElementById('name');
   const colorElement = document.getElementById('color');
 
