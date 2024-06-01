@@ -10,9 +10,11 @@ export default class Disgaea3 extends Game {
     this.init('disgaea-3-body', 'game-body');
     this.init('disgaea-3-actions', 'game-actions');
     
-    const actions = document.getElementById('game-actions');
+    const actions = this.get('game-actions');
     actions.classList.add('disgaea-3');
     
+    this.set('mark-button', 'onclick', this.markUnmark);
+
     this.update();
   }
   
@@ -26,7 +28,7 @@ export default class Disgaea3 extends Game {
 
   markUnmark() {
     if (!selected) return;
-    const markButton = document.getElementById('mark-button');
+    const markButton = this.get('mark-button');
 
     const classes = { ...DEFAULT_CLASSES, ...this.load() };
 
@@ -68,7 +70,7 @@ export default class Disgaea3 extends Game {
   }
 
   clear() {
-    const items = document.getElementById('items');
+    const items = this.get('items');
     items.innerHTML = '';
   }
 
@@ -77,9 +79,9 @@ export default class Disgaea3 extends Game {
 
     let offset = 0;
 
-    const template = document.getElementById('disgaea-3-class');
-    const subclass = document.getElementById('subclass');
-    const markButton = document.getElementById('mark-button');
+    const template = this.get('disgaea-3-class');
+    const subclass = this.get('subclass');
+    const markButton = this.get('mark-button');
 
     const classes = { ...DEFAULT_CLASSES, ...this.load() };
 
@@ -108,7 +110,7 @@ export default class Disgaea3 extends Game {
         }
       }
   
-      const items = document.getElementById('items');
+      const items = this.get('items');
       items.appendChild(clon);
 
       offset++;
