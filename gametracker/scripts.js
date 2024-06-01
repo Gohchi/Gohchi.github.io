@@ -10,8 +10,9 @@ let scripts;
 
 window.trackerChanged = function (e) {
   const id = e.target.value;
-  console.log(id);
+  
   clear();
+
   import(modules[id])
     .then((Module) => {
       scripts = new Module.default();
@@ -19,18 +20,19 @@ window.trackerChanged = function (e) {
     });
 };
 
-// window.markUnmark = function () {
-//   scripts.markUnmark();
-// };
 window.clearData = function () {
   scripts.clearData();
 };
 
+// fire first time
 window.trackerChanged({
-  target: { value: 'D-3' }
+  target: { value: document.getElementById('game-id').value }
 });
 
 function clear() {
-  document.getElementById('game-body').innerHTML = '';
-  document.getElementById('game-actions').innerHTML = '';
-}
+  for (const id of ['game-body', 'game-actions']) {
+    const element = document.getElementById(id);
+    element.innerHTML = '';
+    element.className = '';
+  }
+};

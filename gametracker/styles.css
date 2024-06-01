@@ -1,16 +1,17 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+
 :root {
   --bg-pos-x: -61.1px;
 }
 
-body {
-  background: url(https://pm1.aminoapps.com/6507/896f7bf94ec73f5b673c359bf571607db6e92551_hq.jpg);
-}
+* {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
 
-#items { 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 64px;
+  option {
+    font-family: cursive;
+    font-size: 12px;
+  }
 }
 
 #actions {
@@ -26,254 +27,294 @@ body {
 
   > #game-actions {
     flex: 1;
+  }
+}
 
-    &.disgaea-3 {
-      display: flex;
+/* Disgaea 3 */
+body:has(.disgaea-3) {
+  background: url(https://pm1.aminoapps.com/6507/896f7bf94ec73f5b673c359bf571607db6e92551_hq.jpg);
+  background-size: contain;
+  
+  #items { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 64px;
+  }
 
-      > .class-desc {
-        flex: 1;
+  #game-actions.disgaea-3 {
+    display: flex;
+
+    > .class-desc {
+      flex: 1;
+    }
+  }
+
+  .class {
+    display: flex;
+
+    &.warrior,
+    &.valkyrie,
+    &.magician {
+      > .subclass {
+        background-position-y: -305px;
+      }
+    }
+
+    &.witch,
+    &.clergy,
+    &.cleric {
+      > .subclass {
+        background-position-y: -366.5px;
+      }
+    }
+
+    &.martial-artist,
+    &.fight-mistress,
+    &.ranger {
+      > .subclass {
+        background-position-y: -427px;
+      }
+    }
+    
+    &.archer,
+    &.gunner,
+    &.gunslinger {
+      > .subclass {
+        background-position-y: -488.5px;
+      }
+    }
+    
+    &.ninja,
+    &.kunoichi,
+    &.samurai {
+      > .subclass {
+        background-position-y: -550px;
+      }
+    }
+
+    &.lady-samurai,
+    &.armor-knight,
+    &.thief {
+      > .subclass {
+        background-position-y: -611px;
+      }
+    }
+    
+    &.wiseman,
+    &.beast-master,
+    &.brute-warrior {
+      > .subclass {
+        background-position-y: -671.6px;
+      }
+    }
+    
+    &.sorcerer,
+    &.masked-hero,
+    &.magic-knight {
+      > .subclass {
+        background-position-y: -733px;
+      }
+    }
+    
+    &.majin,
+    &.cheerleader,
+    &.celestial-host {
+      > .subclass {
+        background-position-y: -794px;
+      }
+    }
+
+
+    &.offset1 > .subclass {
+      &:nth-child(1) {
+        background-position-x: calc(var(--bg-pos-x) * 6);
+      }
+      &:nth-child(2) {
+        background-position-x: calc(var(--bg-pos-x) * 7);
+      }
+      &:nth-child(3) {
+        background-position-x: calc(var(--bg-pos-x) * 8);
+      }
+      &:nth-child(4) {
+        background-position-x: calc(var(--bg-pos-x) * 9);
+      }
+      &:nth-child(5) {
+        background-position-x: calc(var(--bg-pos-x) * 10);
+      }
+      &:nth-child(6) {
+        background-position-x: calc(var(--bg-pos-x) * 11);
+      }
+    }
+    
+    &.offset2 > .subclass {
+      &:nth-child(1) {
+        background-position-x: calc(var(--bg-pos-x) * 12);
+      }
+      &:nth-child(2) {
+        background-position-x: calc(var(--bg-pos-x) * 13);
+      }
+      &:nth-child(3) {
+        background-position-x: calc(var(--bg-pos-x) * 14);
+      }
+      &:nth-child(4) {
+        background-position-x: calc(var(--bg-pos-x) * 15);
+      }
+      &:nth-child(5) {
+        background-position-x: calc(var(--bg-pos-x) * 16);
+      }
+      &:nth-child(6) {
+        background-position-x: calc(var(--bg-pos-x) * 17);
+      }
+    }
+
+
+    > .subclass {
+      cursor: pointer;
+      height: 62px;
+      width: 62px;
+      /* outline: 1px solid; */
+      background-image: url(./img/D3.png);
+      background-size: 1100px;
+
+      &:not(.unlocked) {
+        filter: grayscale(1);
+      }
+
+      &:nth-child(2) {
+        background-position-x: var(--bg-pos-x);
+      }
+      &:nth-child(3) {
+        background-position-x: calc(var(--bg-pos-x) * 2);
+      }
+      &:nth-child(4) {
+        background-position-x: calc(var(--bg-pos-x) * 3);
+      }
+      &:nth-child(5) {
+        background-position-x: calc(var(--bg-pos-x) * 4);
+      }
+      &:nth-child(6) {
+        background-position-x: calc(var(--bg-pos-x) * 5);
+      }
+    }
+    
+  }
+
+
+  .class {
+    &.sludge,
+    &.orc,
+    &.winged-warrior {
+      > .subclass {
+        background-position-y: -916px;
+      }
+    }
+    
+    &.shroom,
+    &.spirit,
+    &.slumber-cat {
+      > .subclass {
+        background-position-y: -977px;
+      }
+    }
+    
+    &.prinny,
+    &.undead,
+    &.marionette {
+      > .subclass {
+        background-position-y: -1038px;
+      }
+    }
+
+    &.flora-beast,
+    &.aqua-demon,
+    &.roc {
+      > .subclass {
+        background-position-y: -1099px;
+      }
+    }
+
+    &.death,
+    &.mystic-beast,
+    &.holy-dragon {
+      > .subclass {
+        background-position-y: -1160px;
+      }
+    }
+
+    &.succubus,
+    &.dragon-zombie,
+    &.wood-golem {
+      > .subclass {
+        background-position-y: -1221px;
+      }
+    }
+    
+    &.riffle-demon,
+    &.fire-demon,
+    &.felynn {
+      > .subclass {
+        background-position-y: -1282px;
+      }
+    }
+
+    &.dragon {
+      > .subclass {
+        background-position-y: -1344px;
+      }
+    }
+
+    &.offset1.factory-desco > .subclass {
+      &:nth-child(1) {
+        background-position-x: calc(var(--bg-pos-x) * 1);
+      }
+      &:nth-child(2) {
+        background-position-x: calc(var(--bg-pos-x) * 2);
+      }
+      &:nth-child(3) {
+        background-position-x: calc(var(--bg-pos-x) * 3);
+      }
+      &:nth-child(4) {
+        background-position-x: calc(var(--bg-pos-x) * 4);
+      }
+      &:nth-child(5) {
+        background-position-x: calc(var(--bg-pos-x) * 5);
+      }
+      &:nth-child(6) {
+        background-position-x: calc(var(--bg-pos-x) * 6);
+      }
+    }
+    &.factory-desco {
+      > .subclass {
+        background-position-y: -1649.7px;
       }
     }
   }
 }
 
-.class {
-  display: flex;
 
-  &.warrior,
-  &.valkyrie,
-  &.magician {
-    > .subclass {
-      background-position-y: -305px;
-    }
-  }
+/* Disgaea DS */
+body:has(.disgaea-ds) {
+  background: url(https://i.pinimg.com/474x/e5/57/b8/e557b8cb225a720651e32f90eb1e127b.jpg);
+  background-size: cover;
 
-  &.witch,
-  &.clergy,
-  &.cleric {
-    > .subclass {
-      background-position-y: -366.5px;
+  fieldset {
+    background-color: #cabaa1d9;
+    border-color: #59432cd9;
+    
+    legend {
+      font-weight: bold;
+      color: #2d1000;
     }
   }
 
-  &.martial-artist,
-  &.fight-mistress,
-  &.ranger {
-    > .subclass {
-      background-position-y: -427px;
-    }
-  }
-  
-  &.archer,
-  &.gunner,
-  &.gunslinger {
-    > .subclass {
-      background-position-y: -488.5px;
-    }
-  }
-  
-  &.ninja,
-  &.kunoichi,
-  &.samurai {
-    > .subclass {
-      background-position-y: -550px;
-    }
+  #config {
+    margin-top: 64px;
+    background-color: #927d5ed9;
   }
 
-  &.lady-samurai,
-  &.armor-knight,
-  &.thief {
-    > .subclass {
-      background-position-y: -611px;
-    }
-  }
-  
-  &.wiseman,
-  &.beast-master,
-  &.brute-warrior {
-    > .subclass {
-      background-position-y: -671.6px;
-    }
-  }
-  
-  &.sorcerer,
-  &.masked-hero,
-  &.magic-knight {
-    > .subclass {
-      background-position-y: -733px;
-    }
-  }
-  
-  &.majin,
-  &.cheerleader,
-  &.celestial-host {
-    > .subclass {
-      background-position-y: -794px;
-    }
-  }
-
-
-  &.offset1 > .subclass {
-    &:nth-child(1) {
-      background-position-x: calc(var(--bg-pos-x) * 6);
-    }
-    &:nth-child(2) {
-      background-position-x: calc(var(--bg-pos-x) * 7);
-    }
-    &:nth-child(3) {
-      background-position-x: calc(var(--bg-pos-x) * 8);
-    }
-    &:nth-child(4) {
-      background-position-x: calc(var(--bg-pos-x) * 9);
-    }
-    &:nth-child(5) {
-      background-position-x: calc(var(--bg-pos-x) * 10);
-    }
-    &:nth-child(6) {
-      background-position-x: calc(var(--bg-pos-x) * 11);
-    }
-  }
-  
-  &.offset2 > .subclass {
-    &:nth-child(1) {
-      background-position-x: calc(var(--bg-pos-x) * 12);
-    }
-    &:nth-child(2) {
-      background-position-x: calc(var(--bg-pos-x) * 13);
-    }
-    &:nth-child(3) {
-      background-position-x: calc(var(--bg-pos-x) * 14);
-    }
-    &:nth-child(4) {
-      background-position-x: calc(var(--bg-pos-x) * 15);
-    }
-    &:nth-child(5) {
-      background-position-x: calc(var(--bg-pos-x) * 16);
-    }
-    &:nth-child(6) {
-      background-position-x: calc(var(--bg-pos-x) * 17);
-    }
-  }
-
-
-  > .subclass {
-    cursor: pointer;
-    height: 62px;
-    width: 62px;
-    /* outline: 1px solid; */
-    background-image: url(./img/D3.png);
-    background-size: 1100px;
-
-    &:not(.unlocked) {
-      filter: grayscale(1);
-    }
-
-    &:nth-child(2) {
-      background-position-x: var(--bg-pos-x);
-    }
-    &:nth-child(3) {
-      background-position-x: calc(var(--bg-pos-x) * 2);
-    }
-    &:nth-child(4) {
-      background-position-x: calc(var(--bg-pos-x) * 3);
-    }
-    &:nth-child(5) {
-      background-position-x: calc(var(--bg-pos-x) * 4);
-    }
-    &:nth-child(6) {
-      background-position-x: calc(var(--bg-pos-x) * 5);
-    }
-  }
-  
-}
-
-
-.class {
-  &.sludge,
-  &.orc,
-  &.winged-warrior {
-    > .subclass {
-      background-position-y: -916px;
-    }
-  }
-  
-  &.shroom,
-  &.spirit,
-  &.slumber-cat {
-    > .subclass {
-      background-position-y: -977px;
-    }
-  }
-  
-  &.prinny,
-  &.undead,
-  &.marionette {
-    > .subclass {
-      background-position-y: -1038px;
-    }
-  }
-
-  &.flora-beast,
-  &.aqua-demon,
-  &.roc {
-    > .subclass {
-      background-position-y: -1099px;
-    }
-  }
-
-  &.death,
-  &.mystic-beast,
-  &.holy-dragon {
-    > .subclass {
-      background-position-y: -1160px;
-    }
-  }
-
-  &.succubus,
-  &.dragon-zombie,
-  &.wood-golem {
-    > .subclass {
-      background-position-y: -1221px;
-    }
-  }
-  
-  &.riffle-demon,
-  &.fire-demon,
-  &.felynn {
-    > .subclass {
-      background-position-y: -1282px;
-    }
-  }
-
-  &.dragon {
-    > .subclass {
-      background-position-y: -1344px;
-    }
-  }
-
-  &.offset1.factory-desco > .subclass {
-    &:nth-child(1) {
-      background-position-x: calc(var(--bg-pos-x) * 1);
-    }
-    &:nth-child(2) {
-      background-position-x: calc(var(--bg-pos-x) * 2);
-    }
-    &:nth-child(3) {
-      background-position-x: calc(var(--bg-pos-x) * 3);
-    }
-    &:nth-child(4) {
-      background-position-x: calc(var(--bg-pos-x) * 4);
-    }
-    &:nth-child(5) {
-      background-position-x: calc(var(--bg-pos-x) * 5);
-    }
-    &:nth-child(6) {
-      background-position-x: calc(var(--bg-pos-x) * 6);
-    }
-  }
-  &.factory-desco {
-    > .subclass {
-      background-position-y: -1649.7px;
-    }
+  #code {
+    width: 208px;
+    height: 42px;
   }
 }

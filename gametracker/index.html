@@ -20,8 +20,8 @@
       onchange="trackerChanged(event)"
     >
       <option value="D-DS">Disgaea DS</option>
-      <!--<option value="D2">Disgaea 2</option> -->
-      <option value="D-3" selected>Disgaea 3</option>
+      <!--<option value="D-2">Disgaea 2</option> -->
+      <option value="D-3"selected>Disgaea 3</option>
     </select>
     <div id="game-actions"></div>
   </div>
@@ -29,6 +29,23 @@
 </body>
 
 <template id="disgaea-ds-body">
+  <div id="config">
+    <fieldset>
+      <legend>Sprite</legend>
+      <select id="sprite"></select>
+    </fieldset>
+    <fieldset>
+      <legend>Class/Title</legend>
+      <select id="classes"></select>
+    </fieldset>
+    <fieldset>
+      <legend>Portrait</legend>
+      <select id="portraits"></select>
+    </fieldset>
+  </div>
+  <textarea id="code" readonly>
+
+  </textarea>
 </template>
 
 

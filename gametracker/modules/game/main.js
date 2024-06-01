@@ -10,7 +10,7 @@ export default class Game {
     const fromEl = this.get(from);
     toEl.appendChild(fromEl.content.cloneNode(true));
   }
-  
+
   start() {
     console.debug('start no implemented');
   }
@@ -34,5 +34,22 @@ export default class Game {
   set(elementId, eventId, callback) {
     const el = this.get(elementId);
     el[eventId] = callback.bind(this);
+  }
+
+  sorter([a], [b]) {
+    return parseInt(a, 16) - parseInt(b, 16);
+  }
+
+  setSelect(data, elementId) {
+    const selectEl = this.get(elementId);
+
+    Object.entries(data)
+      .toSorted(this.sorter) 
+      .map(([id, name]) => {
+        const optionEl = document.createElement('option');
+        optionEl.value = id;
+        optionEl.innerText = name;
+        selectEl.appendChild(optionEl);
+      });
   }
 }
