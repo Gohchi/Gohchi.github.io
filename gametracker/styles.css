@@ -24,12 +24,19 @@ body {
   background-color: white;
   padding: 10px;
 
-  .class-desc {
+  > #game-actions {
     flex: 1;
-    display: flex;
-    flex-direction: column;
+
+    &.disgaea-3 {
+      display: flex;
+
+      > .class-desc {
+        flex: 1;
+      }
+    }
   }
 }
+
 .class {
   display: flex;
 
