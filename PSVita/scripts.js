@@ -54,11 +54,10 @@ function uploadFiles(){
   const req = new XMLHttpRequest();
   const formData = new FormData();
 
-  const files = document.querySelectorAll('.loaded input[type=file]');
+  const elements = document.querySelectorAll('.loaded input[type=file]');
 
-  for (var i = 0; i < files.length; i++) {
-    const file = files[i].files[0];
-    formData.append("photo", file);
+  for (var i = 0; i < elements.length; i++) {
+    formData.append("photo", elements[i].files[0]);
   }
 
   req.onreadystatechange = function() {
