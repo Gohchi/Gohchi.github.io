@@ -43,6 +43,10 @@ input[type="file"] {
                0 8px 0 0 black;
 }
 
+.custom-file-upload:active {
+  color: gray;
+}
+
 .loaded {
   background-color: #aaeeaa;
   color: black;
