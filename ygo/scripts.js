@@ -3,6 +3,8 @@ import { createApp, onMounted } from 'vue';
 import { getAPI } from '/modules/Tools.js';
 import cards from './cards.json' assert {type: 'json'};
 
+// https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=barbaroid
+
 console.log(cards);
 createApp({
   components: {

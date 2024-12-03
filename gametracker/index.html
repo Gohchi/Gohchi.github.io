@@ -19,9 +19,9 @@
       id="game-id"
       onchange="trackerChanged(event)"
     >
-      <option value="D-DS">Disgaea DS</option>
+      <option value="D-DS" selected>Disgaea DS</option>
       <!--<option value="D-2">Disgaea 2</option> -->
-      <option value="D-3"selected>Disgaea 3</option>
+      <option value="D-3">Disgaea 3</option>
     </select>
     <div id="game-actions"></div>
   </div>
@@ -46,6 +46,11 @@
   <textarea id="code" readonly>
 
   </textarea>
+  <div class="generator">
+    <input id="code-base" placeholder="base" value="221D10E" />
+    <input id="value" placeholder="value" value="0" />
+    <textarea id="codes" readonly></textarea>
+  </div>
 </template>
 
 
