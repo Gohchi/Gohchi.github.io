@@ -1,7 +1,7 @@
 
 import { createApp, onMounted } from 'vue';
 import { getAPI } from '/modules/Tools.js';
-import cards from './cards.json' assert {type: 'json'};
+import cards from './cards.json' with { type: 'json' };
 
 console.log(cards);
 createApp({

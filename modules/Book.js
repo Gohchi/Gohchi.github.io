@@ -1,4 +1,4 @@
-import contactData from '/data.json' assert {type: 'json'};
+import contactData from '/data.json' with { type: 'json' };
 
 export default {
   data() {
