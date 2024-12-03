@@ -1,0 +1,83 @@
+body {
+  font-family: "M PLUS 1p", sans-serif;
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 1rem 0 0 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    
+    .title {
+      margin-bottom: 1rem;
+    }
+  }
+
+  main {
+    transition: margin 1s;
+    margin-top: 4rem;
+    padding-bottom: 2rem;
+    
+    &.menuOpen {
+      margin-top: 12rem;
+    }
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 2px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.icon-menu {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  height: 32px;
+  width: 32px;
+  background-image: url(./images/sushi.svg);
+
+  &:hover {
+    filter: drop-shadow(1px 3px 2px black);
+  }
+
+  .open {
+    filter: grayscale(1);
+  }
+}
+
+.menu-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  li {
+    margin-bottom: 10px;
+
+    a {
+      text-decoration: none;
+      color: #337ab7;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #23527c;
+      }
+    }
+
+    &.active a {
+      color: #23527c;
+    }
+  }
+}
