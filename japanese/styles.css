@@ -21,8 +21,21 @@ body {
     margin-top: 4rem;
     padding-bottom: 2rem;
     
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+
     &.menuOpen {
       margin-top: 12rem;
+    }
+
+    article {
+      display: flex;
+      flex-direction: column;
+      
+      gap: .5rem;
+      padding: 3px;
+      outline: 1px solid gray;
     }
   }
 

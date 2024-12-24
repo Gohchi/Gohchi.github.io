@@ -17,11 +17,10 @@
         }
       }
     </script>
-    <script src="https://unpkg.com/react-query/dist/react-query.production.min.js"></script>
     <script type="module" src="scripts.js" defer></script>
 	</head>
 	<body id="app">
-    <header v-if="true">
+    <header>
       <div class="title">
         <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ
       </div>
@@ -35,52 +34,14 @@
       </div>
     </header>
 
-    <main :class="{ 'menuOpen': showMenu } ">
-      <div markdown="1">
-        *こちらは私の彼女です。*
-        こちらははたしのかのしょです。
-        This is my girlfriend.
-      </div>
-      <div markdown="1">
-        *彼女はおしゃれな人です。 *
-        かのしょはおしゃれなひとです。
-        My girlfriend is a stylish person.
-      </div>
-      <div markdown="1">
-        私の彼女は元気な人です。 可愛いものが好きです。
-        わたしのかのじょはげんきなひとです。かわいいものがすきです。
-        My girlfriend is a lively person. She likes cute things.
-      </div>
-      <div markdown="1">
-        この電車は渋谷駅に行きますか 
-        このでんしゃはしぶやえきにいきますか 
-        Does this train go to Shibuya Station?
-      </div>
-      <div markdown="1">
-        私の趣味はゲームと読みです。
-        わたしのしゅみはゲームとよみです。
-        My hobbies are playing games and reading.
-      </div>
-      <div markdown="1">
-        ビールを飲みますか  いいえ、ビールは 飲みません。
-        ビールをのみますか  いいえ、 ビールをのみません。
-        Do you drink beer？ No, I don’t drink beer.
-      </div>
-      <div markdown="1">
-        毎週木曜日に弟と晩御飯を作ります。 今週何を作りましょうか
-        まいしゅうもくようびにおとうととばんごはんをつくります。こんしゅうなにをつくりましょうか。 
-        I make dinner with my (younger) brother every Thursday. What should I make this week?
-      </div>
-      <div markdown="1">
-        日本のゲームも翻訳します。
-        にほんのゲームもほにゃくします。
-        I also translate Japanese games.
-      </div>
-      <div markdown="1">
-        今日はとても寒いです。 明日も寒いです。 
-        きょうはとてもさむいです。あしたもさむいです。
-        Today is very cold. Tomorrow will also be cold.
-      </div>
+    <main :class="{ 'menuOpen': showMenu }">
+      <article
+        v-for="([main, kana, eng], index) in articles" :key="index"
+      >
+        <span class="main">{{ main }}</span>
+        <span class="kana">{{ kana }}</span>
+        <span class="eng">{{ eng }}</span>
+      </article>
     </main>
     <footer>
       demo
