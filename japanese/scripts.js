@@ -1,6 +1,8 @@
 
 import { createApp } from 'vue';
 
+import { data } from './data/phrases.js';
+
 createApp({
   components: {
   },
@@ -11,6 +13,7 @@ createApp({
   data() {
     return {
       showMenu: false,
+      articles: data,
     }
   },
 }).mount('#app');
