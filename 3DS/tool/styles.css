@@ -1,0 +1,85 @@
+:root {
+  --corner-color: #adadad;
+  --corner-size: 2.5px;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+body {
+  position: absolute;
+  font-family: "VT323", monospace;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  color: white;
+  /* background-image: url(https://cdnb.artstation.com/p/assets/images/images/061/615/715/original/feon-pixel-art-background-6.gif?1681236026); */
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: calc(100% - 20px);
+  padding: 10px;
+}
+
+.layout-header {
+  font-size: 42px;
+  text-align: center;
+  padding: 10px;
+  backdrop-filter: blur(2px);
+  background-color: #00000024;
+}
+
+.layout-content {
+  overflow: auto;
+  overflow-x: hidden;
+  flex-grow: 1;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.layout-content #photos a img {
+  width: 100%;
+}
+
+.layout-footer {
+  display: flex;
+  text-align: center;
+  padding: 10px;
+  background-color: #8080801c;
+  color: #ffffff;
+  border-radius: 8px;
+}
+
+.layout-footer > * {
+  flex: 1;
+}
+
+
+@media screen and (max-width: 600px) {
+  body {
+    background-color: black;
+    /* background-image: url(./assets/img/xyz-bg-v.png); */
+  }
+  a {
+    color: white;
+  }
+  button {
+    width: 100%;
+  }
+ 
+  .layout-header {
+    font-size: 22px;
+  }
+
+  .layout-content {
+    flex-direction: column;
+  }
+}
