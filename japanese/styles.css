@@ -26,7 +26,7 @@ body {
     flex-direction: column;
 
     &.menuOpen {
-      margin-top: 12rem;
+      margin-top: 13rem;
     }
 
     article {
@@ -91,6 +91,21 @@ body {
 
     &.active a {
       color: #23527c;
+    }
+  }
+}
+
+#dialog-kana {
+  .tables {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    font-size: x-large;
+
+    td {
+      outline: 1px solid;
+      padding: 0 3px;
     }
   }
 }
