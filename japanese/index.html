@@ -37,7 +37,7 @@
 
     <main :class="{ 'menuOpen': showMenu }">
       <article
-        v-for="([main, eng], index) in articles" :key="index"
+        v-for="([main, eng, refs], index) in articles" :key="index"
       >
         <span class="main">
           <template v-for="(group, index) in splitByKanji(main, extractKanji(main))" :key="index">
@@ -49,11 +49,16 @@
             </template>
           </template>
         </span>
-        <span class="eng">{{ eng }}</span>
+        <span class="eng" @click="showDialog(refs)">{{ eng }}</span>
       </article>
     </main>
     <footer>
       demo
     </footer>
+    <dialog @click="closeDialog()">
+      <h2>References:</h2>
+      <div class="content">
+      </div>
+    </dialog>
 	</body>
 </html>

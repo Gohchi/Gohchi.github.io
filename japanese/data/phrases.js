@@ -8,15 +8,13 @@ export const data = [
   ], [
     "私の彼女は元気な人です。 可愛いものが好きです。",
     "My girlfriend is a lively person. She likes cute things.",
-  ],
-  [
+  ], [
     "この電車は渋谷駅に行きますか",
     "Does this train go to Shibuya Station?",
   ], [
     "私の趣味はゲームと読みです。",
     "My hobbies are playing games and reading.",
-  ],
-  [
+  ], [
     "ビールを飲みますか  いいえ、ビールは 飲みません。",
     "Do you drink beer？ No, I don’t drink beer.",
   ], [
@@ -28,8 +26,7 @@ export const data = [
   ], [
     "今日はとても寒いです。 明日も寒いです。 ",
     "Today is very cold. Tomorrow will also be cold.",
-  ],
-  [
+  ], [
     "日本語の授業が全然わかりません。困ります。",
     "I do not understand Japanse class at all. I am in trouble.",
   ], [
@@ -50,48 +47,41 @@ export const data = [
   ], [
     "新しい日本料理の本を買おうと思う。",
     "I think I'll buy a new book about Japanese cuisine.",
-  ],
+  ], [
+    "二日間ねませんでした。",
+    "I didn't sleep for two days.",
+  ], [
+    "お腹がすきました。",
+    "I am hungry.",
+  ], [
+    "公園で花見をしました。",
+    "We went cherry blossom viewing in the park.",
+  ], [
+    "花見は楽しかったです。",
+    "Cherry blossom viewing was fun.",
+  ], [
+    "日本語の勉強は楽しいです。",
+    "Studying Japanese is fun.",
+  ], [
+    "日本語の勉強は難しいです。",
+    "Studying Japanese is difficult.",
+  ], [
+    "日本語の勉強は簡単です。",
+    "Studying Japanese is easy.",
+  ], [
+    "日本語の勉強は面白いです。",
+    "Studying Japanese is interesting.",
+  ], [
+    "日本語の勉強は大変です。",
+    "Studying Japanese is hard.",
+    [
+      "asd is a Japanese stir-fried noodle dish, typically made with wheat noodles, vegetables, and meat or seafood, seasoned with a savory sauce.",
+    ],
+  ], [
+    "まず焼きそばを食べましょう",
+    "First, we should eat yakisoba*.",
+    [
+      "Yakisoba is a Japanese stir-fried noodle dish, typically made with wheat noodles, vegetables, and meat or seafood, seasoned with a savory sauce.",
+    ],
+  ]
 ];
-
-export const ruby = {
-  "私": "わたし",
-  "女": "おんな",
-  "彼": "かれ",
-  "彼女": "かのしょ",
-  "人": "ひと",
-  "可愛": "かわい",
-  "好": "す",
-  "元気": "げんき",
-  "電車": "でんしゃ",
-  "渋谷駅": "しぶやえき",
-  "駅": "えき",
-  "行": "い",
-  "趣味": "しゅみ",
-  "読": "よ",
-  "飲": "の",
-  "毎週木曜日": "まいしゅうもくようび",
-  "弟": "おとうと",
-  "晩御飯": "ばんごはん",
-  "作": "つく",
-  "今週何": "こんしゅうなに",
-  "本": "ほん",
-  "日本": "にほん",
-  "日本語": "にほんご",
-  "日本料理": "にほんりょうり",
-  "翻訳": "ほにゃく",
-  "授業": "じゅぎょう",
-  "全然": "ぜんぜん",
-  "困": "こま",
-  "今日": "きょう",
-  "寒": "さむ",
-  "明日": "あした",
-  "独学": "どくがく",
-  "面白": "おもしろ",
-  "勉強": "べんきょう",
-  "予報": "よほう",
-  "買": "か",
-  "思": "おも",
-  "雨": "あめ",
-  "後": "あと",
-  "新": "あたら",
-};

@@ -1,7 +1,8 @@
 
 import { createApp } from 'vue';
 
-import { data, ruby } from './data/phrases.js';
+import { data } from './data/phrases.js';
+import { ruby } from './data/kanji.js';
 
 createApp({
   components: {
@@ -40,6 +41,31 @@ createApp({
       }
       result.push(sentence.substring(currentIndex));
       return result;
+    },
+    "showDialog": refs => {
+      if (!refs) { // If no references are provided, do nothing
+        return;
+      }
+
+      const dialog = document.querySelector('dialog');
+      if (dialog) {
+        const content = dialog.querySelector('.content');
+        content.innerHTML = ''; // Clear previous content
+        for (let i = 0; i < refs.length; i++) {
+          const ref = refs[i];
+          const p = document.createElement('p');
+          p.textContent = `${'*'.repeat(i + 1)} ${ref}`;
+          content.appendChild(p); // Add each reference as a paragraph
+        }
+
+        dialog.showModal(); // Finally, show the dialog
+      }
+    },
+    "closeDialog": () => {
+      const dialog = document.querySelector('dialog');
+      if (dialog) {
+        dialog.close();
+      }
     },
   },
   mounted() {
