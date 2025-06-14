@@ -42,7 +42,7 @@ createApp({
       result.push(sentence.substring(currentIndex));
       return result;
     },
-    "showDialog": refs => {
+    "showRefsDialog": refs => {
       if (!refs) { // If no references are provided, do nothing
         return;
       }
@@ -61,8 +61,14 @@ createApp({
         dialog.showModal(); // Finally, show the dialog
       }
     },
-    "closeDialog": () => {
-      const dialog = document.querySelector('dialog');
+    "showDialog": id => {
+      const dialog = document.getElementById(id);
+      if (dialog) {
+        dialog.showModal(); // Finally, show the dialog
+      }
+    },
+    "closeDialog": id => {
+      const dialog = document.getElementById(id);
       if (dialog) {
         dialog.close();
       }

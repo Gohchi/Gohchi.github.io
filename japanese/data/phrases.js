@@ -74,9 +74,6 @@ export const data = [
   ], [
     "日本語の勉強は大変です。",
     "Studying Japanese is hard.",
-    [
-      "asd is a Japanese stir-fried noodle dish, typically made with wheat noodles, vegetables, and meat or seafood, seasoned with a savory sauce.",
-    ],
   ], [
     "まず焼きそばを食べましょう",
     "First, we should eat yakisoba*.",
