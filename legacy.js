@@ -1,6 +1,7 @@
 window.onload = function () {
   const browser = identifyBrowser();
-  document.getElementById("browser").innerText = browser;
+  const message = '\nYou are using ' + browser + '. Redirecting you to the appropriate page...';
+  document.getElementById("browser").innerText += message;
   redirectByBrowser();
 };
 
