@@ -1,8 +1,11 @@
 window.onload = function () {
-  const browser = identifyBrowser();
-  const message = '\nYou are using ' + browser + '. Redirecting you to the appropriate page...';
-  document.getElementById("browser").innerText += message;
-  redirectByBrowser();
+  const container = document.getElementById('browser');
+  if (container) {
+    const browser = identifyBrowser();
+    const message = '\nYou are using ' + browser + '. Redirecting you to the appropriate page...';
+    container.innerText += message;
+    redirectByBrowser();
+  }
 };
 
 function redirectByBrowser() {
