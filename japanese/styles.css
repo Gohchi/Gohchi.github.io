@@ -17,17 +17,21 @@ body {
     }
   }
 
+  &.index main {
+    padding: .5rem;
+    padding-bottom: 2.5rem;
+  }
+
   main {
     transition: margin 1s;
     margin-top: 4rem;
-    padding-bottom: 2rem;
     
     gap: .5rem;
     display: flex;
     flex-direction: column;
 
     &.menuOpen {
-      margin-top: 13rem;
+      margin-top: 17rem;
     }
 
     article {
@@ -112,60 +116,82 @@ body {
   }
 }
 
-// .index main {
-//   margin: 4px;
-// }
-
-.index {
-  ul {
-    list-style: none;
-    padding-left: 1rem;
-    width: 100%;
-
-    .index-item {
-      cursor: pointer;
-    }
-  }
-}
-
 .berserk-novel {
   main {
     position: absolute;
-    height: calc(100% - 4rem - 32px);
+    height: calc(100% - 4rem - 8px);
     width: 100%;
     
     article {
       flex: 1;
-      align-items: center;
+
+      .title {
+        font-size: 2rem;
+      }
+
+      .title,
+      .subtitle {
+        text-align: center;
+      }
+
+      .page-number {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+      }
+
+      .translation {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
 
       &.tategaki {
         writing-mode: vertical-rl;
         text-orientation: upright;
       }
-
-      h1.title {
-        font-size: 2rem;
-      }
-
+      
       &.main {
         justify-content: center;
+        align-items: center;
       }
-      .translation {
-        font-size: 1rem;
-        line-height: 1.5;
+
+      &.index {
+        ul {
+          list-style: none;
+          padding-left: 1rem;
+          width: calc(100% - 1rem);
+
+          .index-item {
+            cursor: pointer;
+            width: max-content;
+          }
+        }
+      }
+
+      &.content {
+        overflow: auto;
+        padding: 1rem;
+
+        &.tategaki {
+          padding: 1rem 3rem;
+        }
+
+        span {
+          text-indent: 1rem;
+        }
+      }
+
+      &.unknown {
+        align-items: center;
+        
+        button {
+          
+          width: max-content;
+        }
       }
     }
-    .title,
-    .subtitle {
-      text-align: center;
-    }
-
-    .page-number {
-      position: absolute;
-      right: 1rem;
-      top: 1rem;
-    }
-
+    
     .actions {
       display: flex;
       justify-content: space-between;
