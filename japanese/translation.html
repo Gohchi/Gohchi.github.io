@@ -60,7 +60,7 @@
               <span class="translation">{{ page[lang]?.subtitle }}</span>
             </template>
           </h2>
-          <div class="page-number" v-if="showPage">{{ pageSelected }}</div>
+          <div class="page-number" v-if="showPageNumber">{{ pageSelected }}</div>
         </article>
       </template>
 
@@ -81,7 +81,22 @@
               {{ text }}
             </li>
           </ul>
-          <div class="page-number" v-if="showPage">{{ pageSelected }}</div>
+          <div class="page-number" v-if="showPageNumber">{{ pageSelected }}</div>
+        </article>
+      </template>
+
+      <template v-if="!type">
+        <article
+          :class="{ 'tategaki': writingDirection === 'tategaki', 'content': true }"
+        >
+          <template v-for="(line, index) in content" :key="index">
+            <br v-if="line === ''" />
+            <span>{{ line }}</span>
+            <template v-if="showTranslation && line !== ''">
+              <span class="translation">{{ page[lang][index] }}</span>
+            </template>
+          </template>
+          <div class="page-number" v-if="showPageNumber">{{ pageSelected }}</div>
         </article>
       </template>
       

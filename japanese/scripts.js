@@ -117,11 +117,14 @@ createApp({
     chapters() {
       return this.page.chapters;
     },
+    content() {
+      return this.page.content;
+    },
     footer() {
       return this.page.footer;
     },
-    showPage() {
-      return this.page.showPage;
+    showPageNumber() {
+      return this.page.showPageNumber;
     },
     first() {
       if (this.pageSelected > this.translations.length) {
