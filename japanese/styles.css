@@ -112,8 +112,20 @@ body {
   }
 }
 
-.index main {
-  margin: 4px;
+// .index main {
+//   margin: 4px;
+// }
+
+.index {
+  ul {
+    list-style: none;
+    padding-left: 1rem;
+    width: 100%;
+
+    .index-item {
+      cursor: pointer;
+    }
+  }
 }
 
 .berserk-novel {
@@ -124,6 +136,12 @@ body {
     
     article {
       flex: 1;
+      align-items: center;
+
+      &.tategaki {
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+      }
 
       h1.title {
         font-size: 2rem;
@@ -158,10 +176,9 @@ body {
         cursor: pointer;
       }
 
-      .lang-actions,
-      .lang-direction-actions {
+      .lang-actions {
         display: flex;
-        gap: 1rem;
+        // gap: 1rem;
 
         .active {
           background-color: #f0f0f0;

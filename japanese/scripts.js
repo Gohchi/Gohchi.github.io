@@ -77,6 +77,10 @@ createApp({
     "goTo": url => {
       window.location.href = url; // Navigate to the specified URL
     },
+    "goToIndex": function() {
+      const index = this.translations.findIndex(({ type }) => type === 'index') + 1;
+      this.pageSelected = index;
+    },
   },
   mounted() {
   },
@@ -86,8 +90,8 @@ createApp({
       "articles": data,
       "ruby": ruby,
       "translations": translations,
-      "pageSelected": 1,
-      "hideDisclaimer": true,
+      "pageSelected": 1, // Default to the first page
+      "hideDisclaimer": false,
       "lang": 'eng', // Default language
       "showTranslation": true,
       "writingDirection": 'yokogaki', // Default writing direction - horizontal writing
@@ -95,9 +99,13 @@ createApp({
   },
   computed: {
     page() {
-      return this.translations.find(({ pageNumber }) => this.pageSelected === pageNumber);
+      return this.translations[this.pageSelected-1] || {};
     },
     type() {
+      if (!this.translations[this.pageSelected-1]) {
+        return 'unknown';
+      }
+
       return this.page.type;
     },
     title() {
@@ -106,8 +114,26 @@ createApp({
     subtitle() {
       return this.page.subtitle;
     },
-    pageNumber() {
-      return this.page.pageNumber;
+    chapters() {
+      return this.page.chapters;
     },
+    footer() {
+      return this.page.footer;
+    },
+    showPage() {
+      return this.page.showPage;
+    },
+    first() {
+      if (this.pageSelected > this.translations.length) {
+        return true; // If the selected page is out of bounds, consider it as the first page
+      }
+      return this.pageSelected === 1;
+    },
+    last() {
+      if (this.pageSelected > this.translations.length) {
+        return true; // If the selected page is out of bounds, consider it as the last page
+      }
+      return this.pageSelected === this.translations.length;
+    }
   }
 }).mount('#app');

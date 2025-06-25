@@ -33,8 +33,19 @@
     </header>
 
     <main>
+      <template v-if="type === 'unknown'">
+        <article class="unknown">
+          <h1 class="title">Unknown Page</h1>
+          <h2 class="subtitle">This page is not available.</h2>
+          <button class="go-back" @click.prevent="goToIndex()">Go back to Index</button>
+          <div class="page-number">{{ pageSelected }}</div>
+        </article>
+      </template>
+      
       <template v-if="type === 'main'">
-        <article :class="{ 'first-page': pageNumber === 1, 'main': true }">
+        <article
+          :class="{ 'tategaki': writingDirection === 'tategaki', 'main': true }"
+        >
           <h1 class="title">
             <span>{{ title }}</span>
             <template v-if="showTranslation">
@@ -49,17 +60,41 @@
               <span class="translation">{{ page[lang]?.subtitle }}</span>
             </template>
           </h2>
-          <div class="page-number">{{ pageNumber }}</div>
+          <div class="page-number" v-if="showPage">{{ pageSelected }}</div>
+        </article>
+      </template>
+
+      <template v-if="type === 'index'">
+        <article class="index">
+          <h1 class="title">{{ title }}</h1>
+          <h2 class="subtitle">{{ subtitle }}</h2>
+          <ul>
+            <li v-for="([name, pageNum], index) in chapters" :key="index"
+              class="index-item"
+              @click="pageSelected = pageNum"
+            >
+              {{ name }}..........{{ pageNum }}
+            </li>
+          </ul>
+          <ul class="index-footer">
+            <li v-for="(text, index) in footer" :key="index">
+              {{ text }}
+            </li>
+          </ul>
+          <div class="page-number" v-if="showPage">{{ pageSelected }}</div>
         </article>
       </template>
       
       <div class="actions">
-        <button class="next-page">&#8592;</button>
+        <button class="next-page" title="つぎ"
+          :disabled="last"
+          @click="pageSelected+=1"
+        >&#8592; 次</button>
         <div class="lang-actions">
           <button
             class="lang-icon"
             :title="showTranslation ? 'Turn off translation' : 'Turn on translation'"
-            @click="showTranslation = !showTranslation"
+            @click="showTranslation = !showTranslation; writingDirection = 'yokogaki';"
           >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
           <template v-if="showTranslation">
             <button class="lang-eng"
@@ -86,7 +121,10 @@
             >横書き</button>
           </template>
         </div>
-        <button class="prev-page" :disabled="pageNumber <= 1">&#8594;</button>
+        <button class="prev-page" title="まえ"
+          :disabled="first"
+          @click="pageSelected-=1"
+        >前 &#8594;</button>
       </div>
     </main>
     <footer>
