@@ -33,7 +33,7 @@
     </header>
 
     <main>
-      <template v-if="main">
+      <template v-if="type === 'main'">
         <article :class="{ 'first-page': pageNumber === 1, 'main': true }">
           <h1 class="title">
             <span>{{ title }}</span>
@@ -54,17 +54,39 @@
       </template>
       
       <div class="actions">
-        <button class="prev-page">&#8592;</button>
+        <button class="next-page">&#8592;</button>
         <div class="lang-actions">
           <button
             class="lang-icon"
-            title="Language"
+            :title="showTranslation ? 'Turn off translation' : 'Turn on translation'"
             @click="showTranslation = !showTranslation"
           >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
-          <button class="lang-eng" @click="lang = 'eng'" :class="{ active: lang === 'eng' }" :disabled="!showTranslation">ENG</button>
-          <button class="lang-esp" @click="lang = 'esp'" :class="{ active: lang === 'esp' }" :disabled="!showTranslation">ESP</button>
+          <template v-if="showTranslation">
+            <button class="lang-eng"
+              @click="lang = 'eng'"
+              :class="{ active: lang === 'eng' }"
+            >ENG</button>
+            <button class="lang-esp"
+              @click="lang = 'esp'"
+              :class="{ active: lang === 'esp' }"
+            >ESP</button>
+          </template>
+          <template v-if="!showTranslation">
+            <button class="tategaki"
+              :title="!showTranslation ? 'たてがき' : undefined"
+              @click="writingDirection = 'tategaki'"
+              :class="{ active: writingDirection === 'tategaki' }"
+              :disabled="showTranslation"
+            >縦書き</button>
+            <button class="yokogaki"
+              :title="!showTranslation ? 'よこがき' : undefined"
+              @click="writingDirection = 'yokogaki'"
+              :class="{ active: writingDirection === 'yokogaki' }"
+              :disabled="showTranslation"
+            >横書き</button>
+          </template>
         </div>
-        <button class="next-page">&#8594;</button>
+        <button class="prev-page" :disabled="pageNumber <= 1">&#8594;</button>
       </div>
     </main>
     <footer>

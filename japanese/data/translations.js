@@ -1,6 +1,6 @@
 export const translations = [
   {
-    main: true,
+    type: 'main',
     title: '『小説』ベルセルク 炎竜の騎士',
     subtitle: '小説=深見真 原作=三浦建太郎',
     pageNumber: 1,

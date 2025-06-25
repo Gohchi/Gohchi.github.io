@@ -158,7 +158,8 @@ body {
         cursor: pointer;
       }
 
-      .lang-actions {
+      .lang-actions,
+      .lang-direction-actions {
         display: flex;
         gap: 1rem;
 

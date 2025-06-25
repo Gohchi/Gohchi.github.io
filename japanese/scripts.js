@@ -90,14 +90,15 @@ createApp({
       "hideDisclaimer": true,
       "lang": 'eng', // Default language
       "showTranslation": true,
+      "writingDirection": 'yokogaki', // Default writing direction - horizontal writing
     }
   },
   computed: {
     page() {
       return this.translations.find(({ pageNumber }) => this.pageSelected === pageNumber);
     },
-    main() {
-      return this.page.main;
+    type() {
+      return this.page.type;
     },
     title() {
       return this.page.title;
