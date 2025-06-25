@@ -1,5 +1,6 @@
 body {
   font-family: "M PLUS 1p", sans-serif;
+  margin: 0;
 
   header {
     position: fixed;
@@ -57,6 +58,7 @@ body {
   top: 1rem;
   height: 32px;
   width: 32px;
+  cursor: pointer;
   background-image: url(./images/sushi.svg);
 
   &:hover {
@@ -108,4 +110,67 @@ body {
       padding: 0 3px;
     }
   }
+}
+
+.index main {
+  margin: 4px;
+}
+
+.berserk-novel {
+  main {
+    position: absolute;
+    height: calc(100% - 4rem - 32px);
+    width: 100%;
+    
+    article {
+      flex: 1;
+
+      h1.title {
+        font-size: 2rem;
+      }
+
+      &.main {
+        justify-content: center;
+      }
+      .translation {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+    }
+    .title,
+    .subtitle {
+      text-align: center;
+    }
+
+    .page-number {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+
+      button {
+        padding: 1rem;
+        cursor: pointer;
+      }
+
+      .lang-actions {
+        display: flex;
+        gap: 1rem;
+
+        .active {
+          background-color: #f0f0f0;
+          border: 1px solid #ccc;
+        }
+      }
+    }
+  }
+
+  .disclaimer {
+    text-align: center;
+  } 
 }

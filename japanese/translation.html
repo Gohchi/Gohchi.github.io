@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
+    <meta charset="UTF-8">
+
+		<title>日本語 メモ - 小説 ベルセルク： 炎竜の騎士</title>
+		<link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "/vue.esm-browser.prod.js"
+        }
+      }
+    </script>
+    <!-- "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js" -->
+    <script type="module" src="scripts.js" defer></script>
+	</head>
+	<body id="app" class="berserk-novel">
+    <header>
+      <div class="title">
+        <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ - 小説 ベルセルク
+      </div>
+      <ul class="menu-index" v-if="showMenu">
+        <li><a href="#" @click.prevent="goTo('./')">Go back</a></li>
+      </ul>
+      <div class="icon-menu" @click="showMenu=!showMenu">
+      </div>
+    </header>
+
+    <main>
+      <template v-if="main">
+        <article :class="{ 'first-page': pageNumber === 1, 'main': true }">
+          <h1 class="title">
+            <span>{{ title }}</span>
+            <template v-if="showTranslation">
+              <br />
+              <span class="translation">{{ page[lang]?.title }}</span>
+            </template>
+          </h1>
+          <h2 class="subtitle">
+            <span>{{ subtitle }}</span>
+            <template v-if="showTranslation">
+              <br />
+              <span class="translation">{{ page[lang]?.subtitle }}</span>
+            </template>
+          </h2>
+          <div class="page-number">{{ pageNumber }}</div>
+        </article>
+      </template>
+      
+      <div class="actions">
+        <button class="prev-page">&#8592;</button>
+        <div class="lang-actions">
+          <button
+            class="lang-icon"
+            title="Language"
+            @click="showTranslation = !showTranslation"
+          >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
+          <button class="lang-eng" @click="lang = 'eng'" :class="{ active: lang === 'eng' }" :disabled="!showTranslation">ENG</button>
+          <button class="lang-esp" @click="lang = 'esp'" :class="{ active: lang === 'esp' }" :disabled="!showTranslation">ESP</button>
+        </div>
+        <button class="next-page">&#8594;</button>
+      </div>
+    </main>
+    <footer>
+      <div class="disclaimer" v-if="!hideDisclaimer">
+        This is a fan translation for educational purposes. All rights to "Berserk: The Flame Dragon Knight" belong to Young Animal Comics and the original creators. Please support the official release.
+      </div>
+      <button class="close-disclaimer" @click="hideDisclaimer = true" v-if="!hideDisclaimer">Close</button>
+    </footer>
+	</body>
+</html>

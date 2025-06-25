@@ -20,7 +20,7 @@
     <!-- "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js" -->
     <script type="module" src="scripts.js" defer></script>
 	</head>
-	<body id="app">
+	<body id="app" class="index">
     <header>
       <div class="title">
         <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ
@@ -31,6 +31,7 @@
         <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
         <li class="active"><a href="#">Contact</a></li>
         <li><a href="#">COMMON PHRASES</a></li>
+        <li><a href="#" @click.prevent="goTo('translation')">小説 ベルセルク： 炎竜の騎士</a></li>
       </ul>
       <div class="icon-menu" @click="showMenu=!showMenu">
       </div>

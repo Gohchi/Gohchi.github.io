@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 
 import { data } from './data/phrases.js';
 import { ruby } from './data/kanji.js';
+import { translations } from './data/translations.js';
 
 createApp({
   components: {
@@ -73,6 +74,9 @@ createApp({
         dialog.close();
       }
     },
+    "goTo": url => {
+      window.location.href = url; // Navigate to the specified URL
+    },
   },
   mounted() {
   },
@@ -81,6 +85,28 @@ createApp({
       "showMenu": false,
       "articles": data,
       "ruby": ruby,
+      "translations": translations,
+      "pageSelected": 1,
+      "hideDisclaimer": true,
+      "lang": 'eng', // Default language
+      "showTranslation": true,
     }
   },
+  computed: {
+    page() {
+      return this.translations.find(({ pageNumber }) => this.pageSelected === pageNumber);
+    },
+    main() {
+      return this.page.main;
+    },
+    title() {
+      return this.page.title;
+    },
+    subtitle() {
+      return this.page.subtitle;
+    },
+    pageNumber() {
+      return this.page.pageNumber;
+    },
+  }
 }).mount('#app');
