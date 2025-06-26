@@ -4,7 +4,7 @@ export const translations = [
     title: '【小説】ベルセルク 炎竜の騎士',
     subtitle: '小説=深見真 原作=三浦建太郎',
     'esp': {
-      title: '[Novela] Berserk: El Caballero del Dragón de Fuego',
+      title: '[Novela] Berserk: El Caballero Dragón de Fuego',
       subtitle: 'Novela: Makoto Fukami, Original: Kentaro Miura',
     },
     'eng': {
