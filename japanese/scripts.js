@@ -76,6 +76,9 @@ createApp({
     showPageNumber() {
       return this.page.showPageNumber;
     },
+    pageNumber() {
+      return this.pageSelected?.toString().padStart(3, '0');
+    },
     first() {
       if (this.pageSelected > this.translations.length) {
         return true; // If the selected page is out of bounds, consider it as the first page

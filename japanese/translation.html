@@ -23,7 +23,7 @@
 	<body id="app" class="berserk-novel">
     <header>
       <div class="title">
-        <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ - 小説 ベルセルク
+        小説 ベルセルク
       </div>
       <ul class="menu-index" v-if="showMenu">
         <li><a href="#" @click.prevent="goTo('./')">Go back</a></li>
@@ -38,7 +38,7 @@
           <h1 class="title">Unknown Page</h1>
           <h2 class="subtitle">This page is not available.</h2>
           <button class="go-back" @click.prevent="goToIndex()">Go back to Index</button>
-          <div class="page-number">{{ pageSelected }}</div>
+          <div class="page-number">{{ pageNumber }}</div>
         </article>
       </template>
       
@@ -60,7 +60,7 @@
               <span class="translation">{{ page[lang]?.subtitle }}</span>
             </template>
           </h2>
-          <div class="page-number" v-if="showPageNumber">{{ pageSelected }}</div>
+          <div class="page-number" v-if="showPageNumber">{{ pageNumber }}</div>
         </article>
       </template>
 
@@ -83,7 +83,7 @@
               {{ text }}
             </li>
           </ul>
-          <div class="page-number" v-if="showPageNumber">{{ pageSelected }}</div>
+          <div class="page-number" v-if="showPageNumber">{{ pageNumber }}</div>
         </article>
       </template>
 
@@ -98,7 +98,7 @@
               <span class="translation">{{ page[lang][index] }}</span>
             </template>
           </template>
-          <div class="page-number" v-if="showPageNumber">{{ pageSelected }}</div>
+          <div class="page-number" v-if="showPageNumber">{{ pageNumber }}</div>
         </article>
       </template>
       
