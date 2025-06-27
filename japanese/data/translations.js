@@ -87,10 +87,10 @@ export const translations = [
       '竜が[...]',
     ],
     'esp': [
-      'Dragon...',
+      'Dragón...',
     ],
     'eng': [
-      'Dragón...',
+      'Dragon...',
     ],
     showPageNumber: true,
   }
