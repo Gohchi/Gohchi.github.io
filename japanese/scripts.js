@@ -74,7 +74,7 @@ createApp({
       return this.page.footer;
     },
     showPageNumber() {
-      return this.page.showPageNumber;
+      return !this.page.hidePageNumber;
     },
     pageNumber() {
       return this.pageSelected?.toString().padStart(3, '0');

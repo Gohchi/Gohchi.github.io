@@ -10,7 +10,8 @@ export const translations = [
     'eng': {
       title: '[Novel] Berserk: The Flame Dragon Knight',
       subtitle: 'Novel: Makoto Fukami, Original work: Kentaro Miura',
-    }
+    },
+    hidePageNumber: true,
   },
   {
     type: 'index',
@@ -29,7 +30,6 @@ export const translations = [
       '実在の人物・団体・事件などにはいっさい関係ありません。',
       'YOUNG ANIMAL COMICS',
     ],
-    showPageNumber: true,
   },
   {
     content: [
@@ -56,7 +56,6 @@ export const translations = [
       '',
       'Here, on a continent ruled by swords and violence, where the Inquisition of the Holy See, which considers faith in the One God as absolute, exerts its tyranny, and great nations compete for supremacy in an era of continuous warfare.',
     ],
-    showPageNumber: true,
   },
   {
     content: [
@@ -68,7 +67,6 @@ export const translations = [
     'eng': [
       'There was a terrible death, a terrible loss for what was once a beautiful woman.',
     ],
-    showPageNumber: true,
   },
   {
     content: [
@@ -80,7 +78,6 @@ export const translations = [
     'eng': [
       'That face...',
     ],
-    showPageNumber: true,
   },
   {
     content: [
@@ -92,6 +89,5 @@ export const translations = [
     'eng': [
       'Dragon...',
     ],
-    showPageNumber: true,
   }
 ];
