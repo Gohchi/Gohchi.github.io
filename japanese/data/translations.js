@@ -57,5 +57,41 @@ export const translations = [
       'Here, on a continent ruled by swords and violence, where the Inquisition of the Holy See, which considers faith in the One God as absolute, exerts its tyranny, and great nations compete for supremacy in an era of continuous warfare.',
     ],
     showPageNumber: true,
+  },
+  {
+    content: [
+      '惨たらしい死休があった。それはかつては美しい女だったものだ。[...]',
+    ],
+    'esp': [
+      'Hubo una muerte terrible, una pérdida terrible para lo que una vez fue una mujer hermosa.',
+    ],
+    'eng': [
+      'There was a terrible death, a terrible loss for what was once a beautiful woman.',
+    ],
+    showPageNumber: true,
+  },
+  {
+    content: [
+      'その顔[...]',
+    ],
+    'esp': [
+      'Esa cara...',
+    ],
+    'eng': [
+      'That face...',
+    ],
+    showPageNumber: true,
+  },
+  {
+    content: [
+      '竜が[...]',
+    ],
+    'esp': [
+      'Dragón...',
+    ],
+    'eng': [
+      'Dragon...',
+    ],
+    showPageNumber: true,
   }
 ];
