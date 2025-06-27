@@ -41,6 +41,31 @@ body {
       gap: .5rem;
       padding: 3px;
       outline: 1px solid gray;
+
+      
+      dialog {
+        text-align: center;
+        text-indent: 0;
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+
+          li::after {
+            content: "|";
+            float: right;
+            padding-left: 10px;
+          }
+          
+          li:last-child::after {
+            display: none;
+          }
+        }
+      }
     }
   }
 
@@ -180,9 +205,10 @@ body {
           padding: 1rem 3rem;
         }
 
-        .phrase {
-          text-indent: 1rem;
+        > div.phrase {
           line-height: 28px;
+
+          text-indent: 1rem;
         }
       }
 

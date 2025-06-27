@@ -15,12 +15,19 @@ export default {
     return {
       "text": text,
       "dialogId": getId(text),
-    };
-  },
-  data() {
-    return {
       "ruby": ruby,
     };
+  },
+  computed: {
+    info() {
+      return this.ruby[this.text];
+    },
+    furigana() {
+      return this.info.furigana;
+    },
+    eng() {
+      return this.info.eng;
+    }
   },
   methods: {
     showDialog,
@@ -29,10 +36,15 @@ export default {
   template: /*html*/`
     <ruby class="open-dialog"
       @click="showDialog(dialogId)"
-    >{{ text }}<rp>(</rp><rt>{{ ruby[text] }}</rt><rp>)</rp></ruby>
+    >{{ text }}<rp>(</rp><rt>{{ furigana }}</rt><rp>)</rp></ruby>
     <dialog :id="dialogId" @click="closeDialog(dialogId)">
-      <h4>{{ ruby[text] }}</h4>
+      <h4>{{ furigana }}</h4>
       <h2>{{ text }}</h2>
+      <ul>
+        <li v-for="(item, index) in eng" :key="index">
+          {{ item }}
+        </li>
+      </ul>
     </dialog>
   `,
 }

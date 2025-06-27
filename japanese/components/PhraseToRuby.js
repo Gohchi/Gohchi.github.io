@@ -11,15 +11,11 @@ export default {
   setup({ text }) {
     return {
       "text": text,
+      "ruby": ruby,
     };
   },
   components: {
     KanjiWithRuby,
-  },
-  data() {
-    return {
-      "ruby": ruby,
-    };
   },
   methods: {
     extractKanji,
