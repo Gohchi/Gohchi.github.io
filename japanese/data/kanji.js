@@ -1,9 +1,8 @@
 
 export const ruby = {
   "私": { furigana: "わたし", 'eng': [
-      "I", "me"
-    ]
-  },
+    "I", "me"
+  ]},
   "女": { furigana: "おんな", eng: "" },
   "彼": { furigana: "かれ", eng: "" },
   "彼女": { furigana: "かのしょ", eng: "" },
@@ -57,9 +56,8 @@ export const ruby = {
   "炎竜": { furigana: "ほのおりゅう", eng: "" },
   "騎士": { furigana: "きし", eng: "" },
   "小説": { furigana: "しょうせつ", eng: [
-      "novel"
-    ]
-  },
+    "novel"
+  ]},
   "原作": { furigana: "げんさく", eng: "" },
   "三浦": { furigana: "ミウラ", eng: "" },
   "建太郎": { furigana: "ケンタロウ", eng: "" },
@@ -100,5 +98,14 @@ export const ruby = {
   "競": { furigana: "くら", eng: "" },
   "戦乱": { furigana: "せんらん", eng: "" },
   "時代": { furigana: "じだい", eng: "" },
-  "続": { furigana: "ぞく", eng: "" },
+  "続": { furigana: "ぞく" },
+  "惨": { furigana: "むご", eng: [
+    "brutally"
+  ]},
+  "死休": { furigana: "しきょう", eng: [
+    "death"
+  ]},
+  "顔": { furigana: "かお", eng: [
+    "face", "look"
+  ]}
 };
