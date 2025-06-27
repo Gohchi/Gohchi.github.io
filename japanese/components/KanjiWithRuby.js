@@ -1,4 +1,4 @@
-// import { ref, useTemplateRef } from 'vue';
+import { toRefs } from 'vue';
 
 import { closeDialog, showDialog } from "../tools.js";
 
@@ -8,17 +8,19 @@ export default {
   props: {
     text: String,
   },
-  setup({ text }) {
-    // const count = ref(0);
-    const getId = text => text.split('').reduce((res, value) => res + value.charCodeAt(0), '');
+  setup(props) {
+
+    const { text } = toRefs(props);
 
     return {
       "text": text,
-      "dialogId": getId(text),
       "ruby": ruby,
     };
   },
   computed: {
+    dialogId() {
+      return this.text.split('').reduce((res, value) => res + value.charCodeAt(0), '');
+    },
     info() {
       return this.ruby[this.text];
     },
