@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 	<head>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=2, maximum-scale=12.0, minimum-scale=.5, user-scalable=yes"/>
     <meta charset="UTF-8">
 
 		<title>日本語 メモ - 小説 ベルセルク： 炎竜の騎士</title>
@@ -47,14 +47,14 @@
           :class="{ 'tategaki': writingDirection === 'tategaki', 'main': true }"
         >
           <h1 class="title">
-            <span>{{ title }}</span>
+            <phrase-to-ruby :text="title"></phrase-to-ruby>
             <template v-if="showTranslation">
               <br />
               <span class="translation">{{ page[lang]?.title }}</span>
             </template>
           </h1>
           <h2 class="subtitle">
-            <span>{{ subtitle }}</span>
+            <phrase-to-ruby :text="subtitle"></phrase-to-ruby>
             <template v-if="showTranslation">
               <br />
               <span class="translation">{{ page[lang]?.subtitle }}</span>
@@ -67,7 +67,9 @@
       <template v-if="type === 'index'">
         <article class="index">
           <h1 class="title">{{ title }}</h1>
-          <h2 class="subtitle">{{ subtitle }}</h2>
+          <h2 class="subtitle">
+            <phrase-to-ruby :text="subtitle"></phrase-to-ruby>
+          </h2>
           <ul>
             <li v-for="([name, pageNum], index) in chapters" :key="index"
               class="index-item"
@@ -91,7 +93,7 @@
         >
           <template v-for="(line, index) in content" :key="index">
             <br v-if="line === ''" />
-            <span>{{ line }}</span>
+            <div class="phrase"><phrase-to-ruby :text="line"></phrase-to-ruby></div>
             <template v-if="showTranslation && line !== ''">
               <span class="translation">{{ page[lang][index] }}</span>
             </template>

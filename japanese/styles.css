@@ -177,8 +177,9 @@ body {
           padding: 1rem 3rem;
         }
 
-        span {
+        .phrase {
           text-indent: 1rem;
+          line-height: 28px;
         }
       }
 

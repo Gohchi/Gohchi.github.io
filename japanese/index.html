@@ -42,14 +42,7 @@
         v-for="([main, eng, refs], index) in articles" :key="index"
       >
         <span class="main">
-          <template v-for="(group, index) in splitByKanji(main, extractKanji(main))" :key="index">
-            <template v-if="!!ruby[group]">
-              <ruby>{{ group }}<rp>(</rp><rt>{{ ruby[group] }}</rt><rp>)</rp></ruby>
-            </template>
-            <template v-else>
-              {{ group }}
-            </template>
-          </template>
+          <phrase-to-ruby :text="main">
         </span>
         <span class="eng" @click="showRefsDialog(refs)">{{ eng }}</span>
       </article>
