@@ -39,7 +39,7 @@ export const showRefsDialog = refs => {
     return;
   }
 
-  const dialog = document.querySelector('dialog');
+  const dialog = document.getElementById('dialog-refs');
   if (dialog) {
     const content = dialog.querySelector('.content');
     content.innerHTML = ''; // Clear previous content
@@ -50,14 +50,14 @@ export const showRefsDialog = refs => {
       content.appendChild(p); // Add each reference as a paragraph
     }
 
-    dialog.showModal(); // Finally, show the dialog
+    dialog.showModal();
   }
 };
 
 export const showDialog = id => {
   const dialog = document.getElementById(id);
   if (dialog) {
-    dialog.showModal(); // Finally, show the dialog
+    dialog.showModal();
   }
 };
 
