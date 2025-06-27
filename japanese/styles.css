@@ -279,6 +279,25 @@ body {
 
           text-indent: 1rem;
         }
+
+        .kanji-details {
+          /* font-family: 'ＭＳ Ｐゴシック'; */
+          /* font-family: 'MS PGothic'; */
+          /* font-family: 'メイリオ'; */
+          /* font-family: Meiryo, sans-serif; */
+          /* font-family: Hiragino Kaku Gothic Pro; */
+          /* font-family: "ヒラギノ角ゴ ProN W3"; */
+          /* font-family: "HiraKakuProN-W3"; */
+          /* font-family: 'Droid Sans Japanese'; */
+          /* font-family: 'TakaoExゴシック'; */
+          /* font-family: '游ゴシック体'; */
+          // font-family: 'Yu Gothic';
+          font-family: "Zen Antique Soft", serif;
+          font-weight: 400;
+          font-style: normal;
+          font-size: 3rem;
+          margin: 2rem 0;
+        }
       }
 
       &.unknown {
