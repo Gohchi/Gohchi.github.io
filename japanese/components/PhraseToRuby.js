@@ -1,17 +1,20 @@
-// import { ref } from 'vue';
-
 import { extractKanji, splitByKanji } from "../tools.js";
+
 import { ruby } from '../data/kanji.js';
+
+import KanjiWithRuby from './KanjiWithRuby.js';
 
 export default {
   props: {
     text: String,
   },
-  setup(props) {
-    // const count = ref(0);
+  setup({ text }) {
     return {
-      "text": props.text,
-    }
+      "text": text,
+    };
+  },
+  components: {
+    KanjiWithRuby,
   },
   data() {
     return {
@@ -22,10 +25,10 @@ export default {
     extractKanji,
     splitByKanji,
   },
-  template: `
+  template: /*html*/`
     <template v-for="(group, index) in splitByKanji(text, extractKanji(text))" :key="index">
       <template v-if="!!ruby[group]">
-        <ruby>{{ group }}<rp>(</rp><rt>{{ ruby[group] }}</rt><rp>)</rp></ruby>
+        <kanji-with-ruby :text="group"></kanji-with-ruby>
       </template>
       <template v-else>
         <span>{{ group }}</span>
