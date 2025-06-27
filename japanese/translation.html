@@ -31,6 +31,7 @@
       </div>
       <ul class="menu-index" v-if="showMenu">
         <li><a href="#" @click.prevent="goTo('./')">Go back</a></li>
+        <li><a href="#" @click.prevent="openZoom()">Zoom level</a></li>
       </ul>
       <div class="icon-menu" @click="showMenu=!showMenu">
       </div>
@@ -91,58 +92,84 @@
       <template v-if="!type">
         <article
           :class="{ 'tategaki': writingDirection === 'tategaki', 'content': true }"
+          :style="'zoom: ' + zoomLevel + '%'"
         >
+          <div class="chapter-title" v-if="chapterFirstPage">{{ chapter }}</div>
           <template v-for="(line, index) in content" :key="index">
-            <div class="chapter-title" v-if="chapterFirstPage">{{ chapter }}</div>
             <br v-if="line === ''" />
-            <div class="phrase"><phrase-to-ruby :text="line"></phrase-to-ruby></div>
-            <template v-if="showTranslation && line !== ''">
-              <span class="translation">{{ page[lang][index] }}</span>
+            <template v-if="typeof line === 'number'">
+              <div class="chapter-number">&#12298; {{ line }} &#12299;</div>
+            </template>
+            <template v-else>
+              <div class="phrase"><phrase-to-ruby :text="line"></phrase-to-ruby></div>
+              <template v-if="showTranslation && line !== ''">
+                <span class="translation">{{ page[lang][index] }}</span>
+              </template>
             </template>
           </template>
+          {{ zoomLevel }}
         </article>
       </template>
       
       <div class="actions">
-        <button class="next-page" title="つぎ"
-          :disabled="last"
-          @click="pageSelected+=1"
-        >&#8592; 次</button>
-        <div class="lang-actions">
-          <button
-            class="lang-icon"
-            :title="showTranslation ? 'Turn off translation' : 'Turn on translation'"
-            @click="showTranslation = !showTranslation; writingDirection = 'yokogaki';"
-          >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
-          <template v-if="showTranslation">
-            <button class="lang-eng"
-              @click="lang = 'eng'"
-              :class="{ active: lang === 'eng' }"
-            >ENG</button>
-            <button class="lang-esp"
-              @click="lang = 'esp'"
-              :class="{ active: lang === 'esp' }"
-            >ESP</button>
-          </template>
-          <template v-if="!showTranslation">
-            <button class="tategaki"
-              :title="!showTranslation ? 'たてがき' : undefined"
-              @click="writingDirection = 'tategaki'"
-              :class="{ active: writingDirection === 'tategaki' }"
-              :disabled="showTranslation"
-            >縦書き</button>
-            <button class="yokogaki"
-              :title="!showTranslation ? 'よこがき' : undefined"
-              @click="writingDirection = 'yokogaki'"
-              :class="{ active: writingDirection === 'yokogaki' }"
-              :disabled="showTranslation"
-            >横書き</button>
-          </template>
-        </div>
-        <button class="prev-page" title="まえ"
-          :disabled="first"
-          @click="pageSelected-=1"
-        >前 &#8594;</button>
+        <template v-if="showZoomMenu">
+          <div>
+            <input
+              type="range"
+              id="zoom-level"
+              name="zoom-level"
+              min="100"
+              max="200"
+              value="100"
+              step="1"
+              @change="onZoomChange"
+            />
+            <label for="zoom-level">Zoom</label>
+          </div>
+          <button @click="confirmZoomLevel()">Confirm</button>
+          <button @click="cancelZoomLevel()">Cancel</button>
+        </template>
+        <template v-else>
+          <button class="next-page" title="つぎ"
+            :disabled="last"
+            @click="pageSelected+=1"
+          >&#8592; 次</button>
+          <div class="lang-actions">
+            <button
+              class="lang-icon"
+              :title="showTranslation ? 'Turn off translation' : 'Turn on translation'"
+              @click="showTranslation = !showTranslation; writingDirection = 'yokogaki';"
+            >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
+            <template v-if="showTranslation">
+              <button class="lang-eng"
+                @click="lang = 'eng'"
+                :class="{ active: lang === 'eng' }"
+              >ENG</button>
+              <button class="lang-esp"
+                @click="lang = 'esp'"
+                :class="{ active: lang === 'esp' }"
+              >ESP</button>
+            </template>
+            <template v-if="!showTranslation">
+              <button class="tategaki"
+                :title="!showTranslation ? 'たてがき' : undefined"
+                @click="writingDirection = 'tategaki'"
+                :class="{ active: writingDirection === 'tategaki' }"
+                :disabled="showTranslation"
+              >縦書き</button>
+              <button class="yokogaki"
+                :title="!showTranslation ? 'よこがき' : undefined"
+                @click="writingDirection = 'yokogaki'"
+                :class="{ active: writingDirection === 'yokogaki' }"
+                :disabled="showTranslation"
+              >横書き</button>
+            </template>
+          </div>
+          <button class="prev-page" title="まえ"
+            :disabled="first"
+            @click="pageSelected-=1"
+          >前 &#8594;</button>
+        </template>
       </div>
     </main>
     <footer>

@@ -27,14 +27,32 @@ createApp({
     showDialog,
     closeDialog,
     goTo,
-    "goToIndex": function() {
+    goToIndex() {
       const index = this.translations.findIndex(({ type }) => type === 'index') + 1;
       this.pageSelected = index;
     },
+    openZoom() {
+      this.showMenu = false;
+      this.prevZoomLevel = this.showZoomMenu;
+      this.showZoomMenu = true;
+    },
+    confirmZoomLevel() {
+      this.showZoomMenu = false;
+      localStorage.setItem('zoom-level', this.zoomLevel);
+    },
+    cancelZoomLevel() {
+      this.zoomLevel = this.prevZoomLevel;
+      this.showZoomMenu = false;
+    },
+    onZoomChange(e) {
+      this.zoomLevel = e.target.value;
+    }
   },
   mounted() {
   },
   data() {
+    const zoomLevel = localStorage.getItem('zoom-level') ?? 100;
+
     return {
       "showMenu": false,
       "articles": data,
@@ -44,7 +62,10 @@ createApp({
       "hideDisclaimer": false,
       "lang": 'eng', // Default language
       "showTranslation": true,
-      "writingDirection": 'yokogaki', // Default writing direction - horizontal writing
+      "writingDirection": 'yokogaki', // Default writing direction - tategaki | 
+      "showZoomMenu": false,
+      "zoomLevel": zoomLevel,
+      "prevZoomLevel": zoomLevel,
     }
   },
   computed: {

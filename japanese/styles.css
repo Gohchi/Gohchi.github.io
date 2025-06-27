@@ -227,16 +227,21 @@ body {
         padding: 1rem;
 
         .chapter-title {
-          position: fixed;
+          position: static;
           font-weight: bold;
           font-size: larger;
+          white-space: nowrap;
+        }
+
+        .chapter-number {
+          padding: 1rem;
         }
 
         &:not(.tategaki) {
           .chapter-title {
             border-bottom: 1px solid;
-            padding-left: 3rem;
-            left: 0;
+            padding: 0 3rem 0 1rem;
+            width: fit-content;
           }
 
           &:has(.chapter-title) {
@@ -254,8 +259,8 @@ body {
           
           .chapter-title {
             border-right: 1px solid;
-            padding-top: 5rem;
-            top: 0;
+            height: fit-content;
+            padding-bottom: 4rem;
           }
 
           &:has(.chapter-title) {
@@ -290,6 +295,7 @@ body {
       display: flex;
       justify-content: space-between;
       padding: 0 1rem;
+      align-items: center;
 
       button {
         padding: 1rem;

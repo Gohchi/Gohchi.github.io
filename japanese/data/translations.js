@@ -62,13 +62,18 @@ export const translations = [
     chapterFirstPage: true,
     content: [
       '惨たらしい死休があった。それはかつては美しい女だったものだ。[...]',
+      1,
       '惨たらしい死休があった。それはかつては美しい女だったものだ。[...]',
     ],
     'esp': [
       'Hubo una muerte terrible, una pérdida terrible para lo que una vez fue una mujer hermosa.',
+      1,
+      'asd',
     ],
     'eng': [
       'There was a terrible death, a terrible loss for what was once a beautiful woman.',
+      1,
+      'asd',
     ],
   },
   {
