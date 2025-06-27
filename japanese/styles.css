@@ -177,9 +177,8 @@ body {
           padding: 1rem 3rem;
         }
 
-        span {
+        .phrase {
           text-indent: 1rem;
-          white-space: nowrap;
           line-height: 28px;
         }
       }
