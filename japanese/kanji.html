@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5.0, minimum-scale=1, user-scalable=yes"/>
+    <meta charset="UTF-8">
+
+		<title>日本語 メモ - 小説 ベルセルク： 炎竜の騎士</title>
+		<link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "/vue.esm-browser.prod.js"
+        }
+      }
+    </script>
+    <!-- "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js" -->
+    <script type="module" src="scripts.js" defer></script>
+	</head>
+	<body id="app" class="berserk-novel">
+    <header>
+      <div class="title">
+        漢字
+      </div>
+      <ul class="menu-index" v-if="showMenu">
+        <li><a href="#" @click.prevent="goTo('./')">Go back</a></li>
+      </ul>
+      <div class="icon-menu" @click="showMenu=!showMenu">
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <h1 class="title">漢字</h1>
+        <h2 class="subtitle">部首 - radical</h2>
+        <ul>
+          <li><ruby>&#12293;<rp>(</rp><rt>のま</rt><rp>)</rp></ruby>: kanji repetition mark</li>
+          <li><ruby>&#12294;<rp>(</rp><rt>しめ</rt><rp>)</rp></ruby> (締め): conclusion</li>
+          <li><ruby>&#12295;<rp>(</rp><rt>ゼロ</rt><rp>)</rp></ruby>: zero</li>
+        </ul>
+        <h4 class="direction">direction</h4>
+        <ul>
+          <ul>&#12272;</ul>
+          <ul>&#12273;</ul>
+          <ul>&#12274;</ul>
+          <ul>&#12275;</ul>
+          <ul>&#12276;</ul>
+          <ul>&#12277;</ul>
+          <ul>&#12278;</ul>
+          <ul>&#12279;</ul>
+          <ul>&#12280;</ul>
+          <ul>&#12281;</ul>
+          <ul>&#12282;</ul>
+          <ul>&#12283;</ul>
+          <ul>&#12284;</ul>
+          <ul>&#12285;</ul>
+          <ul>&#12286;</ul>
+          <ul>&#12287;</ul>
+        </ul>
+        <h4>tools</h4>
+        <ul>
+          <li>https://unicodes.jessetane.com/</li>
+        </ul>
+        <button class="go-back" @click.prevent="goToIndex()">Go back to Index</button>
+      </article>
+    </main>
+    <footer>
+    </footer>
+	</body>
+</html>
