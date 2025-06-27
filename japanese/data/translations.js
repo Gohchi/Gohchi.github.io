@@ -58,7 +58,10 @@ export const translations = [
     ],
   },
   {
+    chapter: 'プロローグ',
+    chapterFirstPage: true,
     content: [
+      '惨たらしい死休があった。それはかつては美しい女だったものだ。[...]',
       '惨たらしい死休があった。それはかつては美しい女だったものだ。[...]',
     ],
     'esp': [
@@ -69,6 +72,7 @@ export const translations = [
     ],
   },
   {
+    chapter: 'プロローグ',
     content: [
       'その顔[...]',
     ],
@@ -80,6 +84,7 @@ export const translations = [
     ],
   },
   {
+    chapter: '第一章',
     content: [
       '竜が[...]',
     ],

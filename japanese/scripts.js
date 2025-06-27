@@ -79,6 +79,12 @@ createApp({
     pageNumber() {
       return this.pageSelected?.toString().padStart(3, '0');
     },
+    chapter() {
+      return this.page.chapter;
+    },
+    chapterFirstPage() {
+      return this.page.chapterFirstPage;
+    },
     first() {
       if (this.pageSelected > this.translations.length) {
         return true; // If the selected page is out of bounds, consider it as the first page

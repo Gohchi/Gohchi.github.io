@@ -150,6 +150,23 @@ body {
 }
 
 .berserk-novel {
+  header {
+    .title {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5rem;
+
+      .page-info {
+        display: flex;
+        gap: 1rem;
+        
+        .chapter {
+          border-bottom: 1px solid;
+          padding-left: 2rem;
+        }
+      }
+    }
+  }
   main {
     position: absolute;
     height: calc(100% - 4rem - 8px);
@@ -209,8 +226,47 @@ body {
         overflow: auto;
         padding: 1rem;
 
+        .chapter-title {
+          position: fixed;
+          font-weight: bold;
+          font-size: larger;
+        }
+
+        &:not(.tategaki) {
+          .chapter-title {
+            border-bottom: 1px solid;
+            padding-left: 3rem;
+            left: 0;
+          }
+
+          &:has(.chapter-title) {
+            > .phrase {
+              margin-top: 4rem;
+              
+              ~ .phrase {
+                margin-top: unset;
+              }
+            }
+          }
+        }
         &.tategaki {
           padding: 1rem 3rem;
+          
+          .chapter-title {
+            border-right: 1px solid;
+            padding-top: 5rem;
+            top: 0;
+          }
+
+          &:has(.chapter-title) {
+            > .phrase {
+              margin-right: 4rem;
+
+              ~ .phrase {
+                margin-right: unset;
+              }
+            }
+          }
         }
 
         > div.phrase {
