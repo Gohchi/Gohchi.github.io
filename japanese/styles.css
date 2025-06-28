@@ -1,3 +1,20 @@
+body {
+  background-color: Canvas;
+  color: CanvasText;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    header {
+      background-color: #303030 !important;
+    }
+
+    .active {
+      background-color: #919191 !important;
+      color: #bababa;
+    }
+  }
+}
 
 .hidden {
 	display: none !important;
