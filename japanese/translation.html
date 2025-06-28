@@ -120,7 +120,7 @@
               name="zoom-level"
               min="100"
               max="200"
-              value="100"
+              :value="zoomLevel ?? 100"
               step="1"
               @change="onZoomChange"
             />
@@ -138,28 +138,28 @@
             <button
               class="lang-icon"
               :title="showTranslation ? 'Turn off translation' : 'Turn on translation'"
-              @click="showTranslation = !showTranslation; writingDirection = 'yokogaki';"
+              @click="switchTranslation()"
             >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
             <template v-if="showTranslation">
               <button class="lang-eng"
-                @click="lang = 'eng'"
+                @click="setLang('eng')"
                 :class="{ active: lang === 'eng' }"
               >ENG</button>
               <button class="lang-esp"
-                @click="lang = 'esp'"
+                @click="setLang('esp')"
                 :class="{ active: lang === 'esp' }"
               >ESP</button>
             </template>
             <template v-if="!showTranslation">
               <button class="tategaki"
                 :title="!showTranslation ? 'たてがき' : undefined"
-                @click="writingDirection = 'tategaki'"
+                @click="setWritingDirection('tategaki')"
                 :class="{ active: writingDirection === 'tategaki' }"
                 :disabled="showTranslation"
               >縦書き</button>
               <button class="yokogaki"
                 :title="!showTranslation ? 'よこがき' : undefined"
-                @click="writingDirection = 'yokogaki'"
+                @click="setWritingDirection('yokogaki')"
                 :class="{ active: writingDirection === 'yokogaki' }"
                 :disabled="showTranslation"
               >横書き</button>
