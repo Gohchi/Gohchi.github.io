@@ -61,19 +61,19 @@ export const translations = [
     chapter: 'プロローグ',
     chapterFirstPage: true,
     content: [
-      '惨たらしい死休があった。それはかつては美しい女だったものだ。[...]',
+      '惨たらしい死休があった。それはかつては美しい女だったものだ。よはど熟練の医師か死休を見慣れた兵士でなければ、生前の性別を判別することすら難しかっただろう。',
       1,
-      '惨たらしい死休があった。それはかつては美しい女だったものだ。[...]',
+      'その女は、',
     ],
     'esp': [
-      'Hubo una muerte terrible, una pérdida terrible para lo que una vez fue una mujer hermosa.',
+      'Hubo una muerte terrible, una pérdida terrible para quien una vez fue una hermosa mujer. Sin embargo, a menos que hubieran sido médicos o soldados con experiencia en ver cadáveres, habría sido difícil siquiera determinar el género de la fallecida.',
       1,
-      'asd',
+      'Esa mujer,',
     ],
     'eng': [
-      'There was a terrible death, a terrible loss for what was once a beautiful woman.',
+      'There was a terrible death, a terrible loss for what was once a beautiful woman. However, unless they had been trained doctors or soldiers accustomed to seeing dead bodies, it would have been difficult to even determine the gender of the deceased.',
       1,
-      'asd',
+      'That woman,',
     ],
   },
   {
