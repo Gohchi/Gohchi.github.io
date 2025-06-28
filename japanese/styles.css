@@ -1,7 +1,33 @@
+
+.hidden {
+	display: none !important;
+}
+
+#loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 9999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	// font-family: 'Press Start 2P', cursive;
+	font-size: 24px;
+}
+
 body {
   // font-family: "M PLUS 1p", sans-serif;
   font-family: Meiryo;
   margin: 0;
+
+
+  &:has(.menu-open) main {
+    margin-top: 17rem;
+  }
 
   header {
     display: flex;
@@ -37,10 +63,6 @@ body {
     gap: .5rem;
     display: flex;
     flex-direction: column;
-
-    &.menuOpen {
-      margin-top: 17rem;
-    }
 
     article {
       display: flex;

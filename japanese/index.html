@@ -25,7 +25,7 @@
       <div class="title">
         <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ
       </div>
-      <ul class="menu-index" v-if="showMenu">
+      <ul class="menu-open menu-index" v-if="showMenu">
         <li><a href="#">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
@@ -37,7 +37,11 @@
       </div>
     </header>
 
-    <main :class="{ 'menuOpen': showMenu }">
+    <div id="loading">
+      <p>Loading...</p>
+    </div>
+
+    <main class="hidden">
       <article
         v-for="([main, eng, refs], index) in articles" :key="index"
       >
@@ -141,4 +145,21 @@
       <p>Hiragana and Katakana are two of the three main scripts used in Japanese writing. Hiragana is used for native Japanese words, while Katakana is typically used for foreign words and names.</p>
     </dialog>
 	</body>
+  <script>
+    const intervalId = setInterval(() => {
+      const mountPoint = document.getElementById('app');
+      if (mountPoint && mountPoint.__vue_app__) {
+        console.log('Vue app mounted successfully');
+        
+        const loadingElement = document.getElementById('loading');
+        loadingElement.classList.add('hidden');
+
+        for (const selector of ['main']) {
+          const mainContent = document.querySelector(selector);
+          mainContent.classList.remove('hidden'); 
+        }
+        clearInterval(intervalId);
+      }
+    }, 100);
+  </script>
 </html>
