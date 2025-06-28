@@ -1,7 +1,50 @@
 body {
+  background-color: Canvas;
+  color: CanvasText;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    header {
+      background-color: #303030 !important;
+    }
+
+    .active {
+      background-color: #919191 !important;
+      color: #bababa;
+    }
+  }
+}
+
+.hidden {
+	display: none !important;
+}
+
+#loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 9999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	// font-family: 'Press Start 2P', cursive;
+	font-size: 24px;
+}
+
+body {
   // font-family: "M PLUS 1p", sans-serif;
   font-family: Meiryo;
   margin: 0;
+
+
+  &:has(.menu-open) main {
+    margin-top: 17rem;
+  }
 
   header {
     display: flex;
@@ -38,10 +81,6 @@ body {
     display: flex;
     flex-direction: column;
 
-    &.menuOpen {
-      margin-top: 17rem;
-    }
-
     article {
       display: flex;
       flex-direction: column;
@@ -61,7 +100,6 @@ body {
           margin: 0;
           padding: 0;
           display: flex;
-          gap: 10px;
           justify-content: center;
 
           li:last-child::after {
@@ -71,10 +109,11 @@ body {
       }
 
       &:not(.tategaki) ul.kanji-meaning {
-        li::after {
-          content: "|";
-          float: right;
-          padding-left: 10px;
+
+        li ~ li {
+          border-left: 1px solid;
+          padding-left: .2rem;
+          margin-left: .2rem;
         }
       }
     }
@@ -177,6 +216,7 @@ body {
     width: 100%;
     
     article {
+      overflow: auto;
       flex: 1;
 
       .title {
@@ -203,6 +243,26 @@ body {
         cursor: pointer;
       }
       
+      .kanji-details {
+        /* font-family: 'ＭＳ Ｐゴシック'; */
+        /* font-family: 'MS PGothic'; */
+        /* font-family: 'メイリオ'; */
+        /* font-family: Meiryo, sans-serif; */
+        /* font-family: Hiragino Kaku Gothic Pro; */
+        /* font-family: "ヒラギノ角ゴ ProN W3"; */
+        /* font-family: "HiraKakuProN-W3"; */
+        /* font-family: 'Droid Sans Japanese'; */
+        /* font-family: 'TakaoExゴシック'; */
+        /* font-family: '游ゴシック体'; */
+        // font-family: 'Yu Gothic';
+        font-family: "Zen Antique Soft", serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 3rem;
+        line-height: 3rem;
+        margin: 2rem 0;
+      }
+
       &.main {
         justify-content: center;
         align-items: center;
@@ -240,7 +300,7 @@ body {
           .chapter-title {
             border-bottom: 1px solid;
             padding: 0 3rem 0 1rem;
-            width: fit-content;
+            width: auto;
           }
 
           &:has(.chapter-title) {
@@ -276,38 +336,26 @@ body {
           }
 
           .kanji-details {
-            margin: 0 2rem;
+            margin: 0 1rem;
           }
           
           .kanji-meaning {
             flex-direction: column;
             height: 100%;
+            
+            li ~ li {
+              border-top: 1px solid;
+              padding-top: .2rem;
+              margin-top: .2rem;
+            }
           }
+          
         }
 
         > div.phrase {
           line-height: 28px;
 
           text-indent: 1rem;
-        }
-
-        .kanji-details {
-          /* font-family: 'ＭＳ Ｐゴシック'; */
-          /* font-family: 'MS PGothic'; */
-          /* font-family: 'メイリオ'; */
-          /* font-family: Meiryo, sans-serif; */
-          /* font-family: Hiragino Kaku Gothic Pro; */
-          /* font-family: "ヒラギノ角ゴ ProN W3"; */
-          /* font-family: "HiraKakuProN-W3"; */
-          /* font-family: 'Droid Sans Japanese'; */
-          /* font-family: 'TakaoExゴシック'; */
-          /* font-family: '游ゴシック体'; */
-          // font-family: 'Yu Gothic';
-          font-family: "Zen Antique Soft", serif;
-          font-weight: 400;
-          font-style: normal;
-          font-size: 3rem;
-          margin: 2rem 0;
         }
       }
 

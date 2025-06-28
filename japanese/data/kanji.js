@@ -134,7 +134,9 @@ export const ruby = {
   "信仰": { furigana: "しんこう", eng: [] },
   "絶対": { furigana: "ぜったい", eng: [] },
   "法王庁": { furigana: "ほうおうちょう", eng: [] },
-  "異端審問": { furigana: "いたんしんもん", eng: [] },
+  "異端審問": { furigana: "いたんしんもん", eng: [
+    "inquisition"
+  ]},
   "暴威": { furigana: "ぼうい", eng: [] },
   "振": { furigana: "ふ", eng: [] },
   "大国": { furigana: "たいこく", eng: [] },

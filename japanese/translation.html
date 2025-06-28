@@ -25,7 +25,7 @@
     <header>
       <div class="title">
         小説 ベルセルク
-        <div class="page-info" v-if="chapter || showPageNumber">
+        <div class="page-info hidden" v-if="chapter || showPageNumber">
           <span class="chapter" v-if="chapter">{{ chapter }}</span>
           <div class="page-number" v-if="showPageNumber">{{ pageNumber }}</div>
         </div>
@@ -38,7 +38,11 @@
       </div>
     </header>
 
-    <main>
+    <div id="loading">
+      <p>Loading...</p>
+    </div>
+
+    <main class="hidden">
       <template v-if="type === 'unknown'">
         <article class="unknown">
           <h1 class="title">Unknown Page</h1>
@@ -126,8 +130,8 @@
             />
             <label for="zoom-level">Zoom</label>
           </div>
-          <button @click="confirmZoomLevel()">Confirm</button>
-          <button @click="cancelZoomLevel()">Cancel</button>
+          <button @click="confirmZoomLevel()">&#10004;</button>
+          <button @click="cancelZoomLevel()">&#10060;</button>
         </template>
         <template v-else>
           <button class="next-page" title="つぎ"
@@ -179,4 +183,21 @@
       <button class="close-disclaimer" @click="hideDisclaimer = true" v-if="!hideDisclaimer">Close</button>
     </footer>
 	</body>
+  <script>
+    const intervalId = setInterval(() => {
+      const mountPoint = document.getElementById('app');
+      if (mountPoint && mountPoint.__vue_app__) {
+        console.log('Vue app mounted successfully');
+        
+        const loadingElement = document.getElementById('loading');
+        loadingElement.classList.add('hidden');
+
+        for (const selector of ['.page-info', 'main']) {
+          const mainContent = document.querySelector(selector);
+          mainContent.classList.remove('hidden'); 
+        }
+        clearInterval(intervalId);
+      }
+    }, 100);
+  </script>
 </html>

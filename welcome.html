@@ -86,7 +86,7 @@
 	</body>
   <script src="legacy.js"></script>
   <script>
-    let intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
       const mountPoint = document.getElementById('app');
       if (mountPoint && mountPoint.__vue_app__) {
         console.log('Vue app mounted successfully');
