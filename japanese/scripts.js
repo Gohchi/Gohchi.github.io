@@ -27,24 +27,73 @@ createApp({
     showDialog,
     closeDialog,
     goTo,
-    "goToIndex": function() {
+    goToIndex() {
       const index = this.translations.findIndex(({ type }) => type === 'index') + 1;
       this.pageSelected = index;
     },
+    openZoom() {
+      this.showMenu = false;
+      this.prevZoomLevel = this.zoomLevel;
+      this.showZoomMenu = true;
+    },
+    confirmZoomLevel() {
+      this.showZoomMenu = false;
+      localStorage.setItem('zoom-level', this.zoomLevel);
+    },
+    cancelZoomLevel() {
+      this.zoomLevel = this.prevZoomLevel;
+      this.showZoomMenu = false;
+    },
+    onZoomChange(e) {
+      this.zoomLevel = e.target.value;
+    },
+    nextPage() {
+      document.querySelector('article').scrollTo(0, 0);
+      this.pageSelected += 1;
+      localStorage.setItem('last-page-visited', this.pageSelected);
+    },
+    prevPage() {
+      document.querySelector('article').scrollTo(0, 0);
+      this.pageSelected -= 1;
+      localStorage.setItem('last-page-visited', this.pageSelected);
+    },
+    switchTranslation() {
+      this.showTranslation = !this.showTranslation;
+      this.writingDirection = 'yokogaki';
+      localStorage.setItem('show-translation', this.showTranslation);
+      localStorage.setItem('writing-direction', this.writingDirection);
+    },
+    setLang(value) {
+      this.lang = value;
+      localStorage.setItem('lang', value);
+    },
+    setWritingDirection(value) {
+      this.writingDirection = value;
+      localStorage.setItem('writing-direction', value);
+    }
   },
   mounted() {
   },
   data() {
+    const zoomLevel = localStorage.getItem('zoom-level');
+    const lastPageVisited = localStorage.getItem('last-page-visited');
+    const showTranslation = localStorage.getItem('show-translation');
+    const writingDirection = localStorage.getItem('writing-direction');
+    const lang = localStorage.getItem('lang');
+
     return {
       "showMenu": false,
       "articles": data,
       "ruby": ruby,
       "translations": translations,
-      "pageSelected": 1, // Default to the first page
-      "hideDisclaimer": false,
-      "lang": 'eng', // Default language
-      "showTranslation": true,
-      "writingDirection": 'yokogaki', // Default writing direction - horizontal writing
+      "pageSelected": lastPageVisited ? +lastPageVisited : 1, // Default to the first page
+      "hideDisclaimer": true,
+      "lang": lang ?? 'eng', // Default language
+      "showTranslation": showTranslation !== null ? showTranslation === 'true' : true,
+      "writingDirection": writingDirection ?? 'yokogaki', // Default writing direction - tategaki | yokogaki
+      "showZoomMenu": false,
+      "zoomLevel": zoomLevel ?? 100,
+      "prevZoomLevel": zoomLevel ?? 100,
     }
   },
   computed: {
@@ -74,7 +123,16 @@ createApp({
       return this.page.footer;
     },
     showPageNumber() {
-      return this.page.showPageNumber;
+      return !this.page.hidePageNumber;
+    },
+    pageNumber() {
+      return this.pageSelected?.toString().padStart(3, '0');
+    },
+    chapter() {
+      return this.page.chapter;
+    },
+    chapterFirstPage() {
+      return this.page.chapterFirstPage;
     },
     first() {
       if (this.pageSelected > this.translations.length) {

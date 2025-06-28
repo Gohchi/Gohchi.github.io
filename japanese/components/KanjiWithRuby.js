@@ -40,9 +40,9 @@ export default {
       @click="showDialog(dialogId)"
     >{{ text }}<rp>(</rp><rt>{{ furigana }}</rt><rp>)</rp></ruby>
     <dialog :id="dialogId" @click="closeDialog(dialogId)">
-      <h4>{{ furigana }}</h4>
-      <h2>{{ text }}</h2>
-      <ul>
+      <div class="kanji-furigana">{{ furigana }}</div>
+      <div class="kanji-details">{{ text }}</div>
+      <ul class="kanji-meaning">
         <li v-for="(item, index) in eng" :key="index">
           {{ item }}
         </li>
