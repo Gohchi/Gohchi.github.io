@@ -57,29 +57,39 @@ export const translations = [
       'Here, on a continent ruled by swords and violence, where the Inquisition of the Holy See, which considers faith in the One God as absolute, exerts its tyranny, and great nations compete for supremacy in an era of continuous warfare.',
     ],
   },
-  {
+  { // 004
     chapter: 'プロローグ',
     chapterFirstPage: true,
     content: [
       '惨たらしい死休があった。それはかつては美しい女だったものだ。よはど熟練の医師か死休を見慣れた兵士でなければ、生前の性別を判別することすら難しかっただろう。',
-      1,
       'その女は、',
     ],
     'esp': [
       'Hubo una muerte terrible, una pérdida terrible para quien una vez fue una hermosa mujer. Sin embargo, a menos que hubieran sido médicos o soldados con experiencia en ver cadáveres, habría sido difícil siquiera determinar el género de la fallecida.',
-      1,
       'Esa mujer,',
     ],
     'eng': [
       'There was a terrible death, a terrible loss for what was once a beautiful woman. However, unless they had been trained doctors or soldiers accustomed to seeing dead bodies, it would have been difficult to even determine the gender of the deceased.',
-      1,
       'That woman,',
     ],
   },
-  {
+  { // 005
     chapter: 'プロローグ',
     content: [
-      'その顔[...]',
+      '縄で「…」',
+    ],
+    'esp': [
+      'Soga...',
+    ],
+    'eng': [
+      'Rope...',
+    ],
+  },
+  { // 006
+    chapter: 'プロローグ',
+    content: [
+      'その顔を見、「…」',
+      '「失礼しました・・・・・！」',
     ],
     'esp': [
       'Esa cara...',
@@ -88,16 +98,38 @@ export const translations = [
       'That face...',
     ],
   },
-  {
-    chapter: '第一章',
+  { // 007
+    chapter: 'プロローグ',
     content: [
-      '竜が[...]',
+      'キルステンの目が、「…」',
+    ],
+    'esp': [
+      'Los ojos de Kirsten...',
+    ],
+    'eng': [
+      'Kirsten\'s eyes...',
+    ],
+  },
+  { // 008
+    chapter: '第一章',
+    chapterFirstPage: true,
+    content: [
+      '竜が「…」',
+      'それでも「…」',
+      'それ以来、「…」',
+      '――この小さな鳥国の伝説。',
+      1,
+      '――小さな',
     ],
     'esp': [
       'Dragón...',
     ],
     'eng': [
       'Dragon...',
+      '',
+      '',
+      'The legend of this little bird country.',
+      1,
     ],
   }
 ];

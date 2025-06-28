@@ -168,4 +168,31 @@ export const ruby = {
   "判別": { furigana: "はんべつ", eng: [
     "discrimination"
   ]},
+  "縄": { furigana: "なわ", eng: [
+    "rope"
+  ]},
+  "目": { furigana: "め", eng: [
+    "eye/s", "look"
+  ]},
+  "以来": { furigana: "いらい", eng: [
+    "since"
+  ]},
+  "小": { furigana: "ちい", eng: [
+    "small", "little", "tiny"
+  ]},
+  "鳥": { furigana: "とり", eng: [
+    "bird"
+  ]},
+  "国": { furigana: "くに", eng: [
+    "country", "region"
+  ]},
+  "伝説": { furigana: "でんせつ", eng: [
+    "legend"
+  ]},
+  "失礼": { furigana: "しつれい", eng: [
+    "rude", "impoliteness"
+  ]},
+  "見": { furigana: "み", eng: [
+    "looking", "viewing"
+  ]},
 };
