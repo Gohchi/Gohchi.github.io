@@ -244,7 +244,7 @@ body {
 
           &:has(.chapter-title) {
             > .phrase {
-              margin-top: 4rem;
+              margin-top: 2rem;
               
               ~ .phrase {
                 margin-top: unset;
@@ -254,7 +254,7 @@ body {
         }
 
         &.tategaki {
-          padding: 1rem 3rem;
+          padding: .5rem 1rem;
           writing-mode: vertical-rl;
           text-orientation: upright;
           
@@ -266,7 +266,7 @@ body {
 
           &:has(.chapter-title) {
             > .phrase {
-              margin-right: 4rem;
+              margin-right: 2rem;
 
               ~ .phrase {
                 margin-right: unset;
@@ -325,12 +325,21 @@ body {
       justify-content: space-between;
       padding: 0 1rem;
       align-items: center;
+      gap: 1rem;
 
       button {
         padding: 1rem;
         cursor: pointer;
       }
 
+      .zoom-level {
+        flex: 1;
+        display: flex;
+
+        input {
+          flex: 1;
+        }
+      }
       .lang-actions {
         display: flex;
         // gap: 1rem;
@@ -346,4 +355,10 @@ body {
   .disclaimer {
     text-align: center;
   } 
+}
+
+@media (max-width: 420px) {
+  .tategaki-button {
+    writing-mode: vertical-rl;
+  }
 }

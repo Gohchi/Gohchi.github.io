@@ -113,7 +113,7 @@
       
       <div class="actions">
         <template v-if="showZoomMenu">
-          <div>
+          <div class="zoom-level">
             <input
               type="range"
               id="zoom-level"
@@ -151,13 +151,13 @@
               >ESP</button>
             </template>
             <template v-if="!showTranslation">
-              <button class="tategaki"
+              <button class="tategaki tategaki-button"
                 :title="!showTranslation ? 'たてがき' : undefined"
                 @click="setWritingDirection('tategaki')"
                 :class="{ active: writingDirection === 'tategaki' }"
                 :disabled="showTranslation"
               >縦書き</button>
-              <button class="yokogaki"
+              <button class="yokogaki tategaki-button"
                 :title="!showTranslation ? 'よこがき' : undefined"
                 @click="setWritingDirection('yokogaki')"
                 :class="{ active: writingDirection === 'yokogaki' }"
