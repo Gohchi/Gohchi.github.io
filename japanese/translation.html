@@ -132,7 +132,7 @@
         <template v-else>
           <button class="next-page" title="つぎ"
             :disabled="last"
-            @click="pageSelected+=1"
+            @click="nextPage()"
           >&#8592; 次</button>
           <div class="lang-actions">
             <button
@@ -167,7 +167,7 @@
           </div>
           <button class="prev-page" title="まえ"
             :disabled="first"
-            @click="pageSelected-=1"
+            @click="prevPage()"
           >前 &#8594;</button>
         </template>
       </div>

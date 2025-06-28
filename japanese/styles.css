@@ -54,7 +54,8 @@ body {
         text-align: center;
         text-indent: 0;
 
-        ul {
+        ul.kanji-meaning {
+          writing-mode: horizontal-tb;
           list-style: none;
           margin: 0;
           padding: 0;
@@ -62,15 +63,17 @@ body {
           gap: 10px;
           justify-content: center;
 
-          li::after {
-            content: "|";
-            float: right;
-            padding-left: 10px;
-          }
-          
           li:last-child::after {
             display: none;
           }
+        }
+      }
+
+      &:not(.tategaki) ul.kanji-meaning {
+        li::after {
+          content: "|";
+          float: right;
+          padding-left: 10px;
         }
       }
     }
@@ -198,11 +201,6 @@ body {
       .open-dialog {
         cursor: pointer;
       }
-
-      &.tategaki {
-        writing-mode: vertical-rl;
-        text-orientation: upright;
-      }
       
       &.main {
         justify-content: center;
@@ -254,8 +252,11 @@ body {
             }
           }
         }
+
         &.tategaki {
           padding: 1rem 3rem;
+          writing-mode: vertical-rl;
+          text-orientation: upright;
           
           .chapter-title {
             border-right: 1px solid;
@@ -271,6 +272,15 @@ body {
                 margin-right: unset;
               }
             }
+          }
+
+          .kanji-details {
+            margin: 0 2rem;
+          }
+          
+          .kanji-meaning {
+            flex-direction: column;
+            height: 100%;
           }
         }
 

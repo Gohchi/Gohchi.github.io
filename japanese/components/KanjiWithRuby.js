@@ -42,7 +42,7 @@ export default {
     <dialog :id="dialogId" @click="closeDialog(dialogId)">
       <div class="kanji-furigana">{{ furigana }}</div>
       <div class="kanji-details">{{ text }}</div>
-      <ul>
+      <ul class="kanji-meaning">
         <li v-for="(item, index) in eng" :key="index">
           {{ item }}
         </li>
