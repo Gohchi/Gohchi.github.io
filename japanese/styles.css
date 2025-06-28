@@ -13,6 +13,10 @@ body {
       background-color: #919191 !important;
       color: #bababa;
     }
+
+    footer {
+      background-color: #5d5d5d !important;
+    }
   }
 }
 
