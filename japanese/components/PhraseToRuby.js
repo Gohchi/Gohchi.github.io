@@ -9,6 +9,7 @@ import KanjiWithRuby from './KanjiWithRuby.js';
 export default {
   props: {
     text: String,
+    furigana: Boolean,
   },
   setup(props) {
     const { text } = toRefs(props);
@@ -27,7 +28,7 @@ export default {
   },
   template: /*html*/`
     <template v-for="(group, index) in splitByKanji(text, extractKanji(text))" :key="index">
-      <template v-if="!!ruby[group]">
+      <template v-if="furigana && !!ruby[group]">
         <kanji-with-ruby :key="index" :text="group"></kanji-with-ruby>
       </template>
       <template v-else>

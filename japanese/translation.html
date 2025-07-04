@@ -32,6 +32,7 @@
       </div>
       <ul class="menu-index" v-if="showMenu">
         <li><a href="#" @click.prevent="goTo('./')">Go back</a></li>
+        <li><a href="#" @click.prevent="furigana = !furigana">Switch furigana</a></li>
         <li><a href="#" @click.prevent="openZoom()">Zoom level</a></li>
       </ul>
       <div class="icon-menu" @click="showMenu=!showMenu">
@@ -106,7 +107,12 @@
               <div class="chapter-number">&#12298; {{ line }} &#12299;</div>
             </template>
             <template v-else>
-              <div class="phrase"><phrase-to-ruby :text="line"></phrase-to-ruby></div>
+              <div class="phrase">
+                <phrase-to-ruby
+                  :text="line"
+                  :furigana="furigana"
+                ></phrase-to-ruby>
+              </div>
               <template v-if="showTranslation && line !== ''">
                 <span class="translation">{{ page[lang][index] }}</span>
               </template>
