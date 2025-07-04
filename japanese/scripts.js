@@ -94,6 +94,7 @@ createApp({
       "showZoomMenu": false,
       "zoomLevel": zoomLevel ?? 100,
       "prevZoomLevel": zoomLevel ?? 100,
+      "furigana": true,
     }
   },
   computed: {
