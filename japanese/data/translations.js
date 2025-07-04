@@ -66,11 +66,11 @@ export const translations = [
     ],
     'esp': [
       'Hubo una muerte terrible, una pérdida terrible para quien una vez fue una hermosa mujer. Sin embargo, a menos que hubieran sido médicos o soldados con experiencia en ver cadáveres, habría sido difícil siquiera determinar el género de la fallecida.',
-      'Esa mujer,',
+      'La mujer fue colocada en una plataforma en la cámara de la muerte de los guardias que protegían la paz de la ciudad. Le habían cercenado los brazos, las piernas y la cabeza, y junto con el torso, la habían dividido en seis pedazos.',
     ],
     'eng': [
       'There was a terrible death, a terrible loss for what was once a beautiful woman. However, unless they had been trained doctors or soldiers accustomed to seeing dead bodies, it would have been difficult to even determine the gender of the deceased.',
-      'That woman, ... Including the torso rest, it is divided into six parts.',
+      'The woman was placed on a platform in the death chamber of the guards who were protecting the peace of the city. Her arms, legs and head had been cut off, and together with her torso she had been divided into six pieces.',
     ],
   },
   { // 005
