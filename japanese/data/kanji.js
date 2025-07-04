@@ -197,4 +197,58 @@ export const ruby = {
   "見": { furigana: "み", eng: [
     "looking", "viewing"
   ]},
+  "街": { furigana: "まち", eng: [
+    "town (big)", "city"
+  ]},
+  "町": { furigana: "まち", eng: [
+    "town (small)"
+  ]},
+  "治安": { furigana: "ちあん", eng: [
+    "public order", "public security"
+  ]},
+  "守": { furigana: "まも", eng: [
+    "protection", "defense"
+  ]},
+  "衛兵": { furigana: "えいへい", eng: [
+    "guard", "sentinel"
+  ]},
+  "話所": { furigana: "はなししょ", eng: [
+    "meeting place"
+  ]},
+  "死休置": { furigana: "したいおけ", eng: [
+    "put the dead body"
+  ]},
+  "場": { furigana: "ば", eng: [
+    "place", "spot"
+  ]},
+  "台": { furigana: "だい", eng: [
+    "place", "spot"
+  ]},
+  "乗": { furigana: "の", eng: [
+    "to get on"
+  ]},
+  "両手両足": { furigana: "りょうてりょうあし", eng: [
+    "both hands and feet"
+  ]},
+  "首": { furigana: "くび", eng: [
+    "neck"
+  ]},
+  "切": { furigana: "き", eng: [
+    "cut"
+  ]},
+  "落": { furigana: "お", eng: [
+    "slip", "omission"
+  ]},
+  "胴体": { furigana: "どうたい", eng: [
+    "torso"
+  ]},
+  "六個": { furigana: "ろくこ", eng: [
+    "six (small) pieces"
+  ]},
+  "部品": { furigana: "ぶひん", eng: [
+    "parts"
+  ]},
+  "分": { furigana: "ふん", eng: [
+    "part", "minute"
+  ]},
 };

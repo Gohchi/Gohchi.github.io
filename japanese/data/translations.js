@@ -62,7 +62,7 @@ export const translations = [
     chapterFirstPage: true,
     content: [
       '惨たらしい死休があった。それはかつては美しい女だったものだ。よはど熟練の医師か死休を見慣れた兵士でなければ、生前の性別を判別することすら難しかっただろう。',
-      'その女は、',
+      'その女は、街の治安を守る衛兵たちの話所で、死休置き場の台のうえに乗せられていた。両手両足そして首が切り落とされ、胴休とあわせて六個の部品に分けられている。',
     ],
     'esp': [
       'Hubo una muerte terrible, una pérdida terrible para quien una vez fue una hermosa mujer. Sin embargo, a menos que hubieran sido médicos o soldados con experiencia en ver cadáveres, habría sido difícil siquiera determinar el género de la fallecida.',
@@ -70,7 +70,7 @@ export const translations = [
     ],
     'eng': [
       'There was a terrible death, a terrible loss for what was once a beautiful woman. However, unless they had been trained doctors or soldiers accustomed to seeing dead bodies, it would have been difficult to even determine the gender of the deceased.',
-      'That woman,',
+      'That woman, ... Including the torso rest, it is divided into six parts.',
     ],
   },
   { // 005
