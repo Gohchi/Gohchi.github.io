@@ -51,50 +51,67 @@
             <div class="card-title card-background-by-type">
               {{ selectedCard.name }}
             </div>
-            <div :class="{ ['card-attribute-' + selectedCardData.family]: true }" v-if="selectedCardData"></div>
+            <div :class="{ ['card-attribute-' + selectedCardAttribute]: true }" v-if="selectedCardData"></div>
           </div>
           <div class="card-content-middle" v-if="selectedCardData">
             <div class="card-info bg-black">
-              <div :class="{ ['card-level-'+getLevelOrRank( selectedCardData )]: true }" v-if="selectedCardData.card_type === 'monster'"></div>
-              <div class="card-level-value" v-if="selectedCardData.card_type === 'monster'">{{ selectedCardData.level }}</div>
-              <div class="card-spell-type" v-if="selectedCardData.card_type === 'spell'">
-                {{ selectedCardData.property }} Spell
+              <template v-if="showLevelOrRank">
+                <div :class="{ ['card-level-'+getLevelOrRank( selectedCardData )]: true }"></div>
+                <div class="card-level-value">{{ selectedCardData.level }}</div>
+              </template>
+              <div class="card-spell-type" v-if="selectedCardData.type.includes('Spell')">
+                {{ selectedCardData.race }} Spell
               </div>
-              <div class="card-trap-type" v-if="selectedCardData.card_type === 'trap'">
-                {{ selectedCardData.property }} Trap
+              <div class="card-trap-type" v-if="selectedCardData.type.includes('Trap')">
+                {{ selectedCardData.race }} Trap
               </div>
             </div>
             <div class="card-subtitle-base card-background-by-type"></div>
-            <div class="card-attack-defense" v-if="selectedCardData.card_type === 'monster'">
-              <div>ATK/{{ selectedCardData.atk }} DEF/{{ selectedCardData.def }}</div>
+            <div class="card-attack-defense-link" v-if="selectedCardData.type.includes('Monster')">
+              <span>ATK/{{ selectedCardData.atk }}</span>
+              <span v-if="!isLinkMonster">DEF/{{ selectedCardData.def }}</span>
+              <span v-if="isLinkMonster">LINK-{{ selectedCardData.linkval }}</span>
             </div>
           </div>
           <div class="card-content-bottom" v-if="selectedCardData">
-            <div class="card-type bg-black" v-if="selectedCardData.card_type === 'monster'">
+            <div class="card-type bg-black" v-if="selectedCardData.type.includes('Monster')">
               [{{ selectedCardData.type }}]
             </div>
-            <div class="card-subtitle-base card-background-by-type" v-if="selectedCardData.card_type === 'monster'"></div>
+            <div class="card-subtitle-base card-background-by-type" v-if="selectedCardData.type.includes('Monster')"></div>
             <div class="card-description">
               <!-- <div class="card-requirements">3 Level 6 LIGHT Machine-Type monsters</div> -->
-              <div class="card-details" ref="textRef"></div>
+              <div class="card-details" v-html="selectedCardDesc"></div>
             </div>
           </div>
         </div>
         <div v-if="selectedCard && selectedCardPrices" class="card-prices">
           <span>Prices:</span>
-          <span>Owned: {{ selectedCard.print_tag }}</span>
+          <!-- <span>Owned: {{ selectedCard.print_tag }}</span>
           <div class="card-price-item card-owned-price"
             v-if="ownedPrices"
           >
             <div>{{ ownedPrices.name }}</div><div>({{ ownedPrices.print_tag }})</div><div>[{{ ownedPrices.rarity }}]</div>
             <div>AVERAGE: {{ ownedPrices.price_data.data?.prices.average }} HIGH: {{ ownedPrices.price_data.data?.prices.high }} LOW: {{ ownedPrices.price_data.data?.prices.low }} </div>
+          </div> -->
+          <div class="card-price-item">
+            <div>Card Market</div>
+            <div>AVERAGE: {{ selectedCardPrices.cardmarket_price }} u$d</div>
           </div>
-          <div class="card-price-item"
-            v-for="item in selectedCardPrices"
-            :key="item.name"
-          >
-            <div>{{ item.name }}</div><div>({{ item.print_tag }})</div><div>[{{ item.rarity }}]</div>
-            <div>AVERAGE: {{ item.price_data.data?.prices.average }} HIGH: {{ item.price_data.data?.prices.high }} LOW: {{ item.price_data.data?.prices.low }} </div>
+          <div class="card-price-item">
+            <div>TCG Player</div>
+            <div>AVERAGE: {{ selectedCardPrices.tcgplayer_price }} u$d</div>
+          </div>
+          <div class="card-price-item">
+            <div>Ebay</div>
+            <div>AVERAGE: {{ selectedCardPrices.ebay_price }} u$d</div>
+          </div>
+          <div class="card-price-item">
+            <div>Amazon</div>
+            <div>AVERAGE: {{ selectedCardPrices.amazon_price }} u$d</div>
+          </div>
+          <div class="card-price-item">
+            <div>Cool Stuff inc.</div>
+            <div>AVERAGE: {{ selectedCardPrices.coolstuffinc_price }} u$d</div>
           </div>
         </div>
       </div>
