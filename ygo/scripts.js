@@ -36,7 +36,7 @@ createApp({
     selectCard( card ) {
       if( this.selectedCard === card )
         return;
-      
+
       this.selectedCard = undefined;
       this.selectedCardData = undefined;
       this.selectedCardDesc = undefined;
@@ -64,7 +64,7 @@ createApp({
           this.selectedCardPrices = _data.card_prices[0];
           this.isLinkMonster = _data.type.includes('Link');
           this.showLevelOrRank = _data.type.includes('Monster')
-            && !isLinkMonster;
+            && !this.isLinkMonster;
         } );
     },
   },
