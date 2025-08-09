@@ -350,7 +350,7 @@ tbody tr:last-of-type {
   background-position: 30px 0px;
 }
 .card-attribute-dark {
-  background-position: 30px 30px;
+  background-position: 60px 60px;
 }
 .card-attribute-light {
   background-position: 30px 60px;
@@ -362,7 +362,7 @@ tbody tr:last-of-type {
   background-position: 60px 30px;
 }
 .card-attribute-trap {
-  background-position: 60px 60px;
+  background-position: 30px 30px;
 }
 
 .card-prices {
@@ -380,6 +380,11 @@ tbody tr:last-of-type {
 .card-owned-price {
   padding-bottom: 10px;
   border-color: yellow;
+}
+
+.card-attack-defense-link { 
+  display: flex;
+  gap: 6px;
 }
 
 .bg-black {
