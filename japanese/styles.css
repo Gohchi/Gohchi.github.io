@@ -74,8 +74,20 @@ body {
 
   &.index main {
     padding: .5rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 4.5rem;
   }
+
+  .hear {
+    &.main span {
+      cursor: pointer;
+      // animation: hear-anim 1s linear infinite alternate;
+    }
+    &.icon {
+      cursor: pointer;
+      position: absolute;
+    }
+  }
+
 
   main {
     transition: margin 1s;
@@ -86,8 +98,8 @@ body {
     flex-direction: column;
 
     article {
-      display: flex;
-      flex-direction: column;
+      // display: flex;
+      // flex-direction: column;
       
       gap: .5rem;
       padding: 3px;
@@ -132,6 +144,20 @@ body {
     text-align: center;
     padding: 2px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+      align-items: center;
+      gap: 1rem;
+
+      button {
+        padding: 1rem;
+        cursor: pointer;
+      }
+    }
   }
 }
 
@@ -413,5 +439,15 @@ body {
 @media (max-width: 420px) {
   .tategaki-button {
     writing-mode: vertical-rl;
+  }
+}
+
+
+@keyframes hear-anim {
+  from {
+    filter: drop-shadow(0 0 0 white)
+  }
+  to {
+    filter: drop-shadow(2px 4px 4px white)
   }
 }
