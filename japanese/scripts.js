@@ -26,6 +26,13 @@ createApp({
     showRefsDialog,
     showDialog,
     closeDialog,
+    speak(text) {
+      if (this.voiceActive) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ja-JP';
+        window.speechSynthesis.speak(utterance);
+      }
+    },
     goTo,
     goToIndex() {
       const index = this.translations.findIndex(({ type }) => type === 'index') + 1;
@@ -95,6 +102,7 @@ createApp({
       "zoomLevel": zoomLevel ?? 100,
       "prevZoomLevel": zoomLevel ?? 100,
       "furigana": true,
+      "voiceActive": false,
     }
   },
   computed: {

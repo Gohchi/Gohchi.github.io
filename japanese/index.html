@@ -29,7 +29,7 @@
         <li><a href="#">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
-        <li class="active"><a href="#">Contact</a></li>
+        <li><a href="#">Contact</a></li>
         <li><a href="#">COMMON PHRASES 〠</a></li>
         <li><a href="#" @click.prevent="goTo('translation')">小説 ベルセルク： 炎竜の騎士</a></li>
       </ul>
@@ -44,15 +44,31 @@
     <main class="hidden">
       <article
         v-for="([main, eng, refs], index) in articles" :key="index"
+        @click="speak(main)"
       >
-        <span class="main">
+        <span
+          :class="{ 'main': true, 'hear': voiceActive }"
+          :title="voiceActive ? 'tap to hear' : ''"
+        >
           <phrase-to-ruby :text="main">
         </span>
+        <span v-if="voiceActive"
+          :class="{ 'icon': true, 'hear': voiceActive }"
+        >🗣️</span>
+        <br />
         <span class="eng" @click="showRefsDialog(refs)">{{ eng }}</span>
       </article>
     </main>
     <footer>
-      demo
+      <div class="actions">
+        <button
+          class="voice-active"
+          title="voice"
+          @click="voiceActive=!voiceActive"
+        >
+        <span aria-hidden="true">{{ voiceActive ? "🗣️" : "🔇" }}</span>
+      </button>
+      </div>
     </footer>
 
     <dialog id="dialog-refs" @click="closeDialog('dialog-refs')">
