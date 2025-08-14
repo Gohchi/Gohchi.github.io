@@ -143,7 +143,5 @@ export const data = [
     [
       "Yakisoba is a Japanese stir-fried noodle dish, typically made with wheat noodles, vegetables, and meat or seafood, seasoned with a savory sauce.",
     ],
-  ], [
-
   ]
 ];

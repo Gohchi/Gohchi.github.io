@@ -26,12 +26,36 @@ createApp({
     showRefsDialog,
     showDialog,
     closeDialog,
+    selectVoice(voice) {
+      this.selectedVoice = voice;
+      this.speak(this.selectedArticle);
+    },
     speak(text) {
-      if (this.voiceActive) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ja-JP';
-        window.speechSynthesis.speak(utterance);
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ja-JP';
+      if (this.selectedVoice) {
+        utterance.voice = this.selectedVoice;
       }
+      window.speechSynthesis.speak(utterance);
+    },
+    async loadVoices() {
+      // Wait for voices to be loaded if not available yet
+      if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+        await new Promise(resolve => {
+          const handler = () => {
+            speechSynthesis.removeEventListener('voiceschanged', handler);
+            resolve();
+          };
+          speechSynthesis.addEventListener('voiceschanged', handler);
+          // In case voices are already loaded
+          if (speechSynthesis.getVoices().length) {
+            speechSynthesis.removeEventListener('voiceschanged', handler);
+            resolve();
+          }
+        });
+      }
+      // Filter voices by ja-JP language
+      this.voices = window.speechSynthesis.getVoices().filter(({ lang }) => ['ja-JP', 'ja_JP'].includes(lang));
     },
     goTo,
     goToIndex() {
@@ -80,6 +104,7 @@ createApp({
     }
   },
   mounted() {
+    this.loadVoices();
   },
   data() {
     const zoomLevel = localStorage.getItem('zoom-level');
@@ -102,7 +127,9 @@ createApp({
       "zoomLevel": zoomLevel ?? 100,
       "prevZoomLevel": zoomLevel ?? 100,
       "furigana": true,
-      "voiceActive": false,
+      "selectedArticle": null,
+      "voices": [],
+      "selectedVoice": null,
     }
   },
   computed: {

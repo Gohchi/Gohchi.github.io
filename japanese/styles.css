@@ -70,6 +70,12 @@ body {
     > .title {
       margin-bottom: 1.2rem;
     }
+
+    .info {
+      position: absolute;
+      right: 5rem;
+      top: 28px;
+    }
   }
 
   &.index main {
@@ -93,6 +99,10 @@ body {
       padding: 3px;
       outline: 1px solid gray;
 
+      &.selected {
+        outline: 1px solid rgb(255, 255, 255);
+      	background-color: rgb(28, 28, 28);
+      }
       
       dialog {
         text-align: center;
