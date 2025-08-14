@@ -2,6 +2,7 @@
 import { createApp } from 'vue';
 
 import PhraseToRuby from '../components/PhraseToRuby.js';
+import MainHeader from '../components/MainHeader.js';
 
 import {
   goTo,
@@ -12,8 +13,12 @@ import { translations } from '../data/translations.js';
 createApp({
   components: {
     PhraseToRuby,
+    MainHeader,
   },
   methods: {
+    switchFurigana() {
+      this.furigana = !this.furigana;
+    },
     goTo,
     goToIndex() {
       const index = this.translations.findIndex(({ type }) => type === 'index') + 1;
@@ -61,7 +66,6 @@ createApp({
     }
   },
   mounted() {
-    this.loadVoices();
   },
   data() {
     const zoomLevel = localStorage.getItem('zoom-level');

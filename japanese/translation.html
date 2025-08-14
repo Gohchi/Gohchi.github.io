@@ -22,22 +22,16 @@
     <script type="module" src="scripts/translation.js" defer></script>
 	</head>
 	<body id="app" class="berserk-novel">
-    <header>
-      <div class="title">
-        小説 ベルセルク
-        <div class="page-info hidden">
-          <span class="chapter" v-if="chapter">{{ chapter }}</span>
-          <div class="page-number" v-if="showPageNumber">{{ pageNumber }}</div>
-        </div>
+    <main-header
+      title="小説 ベルセルク"
+      @on-change-furigana="furigana = !furigana"
+      @on-open-zoom="openZoom()"
+    >
+      <div class="page-info hidden">
+        <span class="chapter" v-if="chapter">{{ chapter }}</span>
+        <div class="page-number" v-if="showPageNumber">{{ pageNumber }}</div>
       </div>
-      <ul class="menu-index" v-if="showMenu">
-        <li><a href="#" @click.prevent="goTo('./')">Go back</a></li>
-        <li><a href="#" @click.prevent="furigana = !furigana">Switch furigana</a></li>
-        <li><a href="#" @click.prevent="openZoom()">Zoom level</a></li>
-      </ul>
-      <div class="icon-menu" @click="showMenu=!showMenu">
-      </div>
-    </header>
+    </main-header>
 
     <div id="loading">
       <p>Loading...</p>
@@ -200,7 +194,7 @@
 
         for (const selector of ['.page-info', 'main']) {
           const mainContent = document.querySelector(selector);
-          mainContent.classList.remove('hidden'); 
+          mainContent?.classList?.remove('hidden'); 
         }
         clearInterval(intervalId);
       }
