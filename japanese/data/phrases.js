@@ -27,6 +27,21 @@ export const data = [
     "今日はとても寒いです。 明日も寒いです。 ",
     "Today is very cold. Tomorrow will also be cold.",
   ], [
+    "彼はどんな人ですか",
+    "What kind of person is he?",
+  ], [
+    "私の誕生日。",
+    "My birthday.",
+  ], [
+    "毎週 ボードゲームサークルに行きます。",
+    "I got to the board game club every week",
+  ], [
+    "プレゼントは何時までですか",
+    "Until what time is the presentation?",
+  ], [
+    "夏休み家族と京都に行きます。今日授業の後ネットでホテルを探します。",
+    "We are going to Kyoto with my family during summer break. After class today, I'll search for a hotel online.",
+  ], [
     "日本語の授業が全然わかりません。困ります。",
     "I do not understand Japanse class at all. I am in trouble.",
   ], [
@@ -45,6 +60,12 @@ export const data = [
     "後でやります。",
     "I will do it later.",
   ], [
+    "お手伝いします。",
+    "I will help you",
+  ], [
+    "手伝ってくれてありがとう。",
+    "Thank you for helping me.",
+  ], [
     "新しい日本料理の本を買おうと思う。",
     "I think I'll buy a new book about Japanese cuisine.",
   ], [
@@ -53,6 +74,48 @@ export const data = [
   ], [
     "お腹がすきました。",
     "I am hungry.",
+  ], [
+    "君が必要だ。",
+    "I need you.",
+  ], [
+    "彼ってバカ。",
+    "He's stupid.",
+  ], [
+    "へえ、マジ？",
+    "Whoa! Really?",
+  ], [
+    "彼は変な奴だ。",
+    "He is a weird guy.",
+  ], [
+    "このアニメ、めっちゃ面白い。",
+    "This anime is absurdly funny.",
+  ], [
+    "気に入りましたか。",
+    "Did you like it?",
+  ], [
+    "いつまでもあなたを愛しています。",
+    "I will love you forever.",
+  ], [
+    "はい、喜んで。",
+    "Yes, with pleasure.",
+  ], [
+    "結婚の祝いにこれを贈ります。",
+    "I give this in celebration of your marriage.",
+  ], [
+    "確かなの？",
+    "Are you sure?",
+  ], [
+    "行くな！",
+    "Don't go.",
+  ], [
+    "動くな！",
+    "Don't move!",
+  ], [
+    "ほら、見て！",
+    "Hey, look!",
+  ], [
+    "そんなに驚くなよ。",
+    "Don't be so surprised.",
   ], [
     "公園で花見をしました。",
     "We went cherry blossom viewing in the park.",
@@ -80,5 +143,7 @@ export const data = [
     [
       "Yakisoba is a Japanese stir-fried noodle dish, typically made with wheat noodles, vegetables, and meat or seafood, seasoned with a savory sauce.",
     ],
+  ], [
+
   ]
 ];
