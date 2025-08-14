@@ -77,18 +77,6 @@ body {
     padding-bottom: 4.5rem;
   }
 
-  .hear {
-    &.main span {
-      cursor: pointer;
-      // animation: hear-anim 1s linear infinite alternate;
-    }
-    &.icon {
-      cursor: pointer;
-      position: absolute;
-    }
-  }
-
-
   main {
     transition: margin 1s;
     margin-top: 4rem;

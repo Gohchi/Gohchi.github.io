@@ -44,17 +44,14 @@
     <main class="hidden">
       <article
         v-for="([main, eng, refs], index) in articles" :key="index"
-        @click="speak(main)"
       >
-        <span
-          :class="{ 'main': true, 'hear': voiceActive }"
-          :title="voiceActive ? 'tap to hear' : ''"
-        >
+        <span class="main">
           <phrase-to-ruby :text="main">
         </span>
-        <span v-if="voiceActive"
-          :class="{ 'icon': true, 'hear': voiceActive }"
-        >🗣️</span>
+        <button
+          v-if="voiceActive"
+          @click="speak(main)"
+        >🗣️</button>
         <br />
         <span class="eng" @click="showRefsDialog(refs)">{{ eng }}</span>
       </article>
