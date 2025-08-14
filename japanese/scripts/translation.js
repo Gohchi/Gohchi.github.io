@@ -1,55 +1,23 @@
 
 import { createApp } from 'vue';
 
-import PhraseToRuby from './components/PhraseToRuby.js';
+import PhraseToRuby from '../components/PhraseToRuby.js';
+import MainHeader from '../components/MainHeader.js';
 
 import {
-  closeDialog,
   goTo,
-  showDialog,
-  showRefsDialog,
-} from './tools.js';
+} from '../tools.js';
 
-import { data } from './data/phrases.js';
+import { translations } from '../data/translations.js';
 
 createApp({
   components: {
     PhraseToRuby,
+    MainHeader,
   },
   methods: {
-    showRefsDialog,
-    showDialog,
-    closeDialog,
-    selectVoice(voice) {
-      this.selectedVoice = voice;
-      this.speak(this.selectedArticle);
-    },
-    speak(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ja-JP';
-      if (this.selectedVoice) {
-        utterance.voice = this.selectedVoice;
-      }
-      window.speechSynthesis.speak(utterance);
-    },
-    async loadVoices() {
-      // Wait for voices to be loaded if not available yet
-      if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
-        await new Promise(resolve => {
-          const handler = () => {
-            speechSynthesis.removeEventListener('voiceschanged', handler);
-            resolve();
-          };
-          speechSynthesis.addEventListener('voiceschanged', handler);
-          // In case voices are already loaded
-          if (speechSynthesis.getVoices().length) {
-            speechSynthesis.removeEventListener('voiceschanged', handler);
-            resolve();
-          }
-        });
-      }
-      // Filter voices by ja-JP language
-      this.voices = window.speechSynthesis.getVoices().filter(({ lang }) => ['ja-JP', 'ja_JP'].includes(lang));
+    switchFurigana() {
+      this.furigana = !this.furigana;
     },
     goTo,
     goToIndex() {
@@ -98,7 +66,6 @@ createApp({
     }
   },
   mounted() {
-    this.loadVoices();
   },
   data() {
     const zoomLevel = localStorage.getItem('zoom-level');
@@ -109,7 +76,7 @@ createApp({
 
     return {
       "showMenu": false,
-      "articles": data,
+      "translations": translations,
       "pageSelected": lastPageVisited ? +lastPageVisited : 1, // Default to the first page
       "hideDisclaimer": true,
       "lang": lang ?? 'eng', // Default language

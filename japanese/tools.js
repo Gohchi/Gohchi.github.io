@@ -1,4 +1,5 @@
 export const extractKanji = phrase => {
+  if (!phrase) return [];
   const kanjiList = [];
   let kanjiGroup = '';
   for (let i = 0; i < phrase.length; i++) {

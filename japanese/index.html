@@ -25,10 +25,12 @@
       <div class="title">
         <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ
       </div>
+      <span class="info">Phrases collected: {{ articles.length }}!</span>
       <ul class="menu-open menu-index" v-if="showMenu">
         <li><a href="#">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
+        <li v-if="!!voices.length"><a href="#" @click.prevent="showDialog('dialog-voices'); showMenu=false;">Change voice</a></li>
         <li><a href="#">Contact</a></li>
         <li><a href="#">COMMON PHRASES 〠</a></li>
         <li><a href="#" @click.prevent="goTo('translation')">小説 ベルセルク： 炎竜の騎士</a></li>
@@ -44,17 +46,12 @@
     <main class="hidden">
       <article
         v-for="([main, eng, refs], index) in articles" :key="index"
-        @click="speak(main)"
+        @click="selectedArticle=main"
+        :class="{ 'selected': main==selectedArticle }"
       >
-        <span
-          :class="{ 'main': true, 'hear': voiceActive }"
-          :title="voiceActive ? 'tap to hear' : ''"
-        >
+        <span class="main">
           <phrase-to-ruby :text="main">
         </span>
-        <span v-if="voiceActive"
-          :class="{ 'icon': true, 'hear': voiceActive }"
-        >🗣️</span>
         <br />
         <span class="eng" @click="showRefsDialog(refs)">{{ eng }}</span>
       </article>
@@ -64,9 +61,17 @@
         <button
           class="voice-active"
           title="voice"
-          @click="voiceActive=!voiceActive"
+          :disabled="!selectedArticle"
+          @click="speak(selectedArticle)"
         >
-        <span aria-hidden="true">{{ voiceActive ? "🗣️" : "🔇" }}</span>
+        <span>🗣️</span>
+      </button>
+        <button
+          title="load voices"
+          :disabled="!voices.length || !selectedArticle"
+          @click="showDialog('dialog-voices')"
+        >
+        <span>select voice</span>
       </button>
       </div>
     </footer>
@@ -159,6 +164,24 @@
       </div>
 
       <p>Hiragana and Katakana are two of the three main scripts used in Japanese writing. Hiragana is used for native Japanese words, while Katakana is typically used for foreign words and names.</p>
+    </dialog>
+
+    <dialog id="dialog-voices">
+      <button class="close-btn" @click="closeDialog('dialog-voices')" aria-label="Close">&times;</button>
+      <h2>Select Voice</h2>
+      <h4>Example: {{ selectedArticle }}</h4>
+      <div class="content">
+        <ul class="voice-list">
+          <li v-for="(voice, idx) in voices" :key="voice.voiceURI">
+            <button
+              :class="{ selected: selectedVoice && selectedVoice.voiceURI === voice.voiceURI }"
+              @click="selectVoice(voice)"
+            >
+              {{ voice.name }} <span v-if="voice.lang">({{ voice.lang }})</span>
+            </button>
+          </li>
+        </ul>
+      </div>
     </dialog>
 	</body>
   <script>
