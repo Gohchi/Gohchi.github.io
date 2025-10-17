@@ -68,7 +68,3 @@ export const closeDialog = id => {
     dialog.close();
   }
 };
-
-export const goTo = url => {
-  window.location.href = url; // Navigate to the specified URL
-}
