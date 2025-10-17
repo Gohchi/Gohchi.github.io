@@ -1,8 +1,8 @@
 import { toRefs } from 'vue';
 
-import { closeDialog, showDialog } from "../tools.js";
+import { closeDialog, showDialog } from 'tools';
 
-import { ruby } from '../data/kanji.js';
+import { ruby } from 'data/kanji.js';
 
 export default {
   props: {

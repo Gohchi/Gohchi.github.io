@@ -1,8 +1,8 @@
 import { toRefs } from 'vue';
 
-import { extractKanji, splitByKanji } from "../tools.js";
+import { extractKanji, splitByKanji } from 'tools';
 
-import { ruby } from '../data/kanji.js';
+import { ruby } from 'data/kanji.js';
 
 import KanjiWithRuby from './KanjiWithRuby.js';
 

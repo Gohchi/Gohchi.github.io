@@ -33,13 +33,24 @@ body {
 	background-color: rgba(0, 0, 0, 0.8);
 	z-index: 9999;
 	display: flex;
+  flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	color: white;
 	// font-family: 'Press Start 2P', cursive;
 	font-size: 24px;
+
+  animation: grayPulse 2s ease-in-out infinite;
+  /* ensure the filter animates smoothly */
+  will-change: transform, filter;
 }
 
+  /* keyframes to pulse grayscale (gray scale emphasis) */
+  @keyframes grayPulse {
+    0%   { filter: grayscale(1) brightness(0.2); }
+    50%  { filter: grayscale(0.1) brightness(1.08); }
+    100% { filter: grayscale(1) brightness(0.2); }
+  }
 body {
   // font-family: "M PLUS 1p", sans-serif;
   font-family: Meiryo;
@@ -78,7 +89,7 @@ body {
     }
   }
 
-  &.index main {
+  &.index .articles-wrapper {
     padding: .5rem;
     padding-bottom: 4.5rem;
   }
