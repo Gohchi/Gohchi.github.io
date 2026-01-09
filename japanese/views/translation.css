@@ -1,0 +1,219 @@
+.berserk-novel {
+  header {
+    .title {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5rem;
+
+      .page-info {
+        display: flex;
+        gap: 1rem;
+        
+        .chapter {
+          border-bottom: 1px solid;
+          padding-left: 2rem;
+        }
+      }
+    }
+  }
+  main {
+    position: absolute;
+    height: calc(100% - 4rem - 8px);
+    width: 100%;
+    
+    article {
+      overflow: auto;
+      flex: 1;
+
+      .title {
+        font-size: 2rem;
+      }
+
+      .title,
+      .subtitle {
+        text-align: center;
+      }
+
+      .page-number {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+      }
+
+      .translation {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      .open-dialog {
+        cursor: pointer;
+      }
+      
+      .kanji-details {
+        /* font-family: 'ＭＳ Ｐゴシック'; */
+        /* font-family: 'MS PGothic'; */
+        /* font-family: 'メイリオ'; */
+        /* font-family: Meiryo, sans-serif; */
+        /* font-family: Hiragino Kaku Gothic Pro; */
+        /* font-family: "ヒラギノ角ゴ ProN W3"; */
+        /* font-family: "HiraKakuProN-W3"; */
+        /* font-family: 'Droid Sans Japanese'; */
+        /* font-family: 'TakaoExゴシック'; */
+        /* font-family: '游ゴシック体'; */
+        // font-family: 'Yu Gothic';
+        font-family: "Zen Antique Soft", serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 3rem;
+        line-height: 3rem;
+        margin: 2rem 0;
+      }
+
+      &.main {
+        justify-content: center;
+        align-items: center;
+      }
+
+      &.index {
+        ul {
+          list-style: none;
+          padding-left: 1rem;
+          width: calc(100% - 1rem);
+
+          .index-item {
+            cursor: pointer;
+            width: max-content;
+          }
+        }
+      }
+
+      &.content {
+        overflow: auto;
+        padding: 1rem;
+
+        .chapter-title {
+          position: static;
+          font-weight: bold;
+          font-size: larger;
+          white-space: nowrap;
+        }
+
+        .chapter-number {
+          padding: 1rem;
+        }
+
+        &:not(.tategaki) {
+          .chapter-title {
+            border-bottom: 1px solid;
+            padding: 0 3rem 0 1rem;
+            width: auto;
+          }
+
+          &:has(.chapter-title) {
+            > .phrase {
+              margin-top: 2rem;
+              
+              ~ .phrase {
+                margin-top: unset;
+              }
+            }
+          }
+        }
+
+        &.tategaki {
+          padding: .5rem 1rem;
+          writing-mode: vertical-rl;
+          text-orientation: upright;
+          
+          .chapter-title {
+            border-right: 1px solid;
+            height: fit-content;
+            padding-bottom: 4rem;
+          }
+
+          &:has(.chapter-title) {
+            > .phrase {
+              margin-right: 2rem;
+
+              ~ .phrase {
+                margin-right: unset;
+              }
+            }
+          }
+
+          .kanji-details {
+            margin: 0 1rem;
+          }
+          
+          .kanji-meaning {
+            flex-direction: column;
+            height: 100%;
+            
+            li ~ li {
+              border-top: 1px solid;
+              padding-top: .2rem;
+              margin-top: .2rem;
+            }
+          }
+          
+        }
+
+        > div.phrase {
+          line-height: 28px;
+
+          text-indent: 1rem;
+        }
+      }
+
+      &.unknown {
+        align-items: center;
+        
+        button {
+          
+          width: max-content;
+        }
+      }
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+      align-items: center;
+      gap: 1rem;
+
+      button {
+        padding: 1rem;
+        cursor: pointer;
+      }
+
+      .zoom-level {
+        flex: 1;
+        display: flex;
+
+        input {
+          flex: 1;
+        }
+      }
+      .lang-actions {
+        display: flex;
+        // gap: 1rem;
+
+        .active {
+          background-color: #f0f0f0;
+          border: 1px solid #ccc;
+        }
+      }
+    }
+  }
+
+  .disclaimer {
+    text-align: center;
+  } 
+}
+
+@media (max-width: 420px) {
+  .tategaki-button {
+    writing-mode: vertical-rl;
+  }
+}

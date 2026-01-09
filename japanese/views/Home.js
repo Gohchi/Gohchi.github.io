@@ -4,6 +4,8 @@ import {
   closeDialog,
   showDialog,
   showRefsDialog,
+  speak,
+  getVoices,
 } from 'tools';
 
 import { data } from 'data/phrases.js';
@@ -28,72 +30,11 @@ export default {
       this.speak(this.selectedArticle);
     },
     speak(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ja-JP';
-      if (this.selectedVoice) {
-        utterance.voice = this.selectedVoice;
-      }
-      window.speechSynthesis.speak(utterance);
+      speak(text, this.selectedVoice);
     },
     async loadVoices() {
-      // Wait for voices to be loaded if not available yet
-      if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
-        await new Promise(resolve => {
-          const handler = () => {
-            speechSynthesis.removeEventListener('voiceschanged', handler);
-            resolve();
-          };
-          speechSynthesis.addEventListener('voiceschanged', handler);
-          // In case voices are already loaded
-          if (speechSynthesis.getVoices().length) {
-            speechSynthesis.removeEventListener('voiceschanged', handler);
-            resolve();
-          }
-        });
-      }
-      // Filter voices by ja-JP language
-      this.voices = window.speechSynthesis.getVoices().filter(({ lang }) => ['ja-JP', 'ja_JP'].includes(lang));
+      this.voices = await getVoices();
     },
-    openZoom() {
-      this.showMenu = false;
-      this.prevZoomLevel = this.zoomLevel;
-      this.showZoomMenu = true;
-    },
-    confirmZoomLevel() {
-      this.showZoomMenu = false;
-      localStorage.setItem('zoom-level', this.zoomLevel);
-    },
-    cancelZoomLevel() {
-      this.zoomLevel = this.prevZoomLevel;
-      this.showZoomMenu = false;
-    },
-    onZoomChange(e) {
-      this.zoomLevel = e.target.value;
-    },
-    nextPage() {
-      document.querySelector('article').scrollTo(0, 0);
-      this.pageSelected += 1;
-      localStorage.setItem('last-page-visited', this.pageSelected);
-    },
-    prevPage() {
-      document.querySelector('article').scrollTo(0, 0);
-      this.pageSelected -= 1;
-      localStorage.setItem('last-page-visited', this.pageSelected);
-    },
-    switchTranslation() {
-      this.showTranslation = !this.showTranslation;
-      this.writingDirection = 'yokogaki';
-      localStorage.setItem('show-translation', this.showTranslation);
-      localStorage.setItem('writing-direction', this.writingDirection);
-    },
-    setLang(value) {
-      this.lang = value;
-      localStorage.setItem('lang', value);
-    },
-    setWritingDirection(value) {
-      this.writingDirection = value;
-      localStorage.setItem('writing-direction', value);
-    }
   },
   mounted() {
     this.loadVoices();
@@ -126,52 +67,6 @@ export default {
     page() {
       return this.translations[this.pageSelected-1] || {};
     },
-    type() {
-      if (!this.translations[this.pageSelected-1]) {
-        return 'unknown';
-      }
-
-      return this.page.type;
-    },
-    title() {
-      return this.page.title;
-    },
-    subtitle() {
-      return this.page.subtitle;
-    },
-    chapters() {
-      return this.page.chapters;
-    },
-    content() {
-      return this.page.content;
-    },
-    footer() {
-      return this.page.footer;
-    },
-    showPageNumber() {
-      return !this.page.hidePageNumber;
-    },
-    pageNumber() {
-      return this.pageSelected?.toString().padStart(3, '0');
-    },
-    chapter() {
-      return this.page.chapter;
-    },
-    chapterFirstPage() {
-      return this.page.chapterFirstPage;
-    },
-    first() {
-      if (this.pageSelected > this.translations.length) {
-        return true; // If the selected page is out of bounds, consider it as the first page
-      }
-      return this.pageSelected === 1;
-    },
-    last() {
-      if (this.pageSelected > this.translations.length) {
-        return true; // If the selected page is out of bounds, consider it as the last page
-      }
-      return this.pageSelected === this.translations.length;
-    }
   },
   template: /*html*/`
     <template v-if="true">
@@ -188,6 +83,7 @@ export default {
           <li><a href="#">Contact</a></li>
           <li><a href="#">COMMON PHRASES 〠</a></li>
           <li><router-link to="/translation">小説 ベルセルク： 炎竜の騎士</router-link></li>
+          <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
         </ul>
         <div class="icon-menu" @click="showMenu=!showMenu">
         </div>

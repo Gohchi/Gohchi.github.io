@@ -68,3 +68,32 @@ export const closeDialog = id => {
     dialog.close();
   }
 };
+
+export const speak = (text, voice) => {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'ja-JP';
+  if (voice) {
+    utterance.voice = voice; //this.selectedVoice;
+  }
+  window.speechSynthesis.speak(utterance);
+}
+
+export const getVoices = async () => {
+  // Wait for voices to be loaded if not available yet
+  if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+    await new Promise(resolve => {
+      const handler = () => {
+        speechSynthesis.removeEventListener('voiceschanged', handler);
+        resolve();
+      };
+      speechSynthesis.addEventListener('voiceschanged', handler);
+      // In case voices are already loaded
+      if (speechSynthesis.getVoices().length) {
+        speechSynthesis.removeEventListener('voiceschanged', handler);
+        resolve();
+      }
+    });
+  }
+  // Filter voices by ja-JP language
+  return window.speechSynthesis.getVoices().filter(({ lang }) => ['ja-JP', 'ja_JP'].includes(lang));
+}
