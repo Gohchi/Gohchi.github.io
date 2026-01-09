@@ -446,6 +446,67 @@ body {
   } 
 }
 
+.kana-keyboard {
+
+  h1 {
+    text-align: center;
+  }
+
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .prompt {
+    font-size: 72px;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .status {
+    text-align: center;
+    margin: 10px 0;
+    min-height: 1.5em;
+  }
+
+  .ok { color: #0a7; font-weight: 600; }
+  .bad { color: #c33; font-weight: 600; }
+
+  .row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  button {
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    cursor: pointer;
+    font-size: 14px;
+    color: black;
+  }
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 16px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  /* Hidden IME capture */
+  #capture {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 @media (max-width: 420px) {
   .tategaki-button {
     writing-mode: vertical-rl;

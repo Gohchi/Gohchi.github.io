@@ -83,6 +83,7 @@ export default {
           <li><a href="#">Contact</a></li>
           <li><a href="#">COMMON PHRASES 〠</a></li>
           <li><router-link to="/translation">小説 ベルセルク： 炎竜の騎士</router-link></li>
+          <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
         </ul>
         <div class="icon-menu" @click="showMenu=!showMenu">
         </div>

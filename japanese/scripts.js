@@ -4,6 +4,7 @@ import { createRouter, createWebHashHistory, useRouter } from 'vue-router';
 
 import Home from 'views/Home.js';
 import Translation from 'views/Translation.js';
+import KanaKeyboard from 'views/KanaKeyboard.js';
 
 const app = createApp({});
 
@@ -60,7 +61,7 @@ const app = createApp({});
       const routes = [
         { path: '/', component: Home, name: 'home' },
         { path: '/translation', component: Translation, name: 'translation' },
-        { path: '/select-user', component: SelectUser, name: 'select-user' },
+        { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
         { path: '/about', component: About, name: 'about' },
         {
           path: '/user/:id(\\d+)',
