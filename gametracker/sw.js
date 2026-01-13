@@ -1,8 +1,3 @@
-async function addResourcesToCache(storeName, resources) {
-  const cache = await caches.open(storeName);
-  await cache.addAll(resources);
-};
-
 self.addEventListener('install', e => {
   e.waitUntil(
     addResourcesToCache(
