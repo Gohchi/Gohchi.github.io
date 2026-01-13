@@ -1,0 +1,15 @@
+{
+  "background_color": "white",
+  "description": "Japanese notes",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "512x512",
+      "type": "image/x-icon"
+    }
+  ],
+  "name": "日本語 メモ",
+  "short_name": "japanese notes",
+  "start_url": "/japanese/index.html"
+}
