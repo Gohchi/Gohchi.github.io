@@ -159,6 +159,24 @@ img.icon {
 	}
 }
 
+.duolingo {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+
+	.info {
+		cursor: pointer;
+		max-width: 90vw;
+	}
+
+	.close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+		cursor: pointer;
+	}
+}
+
 @media screen and (max-width: 600px) {
 	.main-content {
 		> header > h1 {

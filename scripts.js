@@ -1,13 +1,20 @@
 import { createApp } from 'vue';
+import { createRouter, createWebHashHistory } from 'vue-router';
+
 import Book from './modules/Book.js';
 import Element from './modules/Element.js';
 
-createApp({
+const app = createApp({
   components: {
     Book,
     Element
   },
+  setup() {
+  },
   methods: {
+    goToDuolingo() {
+      window.open('https://www.duolingo.com/profile/Gohchi', '_blank');
+    },
     getFragment() {
       return window.location.hash ? window.location.hash.substring(1) : '';
     },
@@ -37,6 +44,7 @@ createApp({
       showBook: false, //window.innerWidth > 1200,
       showDropdown: false,
       selectedTab: fragment ?? 'home',
+      showDuolingo: true,
       projects: [
         // { id: 'project01', url: 'https://github.com/Gohchi/', title: 'Go to Github♥', text: 'Check my repos!' },
         { id: 'project02', url: 'https://slots-marshall-lee.vercel.app/', title: 'A simple slots game demo in Phaser 3.', text: 'SLOTS game made in Phaser 3' },
@@ -66,4 +74,15 @@ createApp({
       return ['projects'].includes(fragment);
     }
   }
-}).mount('#app');
+});
+
+const routes = [];
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+});
+
+app.use(router);
+
+app.mount('#app');

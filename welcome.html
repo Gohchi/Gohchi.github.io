@@ -10,7 +10,8 @@
 		<script type="importmap">
 			{
 				"imports": {
-          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js"
+          "vue": "/cdn/vue.esm-browser.prod.js",
+          "vue-router": "/cdn/vue-router.esm-browser.prod.js"
 				}
 			}
 		</script>
@@ -24,8 +25,6 @@
       <div class="main-content hidden">
         <header>
           <h1>Hi. My name is Mart&iacute;n A. Farias</h1>
-          <p>Some projects...
-          </p>
           <!-- <div id="menu"></div> -->
           <div class="menu">
             <nav class="dropdown-menu">
@@ -55,7 +54,22 @@
           </ul>
         </section>
       </div>	
-        
+    
+      <div class="duolingo" v-if="showDuolingo">
+        <img
+          class="info"
+          src="https://duolingo-stats-card.vercel.app/api?username=gohchi"
+          alt="Duolingo Stats"
+          title="Check my Duolingo stats"
+          @click.prevent="goToDuolingo"
+        />
+        <img
+          class="close"
+          src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gU3ZnIFZlY3RvciBJY29ucyA6IGh0dHA6Ly93d3cub25saW5ld2ViZm9udHMuY29tL2ljb24gLS0+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjU2IDI1NiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8bWV0YWRhdGE+IFN2ZyBWZWN0b3IgSWNvbnMgOiBodHRwOi8vd3d3Lm9ubGluZXdlYmZvbnRzLmNvbS9pY29uIDwvbWV0YWRhdGE+DQo8Zz48Zz48cGF0aCBmaWxsPSIjMDAwMDAwIiBkPSJNMTk4LjgsMTA0LjRWODAuOGgyMy42VjU3LjJIMjQ2VjEwaC00Ny4ydjIzLjZoLTIzLjZ2MjMuNmgtMjMuNnYyMy42aC00Ny4yVjU3LjJIODAuOFYzMy42SDU3LjJWMTBIMTB2NDcuMmgyMy42djIzLjZoMjMuNnYyMy42aDIzLjZ2NDcuMkg1Ny4ydjIzLjZIMzMuNnYyMy42SDEwVjI0Nmg0Ny4ydi0yMy42aDIzLjZ2LTIzLjZoMjMuNnYtMjMuNmg0Ny4ydjIzLjZoMjMuNnYyMy42aDIzLjZWMjQ2SDI0NnYtNDcuMmgtMjMuNnYtMjMuNmgtMjMuNnYtMjMuNmgtMjMuNnYtNDcuMkgxOTguOHoiLz48L2c+PC9nPg0KPC9zdmc+" width="16" height="16"
+          @click.prevent="showDuolingo=false"
+        >
+      </div>
+      
       <footer>
         <!-- <button
           @click="bgSvgMode=!bgSvgMode"
