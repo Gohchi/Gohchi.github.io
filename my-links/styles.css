@@ -60,8 +60,8 @@ body::before {
 .main-column .item.color-youtube:hover {
   background-color: rgba(255, 0, 0, 0.8)
 }
-.main-column .item.color-twitch:hover {
-  background-color: rgba(144, 70, 255, 0.8);
+.main-column .item.color-more:hover {
+  background-color: rgba(191, 191, 191, 0.8);
 }
 .main-column .profile-picture {
   border-radius: 50%;
