@@ -54,3 +54,19 @@ canvas {
 .number-two-digits {
   width: 47px;
 }
+
+@media screen and (max-width: 700px) {
+  #toolbar-actions {
+
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    right: 0;
+    background: #594db957;
+    width: 160px;
+  }
+
+  .size-type-info {
+    display: grid;
+  }
+}
