@@ -24,18 +24,20 @@ var app = new Vue({
     marginBottom: 15,
     marginLeft: 20,
     gap: 4,
+    lineStyles: 'NONE',
+    bgColor: 'white',
+    download: 'download',
   },
   created: function () {
-    this.size = this.type.CUSTOM;
-    this.sizeName = 'CUSTOM';
-    // this.size = this.type.A4;
+    this.size = this.type.A3;
+    this.sizeName = 'A3';
   },
   computed: {
     size: {
       get: function(){
         return this.internalSize
-          ? this.orientation == 'h' ? { width: this.internalSize.width, height: this.internalSize.height }
-            : this.orientation == 'v' ? { width: this.internalSize.height, height: this.internalSize.width }
+          ? this.orientation == 'v' ? { width: this.internalSize.width, height: this.internalSize.height }
+            : this.orientation == 'h' ? { width: this.internalSize.height, height: this.internalSize.width }
               : null
           : null;
       },
@@ -89,17 +91,28 @@ var app = new Vue({
         const gap = +this.gap;
         const amountHorizontal = +this.amountHorizontal;
 
-        ctx.setLineDash([10, 5]);
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(marginLeft, marginTop, canvas.width - marginRight - marginLeft, canvas.height - marginBottom - marginTop);
+        if (this.lineStyles != 'NONE') {
+          if (this.lineStyles === 'DASH') {
+            ctx.setLineDash([10, 5]);
+          } else {
+            ctx.setLineDash([]);
+          }
+          ctx.strokeStyle = 'black';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(marginLeft, marginTop, canvas.width - marginRight - marginLeft, canvas.height - marginBottom - marginTop);
+        }
 
         patternCanvas.width = (canvas.width - marginLeft - marginRight - gap * (amountHorizontal-1)) / amountHorizontal;
         patternCanvas.height = img.height * (patternCanvas.width / img.width);
         patternCtx.drawImage(img, 0, 0, patternCanvas.width, patternCanvas.height);
 
-        const amountVertical = Math.floor((canvas.height - marginTop - marginBottom) / patternCanvas.height);
+        const amountVertical = Math.floor((canvas.height - marginTop - marginBottom + gap) / (patternCanvas.height + gap));
 
+        ctx.fillStyle = this.bgColor;
+        const totalImageWidth = amountHorizontal * patternCanvas.width + gap * (amountHorizontal - 1);
+        const totalImageHeight = amountVertical * patternCanvas.height + gap * (amountVertical - 1);
+        ctx.fillRect(marginLeft, marginTop, totalImageWidth, totalImageHeight);
+        
         for (let i = 0; i < amountHorizontal; i++) {
           const offsetLeft = marginLeft + patternCanvas.width * i + (i > 0 ? gap * i : 0);
           
@@ -139,20 +152,62 @@ var app = new Vue({
     swapOrientation() {
       this.orientation = this.orientation=='h' ? 'v': 'h';
       this.refresh();
+    },
+    downloadFile() {
+      if (this.download === 'print') {
+        var canvas = document.getElementById('canvas');
+        var dataUrl = canvas.toDataURL('image/png');
+        var windowContent = '<!DOCTYPE html>';
+        windowContent += '<html>';
+        windowContent += '<head><title>Print Image</title></head>';
+        windowContent += '<body>';
+        windowContent += '<img src="' + dataUrl + '">';
+        windowContent += '</body>';
+        windowContent += '</html>';
+        var printWin = window.open('', '', 'width=800,height=600');
+        printWin.document.open();
+        printWin.document.write(windowContent);
+        printWin.document.close();
+        printWin.focus();
+        setTimeout(() => {
+          printWin.print();
+          printWin.close();
+        }, 500);
+      } else {
+        var canvas = document.getElementById('canvas');
+        var now = new Date();
+        var dateStr = now.getFullYear() + '-' 
+          + String(now.getMonth() + 1).padStart(2, '0') + '-' 
+          + String(now.getDate()).padStart(2, '0') + '_' 
+          + String(now.getHours()).padStart(2, '0') + '-' 
+          + String(now.getMinutes()).padStart(2, '0') + '-' 
+          + String(now.getSeconds()).padStart(2, '0');
+        var link = document.createElement('a');
+        link.download = 'mosaico_' + dateStr + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }
     }
   }
 });
 
 // configure menu
 {
-  const buttonEl = document.getElementById('button-sizes');
-  const menuEl = document.getElementById('menu-sizes');
+  function configureMenu(id) {
+    const buttonEl = document.getElementById('button-'+id);
+    const menuEl = document.getElementById('menu-'+id);
 
-  const menu = new mdc.menu.MDCMenu(menuEl);
-  
-  buttonEl.addEventListener('click', (event) => {
-    menu.open = !menu.open;
-    menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
-    menu.setAnchorElement(buttonEl);
-  });
+    const menu = new mdc.menu.MDCMenu(menuEl);
+    
+    buttonEl.addEventListener('click', (event) => {
+      menu.open = !menu.open;
+      menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
+      menu.setAnchorElement(buttonEl);
+    });
+  }
+
+  configureMenu('sizes');
+  configureMenu('line-styles');
+  configureMenu('bg-color');
+  configureMenu('download');
 }

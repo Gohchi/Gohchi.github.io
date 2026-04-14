@@ -23,8 +23,70 @@
             <span class="mdc-top-app-bar__title">Mosaicos</span>
           </section>
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-            <div id="demo-menu" class="mdc-menu-surface--anchor">
-              <button id="button-sizes" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Size">photo_size_select_large</button>
+            
+            <div class="mdc-menu-surface--anchor">
+              <button id="button-download"
+                class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                aria-label="Size"
+              >download</button>
+              <div id="menu-download" class="mdc-menu mdc-menu-surface">
+                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                  <component v-for="[key, value] in [['download', 'Descargar'], ['print', 'Imprimir']]">
+                    <li class="mdc-list-item" role="menuitem"
+                      v-bind:class="(download==key ? 'mdc-list-item--selected' : null)"
+                      @click="download=key; downloadFile(); changeType();"
+                    >
+                      <span class="mdc-list-item__ripple"></span>
+                      <span class="mdc-list-item__text">{{ value }}</span>
+                    </li>
+                  </component>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mdc-menu-surface--anchor">
+              <button id="button-bg-color"
+                class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                aria-label="Size"
+              >colorize</button>
+              <div id="menu-bg-color" class="mdc-menu mdc-menu-surface">
+                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                  <component v-for="[key, value] in [['white', 'Blanco'], ['black', 'Negro'], ['gray', 'Gris']]">
+                    <li class="mdc-list-item" role="menuitem"
+                      v-bind:class="(bgColor==key ? 'mdc-list-item--selected' : null)"
+                      @click="bgColor=key; changeType();"
+                    >
+                      <span class="mdc-list-item__ripple"></span>
+                      <span class="mdc-list-item__text">{{ value }}</span>
+                    </li>
+                  </component>
+                </ul>
+              </div>
+            </div>
+          
+            <div class="mdc-menu-surface--anchor">
+              <button id="button-line-styles"
+                class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                aria-label="Size"
+              >line_style</button>
+              <div id="menu-line-styles" class="mdc-menu mdc-menu-surface">
+                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                  <component v-for="[key, value] in [['NONE', 'Nada'], ['LINE', 'Normal'], ['DASH', 'Líneas']]">
+                    <li class="mdc-list-item" role="menuitem"
+                      v-bind:class="(lineStyles==key ? 'mdc-list-item--selected' : null)"
+                      @click="lineStyles=key; changeType();"
+                    >
+                      <span class="mdc-list-item__ripple"></span>
+                      <span class="mdc-list-item__text">{{ value }}</span>
+                    </li>
+                  </component>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mdc-menu-surface--anchor">
+              <button id="button-sizes" class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+              aria-label="Size">photo_size_select_large</button>
               <div id="menu-sizes" class="mdc-menu mdc-menu-surface">
                 <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
                   <component v-for="item in ['A4', 'A3', 'CUSTOM']">
@@ -68,8 +130,8 @@
           v-bind:height="size.height"
           v-bind:style="showBorder ? styleCanvas : null"
         ></canvas>
-        <div class="size-type-info">
-          <span v-if="sizeName!='CUSTOM'" class="mdc-top-app-bar__title size-info">{{ sizeName }} ({{ size.width }}x{{ size.height }})</span>
+        <div class="size-type-info mdc-top-app-bar__title ">
+          <span v-if="sizeName!='CUSTOM'" class="size-info">{{ sizeName }} - {{(orientation == 'v' ? 'vertical' : 'horizontal')}} ({{ size.width }}x{{ size.height }})</span>
           
           <component v-if="sizeName=='CUSTOM'" class="custom-sizes">
             <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon mdc-text-field--with-trailing-icon">
@@ -103,6 +165,7 @@
             v-model="amountHorizontal"
             @keyup="refresh"
           />
+
           <div class="separator"></div>
           <span>Margen:</span>
           <input
@@ -133,6 +196,8 @@
             v-model="marginLeft"
             @keyup="refresh"
           />
+          
+          <div class="separator"></div>
           <span>Espacio:</span>
           <input
             class="mdc-text-field__input number-two-digits"
