@@ -15,7 +15,7 @@ var app = new Vue({
     ready: false,
     showBorder: true,
     internalSize: null,
-    sizeName: 'CUSTOM',
+    sizeName: 'A3',
     showHelp: false
   },
   created: function () {
@@ -54,6 +54,8 @@ var app = new Vue({
       var canvas = document.getElementById('canvas');
       var ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, this.size.width, this.size.height);
+      var input = document.getElementById('file');
+      input.value = '';
     },
     refresh: function () {
       var fn = () => {
@@ -93,6 +95,10 @@ var app = new Vue({
     },
     saveCanvas: function() {
       var canvas = document.getElementById('canvas');
+    },
+    swapOrientation() {
+      this.orientation = this.orientation=='h' ? 'v': 'h';
+      this.refresh();
     }
   }
 });
