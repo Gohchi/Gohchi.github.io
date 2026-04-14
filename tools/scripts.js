@@ -1,4 +1,4 @@
-const initCustomSize = { height: 400, width: 1000 };
+const initCustomSize = { height: 1724, width: 700 };
 
 var app = new Vue({
   el: '#app',
@@ -8,26 +8,36 @@ var app = new Vue({
       A4: { height: 2480, width: 3508 },
       A3: { height: 4961, width: 3605 },
     },
-    orientation: 'h',
+    orientation: 'v',
     customHeight: initCustomSize.height,
     customWidth: initCustomSize.width,
     message: 'Seleccione un tipo de hoja y cargue una imagen para armar el mosaico.',
     ready: false,
     showBorder: true,
     internalSize: null,
-    sizeName: 'CUSTOM',
-    showHelp: false
+    // sizeName: 'A3',
+    sizeName: '',
+    showHelp: false,
+    amountHorizontal: 4,
+    marginTop: 40,
+    marginRight: 30,
+    marginBottom: 15,
+    marginLeft: 20,
+    gap: 4,
+    lineStyles: 'NONE',
+    bgColor: 'white',
+    download: 'download',
   },
   created: function () {
-    // this.size = this.type.CUSTOM;
-    this.size = this.type.A4;
+    this.size = this.type.A3;
+    this.sizeName = 'A3';
   },
   computed: {
     size: {
       get: function(){
         return this.internalSize
-          ? this.orientation == 'h' ? { width: this.internalSize.width, height: this.internalSize.height }
-            : this.orientation == 'v' ? { width: this.internalSize.height, height: this.internalSize.width }
+          ? this.orientation == 'v' ? { width: this.internalSize.width, height: this.internalSize.height }
+            : this.orientation == 'h' ? { width: this.internalSize.height, height: this.internalSize.width }
               : null
           : null;
       },
@@ -50,21 +60,66 @@ var app = new Vue({
 
       this.refresh();
     },
-    clear: function () {
+    clearCanvas: function () {
       var canvas = document.getElementById('canvas');
       var ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, this.size.width, this.size.height);
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    },
+    clearAll: function () {
+      this.clearCanvas();
+      var input = document.getElementById('file');
+      input.value = '';
     },
     refresh: function () {
       var fn = () => {
         this.ready = true;
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
+        const canvas = document.getElementById('canvas');
+        /** @type {CanvasRenderingContext2D} */
+        const ctx = canvas.getContext('2d');
+        // ctx.drawImage(img, 0, 0, canvas.width, img.height * (canvas.width / img.width));
+        
+        this.clearCanvas();
 
-        var pattern = ctx.createPattern(img, 'repeat');
-        if( pattern ) {
-          ctx.fillStyle = pattern;
-          ctx.fillRect(0, 0, this.size.width, this.size.height);
+        // Create a temporary canvas for the limited horizontal repeat
+        const patternCanvas = document.createElement('canvas');
+        const patternCtx = patternCanvas.getContext('2d');
+        const marginTop = +this.marginTop;
+        const marginRight = +this.marginRight;
+        const marginBottom = +this.marginBottom;
+        const marginLeft = +this.marginLeft;
+        const gap = +this.gap;
+        const amountHorizontal = +this.amountHorizontal;
+
+        if (this.lineStyles != 'NONE') {
+          if (this.lineStyles === 'DASH') {
+            ctx.setLineDash([10, 5]);
+          } else {
+            ctx.setLineDash([]);
+          }
+          ctx.strokeStyle = 'black';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(marginLeft, marginTop, canvas.width - marginRight - marginLeft, canvas.height - marginBottom - marginTop);
+        }
+
+        patternCanvas.width = (canvas.width - marginLeft - marginRight - gap * (amountHorizontal-1)) / amountHorizontal;
+        patternCanvas.height = img.height * (patternCanvas.width / img.width);
+        patternCtx.drawImage(img, 0, 0, patternCanvas.width, patternCanvas.height);
+
+        const amountVertical = Math.floor((canvas.height - marginTop - marginBottom + gap) / (patternCanvas.height + gap));
+
+        ctx.fillStyle = this.bgColor;
+        const totalImageWidth = amountHorizontal * patternCanvas.width + gap * (amountHorizontal - 1);
+        const totalImageHeight = amountVertical * patternCanvas.height + gap * (amountVertical - 1);
+        ctx.fillRect(marginLeft, marginTop, totalImageWidth, totalImageHeight);
+        
+        for (let i = 0; i < amountHorizontal; i++) {
+          const offsetLeft = marginLeft + patternCanvas.width * i + (i > 0 ? gap * i : 0);
+          
+          for (let l = 0; l < amountVertical; l++) {
+            const offsetTop = patternCanvas.height * l;
+            ctx.drawImage(patternCanvas, offsetLeft+1, marginTop+1 + offsetTop + (l > 0 ? gap * l : 0));
+          }
         }
       }
 
@@ -93,20 +148,66 @@ var app = new Vue({
     },
     saveCanvas: function() {
       var canvas = document.getElementById('canvas');
+    },
+    swapOrientation() {
+      this.orientation = this.orientation=='h' ? 'v': 'h';
+      this.refresh();
+    },
+    downloadFile() {
+      if (this.download === 'print') {
+        var canvas = document.getElementById('canvas');
+        var dataUrl = canvas.toDataURL('image/png');
+        var windowContent = '<!DOCTYPE html>';
+        windowContent += '<html>';
+        windowContent += '<head><title>Print Image</title></head>';
+        windowContent += '<body>';
+        windowContent += '<img src="' + dataUrl + '">';
+        windowContent += '</body>';
+        windowContent += '</html>';
+        var printWin = window.open('', '', 'width=800,height=600');
+        printWin.document.open();
+        printWin.document.write(windowContent);
+        printWin.document.close();
+        printWin.focus();
+        setTimeout(() => {
+          printWin.print();
+          printWin.close();
+        }, 500);
+      } else {
+        var canvas = document.getElementById('canvas');
+        var now = new Date();
+        var dateStr = now.getFullYear() + '-' 
+          + String(now.getMonth() + 1).padStart(2, '0') + '-' 
+          + String(now.getDate()).padStart(2, '0') + '_' 
+          + String(now.getHours()).padStart(2, '0') + '-' 
+          + String(now.getMinutes()).padStart(2, '0') + '-' 
+          + String(now.getSeconds()).padStart(2, '0');
+        var link = document.createElement('a');
+        link.download = 'mosaico_' + dateStr + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }
     }
   }
 });
 
 // configure menu
 {
-  const buttonEl = document.getElementById('button-sizes');
-  const menuEl = document.getElementById('menu-sizes');
+  function configureMenu(id) {
+    const buttonEl = document.getElementById('button-'+id);
+    const menuEl = document.getElementById('menu-'+id);
 
-  const menu = new mdc.menu.MDCMenu(menuEl);
-  
-  buttonEl.addEventListener('click', (event) => {
-    menu.open = !menu.open;
-    menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
-    menu.setAnchorElement(buttonEl);
-  });
+    const menu = new mdc.menu.MDCMenu(menuEl);
+    
+    buttonEl.addEventListener('click', (event) => {
+      menu.open = !menu.open;
+      menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
+      menu.setAnchorElement(buttonEl);
+    });
+  }
+
+  configureMenu('sizes');
+  configureMenu('line-styles');
+  configureMenu('bg-color');
+  configureMenu('download');
 }
