@@ -8,7 +8,7 @@ var app = new Vue({
       A4: { height: 2480, width: 3508 },
       A3: { height: 4961, width: 3605 },
     },
-    orientation: 'h',
+    orientation: 'v',
     customHeight: initCustomSize.height,
     customWidth: initCustomSize.width,
     message: 'Seleccione un tipo de hoja y cargue una imagen para armar el mosaico.',
@@ -16,7 +16,13 @@ var app = new Vue({
     showBorder: true,
     internalSize: null,
     sizeName: 'A3',
-    showHelp: false
+    showHelp: false,
+    amountHorizontal: 4,
+    marginTop: 40,
+    marginRight: 30,
+    marginBottom: 0,
+    marginLeft: 20,
+    gap: 4,
   },
   created: function () {
     // this.size = this.type.CUSTOM;
@@ -50,10 +56,14 @@ var app = new Vue({
 
       this.refresh();
     },
-    clear: function () {
+    clearCanvas: function () {
       var canvas = document.getElementById('canvas');
       var ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, this.size.width, this.size.height);
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    },
+    clearAll: function () {
+      this.clearCanvas();
       var input = document.getElementById('file');
       input.value = '';
     },
@@ -62,11 +72,25 @@ var app = new Vue({
         this.ready = true;
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');
+        // ctx.drawImage(img, 0, 0, canvas.width, img.height * (canvas.width / img.width));
+        
+        this.clearCanvas();
 
-        var pattern = ctx.createPattern(img, 'repeat');
-        if( pattern ) {
-          ctx.fillStyle = pattern;
-          ctx.fillRect(0, 0, this.size.width, this.size.height);
+        // Create a temporary canvas for the limited horizontal repeat
+        const patternCanvas = document.createElement('canvas');
+        const patternCtx = patternCanvas.getContext('2d');
+        const marginTop = +this.marginTop;
+        const marginRight = +this.marginRight;
+        const marginLeft = +this.marginLeft;
+        const gap = +this.gap;
+        const amountHorizontal = +this.amountHorizontal;
+        patternCanvas.width = (canvas.width - marginLeft - marginRight - gap * amountHorizontal) / amountHorizontal;
+        patternCanvas.height = img.height * (patternCanvas.width / img.width);
+        patternCtx.drawImage(img, 0, 0, patternCanvas.width, patternCanvas.height);
+
+        for (let i = 0; i < amountHorizontal; i++) {
+          const offsetLeft = marginLeft + patternCanvas.width * i + (i > 0 ? gap * i : 0);
+          ctx.drawImage(patternCanvas, offsetLeft, marginTop);
         }
       }
 

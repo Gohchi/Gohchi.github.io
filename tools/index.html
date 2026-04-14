@@ -50,7 +50,7 @@
               v-bind:disabled="!ready" @click="refresh"
             >autorenew</button>
             <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Clear"
-              @click="clear"
+              @click="clearAll"
             >clear</button>
             <label class="mdc-button mdc-button--outlined mdc-top-app-bar__action-item load-file-button">
               <input type="file" id="file" v-on:change="refresh" style="display: none;">
@@ -93,6 +93,54 @@
               <input class="mdc-text-field__input" type="number" min="1" v-model="customHeight" @keyup="changeType" />
             </label>
           </component>
+          
+          <div class="separator"></div>
+          <span># por línea:</span>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="1"
+            v-model="amountHorizontal"
+            @keyup="refresh"
+          />
+          <div class="separator"></div>
+          <span>Margen:</span>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="marginTop"
+            @keyup="refresh"
+          />
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="marginRight"
+            @keyup="refresh"
+          />
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="marginBottom"
+            @keyup="refresh"
+          />
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="marginLeft"
+            @keyup="refresh"
+          />
+          <span>Espacio:</span>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="gap"
+            @keyup="refresh"
+          />
         </div>
       </main>
     </div>
