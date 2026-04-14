@@ -1,4 +1,4 @@
-const initCustomSize = { height: 400, width: 1000 };
+const initCustomSize = { height: 1724, width: 700 };
 
 var app = new Vue({
   el: '#app',
@@ -15,18 +15,20 @@ var app = new Vue({
     ready: false,
     showBorder: true,
     internalSize: null,
-    sizeName: 'A3',
+    // sizeName: 'A3',
+    sizeName: '',
     showHelp: false,
     amountHorizontal: 4,
     marginTop: 40,
     marginRight: 30,
-    marginBottom: 0,
+    marginBottom: 15,
     marginLeft: 20,
     gap: 4,
   },
   created: function () {
-    // this.size = this.type.CUSTOM;
-    this.size = this.type.A4;
+    this.size = this.type.CUSTOM;
+    this.sizeName = 'CUSTOM';
+    // this.size = this.type.A4;
   },
   computed: {
     size: {
@@ -70,8 +72,9 @@ var app = new Vue({
     refresh: function () {
       var fn = () => {
         this.ready = true;
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
+        const canvas = document.getElementById('canvas');
+        /** @type {CanvasRenderingContext2D} */
+        const ctx = canvas.getContext('2d');
         // ctx.drawImage(img, 0, 0, canvas.width, img.height * (canvas.width / img.width));
         
         this.clearCanvas();
@@ -81,16 +84,29 @@ var app = new Vue({
         const patternCtx = patternCanvas.getContext('2d');
         const marginTop = +this.marginTop;
         const marginRight = +this.marginRight;
+        const marginBottom = +this.marginBottom;
         const marginLeft = +this.marginLeft;
         const gap = +this.gap;
         const amountHorizontal = +this.amountHorizontal;
-        patternCanvas.width = (canvas.width - marginLeft - marginRight - gap * amountHorizontal) / amountHorizontal;
+
+        ctx.setLineDash([10, 5]);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(marginLeft, marginTop, canvas.width - marginRight - marginLeft, canvas.height - marginBottom - marginTop);
+
+        patternCanvas.width = (canvas.width - marginLeft - marginRight - gap * (amountHorizontal-1)) / amountHorizontal;
         patternCanvas.height = img.height * (patternCanvas.width / img.width);
         patternCtx.drawImage(img, 0, 0, patternCanvas.width, patternCanvas.height);
 
+        const amountVertical = Math.floor((canvas.height - marginTop - marginBottom) / patternCanvas.height);
+
         for (let i = 0; i < amountHorizontal; i++) {
           const offsetLeft = marginLeft + patternCanvas.width * i + (i > 0 ? gap * i : 0);
-          ctx.drawImage(patternCanvas, offsetLeft, marginTop);
+          
+          for (let l = 0; l < amountVertical; l++) {
+            const offsetTop = patternCanvas.height * l;
+            ctx.drawImage(patternCanvas, offsetLeft+1, marginTop+1 + offsetTop + (l > 0 ? gap * l : 0));
+          }
         }
       }
 
