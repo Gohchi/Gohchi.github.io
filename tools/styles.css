@@ -17,13 +17,14 @@ canvas {
 }
 
 .size-type-info {
+  display: flex;
+  align-items: flex-end;
   position: fixed;
   bottom: 0;
   left: 0;
   background: white;
   border: 1px solid #a3a0a0;
   border-radius: 5px;
-  display: inline-block;
   padding: 10px;
 }
 
@@ -55,9 +56,10 @@ canvas {
   width: 47px;
 }
 
-.card-info {
-  display: flex;
-  align-items: flex-end;
+canvas#zoom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
 }
 
 @media screen and (max-width: 700px) {

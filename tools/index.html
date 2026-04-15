@@ -140,7 +140,7 @@
           v-bind:height="size.height"
           v-bind:style="showBorder ? styleCanvas : null"
         ></canvas>
-        <div class="size-type-info mdc-top-app-bar__title card-info">
+        <div class="size-type-info mdc-top-app-bar__title">
           <span v-if="sizeName!='CUSTOM'" class="size-info">{{ sizeName }} - {{(orientation == 'v' ? 'vertical' : 'horizontal')}} ({{ size.width }}x{{ size.height }})</span>
           
           <component v-if="sizeName=='CUSTOM'" class="custom-sizes">
@@ -344,6 +344,11 @@
             </template>
           </div>
         </div>
+
+        <canvas id="zoom"
+          v-bind:width="zoomSize.width"
+          v-bind:height="zoomSize.height"
+        ></canvas>
       </main>
     </div>
     <script src="scripts.js"></script>

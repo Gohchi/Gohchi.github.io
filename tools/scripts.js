@@ -47,6 +47,15 @@ var app = new Vue({
         this.internalSize = value;
       }
     },
+    zoomSize: {
+      get: function(){
+        // return this.size;
+        return {
+          "width": this.size.width * .05,
+          "height": this.size.height * .05
+        }
+      },
+    },
     styleCanvas: function () {
       return {
         border: '2px dashed black'
@@ -54,7 +63,7 @@ var app = new Vue({
     }
   },
   methods: {
-    changeType: function(){
+    changeType() {
       if( this.sizeName == 'CUSTOM' )
         this.internalSize = { height: this.customHeight, width: this.customWidth };
       else
@@ -62,19 +71,25 @@ var app = new Vue({
 
       this.refresh();
     },
-    clearCanvas: function () {
+    clearCanvas() {
       var canvas = document.getElementById('canvas');
       var ctx = canvas.getContext('2d');
       ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     },
-    clearAll: function () {
+    clearAll() {
       this.clearCanvas();
       this.ready = false;
       this.menu = {};
       this.file = null;
     },
-    refresh: function () {
+    updateZoom() {
+      var canvas = document.getElementById('canvas');
+      var zoom = document.getElementById('zoom');
+      var ctx = zoom.getContext('2d');
+      ctx.drawImage(canvas, 0, 0, zoom.width, zoom.height);
+    },
+    refresh() {
       var fn = () => {
         this.ready = true;
         const canvas = document.getElementById('canvas');
@@ -123,6 +138,8 @@ var app = new Vue({
             ctx.drawImage(patternCanvas, offsetLeft+1, marginTop+1 + offsetTop + (l > 0 ? gap * l : 0));
           }
         }
+
+        this.updateZoom();
       }
 
       var img = this.imageSizeHeight && this.imageSizeWidth
