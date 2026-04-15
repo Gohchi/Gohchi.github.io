@@ -3,6 +3,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
     
     <title>Mosaicos</title>
+		<link rel="shortcut icon" type="image/svg+xml" href="favicon.svg"/>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> <!-- release -->
 
@@ -19,103 +20,114 @@
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <!-- <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">menu</button> -->
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Help" @click="showHelp=!showHelp">help</button>
+            <!-- <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Help" @click="showHelp=!showHelp">help</button> -->
+            <div class="main-icon"></div>
             <span class="mdc-top-app-bar__title">Mosaicos</span>
           </section>
           <section id="toolbar-actions" class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-            
-            <div class="mdc-menu-surface--anchor">
-              <button id="button-download"
-                class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                aria-label="Size"
-              >download</button>
-              <div id="menu-download" class="mdc-menu mdc-menu-surface">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                  <component v-for="[key, value] in [['download', 'Descargar'], ['print', 'Imprimir']]">
-                    <li class="mdc-list-item" role="menuitem"
-                      v-bind:class="(download==key ? 'mdc-list-item--selected' : null)"
-                      @click="download=key; downloadFile(); changeType();"
-                    >
-                      <span class="mdc-list-item__ripple"></span>
-                      <span class="mdc-list-item__text">{{ value }}</span>
-                    </li>
-                  </component>
-                </ul>
+            <template v-if="ready">
+              <div class="mdc-menu-surface--anchor">
+                <button id="button-download"
+                  class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                  aria-label="Size"
+                  @click="openMenu('download')"
+                >download</button>
+                <div id="menu-download" class="mdc-menu mdc-menu-surface">
+                  <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                    <component v-for="[key, value] in [['download', 'Descargar'], ['print', 'Imprimir']]">
+                      <li class="mdc-list-item" role="menuitem"
+                        v-bind:class="(download==key ? 'mdc-list-item--selected' : null)"
+                        @click="download=key; downloadFile(); changeType();"
+                      >
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">{{ value }}</span>
+                      </li>
+                    </component>
+                  </ul>
+                </div>
               </div>
-            </div>
 
-            <div class="mdc-menu-surface--anchor">
-              <button id="button-bg-color"
-                class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                aria-label="Size"
-              >colorize</button>
-              <div id="menu-bg-color" class="mdc-menu mdc-menu-surface">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                  <component v-for="[key, value] in [['white', 'Blanco'], ['black', 'Negro'], ['gray', 'Gris']]">
-                    <li class="mdc-list-item" role="menuitem"
-                      v-bind:class="(bgColor==key ? 'mdc-list-item--selected' : null)"
-                      @click="bgColor=key; changeType();"
-                    >
-                      <span class="mdc-list-item__ripple"></span>
-                      <span class="mdc-list-item__text">{{ value }}</span>
-                    </li>
-                  </component>
-                </ul>
+              <div class="mdc-menu-surface--anchor">
+                <button id="button-bg-color"
+                  class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                  aria-label="Size"
+                  @click="openMenu('bg-color')"
+                >colorize</button>
+                <div id="menu-bg-color" class="mdc-menu mdc-menu-surface">
+                  <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                    <component v-for="[key, value] in [['white', 'Blanco'], ['black', 'Negro'], ['gray', 'Gris']]">
+                      <li class="mdc-list-item" role="menuitem"
+                        v-bind:class="(bgColor==key ? 'mdc-list-item--selected' : null)"
+                        @click="bgColor=key; changeType();"
+                      >
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">{{ value }}</span>
+                      </li>
+                    </component>
+                  </ul>
+                </div>
               </div>
-            </div>
-          
-            <div class="mdc-menu-surface--anchor">
-              <button id="button-line-styles"
-                class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                aria-label="Size"
-              >line_style</button>
-              <div id="menu-line-styles" class="mdc-menu mdc-menu-surface">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                  <component v-for="[key, value] in [['NONE', 'Nada'], ['LINE', 'Normal'], ['DASH', 'Líneas']]">
-                    <li class="mdc-list-item" role="menuitem"
-                      v-bind:class="(lineStyles==key ? 'mdc-list-item--selected' : null)"
-                      @click="lineStyles=key; changeType();"
-                    >
-                      <span class="mdc-list-item__ripple"></span>
-                      <span class="mdc-list-item__text">{{ value }}</span>
-                    </li>
-                  </component>
-                </ul>
-              </div>
-            </div>
-
-            <div class="mdc-menu-surface--anchor">
-              <button id="button-sizes" class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-              aria-label="Size">photo_size_select_large</button>
-              <div id="menu-sizes" class="mdc-menu mdc-menu-surface">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                  <component v-for="item in ['A4', 'A3', 'CUSTOM']">
-                    <li class="mdc-list-item" role="menuitem"
-                      v-bind:class="(sizeName==item ? 'mdc-list-item--selected' : null)"
-                      @click="sizeName=item; changeType();"
-                    >
-                      <span class="mdc-list-item__ripple"></span>
-                      <span class="mdc-list-item__text">{{ item }}</span>
-                    </li>
-                  </component>
-                </ul>
-              </div>
-            </div>
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Orientation"
-              @click="swapOrientation"
-            >rotate_90_degrees_ccw</button>
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Border"
-              @click="showBorder=!showBorder"
-            >{{ showBorder ? 'border_clear' : 'border_outer' }}</button>
             
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Refresh"
-              v-bind:disabled="!ready" @click="refresh"
-            >autorenew</button>
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Clear"
-              @click="clearAll"
-            >clear</button>
-            <label class="mdc-button mdc-button--outlined mdc-top-app-bar__action-item load-file-button">
-              <input type="file" id="file" v-on:change="refresh" style="display: none;">
+              <div class="mdc-menu-surface--anchor">
+                <button id="button-line-styles"
+                  class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                  aria-label="Size"
+                  @click="openMenu('line-styles')"
+                >line_style</button>
+                <div id="menu-line-styles" class="mdc-menu mdc-menu-surface">
+                  <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                    <component v-for="[key, value] in [['NONE', 'Nada'], ['LINE', 'Normal'], ['DASH', 'Líneas']]">
+                      <li class="mdc-list-item" role="menuitem"
+                        v-bind:class="(lineStyles==key ? 'mdc-list-item--selected' : null)"
+                        @click="lineStyles=key; changeType();"
+                      >
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">{{ value }}</span>
+                      </li>
+                    </component>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mdc-menu-surface--anchor">
+                <button id="button-sizes" class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                  aria-label="Size"
+                  @click="openMenu('sizes')"
+                >photo_size_select_large</button>
+                <div id="menu-sizes" class="mdc-menu mdc-menu-surface">
+                  <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                    <component v-for="item in ['A4', 'A3', 'CUSTOM']">
+                      <li class="mdc-list-item" role="menuitem"
+                        v-bind:class="(sizeName==item ? 'mdc-list-item--selected' : null)"
+                        @click="sizeName=item; changeType();"
+                      >
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">{{ item }}</span>
+                      </li>
+                    </component>
+                  </ul>
+                </div>
+              </div>
+
+              <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Orientation"
+                @click="swapOrientation"
+              >rotate_90_degrees_ccw</button>
+
+              <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Border"
+                @click="showBorder=!showBorder"
+              >{{ showBorder ? 'border_clear' : 'border_outer' }}</button>
+              
+              <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Refresh"
+                v-bind:disabled="!ready" @click="refresh"
+              >autorenew</button>
+
+              <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Clear"
+                @click="clearAll"
+              >clear</button>
+            </template>
+
+            <label v-if="!ready" class="mdc-button mdc-button--outlined mdc-top-app-bar__action-item load-file-button">
+              <input type="file" id="file" v-on:change="fileLoaded" style="display: none;">
               <div class="mdc-button__ripple"></div>
               <span class="mdc-button__label">Cargar</span>
             </label>
@@ -123,14 +135,14 @@
         </div>
       </header>
       <main class="mdc-top-app-bar--fixed-adjust">
-        <div v-if="showHelp" style="padding: 20px;">{{ message }}</div>
+        <!-- <div v-if="showHelp" style="padding: 20px;">{{ message }}</div> -->
         <canvas id="canvas"
           v-if="size"
           v-bind:width="size.width"
           v-bind:height="size.height"
           v-bind:style="showBorder ? styleCanvas : null"
         ></canvas>
-        <div class="size-type-info mdc-top-app-bar__title ">
+        <div v-if="ready" class="size-type-info mdc-top-app-bar__title">
           <span v-if="sizeName!='CUSTOM'" class="size-info">{{ sizeName }} - {{(orientation == 'v' ? 'vertical' : 'horizontal')}} ({{ size.width }}x{{ size.height }})</span>
           
           <component v-if="sizeName=='CUSTOM'" class="custom-sizes">
@@ -158,55 +170,187 @@
           
           <div class="separator"></div>
           <span># por línea:</span>
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="1"
-            v-model="amountHorizontal"
-            @keyup="refresh"
-          />
+
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="1"
+              v-model="amountHorizontal"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="amountHorizontal--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="amountHorizontal-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="amountHorizontal+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="amountHorizontal++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
 
           <div class="separator"></div>
           <span>Margen:</span>
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="marginTop"
-            @keyup="refresh"
-          />
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="marginRight"
-            @keyup="refresh"
-          />
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="marginBottom"
-            @keyup="refresh"
-          />
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="marginLeft"
-            @keyup="refresh"
-          />
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="marginTop"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginTop--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginTop-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginTop+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginTop++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="marginRight"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginRight--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginRight-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginRight+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginRight++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="marginBottom"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginBottom--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginBottom-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginBottom+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginBottom++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="marginLeft"
+              @keyup="refresh"
+            />
           
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginLeft--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginLeft-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginLeft+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginLeft++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
+
           <div class="separator"></div>
           <span>Espacio:</span>
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="gap"
-            @keyup="refresh"
-          />
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="gap"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="gap--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="gap-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="gap+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="gap++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
         </div>
+
+        <canvas id="zoom"
+          v-bind:width="zoomSize.width"
+          v-bind:height="zoomSize.height"
+        ></canvas>
       </main>
     </div>
     <script src="scripts.js"></script>

@@ -27,6 +27,8 @@ var app = new Vue({
     lineStyles: 'NONE',
     bgColor: 'white',
     download: 'download',
+    menu: {},
+    file: null,
   },
   created: function () {
     this.size = this.type.A3;
@@ -45,6 +47,15 @@ var app = new Vue({
         this.internalSize = value;
       }
     },
+    zoomSize: {
+      get: function(){
+        // return this.size;
+        return {
+          "width": this.size.width * .05,
+          "height": this.size.height * .05
+        }
+      },
+    },
     styleCanvas: function () {
       return {
         border: '2px dashed black'
@@ -52,7 +63,7 @@ var app = new Vue({
     }
   },
   methods: {
-    changeType: function(){
+    changeType() {
       if( this.sizeName == 'CUSTOM' )
         this.internalSize = { height: this.customHeight, width: this.customWidth };
       else
@@ -60,24 +71,30 @@ var app = new Vue({
 
       this.refresh();
     },
-    clearCanvas: function () {
+    clearCanvas() {
       var canvas = document.getElementById('canvas');
       var ctx = canvas.getContext('2d');
       ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     },
-    clearAll: function () {
+    clearAll() {
       this.clearCanvas();
-      var input = document.getElementById('file');
-      input.value = '';
+      this.ready = false;
+      this.menu = {};
+      this.file = null;
     },
-    refresh: function () {
+    updateZoom() {
+      var canvas = document.getElementById('canvas');
+      var zoom = document.getElementById('zoom');
+      var ctx = zoom.getContext('2d');
+      ctx.drawImage(canvas, 0, 0, zoom.width, zoom.height);
+    },
+    refresh() {
       var fn = () => {
         this.ready = true;
         const canvas = document.getElementById('canvas');
         /** @type {CanvasRenderingContext2D} */
         const ctx = canvas.getContext('2d');
-        // ctx.drawImage(img, 0, 0, canvas.width, img.height * (canvas.width / img.width));
         
         this.clearCanvas();
 
@@ -121,13 +138,14 @@ var app = new Vue({
             ctx.drawImage(patternCanvas, offsetLeft+1, marginTop+1 + offsetTop + (l > 0 ? gap * l : 0));
           }
         }
+
+        this.updateZoom();
       }
 
       var img = this.imageSizeHeight && this.imageSizeWidth
         ? new Image( this.imageSizeWidth, this.imageSizeHeight ) : new Image();
       setTimeout(() => {
-        var input = document.getElementById('file');
-        var file = input.files[0];
+        const file = this.file;
         if (file) {
           this.ready = true;
           var reader  = new FileReader();
@@ -187,27 +205,51 @@ var app = new Vue({
         link.href = canvas.toDataURL('image/png');
         link.click();
       }
+    },
+    openMenu(id) {
+
+      const buttonEl = document.getElementById('button-'+id);
+      
+      const key = 'menu-'+id;
+      let menu = this.menu[key];
+      
+      if (!menu) {
+        const menuEl = document.getElementById(key);
+
+        menu = new mdc.menu.MDCMenu(menuEl);
+        this.menu[key] = menu;
+      }
+      
+      menu.open = !menu.open;
+      menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
+      menu.setAnchorElement(buttonEl);
+    },
+    fileLoaded() {
+    
+      const input = document.getElementById('file');
+      this.file = input.files[0];
+      this.refresh();
     }
   }
 });
 
-// configure menu
-{
-  function configureMenu(id) {
-    const buttonEl = document.getElementById('button-'+id);
-    const menuEl = document.getElementById('menu-'+id);
+// // configure menu
+// {
+//   function configureMenu(id) {
+//     const buttonEl = document.getElementById('button-'+id);
+//     const menuEl = document.getElementById('menu-'+id);
 
-    const menu = new mdc.menu.MDCMenu(menuEl);
+//     const menu = new mdc.menu.MDCMenu(menuEl);
     
-    buttonEl.addEventListener('click', (event) => {
-      menu.open = !menu.open;
-      menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
-      menu.setAnchorElement(buttonEl);
-    });
-  }
+//     buttonEl.addEventListener('click', (event) => {
+//       menu.open = !menu.open;
+//       menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
+//       menu.setAnchorElement(buttonEl);
+//     });
+//   }
 
-  configureMenu('sizes');
-  configureMenu('line-styles');
-  configureMenu('bg-color');
-  configureMenu('download');
-}
+//   configureMenu('sizes');
+//   configureMenu('line-styles');
+//   configureMenu('bg-color');
+//   configureMenu('download');
+// }
