@@ -27,6 +27,8 @@ var app = new Vue({
     lineStyles: 'NONE',
     bgColor: 'white',
     download: 'download',
+    menu: {},
+    file: null,
   },
   created: function () {
     this.size = this.type.A3;
@@ -68,8 +70,9 @@ var app = new Vue({
     },
     clearAll: function () {
       this.clearCanvas();
-      var input = document.getElementById('file');
-      input.value = '';
+      this.ready = false;
+      this.menu = {};
+      this.file = null;
     },
     refresh: function () {
       var fn = () => {
@@ -77,7 +80,6 @@ var app = new Vue({
         const canvas = document.getElementById('canvas');
         /** @type {CanvasRenderingContext2D} */
         const ctx = canvas.getContext('2d');
-        // ctx.drawImage(img, 0, 0, canvas.width, img.height * (canvas.width / img.width));
         
         this.clearCanvas();
 
@@ -126,8 +128,7 @@ var app = new Vue({
       var img = this.imageSizeHeight && this.imageSizeWidth
         ? new Image( this.imageSizeWidth, this.imageSizeHeight ) : new Image();
       setTimeout(() => {
-        var input = document.getElementById('file');
-        var file = input.files[0];
+        const file = this.file;
         if (file) {
           this.ready = true;
           var reader  = new FileReader();
@@ -187,27 +188,51 @@ var app = new Vue({
         link.href = canvas.toDataURL('image/png');
         link.click();
       }
+    },
+    openMenu(id) {
+
+      const buttonEl = document.getElementById('button-'+id);
+      
+      const key = 'menu-'+id;
+      let menu = this.menu[key];
+      
+      if (!menu) {
+        const menuEl = document.getElementById(key);
+
+        menu = new mdc.menu.MDCMenu(menuEl);
+        this.menu[key] = menu;
+      }
+      
+      menu.open = !menu.open;
+      menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
+      menu.setAnchorElement(buttonEl);
+    },
+    fileLoaded() {
+    
+      const input = document.getElementById('file');
+      this.file = input.files[0];
+      this.refresh();
     }
   }
 });
 
-// configure menu
-{
-  function configureMenu(id) {
-    const buttonEl = document.getElementById('button-'+id);
-    const menuEl = document.getElementById('menu-'+id);
+// // configure menu
+// {
+//   function configureMenu(id) {
+//     const buttonEl = document.getElementById('button-'+id);
+//     const menuEl = document.getElementById('menu-'+id);
 
-    const menu = new mdc.menu.MDCMenu(menuEl);
+//     const menu = new mdc.menu.MDCMenu(menuEl);
     
-    buttonEl.addEventListener('click', (event) => {
-      menu.open = !menu.open;
-      menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
-      menu.setAnchorElement(buttonEl);
-    });
-  }
+//     buttonEl.addEventListener('click', (event) => {
+//       menu.open = !menu.open;
+//       menu.setAnchorCorner(mdc.menu.Corner.BOTTOM_LEFT);
+//       menu.setAnchorElement(buttonEl);
+//     });
+//   }
 
-  configureMenu('sizes');
-  configureMenu('line-styles');
-  configureMenu('bg-color');
-  configureMenu('download');
-}
+//   configureMenu('sizes');
+//   configureMenu('line-styles');
+//   configureMenu('bg-color');
+//   configureMenu('download');
+// }

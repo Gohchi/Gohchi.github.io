@@ -63,10 +63,17 @@ canvas {
     flex-direction: column;
     right: 0;
     background: #594db957;
-    width: 160px;
+    width: 44px;
+    align-items: stretch;
   }
 
   .size-type-info {
     display: grid;
+  }
+
+  .load-file-button {
+    top: 1vh;
+    right: 5vw;
+    padding: 1vw;
   }
 }
