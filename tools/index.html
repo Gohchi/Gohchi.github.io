@@ -140,7 +140,7 @@
           v-bind:height="size.height"
           v-bind:style="showBorder ? styleCanvas : null"
         ></canvas>
-        <div class="size-type-info mdc-top-app-bar__title ">
+        <div class="size-type-info mdc-top-app-bar__title card-info">
           <span v-if="sizeName!='CUSTOM'" class="size-info">{{ sizeName }} - {{(orientation == 'v' ? 'vertical' : 'horizontal')}} ({{ size.width }}x{{ size.height }})</span>
           
           <component v-if="sizeName=='CUSTOM'" class="custom-sizes">
@@ -168,54 +168,181 @@
           
           <div class="separator"></div>
           <span># por línea:</span>
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="1"
-            v-model="amountHorizontal"
-            @keyup="refresh"
-          />
+
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="1"
+              v-model="amountHorizontal"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="amountHorizontal--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="amountHorizontal-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="amountHorizontal+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="amountHorizontal++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
 
           <div class="separator"></div>
           <span>Margen:</span>
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="marginTop"
-            @keyup="refresh"
-          />
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="marginRight"
-            @keyup="refresh"
-          />
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="marginBottom"
-            @keyup="refresh"
-          />
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="marginLeft"
-            @keyup="refresh"
-          />
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="marginTop"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginTop--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginTop-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginTop+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginTop++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="marginRight"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginRight--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginRight-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginRight+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginRight++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="marginBottom"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginBottom--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginBottom-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginBottom+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginBottom++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="marginLeft"
+              @keyup="refresh"
+            />
           
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginLeft--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginLeft-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginLeft+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="marginLeft++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
+
           <div class="separator"></div>
           <span>Espacio:</span>
-          <input
-            class="mdc-text-field__input number-two-digits"
-            type="number"
-            min="0"
-            v-model="gap"
-            @keyup="refresh"
-          />
+          <div>
+            <input
+              class="mdc-text-field__input number-two-digits"
+              type="number"
+              min="0"
+              v-model="gap"
+              @keyup="refresh"
+            />
+            
+            <template v-if="window.innerWidth < 700">
+              <button
+                class="material-icons mdc-icon-button"
+                @click="gap--; refresh();"
+              >keyboard_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="gap-=10; refresh();"
+              >keyboard_double_arrow_left</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="gap+=10; refresh();"
+              >keyboard_double_arrow_right</button>
+              <button
+                class="material-icons mdc-icon-button"
+                @click="gap++; refresh();"
+              >keyboard_arrow_right</button>
+            </template>
+          </div>
         </div>
       </main>
     </div>

@@ -55,6 +55,11 @@ canvas {
   width: 47px;
 }
 
+.card-info {
+  display: flex;
+  align-items: flex-end;
+}
+
 @media screen and (max-width: 700px) {
   #toolbar-actions {
 
