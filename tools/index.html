@@ -3,6 +3,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
     
     <title>Mosaicos</title>
+		<link rel="shortcut icon" type="image/svg+xml" href="favicon.svg"/>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> <!-- release -->
 
@@ -19,7 +20,8 @@
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <!-- <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">menu</button> -->
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Help" @click="showHelp=!showHelp">help</button>
+            <!-- <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Help" @click="showHelp=!showHelp">help</button> -->
+            <div class="main-icon"></div>
             <span class="mdc-top-app-bar__title">Mosaicos</span>
           </section>
           <section id="toolbar-actions" class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
@@ -133,14 +135,14 @@
         </div>
       </header>
       <main class="mdc-top-app-bar--fixed-adjust">
-        <div v-if="showHelp" style="padding: 20px;">{{ message }}</div>
+        <!-- <div v-if="showHelp" style="padding: 20px;">{{ message }}</div> -->
         <canvas id="canvas"
           v-if="size"
           v-bind:width="size.width"
           v-bind:height="size.height"
           v-bind:style="showBorder ? styleCanvas : null"
         ></canvas>
-        <div class="size-type-info mdc-top-app-bar__title">
+        <div v-if="ready" class="size-type-info mdc-top-app-bar__title">
           <span v-if="sizeName!='CUSTOM'" class="size-info">{{ sizeName }} - {{(orientation == 'v' ? 'vertical' : 'horizontal')}} ({{ size.width }}x{{ size.height }})</span>
           
           <component v-if="sizeName=='CUSTOM'" class="custom-sizes">
