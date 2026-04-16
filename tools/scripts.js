@@ -225,10 +225,17 @@ var app = new Vue({
       menu.setAnchorElement(buttonEl);
     },
     fileLoaded() {
-    
       const input = document.getElementById('file');
       this.file = input.files[0];
       this.refresh();
+    },
+    moveZoom() {
+      const canvas = document.getElementById('zoom');
+      if (canvas.classList.contains('moved')) {
+        canvas.classList.remove('moved');
+      } else {
+        canvas.classList.add('moved');
+      }
     }
   }
 });
