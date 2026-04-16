@@ -167,189 +167,211 @@
               <input class="mdc-text-field__input" type="number" min="1" v-model="customHeight" @keyup="changeType" />
             </label>
           </component>
+
+          <details class="accordion-item">
+            <summary class="accordion-header">
+              <span># por línea</span>
+              <i class="material-icons accordion-icon">expand_more</i>
+            </summary>
+            <div class="accordion-content">
+              <div>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="1"
+            v-model="amountHorizontal"
+            @keyup="refresh"
+          />
           
-          <div class="separator"></div>
-          <span># por línea:</span>
+          <template v-if="window.innerWidth < 700">
+            <button
+              class="material-icons mdc-icon-button"
+              @click="amountHorizontal--; refresh();"
+            >keyboard_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="amountHorizontal-=10; refresh();"
+            >keyboard_double_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="amountHorizontal+=10; refresh();"
+            >keyboard_double_arrow_right</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="amountHorizontal++; refresh();"
+            >keyboard_arrow_right</button>
+          </template>
+              </div>
+            </div>
+          </details>
 
-          <div>
-            <input
-              class="mdc-text-field__input number-two-digits"
-              type="number"
-              min="1"
-              v-model="amountHorizontal"
-              @keyup="refresh"
-            />
-            
-            <template v-if="window.innerWidth < 700">
-              <button
-                class="material-icons mdc-icon-button"
-                @click="amountHorizontal--; refresh();"
-              >keyboard_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="amountHorizontal-=10; refresh();"
-              >keyboard_double_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="amountHorizontal+=10; refresh();"
-              >keyboard_double_arrow_right</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="amountHorizontal++; refresh();"
-              >keyboard_arrow_right</button>
-            </template>
-          </div>
-
-          <div class="separator"></div>
-          <span>Margen:</span>
-          <div>
-            <input
-              class="mdc-text-field__input number-two-digits"
-              type="number"
-              min="0"
-              v-model="marginTop"
-              @keyup="refresh"
-            />
-            
-            <template v-if="window.innerWidth < 700">
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginTop--; refresh();"
-              >keyboard_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginTop-=10; refresh();"
-              >keyboard_double_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginTop+=10; refresh();"
-              >keyboard_double_arrow_right</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginTop++; refresh();"
-              >keyboard_arrow_right</button>
-            </template>
-          </div>
-          <div>
-            <input
-              class="mdc-text-field__input number-two-digits"
-              type="number"
-              min="0"
-              v-model="marginRight"
-              @keyup="refresh"
-            />
-            
-            <template v-if="window.innerWidth < 700">
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginRight--; refresh();"
-              >keyboard_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginRight-=10; refresh();"
-              >keyboard_double_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginRight+=10; refresh();"
-              >keyboard_double_arrow_right</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginRight++; refresh();"
-              >keyboard_arrow_right</button>
-            </template>
-          </div>
-          <div>
-            <input
-              class="mdc-text-field__input number-two-digits"
-              type="number"
-              min="0"
-              v-model="marginBottom"
-              @keyup="refresh"
-            />
-            
-            <template v-if="window.innerWidth < 700">
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginBottom--; refresh();"
-              >keyboard_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginBottom-=10; refresh();"
-              >keyboard_double_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginBottom+=10; refresh();"
-              >keyboard_double_arrow_right</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginBottom++; refresh();"
-              >keyboard_arrow_right</button>
-            </template>
-          </div>
-          <div>
-            <input
-              class="mdc-text-field__input number-two-digits"
-              type="number"
-              min="0"
-              v-model="marginLeft"
-              @keyup="refresh"
-            />
+          <details class="accordion-item">
+            <summary class="accordion-header">
+              <span>Margen</span>
+              <i class="material-icons accordion-icon">expand_more</i>
+            </summary>
+            <div class="accordion-content">
+              <div>
+          <span class="margin-label">Arriba:</span>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="marginTop"
+            @keyup="refresh"
+          />
           
-            <template v-if="window.innerWidth < 700">
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginLeft--; refresh();"
-              >keyboard_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginLeft-=10; refresh();"
-              >keyboard_double_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginLeft+=10; refresh();"
-              >keyboard_double_arrow_right</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="marginLeft++; refresh();"
-              >keyboard_arrow_right</button>
-            </template>
-          </div>
+          <template v-if="window.innerWidth < 700">
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginTop--; refresh();"
+            >keyboard_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginTop-=10; refresh();"
+            >keyboard_double_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginTop+=10; refresh();"
+            >keyboard_double_arrow_right</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginTop++; refresh();"
+            >keyboard_arrow_right</button>
+          </template>
+              </div>
+              <div>
+          <span class="margin-label">Derecha:</span>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="marginRight"
+            @keyup="refresh"
+          />
+          
+          <template v-if="window.innerWidth < 700">
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginRight--; refresh();"
+            >keyboard_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginRight-=10; refresh();"
+            >keyboard_double_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginRight+=10; refresh();"
+            >keyboard_double_arrow_right</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginRight++; refresh();"
+            >keyboard_arrow_right</button>
+          </template>
+              </div>
+              <div>
+          <span class="margin-label">Abajo:</span>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="marginBottom"
+            @keyup="refresh"
+          />
+          
+          <template v-if="window.innerWidth < 700">
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginBottom--; refresh();"
+            >keyboard_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginBottom-=10; refresh();"
+            >keyboard_double_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginBottom+=10; refresh();"
+            >keyboard_double_arrow_right</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginBottom++; refresh();"
+            >keyboard_arrow_right</button>
+          </template>
+              </div>
+              <div>
+          <span class="margin-label">Izquierda:</span>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="marginLeft"
+            @keyup="refresh"
+          />
+              
+          <template v-if="window.innerWidth < 700">
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginLeft--; refresh();"
+            >keyboard_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginLeft-=10; refresh();"
+            >keyboard_double_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginLeft+=10; refresh();"
+            >keyboard_double_arrow_right</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="marginLeft++; refresh();"
+            >keyboard_arrow_right</button>
+          </template>
+              </div>
+            </div>
+          </details>
 
-          <div class="separator"></div>
-          <span>Espacio:</span>
-          <div>
-            <input
-              class="mdc-text-field__input number-two-digits"
-              type="number"
-              min="0"
-              v-model="gap"
-              @keyup="refresh"
-            />
-            
-            <template v-if="window.innerWidth < 700">
-              <button
-                class="material-icons mdc-icon-button"
-                @click="gap--; refresh();"
-              >keyboard_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="gap-=10; refresh();"
-              >keyboard_double_arrow_left</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="gap+=10; refresh();"
-              >keyboard_double_arrow_right</button>
-              <button
-                class="material-icons mdc-icon-button"
-                @click="gap++; refresh();"
-              >keyboard_arrow_right</button>
-            </template>
-          </div>
+          <details class="accordion-item">
+            <summary class="accordion-header">
+              <span>Espacio</span>
+              <i class="material-icons accordion-icon">expand_more</i>
+            </summary>
+            <div class="accordion-content">
+              <div>
+          <input
+            class="mdc-text-field__input number-two-digits"
+            type="number"
+            min="0"
+            v-model="gap"
+            @keyup="refresh"
+          />
+          
+          <template v-if="window.innerWidth < 700">
+            <button
+              class="material-icons mdc-icon-button"
+              @click="gap--; refresh();"
+            >keyboard_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="gap-=10; refresh();"
+            >keyboard_double_arrow_left</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="gap+=10; refresh();"
+            >keyboard_double_arrow_right</button>
+            <button
+              class="material-icons mdc-icon-button"
+              @click="gap++; refresh();"
+            >keyboard_arrow_right</button>
+          </template>
+              </div>
+            </div>
+          </details>
         </div>
 
         <canvas id="zoom"
           v-bind:width="zoomSize.width"
           v-bind:height="zoomSize.height"
+          @click="moveZoom()"
         ></canvas>
       </main>
     </div>
