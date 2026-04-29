@@ -204,39 +204,50 @@ var app = new Vue({
       this.orientation = this.orientation=='h' ? 'v': 'h';
       this.refresh();
     },
-    downloadFile() {
-      if (this.download === 'print') {
-        var canvas = document.getElementById('canvas');
-        var dataUrl = canvas.toDataURL('image/png');
-        var windowContent = '<!DOCTYPE html>';
-        windowContent += '<html>';
-        windowContent += '<head><title>Print Image</title></head>';
-        windowContent += '<body>';
-        windowContent += '<img src="' + dataUrl + '">';
-        windowContent += '</body>';
-        windowContent += '</html>';
-        var printWin = window.open('', '', 'width=800,height=600');
-        printWin.document.open();
-        printWin.document.write(windowContent);
-        printWin.document.close();
-        printWin.focus();
-        setTimeout(() => {
-          printWin.print();
-          printWin.close();
-        }, 500);
-      } else {
-        var canvas = document.getElementById('canvas');
-        var now = new Date();
-        var dateStr = now.getFullYear() + '-' 
-          + String(now.getMonth() + 1).padStart(2, '0') + '-' 
-          + String(now.getDate()).padStart(2, '0') + '_' 
-          + String(now.getHours()).padStart(2, '0') + '-' 
-          + String(now.getMinutes()).padStart(2, '0') + '-' 
-          + String(now.getSeconds()).padStart(2, '0');
-        var link = document.createElement('a');
-        link.download = 'mosaico_' + dateStr + '.png';
+    downloadFile(action) {
+      const canvas = document.getElementById('canvas');
+
+      const now = new Date();
+      const dateStr = now.getFullYear() + '-' 
+        + String(now.getMonth() + 1).padStart(2, '0') + '-' 
+        + String(now.getDate()).padStart(2, '0') + '_' 
+        + String(now.getHours()).padStart(2, '0') + '-' 
+        + String(now.getMinutes()).padStart(2, '0') + '-' 
+        + String(now.getSeconds()).padStart(2, '0');
+
+      const filename = 'mosaico_' + dateStr;
+
+      if (action === 'download') {
+        const link = document.createElement('a');
+        link.download = filename + '.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
+      } else if (['pdf', 'print'].includes(action)) {
+        const { jsPDF } = window.jspdf; 
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+          orientation: this.orientation === 'h' ? 'l' : 'p',
+          unit: 'px',
+          format: [canvas.width, canvas.height]
+        });
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        
+        if (action === 'print') {
+          const blob = pdf.output('blob');
+          const url = URL.createObjectURL(blob);
+
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none'; // Hide the iframe
+          iframe.src = url;
+          document.body.appendChild(iframe);
+
+          iframe.onload = function() {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+          };
+        } else {
+          pdf.save(filename + '.pdf');
+        }
       }
     },
     openMenu(id) {
