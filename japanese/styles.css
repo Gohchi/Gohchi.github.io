@@ -507,6 +507,17 @@ body {
   }
 }
 
+.topics {
+  main {
+    margin: 4rem 1rem;
+  }
+
+  .sources {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
 @media (max-width: 420px) {
   .tategaki-button {
     writing-mode: vertical-rl;

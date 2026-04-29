@@ -213,6 +213,9 @@ export const ruby = {
     "guard", "sentinel"
   ]},
   "話所": { furigana: "はなししょ", eng: [
+    "topic", "subject"
+  ]},
+  "話題": { furigana: "わだい", eng: [
     "meeting place"
   ]},
   "死休置": { furigana: "したいおけ", eng: [
