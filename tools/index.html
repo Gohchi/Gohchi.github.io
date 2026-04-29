@@ -23,6 +23,7 @@
 		<link rel="shortcut icon" type="image/svg+xml" href="favicon.svg"/>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> <!-- release -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
@@ -51,10 +52,9 @@
                 >download</button>
                 <div id="menu-download" class="mdc-menu mdc-menu-surface">
                   <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                    <component v-for="[key, value] in [['download', 'Descargar'], ['print', 'Imprimir']]">
+                    <component v-for="[key, value] in [['download', 'Descargar'], ['pdf', 'PDF'], ['print', 'Imprimir']]">
                       <li class="mdc-list-item" role="menuitem"
-                        v-bind:class="(download==key ? 'mdc-list-item--selected' : null)"
-                        @click="download=key; downloadFile(); changeType();"
+                        @click="download=key; downloadFile(key); changeType();"
                       >
                         <span class="mdc-list-item__ripple"></span>
                         <span class="mdc-list-item__text">{{ value }}</span>
@@ -137,6 +137,26 @@
               <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Refresh"
                 v-bind:disabled="!ready" @click="refresh"
               >autorenew</button>
+              
+              <div class="mdc-menu-surface--anchor">
+                <button id="button-more"
+                  class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                  aria-label="Size"
+                  @click="openMenu('more')"
+                >more_vert</button>
+                <div id="menu-more" class="mdc-menu mdc-menu-surface">
+                  <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                    <component v-for="[key, value] in [['show-type', (showPaperType ? 'Ocultar' : 'Mostrar') + ' tipo de hoja'], ['add-legend', legend ? 'Quitar leyenda' : 'Agregar leyenda']]">
+                      <li class="mdc-list-item" role="menuitem"
+                        @click="moreOptionSelected(key);"
+                      >
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">{{ value }}</span>
+                      </li>
+                    </component>
+                  </ul>
+                </div>
+              </div>
 
               <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Clear"
                 @click="clearAll"
