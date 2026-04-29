@@ -137,6 +137,26 @@
               <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Refresh"
                 v-bind:disabled="!ready" @click="refresh"
               >autorenew</button>
+              
+              <div class="mdc-menu-surface--anchor">
+                <button id="button-more"
+                  class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                  aria-label="Size"
+                  @click="openMenu('more')"
+                >more_vert</button>
+                <div id="menu-more" class="mdc-menu mdc-menu-surface">
+                  <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                    <component v-for="[key, value] in [['show-type', (showPaperType ? 'Ocultar' : 'Mostrar') + ' tipo de hoja'], ['add-legend', legend ? 'Quitar leyenda' : 'Agregar leyenda']]">
+                      <li class="mdc-list-item" role="menuitem"
+                        @click="moreOptionSelected(key);"
+                      >
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">{{ value }}</span>
+                      </li>
+                    </component>
+                  </ul>
+                </div>
+              </div>
 
               <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Clear"
                 @click="clearAll"

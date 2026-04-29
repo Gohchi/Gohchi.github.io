@@ -29,6 +29,9 @@ var app = new Vue({
     download: 'download',
     menu: {},
     file: null,
+    more: '',
+    showPaperType: false,
+    legend: '',
   },
   created: function () {
     this.size = this.type.A3;
@@ -63,6 +66,17 @@ var app = new Vue({
     }
   },
   methods: {
+    moreOptionSelected(key) {
+      this.more = key;
+
+      if (key === 'show-type') {
+        this.showPaperType = !this.showPaperType;
+      } else if (key === 'add-legend') {
+        this.legend = this.legend ? '' : prompt('Agregar leyenda:');
+      }
+
+      this.refresh();
+    },
     changeType() {
       if( this.sizeName == 'CUSTOM' )
         this.internalSize = { height: this.customHeight, width: this.customWidth };
@@ -82,6 +96,7 @@ var app = new Vue({
       this.ready = false;
       this.menu = {};
       this.file = null;
+      this.updateZoom();
     },
     updateZoom() {
       var canvas = document.getElementById('canvas');
@@ -137,6 +152,24 @@ var app = new Vue({
             const offsetTop = patternCanvas.height * l;
             ctx.drawImage(patternCanvas, offsetLeft+1, marginTop+1 + offsetTop + (l > 0 ? gap * l : 0));
           }
+        }
+        const textPadding = 10;
+        const lineCount = this.showPaperType || this.legend ? 1 : 0;
+        const availableHeight = Math.max(4, marginTop - textPadding * 2);
+        const fontSize = Math.max(4, Math.min(48, availableHeight / Math.max(1, lineCount)));
+        ctx.fillStyle = 'black';
+        ctx.font = `${fontSize}px Arial`;
+
+        let x = marginLeft + textPadding;
+        const y = textPadding + fontSize;
+
+        if (this.showPaperType) {
+          ctx.fillText(this.sizeName, x, y);
+          x += fontSize * 1.5;
+        }
+
+        if (this.legend) {
+          ctx.fillText(this.legend, x, y);
         }
 
         this.updateZoom();
