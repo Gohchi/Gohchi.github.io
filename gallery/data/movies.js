@@ -32,4 +32,15 @@ export const movies = [
     image:
       './images/matrix-hallway.png',
   },
+  {
+    id: 'oldboy001',
+    title: 'Hammer Fight',
+    show: 'Oldboy',
+    year: 2003,
+    director: 'Park Chan-wook',
+    mood: ['intense', 'claustrophobic'],
+    visualTags: ['hallway', 'single-take', 'muted-colors'],
+    image:
+      './images/oldboy-hammer-fight.png',
+  }
 ];

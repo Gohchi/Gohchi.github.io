@@ -6,6 +6,10 @@ import Home from 'views/Home.js';
 
 const app = createApp({});
 
+const currentHash = window.location.hash;
+if (currentHash && !currentHash.startsWith('#/') && currentHash !== '#') {
+  window.location.replace('#/' + currentHash.slice(1));
+}
 
 // Pages (components)
 const SelectUser = {
@@ -57,8 +61,18 @@ const NotFound = {
 
 // Routes
 const routes = [
-  { path: '/', component: Home, name: 'home' },
+  {
+    path: '/',
+    component: Home, name: 'home',
+    props: true // passes route params as props
+  },
   { path: '/about', component: About, name: 'about' },
+  {
+    path: '/:items(.*)',
+    component: Home,
+    name: 'home-data',
+    props: true // passes route params as props
+  },
   {
     path: '/user/:id(\\d+)',
     component: User,

@@ -11,6 +11,7 @@ export default {
           v-for="img in related"
           :key="img.id"
           class="group flex gap-4 rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
+          @click.stop="selectImage(img.id)"
         >
           <img
             :src="img.image"
@@ -42,5 +43,10 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  setup(props, { emit }) {
+    return {
+      selectImage: id => emit('selectImage', id),
+    };
   },
 };

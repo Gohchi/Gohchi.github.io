@@ -17,7 +17,8 @@ export default {
         <article
           v-for="img in images"
           :key="img.id"
-          class="group overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 hover:border-zinc-700 transition-all"
+          class="group overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 hover:border-zinc-700 transition-all cursor-pointer"
+          @click.stop="selectImage(img.id)"
         >
           <div class="overflow-hidden">
             <img
@@ -61,5 +62,10 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  setup(props, { emit }) {
+    return {
+      selectImage: id => emit('selectImage', id),
+    };
   },
 };

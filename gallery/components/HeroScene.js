@@ -1,3 +1,5 @@
+import { ref, watch } from 'vue';
+
 export default {
   template: /*html*/`
     <div class="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900">
@@ -9,6 +11,35 @@ export default {
 
       <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 
+      <div class="absolute top-2 right-2 flex gap-2 group">
+        <button v-if="qty > 0"
+          @click.stop="removeAll(scene.id)"
+          class="bg-black/80 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 items-center justify-center text-xs font-medium cursor-pointer"
+        >
+          &times;
+        </button>
+
+        <button v-if="qty > 0"
+          @click.stop="removeOne(scene.id)"
+          class="bg-black/80 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 items-center justify-center text-xs font-medium cursor-pointer"
+        >
+          -1
+        </button>
+
+        <div v-if="qty > 0"
+          class="bg-black/30 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 flex items-center justify-center text-xs font-medium"
+        >
+          &times; {{ qty }}
+        </div>
+
+        <button
+          @click.stop="addOne(scene.id)"
+          class="bg-black/80 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 items-center justify-center text-xs font-medium cursor-pointer"
+        >
+          +1
+        </button>
+      </div>
+      
       <div class="absolute bottom-0 left-0 right-0 p-8">
         <div class="flex flex-wrap gap-2 mb-4">
           <span
@@ -37,5 +68,33 @@ export default {
       type: Object,
       required: true,
     },
+    selectedImages: {
+      type: Array,
+      required: true,
+    },
+  },
+  setup(props, { emit }) {
+    const selectedImages = ref(props.selectedImages);
+
+    watch(
+      () => props.selectedImages,
+      (value) => {
+        selectedImages.value = value;
+      },
+      { deep: true }
+    );
+
+    return {
+      selectedImages,
+      selectImage: id => emit('selectImage', id),
+      removeAll: id => emit('removeAll', id),
+      removeOne: id => emit('removeOne', id),
+      addOne: id => emit('addOne', id),
+    };
+  },
+  computed: {
+    qty() {
+      return this.selectedImages[this.scene.id];
+    }
   },
 };
