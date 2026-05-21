@@ -1,6 +1,6 @@
 export default {
   template: /*html*/`
-    <section class="mt-12">
+    <section id="explore">
       <div class="flex items-center justify-between mb-6">
         <div>
           <h3 class="text-2xl font-semibold tracking-tight">

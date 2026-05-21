@@ -1,7 +1,7 @@
 export default {
   template: /*html*/`
     <header class="border-b border-zinc-800 sticky top-0 z-20 backdrop-blur bg-zinc-950/80">
-      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <div class="max-w-7xl mx-auto px-6 py-4 block md:flex items-center justify-between gap-4 h-[11vh]">
         <div>
           <h1 class="text-2xl font-semibold tracking-tight">
             DatSin
@@ -12,10 +12,26 @@ export default {
           </p>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="absolute right-5 top-5 flex md:hidden items-center gap-2">
+          <button class="md:invisible rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition"
+            @click.stop="swapCart()"
+          >
+            <span class="sr-only">Open cart</span>
+            {{ showCart ? 'HOME' : totalItems + ' 🛒' }}
+          </button>
+
+          <button class="md:invisible rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition"
+            @click.stop="explore()"
+          >
+            <span class="sr-only">Explore</span>
+            🔍
+          </button>
+        </div>
+        <div class="invisible md:visible items-center gap-3">
           <input
             placeholder="Search mood, director, color..."
             class="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2 text-sm w-72 outline-none focus:border-zinc-600"
+            @focus="onFocusExplore()"
           />
 
           <button class="rounded-xl bg-white text-black px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity">
@@ -25,4 +41,21 @@ export default {
       </div>
     </header>
   `,
+  props: {
+    totalItems: {
+      type: Number,
+      required: true,
+    },
+    showCart: {
+      type: Boolean,
+      required: true,
+    }
+  },
+  setup(props, { emit }) {
+    return {
+      swapCart: () => emit('swapCart'),
+      explore: () => emit('explore'),
+      onFocusExplore: () => emit('onFocusExplore'),
+    };
+  }
 }

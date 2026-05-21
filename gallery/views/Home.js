@@ -61,8 +61,16 @@ export default {
     selectImage(id) {
       this.featured = this.movies.find(m => m.id === id) || this.featured;
 
+      this.showCart = false;
       if (window && window.scrollTo) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    },
+    scrollToExplore() {
+      const exploreSection = document.getElementById('explore');
+      if (exploreSection) {
+        const elementTop = exploreSection.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: elementTop - 110, behavior: 'smooth' });
       }
     },
     
@@ -124,6 +132,8 @@ export default {
       "lang": lang ?? 'eng', // Default language
       "selection": parsedSelection || {},
       "featured": movies[0],
+      "showCart": false,
+      "exploring": false,
     };
   },
   computed: {
@@ -140,6 +150,13 @@ export default {
             qty,
           };
         });
+    },
+    totalItems() {
+      return this.selection ? Object.values(this.selection).reduce((sum, qty) => sum + qty, 0) : null;
+    },
+    isDesktop() {
+      const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1024; // default to desktop width if window is not available
+      return windowWidth >= 768;
     }
   },
   template,

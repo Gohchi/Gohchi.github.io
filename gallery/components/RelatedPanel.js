@@ -6,17 +6,17 @@ export default {
         <span class="text-xs text-zinc-500">Metadata graph</span>
       </div>
 
-      <div class="space-y-4">
+      <div class="space-y-3">
         <div
           v-for="img in related"
           :key="img.id"
-          class="group flex gap-4 rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
+          class="group flex gap-3 rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
           @click.stop="selectImage(img.id)"
         >
           <img
             :src="img.image"
             :alt="img.title"
-            class="w-32 h-24 object-cover"
+            class="w-32 h-20 object-cover"
           />
 
           <div class="py-3 pr-3 flex-1 min-w-0">

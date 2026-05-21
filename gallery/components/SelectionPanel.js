@@ -22,9 +22,9 @@ export default {
         </div>
       </div>
 
-      <div class="bg-black rounded-2xl p-3 text-xs break-all text-zinc-400 border border-zinc-800 mb-5">
+      <!--div class="bg-black rounded-2xl p-3 text-xs break-all text-zinc-400 border border-zinc-800 mb-5">
         {{ shareHash }}
-      </div>
+      </div-->
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div
@@ -98,6 +98,10 @@ export default {
       type: Array,
       required: true,
     },
+    totalItems: {
+      type: Number,
+      required: true,
+    },
   },
   setup(props, { emit }) {
     const selectedImages = ref(props.selectedImages);
@@ -118,9 +122,6 @@ export default {
     };
   },
   computed: {
-    totalItems() {
-      return this.selectedImages.reduce((sum, { qty }) => sum + qty, 0);
-    },
     shareHash() {
       return this.selectedImages
         .map(({ id, qty }) => `${id}:${qty}`)
