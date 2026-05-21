@@ -20,12 +20,24 @@ export default {
             🏠
           </button>
 
-          <button class="md:invisible rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition"
-            @click.stop="swapCart()"
+          <Transition
+            enter-active-class="transition duration-300 ease-out"
+            enter-from-class="transform scale-95 opacity-0"
+            enter-to-class="transform scale-100 opacity-100"
+            leave-active-class="transition duration-200 ease-in"
+            leave-from-class="transform scale-100 opacity-100"
+            leave-to-class="transform scale-95 opacity-0"
+            mode="out-in"
           >
-            <span class="sr-only">Open cart</span>
-            {{ totalItems }} 🛒
-          </button>
+            <button
+              :key="totalItems"
+              class="md:invisible rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition"
+              @click.stop="swapCart()"
+            >
+              <span class="sr-only">Open cart</span>
+              {{ totalItems }} 🛒
+            </button>
+          </Transition>
 
           <button class="md:invisible rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition"
             @click.stop="explore()"

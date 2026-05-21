@@ -33,6 +33,7 @@ export default /*html*/`
               @selectImage="selectImage"
               @removeAll="removeAll"
               @removeOne="removeOne"
+              @addOne="addOne"
             />
 
             <RelatedPanel

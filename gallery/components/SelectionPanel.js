@@ -12,9 +12,23 @@ export default {
         </div>
 
         <div class="text-right">
-          <div class="text-2xl font-semibold">
-            {{ totalItems }}
-          </div>
+        
+          <Transition
+            enter-active-class="transition duration-300 ease-out"
+            enter-from-class="transform scale-95 opacity-0"
+            enter-to-class="transform scale-100 opacity-100"
+            leave-active-class="transition duration-200 ease-in"
+            leave-from-class="transform scale-100 opacity-100"
+            leave-to-class="transform scale-95 opacity-0"
+            mode="out-in"
+          >
+            <div
+              :key="totalItems"
+              class="text-2xl font-semibold"
+            >
+              {{ totalItems }}
+            </div>
+          </Transition>
 
           <div class="text-xs text-zinc-500">
             total items
@@ -28,7 +42,7 @@ export default {
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div
-          v-for="item in lastThreeSelections"
+          v-for="item in (isDesktop ? lastThreeSelections : selectedImages)"
           :key="item.id"
           class="relative overflow-hidden rounded-2xl border border-zinc-800 group"
         >
@@ -55,11 +69,29 @@ export default {
               -1
             </button>
 
-            <div
-              class="bg-black/30 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 flex items-center justify-center text-xs font-medium"
+            <Transition
+              enter-active-class="transition duration-300 ease-out"
+              enter-from-class="transform scale-95 opacity-0"
+              enter-to-class="transform scale-100 opacity-100"
+              leave-active-class="transition duration-200 ease-in"
+              leave-from-class="transform scale-100 opacity-100"
+              leave-to-class="transform scale-95 opacity-0"
+              mode="out-in"
             >
-              &times; {{ item.qty }}
-            </div>
+              <div
+                :key="item.qty"
+                class="bg-black/30 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 flex items-center justify-center text-xs font-medium"
+              >
+                &times; {{ item.qty }}
+              </div>
+            </Transition>
+
+            <button
+              @click.stop="addOne(item.id)"
+              class="bg-black/80 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 items-center justify-center text-xs font-medium cursor-pointer"
+            >
+              +1
+            </button>
           </div>
 
           <div
@@ -77,7 +109,7 @@ export default {
         </div>
 
         
-        <div v-if="selectedImages.length > 3"
+        <div v-if="isDesktop && selectedImages.length > 3"
           class="relative overflow-hidden rounded-2xl border border-zinc-800 group cursor-pointer"
           @click.stop="more()"
         >
@@ -119,6 +151,7 @@ export default {
       selectImage: id => emit('selectImage', id),
       removeAll: id => emit('removeAll', id),
       removeOne: id => emit('removeOne', id),
+      addOne: id => emit('addOne', id),
     };
   },
   computed: {
@@ -132,6 +165,10 @@ export default {
 
       if (!currentImage) return [];
       return this.selectedImages.slice(-3).reverse();
+    },
+    isDesktop() {
+      const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1024; // default to desktop width if window is not available
+      return windowWidth >= 768;
     }
   },
 };

@@ -26,11 +26,22 @@ export default {
           -1
         </button>
 
-        <div v-if="qty > 0"
-          class="bg-black/30 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 flex items-center justify-center text-xs font-medium"
+        <Transition
+          enter-active-class="transition duration-300 ease-out"
+          enter-from-class="transform scale-95 opacity-0"
+          enter-to-class="transform scale-100 opacity-100"
+          leave-active-class="transition duration-200 ease-in"
+          leave-from-class="transform scale-100 opacity-100"
+          leave-to-class="transform scale-95 opacity-0"
+          mode="out-in"
         >
-          &times; {{ qty }}
-        </div>
+          <div v-if="qty > 0"
+            :key="qty"
+            class="bg-black/30 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 flex items-center justify-center text-xs font-medium"
+          >
+            &times; {{ qty }}
+          </div>
+        </Transition>
 
         <button
           @click.stop="addOne(scene.id)"
