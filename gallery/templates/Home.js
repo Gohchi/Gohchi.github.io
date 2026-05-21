@@ -4,8 +4,10 @@ export default /*html*/`
       <AppHeader
         :totalItems="totalItems"
         :showCart="showCart"
-        @swapCart="showCart = !showCart"
-        @explore="exploring = !exploring"
+        :exploring="exploring"
+        @goHome="showCart = false; exploring = false"
+        @swapCart="showCart = !showCart; exploring = false"
+        @explore="exploring = !exploring; showCart = false"
         @onFocusExplore="scrollToExplore"
       />
 

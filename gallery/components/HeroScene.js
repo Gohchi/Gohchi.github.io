@@ -38,6 +38,14 @@ export default {
         >
           +1
         </button>
+
+        <button
+          @click.stop="toggleFullscreen"
+          class="bg-black/80 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 items-center justify-center text-xs font-medium cursor-pointer"
+          :title="isFullscreen ? 'Exit full screen' : 'Full screen'"
+        >
+          ⛶
+        </button>
       </div>
       
       <div class="absolute bottom-0 left-0 right-0 p-8">
@@ -75,6 +83,7 @@ export default {
   },
   setup(props, { emit }) {
     const selectedImages = ref(props.selectedImages);
+      const isFullscreen = ref(false);
 
     watch(
       () => props.selectedImages,
@@ -86,10 +95,14 @@ export default {
 
     return {
       selectedImages,
+      isFullscreen,
       selectImage: id => emit('selectImage', id),
       removeAll: id => emit('removeAll', id),
       removeOne: id => emit('removeOne', id),
       addOne: id => emit('addOne', id),
+      toggleFullscreen: () => {
+        window.open(props.scene.image, '_blank', 'noopener');
+      },
     };
   },
   computed: {

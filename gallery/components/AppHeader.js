@@ -14,10 +14,17 @@ export default {
 
         <div class="absolute right-5 top-5 flex md:hidden items-center gap-2">
           <button class="md:invisible rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition"
+            @click.stop="goHome()"
+          >
+            <span class="sr-only">go home</span>
+            🏠
+          </button>
+
+          <button class="md:invisible rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition"
             @click.stop="swapCart()"
           >
             <span class="sr-only">Open cart</span>
-            {{ showCart ? 'HOME' : totalItems + ' 🛒' }}
+            {{ totalItems }} 🛒
           </button>
 
           <button class="md:invisible rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition"
@@ -49,10 +56,15 @@ export default {
     showCart: {
       type: Boolean,
       required: true,
-    }
+    },
+    exploring: {
+      type: Boolean,
+      required: true,
+    },
   },
   setup(props, { emit }) {
     return {
+      goHome: () => emit('goHome'),
       swapCart: () => emit('swapCart'),
       explore: () => emit('explore'),
       onFocusExplore: () => emit('onFocusExplore'),
