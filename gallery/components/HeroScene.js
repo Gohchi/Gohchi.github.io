@@ -2,14 +2,14 @@ import { ref, watch } from 'vue';
 
 export default {
   template: /*html*/`
-    <div class="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900">
+    <div class="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 h-[50vh] md:h-[45rem]">
       <img
         :src="scene.image"
         :alt="scene.title"
-        class="w-full h-[70vh] object-cover"
+        class="w-full h-[30vh] md:h-[70vh] object-cover"
       />
 
-      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black via-30% md:via-15% to-transparent" />
 
       <div class="absolute top-2 right-2 flex gap-2 group">
         <button v-if="qty > 0"

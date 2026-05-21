@@ -26,7 +26,7 @@ export default {
         {{ shareHash }}
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div
           v-for="item in lastThreeSelections"
           :key="item.id"
