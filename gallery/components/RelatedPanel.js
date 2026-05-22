@@ -8,7 +8,7 @@ export default {
 
       <div class="space-y-3">
         <div
-          v-for="img in related"
+          v-for="img in threeRelated"
           :key="img.id"
           class="group flex gap-3 rounded-2xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
           @click.stop="selectImage(img.id)"
@@ -48,5 +48,10 @@ export default {
     return {
       selectImage: id => emit('selectImage', id),
     };
+  },
+  computed: {
+    threeRelated() {
+      return this.related.slice(0, 3);
+    },
   },
 };

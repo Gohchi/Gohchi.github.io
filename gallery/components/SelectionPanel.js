@@ -2,7 +2,9 @@ import { ref, watch } from 'vue';
 
 export default {
   template: /*html*/`
-    <div class="rounded-3xl border border-zinc-800 bg-zinc-900 p-5">
+    <div class="rounded-3xl border border-zinc-800 bg-zinc-900 p-5"
+      :class="{ 'mb-12': showMore }"
+    >
       <div class="flex items-center justify-between mb-5">
         <div>
           <h3 class="font-medium text-lg">Selection Cart</h3>
@@ -12,7 +14,7 @@ export default {
         </div>
 
         <div class="text-right">
-        
+
           <Transition
             enter-active-class="transition duration-300 ease-out"
             enter-from-class="transform scale-95 opacity-0"
@@ -36,13 +38,34 @@ export default {
         </div>
       </div>
 
+      <div
+        v-if="showMore"
+        class="flex flex-wrap gap-2 mb-5"
+      >
+        <button
+          @click.stop="share"
+          class="rounded-2xl bg-zinc-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-700 cursor-pointer"
+        >
+          Share
+        </button>
+
+        <button
+          @click.stop="confirmOrder"
+          class="rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 cursor-pointer"
+        >
+          Confirm Order
+        </button>
+      </div>
+
       <!--div class="bg-black rounded-2xl p-3 text-xs break-all text-zinc-400 border border-zinc-800 mb-5">
         {{ shareHash }}
       </div-->
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div class="grid grid-cols-1  gap-3"
+        :class="{ 'grid-cols-2': isDesktop && !showMore, 'grid-cols-3': isDesktop && showMore }"
+      >
         <div
-          v-for="item in (isDesktop ? lastThreeSelections : selectedImages)"
+          v-for="item in (showMore ? selectedImages : lastThreeSelections)"
           :key="item.id"
           class="relative overflow-hidden rounded-2xl border border-zinc-800 group"
         >
@@ -109,7 +132,7 @@ export default {
         </div>
 
         
-        <div v-if="isDesktop && selectedImages.length > 3"
+        <div v-if="!showMore && selectedImages.length > 3"
           class="relative overflow-hidden rounded-2xl border border-zinc-800 group cursor-pointer"
           @click.stop="more()"
         >
@@ -121,7 +144,6 @@ export default {
 
           <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
-        
       </div>
     </div>
   `,
@@ -133,6 +155,16 @@ export default {
     totalItems: {
       type: Number,
       required: true,
+    },
+    showMore: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    isDesktop: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props, { emit }) {
@@ -152,23 +184,16 @@ export default {
       removeAll: id => emit('removeAll', id),
       removeOne: id => emit('removeOne', id),
       addOne: id => emit('addOne', id),
+      share: () => emit('share'),
+      confirmOrder: () => emit('confirmOrder'),
     };
   },
   computed: {
-    shareHash() {
-      return this.selectedImages
-        .map(({ id, qty }) => `${id}:${qty}`)
-        .join(',');
-    },
     lastThreeSelections() {
       const currentImage = this.selectedImages[this.selectedImages.length - 1];
 
       if (!currentImage) return [];
       return this.selectedImages.slice(-3).reverse();
     },
-    isDesktop() {
-      const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1024; // default to desktop width if window is not available
-      return windowWidth >= 768;
-    }
   },
 };

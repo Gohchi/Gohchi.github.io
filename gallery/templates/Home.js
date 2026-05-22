@@ -5,15 +5,15 @@ export default /*html*/`
         :totalItems="totalItems"
         :showCart="showCart"
         :exploring="exploring"
-        @goHome="showCart = false; exploring = false"
-        @swapCart="showCart = !showCart; exploring = false"
-        @explore="exploring = !exploring; showCart = false"
+        @goHome="goHome()"
+        @swapCart="swapCart()"
+        @explore="explore()"
         @onFocusExplore="scrollToExplore"
       />
 
       <main id="main" class="max-w-7xl mx-auto px-6 py-8">
         <section
-          v-if="!exploring"
+          v-if="featured"
           class="grid lg:grid-cols-[1.6fr_0.9fr] gap-6 mb-12"
         >
           <HeroScene
@@ -23,17 +23,22 @@ export default /*html*/`
             @removeAll="removeAll"
             @removeOne="removeOne"
             @addOne="addOne"
+            @close="featured = null"
           />
 
           <aside class="space-y-6">
             <SelectionPanel
-              v-if="isDesktop || showCart"
+              v-if="isDesktop && selectedImages.length > 0"
               :selectedImages="selectedImages"
               :totalItems="totalItems"
+              :showMore="!isDesktop"
+              :isDesktop="isDesktop"
               @selectImage="selectImage"
               @removeAll="removeAll"
               @removeOne="removeOne"
               @addOne="addOne"
+              @share="share"
+              @confirmOrder="confirmOrder"
             />
 
             <RelatedPanel
@@ -44,12 +49,31 @@ export default /*html*/`
           </aside>
         </section>
 
+        <SelectionPanel
+          v-if="showCart"
+          :selectedImages="selectedImages"
+          :totalItems="totalItems"
+          :showMore="true"
+          :isDesktop="isDesktop"
+          @selectImage="selectImage"
+          @removeAll="removeAll"
+          @removeOne="removeOne"
+          @addOne="addOne"
+          @share="share"
+          @confirmOrder="confirmOrder"
+        />
+
         <ExploreSection
           v-if="isDesktop || !showCart"
           :images="movies"
           @selectImage="selectImage"
         />
       </main>
+      <Notifications
+        v-if="notification"
+        :notification="notification"
+        @close="notification = null"
+      />
       <AppFooter />
     </div>
   </template>

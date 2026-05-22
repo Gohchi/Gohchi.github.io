@@ -6,10 +6,19 @@ export default {
       <img
         :src="scene.image"
         :alt="scene.title"
-        class="w-full h-[30vh] md:h-[70vh] object-cover"
+        class="w-full h-[30vh] md:h-[50vh] object-cover"
       />
 
-      <div class="absolute inset-0 bg-gradient-to-t from-black via-black via-30% md:via-15% to-transparent" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black via-30% md:via-35% to-transparent" />
+
+      <div class="absolute top-2 left-2 flex gap-2 group">
+        <button
+          @click.stop="close()"
+          class="bg-black/80 backdrop-blur border border-white/10 rounded-full min-w-7 h-7 px-2 items-center justify-center text-xs font-medium cursor-pointer"
+        >
+          close
+        </button>
+      </div>
 
       <div class="absolute top-2 right-2 flex gap-2 group">
         <button v-if="qty > 0"
@@ -107,6 +116,7 @@ export default {
     return {
       selectedImages,
       isFullscreen,
+      close: () => emit('close'),
       selectImage: id => emit('selectImage', id),
       removeAll: id => emit('removeAll', id),
       removeOne: id => emit('removeOne', id),

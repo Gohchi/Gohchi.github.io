@@ -4,6 +4,7 @@ import HeroScene from 'components/HeroScene.js';
 import SelectionPanel from 'components/SelectionPanel.js';
 import RelatedPanel from 'components/RelatedPanel.js';
 import ExploreSection from 'components/ExploreSection.js';
+import Notifications from 'components/Notifications.js';
 
 import template from 'templates/Home.js';
 
@@ -17,6 +18,7 @@ export default {
     SelectionPanel,
     RelatedPanel,
     ExploreSection,
+    Notifications
   },
   methods: {
     getRelatedImages(currentImage) {
@@ -62,15 +64,13 @@ export default {
       this.featured = this.movies.find(m => m.id === id) || this.featured;
 
       this.showCart = false;
-      if (window && window.scrollTo) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      this.scrollToTop();
     },
     scrollToExplore() {
       const exploreSection = document.getElementById('explore');
       if (exploreSection) {
         const elementTop = exploreSection.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: elementTop - 110, behavior: 'smooth' });
+        window.scrollTo({ top: elementTop - 140, behavior: 'smooth' });
       }
     },
     
@@ -92,6 +92,69 @@ export default {
         // ignore
       }
     },
+    scrollToTop() {
+      if (window && window.scrollTo) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    },
+    goHome() {
+      this.showCart = false;
+      this.exploring = false;
+      this.scrollToTop();
+    },
+    swapCart() {
+      this.showCart = !this.showCart;
+      this.exploring = false;
+      this.featured = null;
+      this.scrollToTop();
+    },
+    explore(){ 
+      this.exploring = !this.exploring;
+      this.showCart = false;
+      this.featured = null;
+      this.scrollToTop();
+    },
+    shareHash() {
+      return this.selectedImages
+        .map(({ id, qty }) => `${id}:${qty}`)
+        .join(',');
+    },
+    sendNotification(title, message, error = false) {
+      if (this.notification && this.notification.timeout) {
+        clearTimeout(this.notification.timeout);
+      }
+
+      this.notification = {
+        title,
+        message,
+        error,
+      };
+      
+      this.notification.timeout = setTimeout(() => {
+        this.notification = null;
+      }, 3000);
+    },
+    share() {
+      const hash = this.shareHash();
+      const baseURL = 'https://www.fromprototype.com/gallery/#/';
+      const url = baseURL + hash;
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          this.sendNotification('Success', 'Selection URL copied to clipboard!');
+        })
+        .catch((err) => {
+          console.error('Failed to copy URL: ', err);
+          this.sendNotification('Error', 'Failed to copy URL. Please try copying manually: ' + url, true);
+        });
+    },
+    confirmOrder() {
+      const hash = this.shareHash();
+      const baseURL = 'https://www.fromprototype.com/gallery/%23/';
+      const baseFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSf_8pQla0dXNVhgsWmsY98ObZwQUY1_Zf-uJ5uisJ5C7CBTkg/viewform?usp=pp_url&entry.654069638=';
+      const url = baseFormURL + baseURL + hash;
+      window.open(url, '_blank', 'noopener');
+    }
   },
   watch: {
     selection(newValue, oldValue) {
@@ -131,9 +194,10 @@ export default {
       "movies": movies,
       "lang": lang ?? 'eng', // Default language
       "selection": parsedSelection || {},
-      "featured": movies[0],
+      "featured": null,
       "showCart": false,
       "exploring": false,
+      "notification": null,
     };
   },
   computed: {
