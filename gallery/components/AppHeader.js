@@ -51,12 +51,14 @@ export default {
             placeholder="Search mood, director, color..."
             class="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2 text-sm w-72 outline-none focus:border-zinc-600"
             @focus="onFocusExplore()"
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value); onSearchChange()"
           />
 
           <button class="rounded-xl bg-white text-black px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer">
             Explore
           </button>
-          
+
           <Transition
             enter-active-class="transition duration-300 ease-out"
             enter-from-class="transform scale-95 opacity-0"
@@ -67,6 +69,7 @@ export default {
             mode="out-in"
           >
             <button
+              v-if="totalItems > 0"
               :key="totalItems"
               class="rounded-xl bg-zinc-900 border border-zinc-800 p-2 text-zinc-200 hover:bg-zinc-800 transition cursor-pointer"
               @click.stop="swapCart()"
@@ -81,6 +84,7 @@ export default {
     </header>
   `,
   props: {
+    modelValue: [String, Number],
     totalItems: {
       type: Number,
       required: true,
@@ -100,6 +104,7 @@ export default {
       swapCart: () => emit('swapCart'),
       explore: () => emit('explore'),
       onFocusExplore: () => emit('onFocusExplore'),
+      onSearchChange: () => emit('onSearchChange'),
     };
   }
 }

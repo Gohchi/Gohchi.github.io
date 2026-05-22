@@ -55,6 +55,13 @@ export default {
         >
           Confirm Order
         </button>
+        
+        <button
+          @click.stop="removeAllFromCart"
+          class="rounded-2xl bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-500 cursor-pointer"
+        >
+          Remove All
+        </button>
       </div>
 
       <!--div class="bg-black rounded-2xl p-3 text-xs break-all text-zinc-400 border border-zinc-800 mb-5">
@@ -186,6 +193,7 @@ export default {
       addOne: id => emit('addOne', id),
       share: () => emit('share'),
       confirmOrder: () => emit('confirmOrder'),
+      removeAllFromCart: () => emit('removeAllFromCart'),
     };
   },
   computed: {

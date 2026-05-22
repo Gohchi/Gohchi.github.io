@@ -154,6 +154,13 @@ export default {
       const baseFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSf_8pQla0dXNVhgsWmsY98ObZwQUY1_Zf-uJ5uisJ5C7CBTkg/viewform?usp=pp_url&entry.654069638=';
       const url = baseFormURL + baseURL + hash;
       window.open(url, '_blank', 'noopener');
+    },
+    removeAllFromCart() {
+      this.selection = {};
+      this.showCart = false;
+    },
+    onSearchChange() {
+      this.scrollToTop();
     }
   },
   watch: {
@@ -198,6 +205,7 @@ export default {
       "showCart": false,
       "exploring": false,
       "notification": null,
+      "searchQuery": '',
     };
   },
   computed: {
@@ -221,6 +229,21 @@ export default {
     isDesktop() {
       const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1024; // default to desktop width if window is not available
       return windowWidth >= 768;
+    },
+    moviesFiltered() {
+      if (!this.searchQuery) return this.movies;
+
+      const queries = this.searchQuery.toLowerCase().trim().split(' ');
+
+      return this.movies.filter(movie => {
+        return queries.some(query => (
+          movie.title.toLowerCase().includes(query) ||
+          movie.director.toLowerCase().includes(query) ||
+          movie.mood.some(m => m.toLowerCase().includes(query)) ||
+          movie.visualTags.some(v => v.toLowerCase().includes(query)) ||
+          movie.show.toLowerCase().includes(query)
+        ));
+      });
     }
   },
   template,

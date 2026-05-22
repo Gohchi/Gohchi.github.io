@@ -2,6 +2,7 @@ export default /*html*/`
   <template v-if="true">
     <div class="min-h-screen bg-zinc-950 text-zinc-100">
       <AppHeader
+        v-model="searchQuery"
         :totalItems="totalItems"
         :showCart="showCart"
         :exploring="exploring"
@@ -9,6 +10,7 @@ export default /*html*/`
         @swapCart="swapCart()"
         @explore="explore()"
         @onFocusExplore="scrollToExplore"
+        @onSearchChange="onSearchChange"
       />
 
       <main id="main" class="max-w-7xl mx-auto px-6 py-8">
@@ -61,11 +63,12 @@ export default /*html*/`
           @addOne="addOne"
           @share="share"
           @confirmOrder="confirmOrder"
+          @removeAllFromCart="removeAllFromCart"
         />
 
         <ExploreSection
           v-if="isDesktop || !showCart"
-          :images="movies"
+          :images="moviesFiltered"
           @selectImage="selectImage"
         />
       </main>
