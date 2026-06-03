@@ -1,7 +1,25 @@
 import MainHeader from 'components/MainHeader.js';
 import Tools from 'components/Tools.js';
 
-const initCustomSize = { height: 1724, width: 700 };
+const SIZE_PRESETS = {
+  A4: { width: 3535, height: 5000 },
+  A3: { width: 3633, height: 5000 },
+};
+
+function aspectRatio(presetName) {
+  const { width, height } = SIZE_PRESETS[presetName];
+  return width / height;
+}
+
+function dimensionsFromWidth(presetName, width) {
+  const w = Math.max(1, Math.round(Number(width) || 1));
+  return { width: w, height: Math.round(w / aspectRatio(presetName)) };
+}
+
+function dimensionsFromHeight(presetName, height) {
+  const h = Math.max(1, Math.round(Number(height) || 1));
+  return { width: Math.round(h * aspectRatio(presetName)), height: h };
+}
 
 export default {
   components: {
@@ -11,13 +29,13 @@ export default {
   data() {
     return {
       type: {
-        CUSTOM: initCustomSize,
-        A4: { height: 2480, width: 3508 },
-        A3: { height: 4961, width: 3605 },
+        A4: { ...SIZE_PRESETS.A4 },
+        A3: { ...SIZE_PRESETS.A3 },
       },
       orientation: 'v',
-      customHeight: initCustomSize.height,
-      customWidth: initCustomSize.width,
+      customRatioBase: 'A4',
+      customWidth: SIZE_PRESETS.A4.width,
+      customHeight: SIZE_PRESETS.A4.height,
       message: 'Seleccione un tipo de hoja y cargue una imagen para armar el mosaico.',
       ready: false,
       showBorder: true,
@@ -85,16 +103,43 @@ export default {
 
       this.refresh();
     },
+    applyCustomSize() {
+      this.internalSize = { width: this.customWidth, height: this.customHeight };
+    },
+    updateCustomDimension(changedSide, value) {
+      const dims = changedSide === 'width'
+        ? dimensionsFromWidth(this.customRatioBase, value)
+        : dimensionsFromHeight(this.customRatioBase, value);
+      this.customWidth = dims.width;
+      this.customHeight = dims.height;
+
+      if (this.sizeName === 'CUSTOM') {
+        this.applyCustomSize();
+        this.refresh();
+      }
+    },
+    changeCustomRatioBase(base) {
+      if (base !== 'A3' && base !== 'A4') return;
+      this.customRatioBase = base;
+      this.updateCustomDimension('width', this.customWidth);
+    },
     changeType(bgColor, lineStyles, sizeName, download) {
+      const prevSizeName = this.sizeName;
       this.bgColor = bgColor;
       this.lineStyles = lineStyles;
       this.sizeName = sizeName;
       this.download = download;
 
-      if (this.sizeName == 'CUSTOM')
-        this.internalSize = { height: this.customHeight, width: this.customWidth };
-      else
-        this.internalSize = this.type[this.sizeName];
+      if (this.sizeName === 'CUSTOM') {
+        if (prevSizeName === 'A3' || prevSizeName === 'A4') {
+          this.customRatioBase = prevSizeName;
+          this.customWidth = this.type[prevSizeName].width;
+          this.customHeight = this.type[prevSizeName].height;
+        }
+        this.applyCustomSize();
+      } else {
+        this.internalSize = { ...this.type[this.sizeName] };
+      }
 
       this.refresh();
     },
@@ -356,6 +401,9 @@ export default {
         :sizeName="sizeName"
         :orientation="orientation"
         :size="size"
+        :customWidth="customWidth"
+        :customHeight="customHeight"
+        :customRatioBase="customRatioBase"
         :amountHorizontal="amountHorizontal"
         :marginTop="marginTop"
         :marginRight="marginRight"
@@ -363,6 +411,8 @@ export default {
         :marginLeft="marginLeft"
         :gap="gap"
         @refresh="refresh"
+        @updateCustomDimension="updateCustomDimension"
+        @changeCustomRatioBase="changeCustomRatioBase"
         @changeAmountHorizontal="changeAmountHorizontal"
         @changeMarginTop="changeMarginTop"
         @changeMarginRight="changeMarginRight"

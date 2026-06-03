@@ -40,11 +40,29 @@ canvas {
   padding: 10px;
 }
 
+.custom-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+}
+
 .custom-sizes > * {
-  width: 110px;
-  
+  width: 120px;
   background: white;
   border-radius: 5px;
+}
+
+.custom-sizes .size-info {
+  width: auto;
+}
+
+.custom-ratio-select {
+  height: 56px;
+  padding: 0 8px;
+  border: 1px solid #a3a0a0;
+  border-radius: 5px;
+  background: white;
 }
 .mdc-button.load-file-button {
   background: #00c0ff;

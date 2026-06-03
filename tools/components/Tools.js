@@ -6,6 +6,9 @@ export default {
     sizeName: String,
     orientation: String,
     size: Object,
+    customWidth: Number,
+    customHeight: Number,
+    customRatioBase: String,
     amountHorizontal: Number,
     marginTop: Number,
     marginRight: Number,
@@ -16,6 +19,9 @@ export default {
   setup(props, { emit }) {
     const {
       ready,
+      customWidth,
+      customHeight,
+      customRatioBase,
       amountHorizontal,
       marginTop,
       marginRight,
@@ -26,8 +32,12 @@ export default {
 
     return {
       ready,
+      customWidth,
+      customHeight,
+      customRatioBase,
       refresh: () => emit('refresh'),
-      changeType: () => emit('changeType'),
+      updateCustomDimension: (side, value) => emit('updateCustomDimension', side, value),
+      changeCustomRatioBase: base => emit('changeCustomRatioBase', base),
       changeAmountHorizontal: value => emit('changeAmountHorizontal', value),
       changeMarginTop: value => emit('changeMarginTop', value),
       changeMarginRight: value => emit('changeMarginRight', value),
@@ -45,8 +55,22 @@ export default {
     <div v-if="ready" class="size-type-info mdc-top-app-bar__title">
       <span v-if="sizeName!='CUSTOM'" class="size-info">{{ sizeName }} - {{(orientation == 'v' ? 'vertical' : 'horizontal')}} ({{ size.width }}x{{ size.height }})</span>
       
-      <component v-if="sizeName=='CUSTOM'" class="custom-sizes">
-        <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon mdc-text-field--with-trailing-icon">
+      <div v-if="sizeName=='CUSTOM'" class="custom-sizes">
+        <span class="size-info">
+          Custom ({{ customRatioBase }}) - {{ orientation == 'v' ? 'vertical' : 'horizontal' }}
+          ({{ size.width }}x{{ size.height }})
+        </span>
+
+        <select
+          class="custom-ratio-select"
+          :value="customRatioBase"
+          @change="changeCustomRatioBase($event.target.value)"
+        >
+          <option value="A4">Ratio A4</option>
+          <option value="A3">Ratio A3</option>
+        </select>
+
+        <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
           <span class="mdc-notched-outline">
             <span class="mdc-notched-outline__leading"></span>
             <span class="mdc-notched-outline__trailing"></span>
@@ -54,9 +78,16 @@ export default {
           <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading">
             {{ orientation=='h' ? 'swap_horiz' : 'swap_vert' }}
           </i>
-          <input class="mdc-text-field__input" type="number" min="1" v-model="customWidth" @keyup="changeType" @change="changeType" />
+          <input
+            class="mdc-text-field__input"
+            type="number"
+            min="1"
+            :value="customWidth"
+            @change="updateCustomDimension('width', $event.target.value)"
+          />
         </label>
-        <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon mdc-text-field--with-trailing-icon">
+
+        <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
           <span class="mdc-notched-outline">
             <span class="mdc-notched-outline__leading"></span>
             <span class="mdc-notched-outline__trailing"></span>
@@ -64,9 +95,15 @@ export default {
           <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading">
             {{ orientation=='v' ? 'swap_horiz' : 'swap_vert' }}
           </i>
-          <input class="mdc-text-field__input" type="number" min="1" v-model="customHeight" @keyup="changeType" />
+          <input
+            class="mdc-text-field__input"
+            type="number"
+            min="1"
+            :value="customHeight"
+            @change="updateCustomDimension('height', $event.target.value)"
+          />
         </label>
-      </component>
+      </div>
 
       <details class="accordion-item">
         <summary class="accordion-header">
