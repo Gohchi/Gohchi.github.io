@@ -1,6 +1,7 @@
 import { toRefs } from 'vue';
 
 import MenuOption from 'components/MenuOption.js';
+import ButtonOption from 'components/ButtonOption.js';
 
 export default {
   props: {
@@ -13,6 +14,7 @@ export default {
   },
   components: {
     MenuOption,
+    ButtonOption,
   },
   setup(props, { emit }) {
     const {
@@ -52,6 +54,14 @@ export default {
       this.bgColor = key;
       this.changeType();
     },
+    onClickLineStylesOption(key) {
+      this.lineStyles = key;
+      this.changeType();
+    },
+    onClickSizeOption(key) {
+      this.sizeName = key;
+      this.changeType();
+    }
   },
   template: /*html*/`
     <header class="mdc-top-app-bar">
@@ -64,7 +74,7 @@ export default {
         </section>
         <section id="toolbar-actions" class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
           <template v-if="ready">
-            <menu-option
+            <MenuOption
               id="download"
               icon="download"
               :options="[['download', 'Descargar'], ['pdf', 'PDF'], ['print', 'Imprimir']]"
@@ -72,7 +82,7 @@ export default {
               @change="onClickDownloadOption"
             />
 
-            <menu-option
+            <MenuOption
               id="bg-color"
               icon="colorize"
               :selected="bgColor"
@@ -80,83 +90,53 @@ export default {
               :openMenu="openMenu"
               @change="onClickBgColorOption"
             />
-          
-            <div class="mdc-menu-surface--anchor">
-              <button id="button-line-styles"
-                class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                aria-label="Size"
-                @click="openMenu('line-styles')"
-              >line_style</button>
-              <div id="menu-line-styles" class="mdc-menu mdc-menu-surface">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                  <component v-for="[key, value] in [['NONE', 'Nada'], ['LINE', 'Normal'], ['DASH', 'Líneas']]">
-                    <li class="mdc-list-item" role="menuitem"
-                      v-bind:class="(lineStyles==key ? 'mdc-list-item--selected' : null)"
-                      @click="lineStyles=key; changeType();"
-                    >
-                      <span class="mdc-list-item__ripple"></span>
-                      <span class="mdc-list-item__text">{{ value }}</span>
-                    </li>
-                  </component>
-                </ul>
-              </div>
-            </div>
 
-            <div class="mdc-menu-surface--anchor">
-              <button id="button-sizes" class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                aria-label="Size"
-                @click="openMenu('sizes')"
-              >photo_size_select_large</button>
-              <div id="menu-sizes" class="mdc-menu mdc-menu-surface">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                  <component v-for="item in ['A4', 'A3', 'CUSTOM']">
-                    <li class="mdc-list-item" role="menuitem"
-                      v-bind:class="(sizeName==item ? 'mdc-list-item--selected' : null)"
-                      @click="sizeName=item; changeType();"
-                    >
-                      <span class="mdc-list-item__ripple"></span>
-                      <span class="mdc-list-item__text">{{ item }}</span>
-                    </li>
-                  </component>
-                </ul>
-              </div>
-            </div>
+            <MenuOption
+              id="line-styles"
+              icon="line_style"
+              :selected="lineStyles"
+              :options="[['NONE', 'Nada'], ['LINE', 'Normal'], ['DASH', 'Líneas']]"
+              :openMenu="openMenu"
+              @change="onClickLineStylesOption"
+            />
 
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Orientation"
-              @click="swapOrientation"
-            >rotate_90_degrees_ccw</button>
+            <MenuOption
+              id="sizes"
+              icon="photo_size_select_large"
+              :selected="sizeName"
+              :options="[['A4', 'A4'], ['A3', 'A3'], ['CUSTOM', 'Personalizado']]"
+              :openMenu="openMenu"
+              @change="onClickSizeOption"
+            />
 
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Border"
-              @click="swapBorder"
-            >{{ showBorder ? 'border_clear' : 'border_outer' }}</button>
+            <ButtonOption
+              icon="rotate_90_degrees_ccw"
+              @onClick="swapOrientation"
+            />
+
+            <ButtonOption
+              :icon="showBorder ? 'border_clear' : 'border_outer'"
+              @onClick="swapBorder"
+            />
             
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Refresh"
-              v-bind:disabled="!ready" @click="refresh"
-            >autorenew</button>
+            <ButtonOption
+              icon="autorenew"
+              v-bind:disabled="!ready"
+              @onClick="refresh"
+            />
             
-            <div class="mdc-menu-surface--anchor">
-              <button id="button-more"
-                class="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                aria-label="Size"
-                @click="openMenu('more')"
-              >more_vert</button>
-              <div id="menu-more" class="mdc-menu mdc-menu-surface">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                  <component v-for="[key, value] in [['show-type', (showPaperType ? 'Ocultar' : 'Mostrar') + ' tipo de hoja'], ['add-legend', legend ? 'Quitar leyenda' : 'Agregar leyenda']]">
-                    <li class="mdc-list-item" role="menuitem"
-                      @click="moreOptionSelected(key);"
-                    >
-                      <span class="mdc-list-item__ripple"></span>
-                      <span class="mdc-list-item__text">{{ value }}</span>
-                    </li>
-                  </component>
-                </ul>
-              </div>
-            </div>
-
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Clear"
-              @click="clearAll"
-            >clear</button>
+            <MenuOption
+              id="more"
+              icon="more_vert"
+              :options="[['show-type', (showPaperType ? 'Ocultar' : 'Mostrar') + ' tipo de hoja'], ['add-legend', legend ? 'Quitar leyenda' : 'Agregar leyenda']]"
+              :openMenu="openMenu"
+              @change="moreOptionSelected"
+            />
+            
+            <ButtonOption
+              icon="clear"
+              @onClick="clearAll"
+            />
           </template>
 
           <label v-if="!ready" class="mdc-button mdc-button--outlined mdc-top-app-bar__action-item load-file-button">
