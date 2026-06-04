@@ -21,6 +21,12 @@ function dimensionsFromHeight(presetName, height) {
   return { width: Math.round(h * aspectRatio(presetName)), height: h };
 }
 
+
+const repeatOptions = [
+  ['rest', 'Resto'],
+  ...Array.from({ length: 100 }, (_, index) => [`${index + 1}`, `${index + 1}`]),
+];
+
 export default {
   components: {
     MainHeader,
@@ -215,47 +221,47 @@ export default {
             }
           });
 
-          if (fixedSequence.length === 0 && restIndexes.length === 0) {
-            restIndexes.push(0);
-          }
-
-          const averageHeight = images.reduce((sum, image) => {
-            return sum + image.height * (cellWidth / image.width);
-          }, 0) / images.length;
-
-          const estimatedRows = Math.max(1, Math.floor((canvas.height - marginTop - marginBottom + gap) / (averageHeight + gap)));
-          const estimatedSlots = amountHorizontal * estimatedRows;
-          const fixedSlots = fixedSequence.length;
-          const restSlots = Math.max(0, estimatedSlots - fixedSlots);
-
-          const restCounts = restIndexes.map((index, restPosition) => {
-            const base = Math.floor(restSlots / restIndexes.length);
-            const extra = restPosition < (restSlots % restIndexes.length) ? 1 : 0;
-            return base + extra;
-          });
+          const hasRest = restIndexes.length > 0;
 
           const sequence = [];
-          let restPosition = 0;
+          
+          if (hasRest) {
+            const averageHeight = images.reduce((sum, image) => {
+              return sum + image.height * (cellWidth / image.width);
+            }, 0) / images.length;
 
-          this.fileRepetitions.forEach((rep, index) => {
-            if (!images[index]) return;
-            if (rep === 'rest') {
+            const estimatedRows = Math.max(1, Math.floor((canvas.height - marginTop - marginBottom + gap) / (averageHeight + gap)));
+            const estimatedSlots = amountHorizontal * estimatedRows;
+            const fixedSlots = fixedSequence.length;
+            const restSlots = Math.max(0, estimatedSlots - fixedSlots);
+
+            const restCounts = restIndexes.map((index, restPosition) => {
+              const base = Math.floor(restSlots / restIndexes.length);
+              const extra = restPosition < (restSlots % restIndexes.length) ? 1 : 0;
+              return base + extra;
+            });
+
+            // Add all fixed images first
+            sequence.push(...fixedSequence);
+
+            // Then add all rest images
+            let restPosition = 0;
+            restIndexes.forEach((restIndex) => {
               const count = restCounts[restPosition++] || 0;
               for (let i = 0; i < count; i++) {
-                sequence.push(index);
+                sequence.push(restIndex);
               }
-            } else {
-              const count = Math.max(0, parseInt(rep, 10));
-              for (let i = 0; i < count; i++) {
-                sequence.push(index);
-              }
-            }
-          });
+            });
+          } else {
+            // No rest selected, only use fixed sequence
+            sequence.push(...fixedSequence);
+          }
 
           if (sequence.length === 0) {
             sequence.push(0);
           }
 
+          const restStartIndex = fixedSequence.length;
           let sequenceIndex = 0;
           let y = marginTop;
 
@@ -264,19 +270,40 @@ export default {
             let rowHeight = 0;
 
             for (let i = 0; i < amountHorizontal; i++) {
-              const imageIndex = sequence[sequenceIndex] !== undefined ? sequence[sequenceIndex] : sequence[sequence.length - 1];
-              const currentImage = images[imageIndex] || images[0];
-              const height = currentImage.height * (cellWidth / currentImage.width);
-              rowImages.push({ currentImage, height });
-              rowHeight = Math.max(rowHeight, height);
-              sequenceIndex = Math.min(sequenceIndex + 1, sequence.length - 1);
+              if (sequenceIndex >= sequence.length) {
+                if (!hasRest) {
+                  // Stop adding to this row, but draw it if it has content
+                  break;
+                } else {
+                  // Cycle back to rest images only
+                  sequenceIndex = restStartIndex;
+                  if (sequenceIndex >= sequence.length) {
+                    // No rest images available, stop
+                    break;
+                  }
+                }
+              }
+              
+              if (sequenceIndex < sequence.length) {
+                const imageIndex = sequence[sequenceIndex];
+                const currentImage = images[imageIndex] || images[0];
+                const height = currentImage.height * (cellWidth / currentImage.width);
+                rowImages.push({ currentImage, height });
+                rowHeight = Math.max(rowHeight, height);
+                sequenceIndex++;
+              }
+            }
+
+            // Draw the row if it has any images
+            if (rowImages.length === 0) {
+              break;
             }
 
             if (y + rowHeight > bottomLimit) {
               break;
             }
 
-            for (let i = 0; i < amountHorizontal; i++) {
+            for (let i = 0; i < rowImages.length; i++) {
               const { currentImage, height } = rowImages[i];
               const offsetLeft = marginLeft + (cellWidth + gap) * i;
               const offsetTop = y + (rowHeight - height) / 2;
@@ -284,6 +311,11 @@ export default {
             }
 
             y += rowHeight + gap;
+
+            // If we've drawn a partial row and no rest, stop
+            if (rowImages.length < amountHorizontal && !hasRest) {
+              break;
+            }
           }
         }
 
@@ -423,7 +455,7 @@ export default {
     },
     setFileRepetition(index, value) {
       if (index < 0 || index >= this.fileRepetitions.length) return;
-      if (!['1', '2', '3', '4', '5', 'rest'].includes(value)) return;
+      if (!repeatOptions.map(([key]) => key).includes(value)) return;
       this.fileRepetitions.splice(index, 1, value);
       this.refresh();
     },

@@ -57,7 +57,12 @@ export default {
       
       <div v-if="sizeName=='CUSTOM'" class="custom-sizes">
         <span class="size-info">
-          Custom ({{ customRatioBase }}) - {{ orientation == 'v' ? 'vertical' : 'horizontal' }}
+          Custom ({{ customRatioBase }})
+        </span>
+        <span>
+          {{ orientation == 'v' ? 'vertical' : 'horizontal' }}
+        </span>
+        <span>
           ({{ size.width }}x{{ size.height }})
         </span>
 

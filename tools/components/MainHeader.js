@@ -2,6 +2,7 @@ import { toRefs } from 'vue';
 
 import MenuOption from 'components/MenuOption.js';
 import ButtonOption from 'components/ButtonOption.js';
+import EditingModal from 'components/EditingModal.js';
 
 export default {
   props: {
@@ -17,6 +18,7 @@ export default {
   components: {
     MenuOption,
     ButtonOption,
+    EditingModal,
   },
   setup(props, { emit }) {
     const {
@@ -31,12 +33,8 @@ export default {
     } = toRefs(props);
 
     const repeatOptions = [
-      ['1', '1'],
-      ['2', '2'],
-      ['3', '3'],
-      ['4', '4'],
-      ['5', '5'],
       ['rest', 'Resto'],
+      ...Array.from({ length: 100 }, (_, index) => [`${index + 1}`, `${index + 1}`]),
     ];
 
     return {
@@ -60,7 +58,7 @@ export default {
   },
   data() {
     return {
-      editing: false,
+      showRepeatModal: false,
     };
   },
   methods: {
@@ -83,11 +81,14 @@ export default {
       this.sizeName = key;
       this.changeType();
     },
-    onEdit() {
-      this.editing = !this.editing;
+    openRepeatModal() {
+      this.showRepeatModal = true;
+    },
+    closeRepeatModal() {
+      this.showRepeatModal = false;
     },
     clearAll() {
-      this.editing = false;
+      this.showRepeatModal = false;
       this.$emit('clearAll');
     }
 
@@ -105,87 +106,82 @@ export default {
           <template v-if="ready">
             <ButtonOption
               icon="edit"
-              @onClick="onEdit"
+              @onClick="openRepeatModal"
+            />
+
+            <template v-if="showRepeatModal">
+              <EditingModal
+                :files="files"
+                :fileRepetitions="fileRepetitions"
+                :repeatOptions="repeatOptions"
+                @closeRepeatModal="closeRepeatModal"
+                @setRepeatCount="setRepeatCount"
+              />
+            </template>
+
+            <MenuOption
+              id="download"
+              icon="download"
+              :options="[['download', 'Descargar'], ['pdf', 'PDF'], ['print', 'Imprimir']]"
+              :openMenu="openMenu"
+              @change="onClickDownloadOption"
+            />
+
+            <MenuOption
+              id="bg-color"
+              icon="colorize"
+              :selected="bgColor"
+              :options="[['white', 'Blanco'], ['black', 'Negro'], ['gray', 'Gris']]"
+              :openMenu="openMenu"
+              @change="onClickBgColorOption"
+            />
+
+            <MenuOption
+              id="line-styles"
+              icon="line_style"
+              :selected="lineStyles"
+              :options="[['NONE', 'Nada'], ['LINE', 'Normal'], ['DASH', 'Líneas']]"
+              :openMenu="openMenu"
+              @change="onClickLineStylesOption"
+            />
+
+            <MenuOption
+              id="sizes"
+              icon="photo_size_select_large"
+              :selected="sizeName"
+              :options="[['A4', 'A4'], ['A3', 'A3'], ['CUSTOM', 'CUSTOM']]"
+              :openMenu="openMenu"
+              @change="onClickSizeOption"
+            />
+
+            <ButtonOption
+              icon="rotate_90_degrees_ccw"
+              @onClick="swapOrientation"
+            />
+
+            <ButtonOption
+              :icon="showBorder ? 'border_clear' : 'border_outer'"
+              @onClick="swapBorder"
             />
             
-            <template v-if="editing && files && files.length">
-              <MenuOption
-                v-for="(file, index) in files"
-                :key="'repeat-' + index"
-                :id="'repeat-' + index"
-                icon="repeat"
-                :selected="fileRepetitions[index] || 'rest'"
-                :options="repeatOptions"
-                :openMenu="openMenu"
-                @change="key => setRepeatCount(index, key)"
-              />
-            </template>
+            <ButtonOption
+              icon="autorenew"
+              v-bind:disabled="!ready"
+              @onClick="refresh"
+            />
+            
+            <MenuOption
+              id="more"
+              icon="more_vert"
+              :options="[['show-type', (showPaperType ? 'Ocultar' : 'Mostrar') + ' tipo de hoja'], ['add-legend', legend ? 'Quitar leyenda' : 'Agregar leyenda']]"
+              :openMenu="openMenu"
+              @change="moreOptionSelected"
+            />
 
-            <template v-if="!editing">
-              <MenuOption
-                id="download"
-                icon="download"
-                :options="[['download', 'Descargar'], ['pdf', 'PDF'], ['print', 'Imprimir']]"
-                :openMenu="openMenu"
-                @change="onClickDownloadOption"
-              />
-
-              <MenuOption
-                id="bg-color"
-                icon="colorize"
-                :selected="bgColor"
-                :options="[['white', 'Blanco'], ['black', 'Negro'], ['gray', 'Gris']]"
-                :openMenu="openMenu"
-                @change="onClickBgColorOption"
-              />
-
-              <MenuOption
-                id="line-styles"
-                icon="line_style"
-                :selected="lineStyles"
-                :options="[['NONE', 'Nada'], ['LINE', 'Normal'], ['DASH', 'Líneas']]"
-                :openMenu="openMenu"
-                @change="onClickLineStylesOption"
-              />
-
-              <MenuOption
-                id="sizes"
-                icon="photo_size_select_large"
-                :selected="sizeName"
-                :options="[['A4', 'A4'], ['A3', 'A3'], ['CUSTOM', 'Personalizado']]"
-                :openMenu="openMenu"
-                @change="onClickSizeOption"
-              />
-
-              <ButtonOption
-                icon="rotate_90_degrees_ccw"
-                @onClick="swapOrientation"
-              />
-
-              <ButtonOption
-                :icon="showBorder ? 'border_clear' : 'border_outer'"
-                @onClick="swapBorder"
-              />
-              
-              <ButtonOption
-                icon="autorenew"
-                v-bind:disabled="!ready"
-                @onClick="refresh"
-              />
-              
-              <MenuOption
-                id="more"
-                icon="more_vert"
-                :options="[['show-type', (showPaperType ? 'Ocultar' : 'Mostrar') + ' tipo de hoja'], ['add-legend', legend ? 'Quitar leyenda' : 'Agregar leyenda']]"
-                :openMenu="openMenu"
-                @change="moreOptionSelected"
-              />
-
-              <ButtonOption
-                icon="clear"
-                @onClick="clearAll"
-              />
-            </template>
+            <ButtonOption
+              icon="clear"
+              @onClick="clearAll"
+            />
           </template>
 
           <label v-if="!ready" class="mdc-button mdc-button--outlined mdc-top-app-bar__action-item load-file-button">
