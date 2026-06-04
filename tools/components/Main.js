@@ -54,6 +54,8 @@ export default {
       download: 'download',
       menu: {},
       file: null,
+      files: [],
+      fileRepetitions: [],
       more: '',
       showPaperType: false,
       legend: '',
@@ -154,6 +156,8 @@ export default {
       this.ready = false;
       this.menu = {};
       this.file = null;
+      this.files = [];
+      this.fileRepetitions = [];
       this.updateZoom();
     },
     updateZoom() {
@@ -163,23 +167,19 @@ export default {
       ctx.drawImage(canvas, 0, 0, zoom.width, zoom.height);
     },
     refresh() {
-      const fn = () => {
+      const draw = images => {
         this.ready = true;
         const canvas = document.getElementById('canvas');
-        /** @type {CanvasRenderingContext2D} */
         const ctx = canvas.getContext('2d');
-        
+
         this.clearCanvas();
 
-        // Create a temporary canvas for the limited horizontal repeat
-        const patternCanvas = document.createElement('canvas');
-        const patternCtx = patternCanvas.getContext('2d');
         const marginTop = +this.marginTop;
         const marginRight = +this.marginRight;
         const marginBottom = +this.marginBottom;
         const marginLeft = +this.marginLeft;
         const gap = +this.gap;
-        const amountHorizontal = +this.amountHorizontal;
+        const amountHorizontal = Math.max(1, +this.amountHorizontal);
 
         if (this.lineStyles != 'NONE') {
           if (this.lineStyles === 'DASH') {
@@ -192,25 +192,101 @@ export default {
           ctx.strokeRect(marginLeft, marginTop, canvas.width - marginRight - marginLeft, canvas.height - marginBottom - marginTop);
         }
 
-        patternCanvas.width = (canvas.width - marginLeft - marginRight - gap * (amountHorizontal-1)) / amountHorizontal;
-        patternCanvas.height = img.height * (patternCanvas.width / img.width);
-        patternCtx.drawImage(img, 0, 0, patternCanvas.width, patternCanvas.height);
-
-        const amountVertical = Math.floor((canvas.height - marginTop - marginBottom + gap) / (patternCanvas.height + gap));
-
         ctx.fillStyle = this.bgColor;
-        const totalImageWidth = amountHorizontal * patternCanvas.width + gap * (amountHorizontal - 1);
-        const totalImageHeight = amountVertical * patternCanvas.height + gap * (amountVertical - 1);
-        ctx.fillRect(marginLeft, marginTop, totalImageWidth, totalImageHeight);
-        
-        for (let i = 0; i < amountHorizontal; i++) {
-          const offsetLeft = marginLeft + patternCanvas.width * i + (i > 0 ? gap * i : 0);
-          
-          for (let l = 0; l < amountVertical; l++) {
-            const offsetTop = patternCanvas.height * l;
-            ctx.drawImage(patternCanvas, offsetLeft+1, marginTop+1 + offsetTop + (l > 0 ? gap * l : 0));
+        ctx.fillRect(marginLeft, marginTop, canvas.width - marginLeft - marginRight, canvas.height - marginTop - marginBottom);
+
+        if (images.length > 0) {
+          const availableWidth = canvas.width - marginLeft - marginRight;
+          const cellWidth = (availableWidth - gap * (amountHorizontal - 1)) / amountHorizontal;
+          const bottomLimit = canvas.height - marginBottom;
+          const fixedSequence = [];
+          const restIndexes = [];
+
+          this.fileRepetitions.forEach((rep, index) => {
+            const image = images[index];
+            if (!image) return;
+            if (rep === 'rest') {
+              restIndexes.push(index);
+            } else {
+              const count = Math.max(0, parseInt(rep, 10));
+              for (let i = 0; i < count; i++) {
+                fixedSequence.push(index);
+              }
+            }
+          });
+
+          if (fixedSequence.length === 0 && restIndexes.length === 0) {
+            restIndexes.push(0);
+          }
+
+          const averageHeight = images.reduce((sum, image) => {
+            return sum + image.height * (cellWidth / image.width);
+          }, 0) / images.length;
+
+          const estimatedRows = Math.max(1, Math.floor((canvas.height - marginTop - marginBottom + gap) / (averageHeight + gap)));
+          const estimatedSlots = amountHorizontal * estimatedRows;
+          const fixedSlots = fixedSequence.length;
+          const restSlots = Math.max(0, estimatedSlots - fixedSlots);
+
+          const restCounts = restIndexes.map((index, restPosition) => {
+            const base = Math.floor(restSlots / restIndexes.length);
+            const extra = restPosition < (restSlots % restIndexes.length) ? 1 : 0;
+            return base + extra;
+          });
+
+          const sequence = [];
+          let restPosition = 0;
+
+          this.fileRepetitions.forEach((rep, index) => {
+            if (!images[index]) return;
+            if (rep === 'rest') {
+              const count = restCounts[restPosition++] || 0;
+              for (let i = 0; i < count; i++) {
+                sequence.push(index);
+              }
+            } else {
+              const count = Math.max(0, parseInt(rep, 10));
+              for (let i = 0; i < count; i++) {
+                sequence.push(index);
+              }
+            }
+          });
+
+          if (sequence.length === 0) {
+            sequence.push(0);
+          }
+
+          let sequenceIndex = 0;
+          let y = marginTop;
+
+          while (true) {
+            const rowImages = [];
+            let rowHeight = 0;
+
+            for (let i = 0; i < amountHorizontal; i++) {
+              const imageIndex = sequence[sequenceIndex] !== undefined ? sequence[sequenceIndex] : sequence[sequence.length - 1];
+              const currentImage = images[imageIndex] || images[0];
+              const height = currentImage.height * (cellWidth / currentImage.width);
+              rowImages.push({ currentImage, height });
+              rowHeight = Math.max(rowHeight, height);
+              sequenceIndex = Math.min(sequenceIndex + 1, sequence.length - 1);
+            }
+
+            if (y + rowHeight > bottomLimit) {
+              break;
+            }
+
+            for (let i = 0; i < amountHorizontal; i++) {
+              const { currentImage, height } = rowImages[i];
+              const offsetLeft = marginLeft + (cellWidth + gap) * i;
+              const offsetTop = y + (rowHeight - height) / 2;
+              ctx.drawImage(currentImage, offsetLeft + 1, offsetTop + 1, cellWidth, height);
+            }
+
+            y += rowHeight + gap;
           }
         }
+
         const textPadding = 10;
         const lineCount = this.showPaperType || this.legend ? 1 : 0;
         const availableHeight = Math.max(4, marginTop - textPadding * 2);
@@ -231,29 +307,29 @@ export default {
         }
 
         this.updateZoom();
-      }
+      };
 
-      const img = this.imageSizeHeight && this.imageSizeWidth
-        ? new Image( this.imageSizeWidth, this.imageSizeHeight ) : new Image();
+      const files = Array.isArray(this.files) ? this.files : [];
       setTimeout(() => {
-        const file = this.file;
-        if (file) {
-          this.ready = true;
-          const reader  = new FileReader();
-
-          reader.onloadend = () => {
-            img.src = reader.result;
-            setTimeout(() => {
-              fn();
-            }, 0);
-          }
-
-          reader.readAsDataURL(file);
-        } else {
-          fn();
+        if (files.length === 0) {
+          draw([]);
+          return;
         }
-      }, 0);
 
+        Promise.all(files.map(file => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = reader.result;
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        })))
+          .then(images => draw(images))
+          .catch(() => draw([]));
+      }, 0);
     },
     saveCanvas: function() {
       const canvas = document.getElementById('canvas');
@@ -327,7 +403,9 @@ export default {
     },
     fileLoaded() {
       const input = document.getElementById('file');
-      this.file = input.files[0];
+      this.files = Array.from(input.files);
+      this.file = this.files[0] || null;
+      this.fileRepetitions = this.files.map(() => 'rest');
       this.refresh();
     },
     moveZoom() {
@@ -341,6 +419,12 @@ export default {
     changeAmountHorizontal(value) {
       if (value < 1) return;
       this.amountHorizontal = value;
+      this.refresh();
+    },
+    setFileRepetition(index, value) {
+      if (index < 0 || index >= this.fileRepetitions.length) return;
+      if (!['1', '2', '3', '4', '5', 'rest'].includes(value)) return;
+      this.fileRepetitions.splice(index, 1, value);
       this.refresh();
     },
     changeMarginTop(value) {
@@ -377,6 +461,8 @@ export default {
       :showPaperType="showPaperType"
       :hideZoom="hideZoom"
       :legend="legend"
+      :files="files"
+      :fileRepetitions="fileRepetitions"
       @fileLoaded="fileLoaded"
       @changeType="changeType"
       @refresh="refresh"
@@ -386,6 +472,7 @@ export default {
       @moreOptionSelected="moreOptionSelected"
       @openMenu="openMenu"
       @downloadFile="downloadFile"
+      @setRepeatCount="setFileRepetition"
     />
     <main class="mdc-top-app-bar--fixed-adjust">
       <!-- <div v-if="showHelp" style="padding: 20px;">{{ message }}</div> -->

@@ -11,6 +11,8 @@ export default {
     showPaperType: Boolean,
     legend: String,
     hideZoom: Boolean,
+    files: Array,
+    fileRepetitions: Array,
   },
   components: {
     MenuOption,
@@ -24,7 +26,18 @@ export default {
       showPaperType,
       legend,
       hideZoom,
+      files,
+      fileRepetitions,
     } = toRefs(props);
+
+    const repeatOptions = [
+      ['1', '1'],
+      ['2', '2'],
+      ['3', '3'],
+      ['4', '4'],
+      ['5', '5'],
+      ['rest', 'Resto'],
+    ];
 
     return {
       title: title ?? 'Mosaicos',
@@ -32,6 +45,9 @@ export default {
       lineStyles: 'LINE',
       sizeName: 'A4',
       download: 'download',
+      files,
+      fileRepetitions,
+      repeatOptions,
       fileLoaded: () => emit('fileLoaded'),
       refresh: () => emit('refresh'),
       swapOrientation: () => emit('swapOrientation'),
@@ -40,6 +56,7 @@ export default {
       moreOptionSelected: option => emit('moreOptionSelected', option),
       openMenu: id => emit('openMenu', id),
       downloadFile: action => emit('downloadFile', action),
+      setRepeatCount: (index, key) => emit('setRepeatCount', index, key),
     };
   },
   methods: {
@@ -109,6 +126,19 @@ export default {
               @change="onClickSizeOption"
             />
 
+            <template v-if="files && files.length">
+              <MenuOption
+                v-for="(file, index) in files"
+                :key="'repeat-' + index"
+                :id="'repeat-' + index"
+                icon="repeat"
+                :selected="fileRepetitions[index] || 'rest'"
+                :options="repeatOptions"
+                :openMenu="openMenu"
+                @change="key => setRepeatCount(index, key)"
+              />
+            </template>
+
             <ButtonOption
               icon="rotate_90_degrees_ccw"
               @onClick="swapOrientation"
@@ -140,7 +170,7 @@ export default {
           </template>
 
           <label v-if="!ready" class="mdc-button mdc-button--outlined mdc-top-app-bar__action-item load-file-button">
-            <input type="file" id="file" v-on:change="fileLoaded" style="display: none;">
+            <input type="file" id="file" multiple v-on:change="fileLoaded" style="display: none;">
             <div class="mdc-button__ripple"></div>
             <span class="mdc-button__label">Cargar</span>
           </label>
