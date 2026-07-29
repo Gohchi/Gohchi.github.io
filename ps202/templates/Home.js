@@ -26,9 +26,9 @@ export default /*html*/`
         <div v-if="showImageModal" class="fixed inset-0 z-50 flex items-center justify-center">
           <div class="absolute inset-0 bg-black/60" @click="closeImageModal"></div>
           <div class="relative z-10 max-h-[80vh] w-11/12 overflow-auto rounded-2xl bg-zinc-900 p-6">
-            <div class="flex items-center justify-between mb-4">
+            <div class="sticky top-0 z-40 flex items-center justify-between mb-4 min-h-10 px-10 rounded-2xl bg-zinc-900">
               <h3 class="text-lg font-semibold text-white">Select an image</h3>
-              <button @click="closeImageModal" class="text-zinc-300 hover:text-white">Close</button>
+              <button @click="closeImageModal" class="cursor-pointer text-zinc-300 hover:text-white">Close</button>
             </div>
             <div v-if="images?.length" class="grid gap-3 sm:grid-cols-4">
               <div
@@ -49,7 +49,7 @@ export default /*html*/`
         
         <section v-if="selectedFile" class="mb-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-6 shadow-lg">
           <div class="flex flex-wrap items-center gap-6">
-            <label class="inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:border-zinc-500">
+            <label class="cursor-pointer inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:border-zinc-500">
               <input
                 type="radio"
                 value="all"
@@ -58,7 +58,7 @@ export default /*html*/`
               />
               All games
             </label>
-            <label class="inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:border-zinc-500">
+            <label class="cursor-pointer inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:border-zinc-500">
               <input
                 type="radio"
                 value="matched"
@@ -68,13 +68,19 @@ export default /*html*/`
               Matched games
             </label>
             <label>
-            Sort:
+            Actions:
             </label>
             <button
               @click="games.sort((a,b) => (a.en_US || '').localeCompare(b.en_US || ''))"
-              class="ml-2 inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-3 py-1 text-sm font-semibold text-white transition hover:border-zinc-500"
+              class="cursor-pointer ml-2 inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-3 py-1 text-sm font-semibold text-white transition hover:border-zinc-500"
             >
-              Name ↑
+              Sort by name ↑ (en_US)
+            </button>
+            <button
+              @click="games = games.filter(game => game.match)"
+              class="cursor-pointer ml-2 inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-3 py-1 text-sm font-semibold text-white transition hover:border-zinc-500"
+            >
+              Keep only matched games
             </button>
           </div>
         </section>
@@ -123,6 +129,7 @@ export default /*html*/`
                   :src="game.imagePreviewUrl"
                   alt="preview"
                   class="max-h-80 max-w-110 w-full border border-zinc-700 object-contain"
+                  @click="changeImage(game)"
                 />
               </div>
               <TextInput
