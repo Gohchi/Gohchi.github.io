@@ -240,6 +240,7 @@ export default {
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;')
           .replace(/"/g, '&quot;')
+          .replace(/,/g, '&comma;')
           .replace(/'/g, '&apos;');
       };
       const lines = ['<?xml version="1.0" encoding="utf-8"?>', `<${rootName}>`];

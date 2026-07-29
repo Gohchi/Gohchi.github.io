@@ -67,6 +67,15 @@ export default /*html*/`
               />
               Matched games
             </label>
+            <label>
+            Sort:
+            </label>
+            <button
+              @click="games.sort((a,b) => (a.en_US || '').localeCompare(b.en_US || ''))"
+              class="ml-2 inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-3 py-1 text-sm font-semibold text-white transition hover:border-zinc-500"
+            >
+              Name ↑
+            </button>
           </div>
         </section>
 
