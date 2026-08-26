@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1FG5RC4F7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-P1FG5RC4F7');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5.0, minimum-scale=1, user-scalable=yes"/>
+    <meta charset="UTF-8">
+
+		<title>Gamelist editor</title>
+		<link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+    
+    <meta name="mobile-web-app-capable" content="yes">
+  
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="apple-touch-icon" href="favicon.ico">
+    <meta name="theme-color" content="#ffffff">
+    <script defer src="../common.js"></script>
+    <!-- <link rel="manifest" href="manifest.webmanifest"> -->
+    <!-- <script defer charset="utf-8" src="register.js"></script> -->
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "/cdn/vue.esm-browser.prod.js",
+          "vue-router": "/cdn/vue-router.esm-browser.prod.js",
+          "components/": "./components/",
+          "views/": "./views/",
+          "templates/": "./templates/",
+          "data/": "./data/",
+          "tools": "./tools.js"
+        } 
+      }
+    </script>
+    <script type="module" src="scripts.js" defer></script>
+	</head>
+	<body id="app" class="index">
+    <div id="loading">
+      <p>Please wait...</p>
+      <div class="spinner-container">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <div class="main hidden">
+      <router-view />
+    </div>
+	</body>
+  <script>
+    const intervalId = setInterval(() => {
+      const mountPoint = document.getElementById('app');
+      if (mountPoint && mountPoint.__vue_app__) {
+        console.log('Vue app mounted successfully');
+        
+        const loadingElement = document.getElementById('loading');
+        loadingElement.classList.add('hidden');
+
+        for (const selector of ['.main']) {
+          const mainContent = document.querySelector(selector);
+          mainContent.classList.remove('hidden'); 
+        }
+        clearInterval(intervalId);
+      }
+    }, 100);
+  </script>
+</html>
