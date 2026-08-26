@@ -1,33 +1,30 @@
 export default /*html*/`
   <template v-if="true">
-    <header>
+    <MainHeader
+      isHome="true"
+      @onChangeFurigana="furigana = !furigana"
+      @onOpenZoom="openZoom()"
+    >
       <div class="title">
         <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ
       </div>
-      <span class="info">Phrases: {{ articles.length }}!</span>
-      <ul class="menu-open menu-index" v-if="showMenu">
-        <!--li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li-->
-        <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
-        <li v-if="!!voices.length"><a href="#" @click.prevent="showDialog('dialog-voices'); showMenu=false;">Change voice</a></li>
-        <!--li><a href="#">Contact</a></li-->
-        <li><a href="#">COMMON PHRASES 〠</a></li>
-        <li><router-link to="/translation">小説 ベルセルク： 炎竜の騎士</router-link></li>
-        <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
-        <li><router-link to="/topics">TOPICS</router-link></li>
-      </ul>
-      <div class="icon-menu" @click="showMenu=!showMenu">
+      <div class="page-info">
+        <span class="info">Phrases: {{ articles.length }}!</span>
       </div>
-    </header>
+    </MainHeader>
 
     <main class="articles-wrapper">
       <article
         v-for="([main, eng, refs], index) in articles" :key="index"
         @click="selectedArticle=main"
         :class="{ 'selected': main==selectedArticle }"
+        :style="'zoom: ' + zoomLevel + '%'"
       >
         <span class="main">
-          <PhraseToRuby :text="main">
+          <PhraseToRuby
+            :text="main"
+            :furigana="furigana"
+          >
         </span>
         <br />
         <span class="eng" @click="showRefsDialog(refs)">{{ eng }}</span>
@@ -35,21 +32,40 @@ export default /*html*/`
     </main>
     <footer>
       <div class="actions">
-        <button
-          class="voice-active"
-          title="voice"
-          :disabled="!selectedArticle"
-          @click="speak(selectedArticle)"
-        >
-        <span>🗣️</span>
-      </button>
-        <button
-          title="load voices"
-          :disabled="!voices.length || !selectedArticle"
-          @click="showDialog('dialog-voices')"
-        >
-          <span>select voice</span>
-        </button>
+        <template v-if="showZoomMenu">
+          <div class="zoom-level">
+            <input
+              type="range"
+              id="zoom-level"
+              name="zoom-level"
+              min="100"
+              max="200"
+              :value="zoomLevel ?? 100"
+              step="1"
+              @change="onZoomChange"
+            />
+            <label for="zoom-level">Zoom</label>
+          </div>
+          <button @click="confirmZoomLevel()">&#10004;</button>
+          <button @click="cancelZoomLevel()">&#10060;</button>
+        </template>
+        <template v-else>
+          <button
+            class="voice-active"
+            title="voice"
+            :disabled="!selectedArticle"
+            @click="speak(selectedArticle)"
+          >
+            <span>🗣️</span>
+          </button>
+          <button
+            title="load voices"
+            :disabled="!voices.length || !selectedArticle"
+            @click="showDialog('dialog-voices')"
+          >
+            <span>select voice</span>
+          </button>
+        </template>
       </div>
     </footer>
     

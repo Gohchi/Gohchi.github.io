@@ -1,3 +1,4 @@
+import MainHeader from 'components/MainHeader.js';
 import PhraseToRuby from 'components/PhraseToRuby.js';
 import template from 'templates/Home.js';
 
@@ -20,6 +21,7 @@ export default {
   //   };
   // },
   components: {
+    MainHeader,
     PhraseToRuby,
   },
   methods: {
@@ -35,6 +37,22 @@ export default {
     },
     async loadVoices() {
       this.voices = await getVoices();
+    },
+    openZoom() {
+      this.showMenu = false;
+      this.prevZoomLevel = this.zoomLevel;
+      this.showZoomMenu = true;
+    },
+    confirmZoomLevel() {
+      this.showZoomMenu = false;
+      localStorage.setItem('zoom-level', this.zoomLevel);
+    },
+    cancelZoomLevel() {
+      this.zoomLevel = this.prevZoomLevel;
+      this.showZoomMenu = false;
+    },
+    onZoomChange(e) {
+      this.zoomLevel = e.target.value;
     },
   },
   mounted() {

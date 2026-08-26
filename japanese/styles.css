@@ -15,7 +15,7 @@ body {
     }
 
     footer {
-      background-color: #5d5d5d !important;
+      background-color: #323232 !important;
     }
   }
 }
@@ -145,6 +145,28 @@ body {
     }
   }
 
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    align-items: center;
+    gap: 1rem;
+
+    button {
+      padding: 1rem;
+      cursor: pointer;
+    }
+
+    .zoom-level {
+      flex: 1;
+      display: flex;
+
+      input {
+        flex: 1;
+      }
+    }
+  }
+
   footer {
     position: fixed;
     bottom: 0;
@@ -154,20 +176,6 @@ body {
     text-align: center;
     padding: 2px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 1rem;
-      align-items: center;
-      gap: 1rem;
-
-      button {
-        padding: 1rem;
-        cursor: pointer;
-      }
-    }
   }
 }
 
@@ -425,14 +433,6 @@ body {
         cursor: pointer;
       }
 
-      .zoom-level {
-        flex: 1;
-        display: flex;
-
-        input {
-          flex: 1;
-        }
-      }
       .lang-actions {
         display: flex;
         // gap: 1rem;

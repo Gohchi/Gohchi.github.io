@@ -2,8 +2,8 @@ export default /*html*/`
   <div class="berserk-novel">
     <MainHeader
       title="小説 ベルセルク"
-      @on-change-furigana="furigana = !furigana"
-      @on-open-zoom="openZoom()"
+      @onChangeFurigana="furigana = !furigana"
+      @onOpenZoom="openZoom()"
     >
       <div class="page-info">
         <span class="chapter" v-if="chapter">{{ chapter }}</span>
