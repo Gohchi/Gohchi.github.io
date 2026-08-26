@@ -8,7 +8,6 @@ import {
 } from 'store';
 
 import {
-  closeDialog,
   showDialog,
   showRefsDialog,
   speak,
@@ -32,7 +31,6 @@ export default {
   methods: {
     showRefsDialog,
     showDialog,
-    closeDialog,
     selectVoice(voice) {
       this.selectedVoice = voice;
       this.speak(this.selectedArticle);
