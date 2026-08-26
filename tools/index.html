@@ -3,8 +3,27 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
     
     <title>Mosaicos</title>
+    
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta property="og:url" content="https://www.fromprototype.com/tools/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mosaicos" />
+    <meta property="og:description" content="" />
+    <meta property="og:description" content="Crea hermosos diseños de mosaico con tamaños, márgenes y espaciado personalizables. Perfectos para proyectos de impresión y diseño." />
+    <meta property="og:image" content="https://www.fromprototype.com/tools/favicon.svg" />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="fromprototype.com">
+    <meta property="twitter:url" content="https://www.fromprototype.com/tools/">
+    <meta name="twitter:title" content="Mosaicos">
+    <meta name="twitter:description" content="Crea hermosos diseños de mosaico con tamaños, márgenes y espaciado personalizables. Perfectos para proyectos de impresión y diseño.">
+    <meta name="twitter:image" content="https://www.fromprototype.com/tools/favicon.svg">
+
+		<link rel="shortcut icon" type="image/svg+xml" href="favicon.svg"/>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> <!-- release -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
@@ -12,90 +31,47 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <link rel="stylesheet" href="styles.css">
+        <script type="importmap">
+      {
+        "imports": {
+          "vue": "/cdn/vue.esm-browser.prod.js",
+          "vue-router": "/cdn/vue-router.esm-browser.prod.js",
+          "components/": "./components/",
+          "views/": "./views/",
+          "data/": "./data/",
+          "tools": "./tools.js"
+        } 
+      }
+    </script>
+    <script type="module" src="scripts.js" defer></script>
   </head>
   <body>
     <div id="app">
-      <header class="mdc-top-app-bar">
-        <div class="mdc-top-app-bar__row">
-          <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <!-- <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">menu</button> -->
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Help" @click="showHelp=!showHelp">help</button>
-            <span class="mdc-top-app-bar__title">Mosaicos</span>
-          </section>
-          <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-            <div id="demo-menu" class="mdc-menu-surface--anchor">
-              <button id="button-sizes" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Size">photo_size_select_large</button>
-              <div id="menu-sizes" class="mdc-menu mdc-menu-surface">
-                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                  <component v-for="item in ['A4', 'A3', 'CUSTOM']">
-                    <li class="mdc-list-item" role="menuitem"
-                      v-bind:class="(sizeName==item ? 'mdc-list-item--selected' : null)"
-                      @click="sizeName=item; changeType();"
-                    >
-                      <span class="mdc-list-item__ripple"></span>
-                      <span class="mdc-list-item__text">{{ item }}</span>
-                    </li>
-                  </component>
-                </ul>
-              </div>
-            </div>
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Orientation"
-              @click="swapOrientation"
-            >rotate_90_degrees_ccw</button>
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Border"
-              @click="showBorder=!showBorder"
-            >{{ showBorder ? 'border_clear' : 'border_outer' }}</button>
-            
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Refresh"
-              v-bind:disabled="!ready" @click="refresh"
-            >autorenew</button>
-            <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Clear"
-              @click="clear"
-            >clear</button>
-            <label class="mdc-button mdc-button--outlined mdc-top-app-bar__action-item load-file-button">
-              <input type="file" id="file" v-on:change="refresh" style="display: none;">
-              <div class="mdc-button__ripple"></div>
-              <span class="mdc-button__label">Cargar</span>
-            </label>
-          </section>
-        </div>
-      </header>
-      <main class="mdc-top-app-bar--fixed-adjust">
-        <div v-if="showHelp" style="padding: 20px;">{{ message }}</div>
-        <canvas id="canvas"
-          v-if="size"
-          v-bind:width="size.width"
-          v-bind:height="size.height"
-          v-bind:style="showBorder ? styleCanvas : null"
-        ></canvas>
-        <div class="size-type-info">
-          <span v-if="sizeName!='CUSTOM'" class="mdc-top-app-bar__title size-info">{{ sizeName }} ({{ size.width }}x{{ size.height }})</span>
-          
-          <component v-if="sizeName=='CUSTOM'" class="custom-sizes">
-            <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon mdc-text-field--with-trailing-icon">
-              <span class="mdc-notched-outline">
-                <span class="mdc-notched-outline__leading"></span>
-                <span class="mdc-notched-outline__trailing"></span>
-              </span>
-              <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading">
-                {{ orientation=='h' ? 'swap_horiz' : 'swap_vert' }}
-              </i>
-              <input class="mdc-text-field__input" type="number" min="1" v-model="customWidth" @keyup="changeType" @change="changeType" />
-            </label>
-            <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon mdc-text-field--with-trailing-icon">
-              <span class="mdc-notched-outline">
-                <span class="mdc-notched-outline__leading"></span>
-                <span class="mdc-notched-outline__trailing"></span>
-              </span>
-              <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading">
-                {{ orientation=='v' ? 'swap_horiz' : 'swap_vert' }}
-              </i>
-              <input class="mdc-text-field__input" type="number" min="1" v-model="customHeight" @keyup="changeType" />
-            </label>
-          </component>
-        </div>
-      </main>
+      <div id="loading">
+        <p>Please wait...</p>
+        <div class="spinner"></div>
+      </div>
+
+      <div class="main hidden">
+        <router-view />
+      </div>
     </div>
-    <script src="scripts.js"></script>
   </body>
+  <script>
+    const intervalId = setInterval(() => {
+      const mountPoint = document.getElementById('app');
+      if (mountPoint && mountPoint.__vue_app__) {
+        console.log('Vue app mounted successfully');
+        
+        const loadingElement = document.getElementById('loading');
+        loadingElement.classList.add('hidden');
+
+        for (const selector of ['.main']) {
+          const mainContent = document.querySelector(selector);
+          mainContent.classList.remove('hidden'); 
+        }
+        clearInterval(intervalId);
+      }
+    }, 100);
+  </script>
 </html>
