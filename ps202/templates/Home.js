@@ -56,7 +56,7 @@ export default /*html*/`
                 v-model="filterMode"
                 class="h-4 w-4 text-indigo-500"
               />
-              All games
+              All games ({{ games.length }})
             </label>
             <label class="cursor-pointer inline-flex items-center gap-2 rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:border-zinc-500">
               <input
@@ -65,7 +65,7 @@ export default /*html*/`
                 v-model="filterMode"
                 class="h-4 w-4 text-indigo-500"
               />
-              Matched games
+              Matched games ({{ games.filter(game => game.match).length }})
             </label>
             <label>
             Actions:
@@ -195,7 +195,7 @@ export default /*html*/`
           <h2 class="text-xl font-semibold text-white mb-4">Files in directory not listed in XML</h2>
           
           <button
-            @click="addMissingFilesToGames"
+            @click="addMissingFilesToGames()"
             class="cursor-pointer inline-flex items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:border-zinc-500 mb-1"
           >
             Add missing files to XML
@@ -204,7 +204,9 @@ export default /*html*/`
             <div
               v-for="file in missingFiles"
               :key="file"
-              class="rounded-xl border border-zinc-700 p-4 text-left text-zinc-100 transition hover:border-zinc-500 bg-zinc-800"
+              class="cursor-pointer rounded-xl border border-zinc-700 p-4 text-left text-zinc-100 transition hover:border-zinc-500 bg-zinc-800"
+              @click="addMissingFilesToGames(file)"
+              title="add"
             >
               <div class="mb-2 font-medium text-white">{{ file.name }}</div>
             </div>

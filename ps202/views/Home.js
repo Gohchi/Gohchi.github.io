@@ -64,52 +64,7 @@ export default {
         this.readXmlFile();
       }
     },
-    // xml2json(xml) {
-    //   try {
-    //     var obj = {};
-    //     if (xml.children.length > 0) {
-    //       for (var i = 0; i < xml.children.length; i++) {
-    //         var item = xml.children.item(i);
-    //         var nodeName = item.nodeName;
-
-    //         if (typeof (obj[nodeName]) == "undefined") {
-    //           obj[nodeName] = this.xml2json(item);
-    //         } else {
-    //           if (typeof (obj[nodeName].push) == "undefined") {
-    //             var old = obj[nodeName];
-
-    //             obj[nodeName] = [];
-    //             obj[nodeName].push(old);
-    //           }
-    //           obj[nodeName].push(this.xml2json(item));
-    //         }
-    //       }
-    //     } else {
-    //       obj = xml.textContent;
-    //     }
-    //     return obj;
-    //   } catch (e) {
-    //       console.log(e.message);
-    //   }
-    // },
-    // async xmlBlobToObject(blob) {
-    //   try {
-    //     const xmlString = await blob.text();
-    //     const parser = new DOMParser();
-    //     const xmlDoc = parser.parseFromString(xmlString, "text/xml");
-        
-    //     if (xmlDoc.querySelector("parsererror")) {
-    //       throw new Error("Invalid XML structure");
-    //     }
-        
-    //     return xmlDoc; // This is your XML object
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // },
     async readXmlFile() {
-      // const test = await this.xmlBlobToObject(file);
-      // this.games
       const reader = new FileReader();
       reader.onload = () => {
         this.fileContent = reader.result;
@@ -156,15 +111,17 @@ export default {
         };
       });
     },
-    addMissingFilesToGames() {
+    addMissingFilesToGames(singleGame) {
       if (!this.selectedFile) {
         return;
       }
 
-      const missingFiles = (this.missingFiles || []).filter((file) => {
-        const relativePath = file.webkitRelativePath || file.name;
-        return !this.games.some((game) => game.path.includes(relativePath) || game.path.includes(file.name));
-      });
+      const missingFiles = singleGame ? [singleGame] : (this.missingFiles || [])
+        .filter(file =>
+          !this.games.some(game =>
+            game.path.includes(file.name)
+          )
+        );
 
       if (!missingFiles.length) {
         this.status = 'No missing files to add.';
@@ -172,19 +129,20 @@ export default {
       }
 
       const newGames = missingFiles.map(file => {
+        const name = file.name.replace(/\.[^/.]+$/, '');
         return {
-          gameid: '',
+          gameid: Math.floor(Math.random() * 25001) + 25000,
           path: `./${file.name}`,
           image: '',
-          video_id: '',
-          class_type: '',
-          game_type: '',
-          timer: '',
-          zh_CN: '',
-          en_US: '',
-          zh_TW: '',
-          ko_KR: '',
-          name: file.name.replace(/\.[^/.]+$/, ''),
+          video_id: 0,
+          class_type: 0,
+          game_type: 0,
+          timer: this.directoryName,
+          zh_CN: name,
+          en_US: name,
+          zh_TW: name,
+          ko_KR: name,
+          name,
           match: true,
           imagePreviewUrl: '',
         };
@@ -238,10 +196,9 @@ export default {
         return String(value || '')
           .replace(/&/g, '&amp;')
           .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/,/g, '&comma;')
-          .replace(/'/g, '&apos;');
+          // .replace(/"/g, '&quot;')
+          // .replace(/'/g, '&apos;')
+          .replace(/>/g, '&gt;');
       };
       const lines = ['<?xml version="1.0" encoding="utf-8"?>', `<${rootName}>`];
       this.games.forEach((game) => {
@@ -281,7 +238,7 @@ export default {
       if (this.selectedFile) {
         return this.files.filter(file =>
           !file.type.startsWith('image/')
-          && !file.type.includes('xml')
+          && !['.xml', '.state'].some(ext => file.name.includes(ext))
           && !Object.values(this.games).some(game => game.path.includes(file.name))
         );
       }
