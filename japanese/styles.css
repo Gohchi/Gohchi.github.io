@@ -232,6 +232,10 @@ body {
   }
 }
 
+.close-btn {
+  cursor: pointer;
+}
+
 .berserk-novel {
   header {
     .title {
