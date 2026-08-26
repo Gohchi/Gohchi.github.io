@@ -254,4 +254,22 @@ export const ruby = {
   "分": { furigana: "ふん", eng: [
     "part", "minute"
   ]},
+  "回": { furigana: "ま", eng: [
+    "times", "repetition"
+  ]},
+  "回目": { furigana: "かいめ", eng: [
+    "th time"
+  ]},
+  "同": { furigana: "おな", eng: [
+    "the same"
+  ]},
+  "同様": { furigana: "おなじよう", eng: [
+    "similar", "the same"
+  ]},
+  "等": { furigana: "ひと", eng: [
+    "etc.", "and so on"
+  ]},
+  "鮭": { furigana: "さけ", eng: [
+    "salmon"
+  ]},
 };

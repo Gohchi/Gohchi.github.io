@@ -1,9 +1,10 @@
 export default /*html*/`
   <template v-if="true">
+  
     <MainHeader
       isHome="true"
-      @onChangeFurigana="furigana = !furigana"
-      @onOpenZoom="openZoom()"
+      @onChangeFurigana="furiganaStore.switchFurigana()"
+      @onOpenZoom="zoomStore.openZoom()"
     >
       <div class="title">
         <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ
@@ -18,12 +19,12 @@ export default /*html*/`
         v-for="([main, eng, refs], index) in articles" :key="index"
         @click="selectedArticle=main"
         :class="{ 'selected': main==selectedArticle }"
-        :style="'zoom: ' + zoomLevel + '%'"
+        :style="'zoom: ' + zoomStore.zoomLevel + '%'"
       >
         <span class="main">
           <PhraseToRuby
             :text="main"
-            :furigana="furigana"
+            :furigana="furiganaStore.showFurigana"
           >
         </span>
         <br />
@@ -32,7 +33,7 @@ export default /*html*/`
     </main>
     <footer>
       <div class="actions">
-        <template v-if="showZoomMenu">
+        <template v-if="zoomStore.showZoomMenu">
           <div class="zoom-level">
             <input
               type="range"
@@ -40,14 +41,14 @@ export default /*html*/`
               name="zoom-level"
               min="100"
               max="200"
-              :value="zoomLevel ?? 100"
+              :value="zoomStore.zoomLevel ?? 100"
               step="1"
-              @change="onZoomChange"
+              @change="e => zoomStore.onZoomChange(e)"
             />
             <label for="zoom-level">Zoom</label>
           </div>
-          <button @click="confirmZoomLevel()">&#10004;</button>
-          <button @click="cancelZoomLevel()">&#10060;</button>
+          <button @click="zoomStore.confirmZoomLevel()">&#10004;</button>
+          <button @click="zoomStore.cancelZoomLevel()">&#10060;</button>
         </template>
         <template v-else>
           <button

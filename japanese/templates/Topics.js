@@ -2,8 +2,8 @@ export default /*html*/`
   <div class="topics">
     <MainHeader
       title="TOPICS"
-      @on-change-furigana="furigana = !furigana"
-      @on-open-zoom="openZoom()"
+      @onChangeFurigana="furiganaStore.switchFurigana()"
+      @onOpenZoom="zoomStore.openZoom()"
     >
       <phrase-to-ruby :text="'話題'"></phrase-to-ruby>
     </MainHeader>
@@ -22,6 +22,10 @@ export default /*html*/`
           <article>
             <h1 class="title">
               <div>{{ item.title }}</div>
+              <PhraseToRuby
+                :text="item.title"
+                :furigana="furiganaStore.showFurigana"
+              >
             </h1>
             <h2 class="subtitle">
               <div>{{ item.subtitle }}</div>
@@ -38,10 +42,16 @@ export default /*html*/`
         <template v-if="type === 'resource'">
           <article>
             <h1 class="title">
-              <div>{{ item.title }}</div>
+              <PhraseToRuby
+                :text="item.title"
+                :furigana="furiganaStore.showFurigana"
+              >
             </h1>
             <h2 class="subtitle">
-              <div>{{ item.subtitle }}</div>
+              <PhraseToRuby
+                :text="item.subtitle"
+                :furigana="furiganaStore.showFurigana"
+              >
             </h2>
           </article>
         </template>

@@ -4,6 +4,10 @@ import template from 'templates/Topics.js';
 
 import { topics } from 'data/topics.js';
 
+import {
+  zoomStore,
+  furiganaStore
+} from 'store';
 
 export default {
   components: {
@@ -11,34 +15,14 @@ export default {
     MainHeader,
   },
   methods: {
-    switchFurigana() {
-      this.furigana = !this.furigana;
-    },
     goToIndex() {
       const index = this.topics.findIndex(({ type }) => type === 'index') + 1;
       this.pageSelected = index;
-    },
-    openZoom() {
-      this.showMenu = false;
-      this.prevZoomLevel = this.zoomLevel;
-      this.showZoomMenu = true;
-    },
-    confirmZoomLevel() {
-      this.showZoomMenu = false;
-      localStorage.setItem('zoom-level', this.zoomLevel);
-    },
-    cancelZoomLevel() {
-      this.zoomLevel = this.prevZoomLevel;
-      this.showZoomMenu = false;
-    },
-    onZoomChange(e) {
-      this.zoomLevel = e.target.value;
     },
   },
   mounted() {
   },
   data() {
-    const zoomLevel = localStorage.getItem('zoom-level');
     const lastPageVisited = localStorage.getItem('last-page-visited');
     const showTranslation = localStorage.getItem('show-translation');
     const writingDirection = localStorage.getItem('writing-direction');
@@ -52,13 +36,11 @@ export default {
       "lang": lang ?? 'eng', // Default language
       "showTranslation": showTranslation !== null ? showTranslation === 'true' : true,
       "writingDirection": writingDirection ?? 'yokogaki', // Default writing direction - tategaki | yokogaki
-      "showZoomMenu": false,
-      "zoomLevel": zoomLevel ?? 100,
-      "prevZoomLevel": zoomLevel ?? 100,
-      "furigana": true,
       "selectedArticle": null,
       "voices": [],
       "selectedVoice": null,
+      zoomStore,
+      furiganaStore
     }
   },
   computed: {

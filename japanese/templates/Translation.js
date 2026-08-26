@@ -2,8 +2,8 @@ export default /*html*/`
   <div class="berserk-novel">
     <MainHeader
       title="小説 ベルセルク"
-      @onChangeFurigana="furigana = !furigana"
-      @onOpenZoom="openZoom()"
+      @onChangeFurigana="furiganaStore.switchFurigana()"
+      @onOpenZoom="zoomStore.openZoom()"
     >
       <div class="page-info">
         <span class="chapter" v-if="chapter">{{ chapter }}</span>
@@ -66,7 +66,7 @@ export default /*html*/`
       <template v-if="!type">
         <article
           :class="{ 'tategaki': writingDirection === 'tategaki', 'content': true }"
-          :style="'zoom: ' + zoomLevel + '%'"
+          :style="'zoom: ' + zoomStore.zoomLevel + '%'"
         >
           <div class="chapter-title" v-if="chapterFirstPage">{{ chapter }}</div>
           <template v-for="(line, index) in content" :key="index">
@@ -78,7 +78,7 @@ export default /*html*/`
               <div class="phrase">
                 <PhraseToRuby
                   :text="line"
-                  :furigana="furigana"
+                  :furigana="furiganaStore.showFurigana"
                 ></PhraseToRuby>
               </div>
               <template v-if="showTranslation && line !== ''">
@@ -90,7 +90,7 @@ export default /*html*/`
       </template>
       
       <div class="actions">
-        <template v-if="showZoomMenu">
+        <template v-if="zoomStore.showZoomMenu">
           <div class="zoom-level">
             <input
               type="range"
@@ -98,14 +98,14 @@ export default /*html*/`
               name="zoom-level"
               min="100"
               max="200"
-              :value="zoomLevel ?? 100"
+              :value="zoomStore.zoomLevel ?? 100"
               step="1"
-              @change="onZoomChange"
+              @change="e => zoomStore.onZoomChange(e)"
             />
             <label for="zoom-level">Zoom</label>
           </div>
-          <button @click="confirmZoomLevel()">&#10004;</button>
-          <button @click="cancelZoomLevel()">&#10060;</button>
+          <button @click="zoomStore.confirmZoomLevel()">&#10004;</button>
+          <button @click="zoomStore.cancelZoomLevel()">&#10060;</button>
         </template>
         <template v-else>
           <button class="next-page" title="つぎ"
