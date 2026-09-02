@@ -14,7 +14,7 @@ export default /*html*/`
       </div>
     </MainHeader>
 
-    <main class="articles-wrapper">
+    <main class="common-phrases articles-wrapper">
       <article
         v-for="([main, eng, refs], index) in articles" :key="index"
         @click="selectedArticle=main"
@@ -22,10 +22,7 @@ export default /*html*/`
         :style="'zoom: ' + zoomStore.zoomLevel + '%'"
       >
         <span class="main">
-          <PhraseToRuby
-            :text="main"
-            :furigana="furiganaStore.showFurigana"
-          >
+          <PhraseToRuby :text="main">
         </span>
         <br />
         <span class="eng" @click="showRefsDialog(refs)">{{ eng }}</span>

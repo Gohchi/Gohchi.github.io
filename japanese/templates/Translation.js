@@ -25,14 +25,14 @@ export default /*html*/`
           :class="{ 'tategaki': writingDirection === 'tategaki', 'main': true }"
         >
           <h1 class="title">
-            <PhraseToRuby :text="title"></PhraseToRuby>
+            <PhraseToRuby :text="title">
             <template v-if="showTranslation">
               <br />
               <span class="translation">{{ page[lang]?.title }}</span>
             </template>
           </h1>
           <h2 class="subtitle">
-            <PhraseToRuby :text="subtitle"></PhraseToRuby>
+            <PhraseToRuby :text="subtitle">
             <template v-if="showTranslation">
               <br />
               <span class="translation">{{ page[lang]?.subtitle }}</span>
@@ -45,7 +45,7 @@ export default /*html*/`
         <article class="index">
           <h1 class="title">{{ title }}</h1>
           <h2 class="subtitle">
-            <PhraseToRuby :text="subtitle"></PhraseToRuby>
+            <PhraseToRuby :text="subtitle">
           </h2>
           <ul>
             <li v-for="([name, pageNum], index) in chapters" :key="index"
@@ -76,10 +76,7 @@ export default /*html*/`
             </template>
             <template v-else>
               <div class="phrase">
-                <PhraseToRuby
-                  :text="line"
-                  :furigana="furiganaStore.showFurigana"
-                ></PhraseToRuby>
+                <PhraseToRuby :text="line">
               </div>
               <template v-if="showTranslation && line !== ''">
                 <span class="translation">{{ page[lang][index] }}</span>

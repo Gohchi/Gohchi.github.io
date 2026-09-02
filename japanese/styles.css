@@ -110,12 +110,8 @@ body {
     flex-direction: column;
 
     article {
-      // display: flex;
-      // flex-direction: column;
-      cursor: pointer;
-      
       gap: .5rem;
-      padding: 3px;
+      padding: 1rem;
       outline: 1px solid gray;
 
       &.selected {
@@ -185,6 +181,16 @@ body {
     padding: 2px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+
+  .list-of-items {
+    tr > * {
+      outline: 1px solid light-dark(#f3f3f3, #434343);
+      padding: .5rem 1rem;
+    }
+    th {
+      background-color: light-dark(#e0e0e0, #1a1a1a);
+    }
+  }
 }
 
 .icon-menu {
@@ -252,6 +258,12 @@ body {
   cursor: pointer;
 }
 
+.common-phrases {
+  article {
+    cursor: pointer;
+    padding: 3px;
+  }
+}
 .berserk-novel {
   header {
     .title {
@@ -522,12 +534,25 @@ body {
 .topics {
   main {
     margin: 5rem 1rem;
+
+    .filters {
+      position: fixed;
+      padding: 1rem;
+      background: light-dark(#ffffffd6, #141414e8);
+      right: 1rem;
+
+      input {
+        padding: .6rem;
+        font-size: large;
+      }
+    }
   }
 
   .sources {
     display: flex;
     gap: 0.5rem;
   }
+  
 }
 
 @media (max-width: 420px) {

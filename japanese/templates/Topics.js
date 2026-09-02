@@ -9,49 +9,81 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <template v-if="type === 'unknown'">
+      <div class="filters">
+        <input
+          type="text"
+          v-model="titleFilters"
+          placeholder="Filter by titles..."
+        />
+        <input
+          type="text"
+          v-model="subtitleFilters"
+          placeholder="Filter by content..."
+        />
+      </div>
+      <template v-if="filteredTopics?.length === 0">
         <article class="unknown">
-          <h1 class="title">Unknown Page</h1>
-          <h2 class="subtitle">This page is not available.</h2>
-          <button class="go-back" @click.prevent="goToIndex()">Go back to Index</button>
+          <h1 class="title">Empty list</h1>
+          <h2 class="subtitle">Clear filters to see more items</h2>
+          <button class="go-back" @click.prevent="titleFilters = ''; subtitleFilters = ''">Clear filters</button>
         </article>
       </template>
       
-      <template v-for="(item, index) in topics" :key="index">
-        <template v-if="type === 'standard'">
+      <template v-for="(item, index) in filteredTopics" :key="index">
+        <template v-if="item.type === 'standard'">
           <article>
             <h1 class="title">
-              <PhraseToRuby
-                :text="item.title"
-                :furigana="furiganaStore.showFurigana"
-              >
+              <PhraseToRuby :text="item.title">
             </h1>
-            <h2 class="subtitle">
+            <h4 class="subtitle">
               <div>{{ item.subtitle }}</div>
-            </h2>
-            <div class="sources">
-              <span>source:</span>
-              <template v-for="(source, i) in item.sources" :key="i" :href="source">
-                <a :href="source">{{ i+1 }}</a>
-              </template>
-            </div>
+            </h4>
+            <section v-for="(content, contentIndex) in item.content" :key="contentIndex">
+              <h3 v-if="content.heading">{{ content.heading }}</h3>
+              <p v-if="content.text">{{ content.text }}</p>
+              <p v-if="content.example">
+                <span class="example-label">Example:</span>
+                <span class="example-text">{{ content.example }}</span>
+              </p>
+            </section>
+            <Sources
+              v-if="item.sources?.length"
+              :sources="item.sources"
+            >
           </article>
         </template>
 
-        <template v-if="type === 'resource'">
+        <template v-if="item.type === 'resource'">
           <article>
             <h1 class="title">
-              <PhraseToRuby
-                :text="item.title"
-                :furigana="furiganaStore.showFurigana"
-              >
+              <PhraseToRuby :text="item.title">
             </h1>
-            <h2 class="subtitle">
-              <PhraseToRuby
-                :text="item.subtitle"
-                :furigana="furiganaStore.showFurigana"
-              >
-            </h2>
+            <h4 v-if="item.subtitle" class="subtitle">
+              <PhraseToRuby :text="item.subtitle">
+            </h4>
+            <p v-if="item.content" class="content">
+              <PhraseToRuby :text="item.content">
+            </p>
+            <Sources
+              v-if="item.sources?.length"
+              :sources="item.sources"
+            >
+          </article>
+        </template>
+
+        <template v-if="item.type === 'list'">
+          <article>
+            <h1 class="title">
+              <PhraseToRuby :text="item.title">
+            </h1>
+            <h4 class="subtitle">
+              <PhraseToRuby :text="item.subtitle">
+            </h4>
+            <ListOfItems :items="item.items">
+            <Sources
+              v-if="item.sources?.length"
+              :sources="item.sources"
+            >
           </article>
         </template>
       </template>

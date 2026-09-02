@@ -1,5 +1,7 @@
 import PhraseToRuby from 'components/PhraseToRuby.js';
 import MainHeader from 'components/MainHeader.js';
+import ListOfItems from 'components/ListOfItems.js';
+import Sources from 'components/Sources.js';
 import template from 'templates/Topics.js';
 
 import { topics } from 'data/topics.js';
@@ -13,6 +15,8 @@ export default {
   components: {
     PhraseToRuby,
     MainHeader,
+    ListOfItems,
+    Sources,
   },
   methods: {
     goToIndex() {
@@ -30,11 +34,35 @@ export default {
       "pageSelected": lastPageVisited ? +lastPageVisited : 1, // Default to the first page
       "hideDisclaimer": true,
       "selectedArticle": null,
+      "titleFilters": "",
+      "subtitleFilters": "",
       zoomStore,
       furiganaStore
     }
   },
   computed: {
+    filteredTopics() {
+      return this.topics.filter(item => {
+        if (this.titleFilters === "" && this.subtitleFilters === "") {
+          return true; // No filters applied, include all topics
+        }
+
+        let titleFilter = false;
+        let subtitleFilter = false;
+
+        if (this.titleFilters) {
+          const titleFilters = this.titleFilters?.split(' ').map(filter => filter.toLowerCase());
+          titleFilter = item.title.split(' ').some(word => titleFilters.some(filter => word.toLowerCase().includes(filter)));
+        }
+
+        if (this.subtitleFilters) {
+          const subtitleFilters = this.subtitleFilters?.split(' ').map(filter => filter.toLowerCase());
+          subtitleFilter = subtitleFilters?.length === 0 || item.subtitle.split(' ').some(word => subtitleFilters.some(filter => word.toLowerCase().includes(filter)));
+        }
+
+        return titleFilter || subtitleFilter;
+      });
+    },
     page() {
       return this.topics[this.pageSelected-1] || {};
     },

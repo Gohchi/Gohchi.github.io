@@ -276,4 +276,16 @@ export const ruby = {
   "誕生日": { furigana: "たんじょうび", eng: [
     "birthday"
   ]},
+  "擬声語": { furigana: "ぎせいご", eng: [
+    "onomatopoeia"
+  ]},
+  "擬音語": { furigana: "ぎおんご", eng: [
+    "onomatopoeia"
+  ]},
+  "擬態語": { furigana: "ぎたいご", eng: [
+    "mimetic words"
+  ]},
+  "擬容語": { furigana: "ぎようご", eng: [
+    "mimetic words"
+  ]},
 };
