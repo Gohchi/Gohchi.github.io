@@ -59,13 +59,6 @@ export default /*html*/`
           >
             <span>🗣️</span>
           </button>
-          <button
-            title="load voices"
-            :disabled="!voices.length || !selectedArticle"
-            @click="showDialog('dialog-voices')"
-          >
-            <span>select voice</span>
-          </button>
         </template>
       </div>
     </footer>
@@ -73,24 +66,6 @@ export default /*html*/`
     <dialog id="dialog-refs" @click="closeDialog('dialog-refs')">
       <h2>References:</h2>
       <div class="content">
-      </div>
-    </dialog>
-
-    <dialog id="dialog-voices">
-      <button class="close-btn" @click="closeDialog('dialog-voices')" aria-label="Close">&times;</button>
-      <h2>Select Voice</h2>
-      <h4>Example: {{ selectedArticle }}</h4>
-      <div class="content">
-        <ul class="voice-list">
-          <li v-for="(voice, idx) in voices" :key="voice.voiceURI">
-            <button
-              :class="{ selected: selectedVoice && selectedVoice.voiceURI === voice.voiceURI }"
-              @click="selectVoice(voice)"
-            >
-              {{ voice.name }} <span v-if="voice.lang">({{ voice.lang }})</span>
-            </button>
-          </li>
-        </ul>
       </div>
     </dialog>
   </template>

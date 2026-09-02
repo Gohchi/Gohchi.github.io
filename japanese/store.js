@@ -1,5 +1,10 @@
 import { reactive } from 'vue';
 
+import {
+  speak,
+  getVoices,
+} from 'tools';
+
 const zoomLevel = localStorage.getItem('zoom-level');
 
 export const zoomStore = reactive({
@@ -26,6 +31,7 @@ export const zoomStore = reactive({
   },
 });
 
+
 const furiganaEnabled = localStorage.getItem('furigana-enabled') === 'true';
 
 export const furiganaStore = reactive({
@@ -35,4 +41,26 @@ export const furiganaStore = reactive({
     this.showFurigana = !this.showFurigana;
     localStorage.setItem('furigana-enabled', this.showFurigana);
   },
+});
+
+
+const selectedVoiceURI = localStorage.getItem('voice');
+
+export const voiceStore = reactive({
+  "selectedVoice": null,
+  "voices": [],
+
+  selectVoice(voice) {
+    this.selectedVoice = voice;
+    localStorage.setItem('voice', voice.voiceURI);
+  },
+  speak(text) {
+    speak(text, this.selectedVoice);
+  },
+  async getVoices() {
+    const voices = await getVoices();
+    this.voices = voices;
+    this.selectVoice(voices.find(v => v.voiceURI === selectedVoiceURI) || voices[0]);
+    return voices;
+  }
 });

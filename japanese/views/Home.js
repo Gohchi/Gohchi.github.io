@@ -11,7 +11,6 @@ import {
   showDialog,
   showRefsDialog,
   speak,
-  getVoices,
 } from 'tools';
 
 import { data } from 'data/phrases.js';
@@ -31,19 +30,7 @@ export default {
   methods: {
     showRefsDialog,
     showDialog,
-    selectVoice(voice) {
-      this.selectedVoice = voice;
-      this.speak(this.selectedArticle);
-    },
-    speak(text) {
-      speak(text, this.selectedVoice);
-    },
-    async loadVoices() {
-      this.voices = await getVoices();
-    },
-  },
-  mounted() {
-    this.loadVoices();
+    speak,
   },
   data() {
     const lastPageVisited = localStorage.getItem('last-page-visited');
@@ -61,8 +48,6 @@ export default {
 
       "furigana": true,
       "selectedArticle": null,
-      "voices": [],
-      "selectedVoice": null,
       zoomStore,
       furiganaStore,
     }

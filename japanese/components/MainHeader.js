@@ -1,6 +1,10 @@
 import { toRefs, defineEmits } from 'vue';
 
 import {
+  voiceStore
+} from 'store';
+
+import {
   showDialog,
   closeDialog,
 } from 'tools';
@@ -31,7 +35,8 @@ export default {
   },
   data() {
     return {
-      showMenu: false,
+      "showMenu": false,
+      "voices": [],
     };
   },
   components: {
@@ -39,6 +44,16 @@ export default {
   methods: {
     showDialog,
     closeDialog,
+    selectVoice(voice) {
+      voiceStore.selectVoice(voice);
+      voiceStore.speak("これはテストです");
+    },
+    async loadVoices() {
+      this.voices = await voiceStore.getVoices();
+    },
+  },
+  mounted() {
+    this.loadVoices();
   },
   template: /*html*/`
     <header>
@@ -55,6 +70,7 @@ export default {
         <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
         <li v-if="!hideFurigana"><a href="#" @click.prevent="onChangeFurigana()">Switch furigana</a></li>
         <li v-if="!hideZoom"><a href="#" @click.prevent="onOpenZoom()">Zoom level</a></li>
+        <li v-if="!!voices.length"><a href="#" @click.prevent="showDialog('dialog-voices'); showMenu=false;">Change voice</a></li>
       </ul>
       
       <div class="icon-menu" @click="showMenu=!showMenu">
@@ -143,6 +159,24 @@ export default {
       </div>
 
       <p>Hiragana and Katakana are two of the three main scripts used in Japanese writing. Hiragana is used for native Japanese words, while Katakana is typically used for foreign words and names.</p>
+    </dialog>
+    
+    <dialog id="dialog-voices">
+      <button class="close-btn" @click="closeDialog('dialog-voices')" aria-label="Close">&times;</button>
+      <h2>Select Voice</h2>
+      <h4>Example: {{ selectedArticle }}</h4>
+      <div class="content">
+        <ul class="voice-list">
+          <li v-for="(voice, idx) in voices" :key="voice.voiceURI">
+            <button
+              :class="{ selected: selectedVoice && selectedVoice.voiceURI === voice.voiceURI }"
+              @click="selectVoice(voice)"
+            >
+              {{ voice.name }} <span v-if="voice.lang">({{ voice.lang }})</span>
+            </button>
+          </li>
+        </ul>
+      </div>
     </dialog>
   `,
 }
