@@ -56,6 +56,7 @@ export default {
     this.loadVoices();
   },
   template: /*html*/`
+    <div class="backdrop" v-if="showMenu" @click="showMenu=false"></div>
     <header>
       <div class="title">
         {{ title }}

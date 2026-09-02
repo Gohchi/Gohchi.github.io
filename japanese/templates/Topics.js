@@ -21,7 +21,6 @@ export default /*html*/`
         <template v-if="type === 'standard'">
           <article>
             <h1 class="title">
-              <div>{{ item.title }}</div>
               <PhraseToRuby
                 :text="item.title"
                 :furigana="furiganaStore.showFurigana"

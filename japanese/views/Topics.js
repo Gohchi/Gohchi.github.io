@@ -23,22 +23,13 @@ export default {
   mounted() {
   },
   data() {
-    const lastPageVisited = localStorage.getItem('last-page-visited');
-    const showTranslation = localStorage.getItem('show-translation');
-    const writingDirection = localStorage.getItem('writing-direction');
-    const lang = localStorage.getItem('lang');
+    const lastPageVisited = localStorage.getItem('topics-last-page-visited');
 
     return {
-      "showMenu": false,
       "topics": topics,
       "pageSelected": lastPageVisited ? +lastPageVisited : 1, // Default to the first page
       "hideDisclaimer": true,
-      "lang": lang ?? 'eng', // Default language
-      "showTranslation": showTranslation !== null ? showTranslation === 'true' : true,
-      "writingDirection": writingDirection ?? 'yokogaki', // Default writing direction - tategaki | yokogaki
       "selectedArticle": null,
-      "voices": [],
-      "selectedVoice": null,
       zoomStore,
       furiganaStore
     }

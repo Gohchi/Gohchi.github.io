@@ -35,6 +35,7 @@ export const ruby = {
   "趣味": { furigana: "しゅみ", eng: [] },
   "読": { furigana: "よ", eng: [] },
   "飲": { furigana: "の", eng: [] },
+  "毎週": { furigana: "まいしゅう", eng: [] },
   "毎週木曜日": { furigana: "まいしゅうもくようび", eng: [] },
   "弟": { furigana: "おとうと", eng: [
     "(younger) brother"
@@ -271,5 +272,8 @@ export const ruby = {
   ]},
   "鮭": { furigana: "さけ", eng: [
     "salmon"
+  ]},
+  "誕生日": { furigana: "たんじょうび", eng: [
+    "birthday"
   ]},
 };
