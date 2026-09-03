@@ -35,6 +35,7 @@ export const ruby = {
   "趣味": { furigana: "しゅみ", eng: [] },
   "読": { furigana: "よ", eng: [] },
   "飲": { furigana: "の", eng: [] },
+  "毎週": { furigana: "まいしゅう", eng: [] },
   "毎週木曜日": { furigana: "まいしゅうもくようび", eng: [] },
   "弟": { furigana: "おとうと", eng: [
     "(younger) brother"
@@ -213,6 +214,9 @@ export const ruby = {
     "guard", "sentinel"
   ]},
   "話所": { furigana: "はなししょ", eng: [
+    "topic", "subject"
+  ]},
+  "話題": { furigana: "わだい", eng: [
     "meeting place"
   ]},
   "死休置": { furigana: "したいおけ", eng: [
@@ -251,4 +255,43 @@ export const ruby = {
   "分": { furigana: "ふん", eng: [
     "part", "minute"
   ]},
+  "回": { furigana: "ま", eng: [
+    "times", "repetition"
+  ]},
+  "回目": { furigana: "かいめ", eng: [
+    "th time"
+  ]},
+  "同": { furigana: "おな", eng: [
+    "the same"
+  ]},
+  "同様": { furigana: "おなじよう", eng: [
+    "similar", "the same"
+  ]},
+  "等": { furigana: "ひと", eng: [
+    "etc.", "and so on"
+  ]},
+  "鮭": { furigana: "さけ", eng: [
+    "salmon"
+  ]},
+  "猫": { furigana: "ねこ", eng: [
+    "cat"
+  ]},
+  "誕生日": { furigana: "たんじょうび", eng: [
+    "birthday"
+  ]},
+  "擬声語": { furigana: "ぎせいご", eng: [
+    "onomatopoeia"
+  ]},
+  "擬音語": { furigana: "ぎおんご", eng: [
+    "onomatopoeia"
+  ]},
+  "擬態語": { furigana: "ぎたいご", eng: [
+    "mimetic words"
+  ]},
+  "擬容語": { furigana: "ぎようご", eng: [
+    "mimetic words"
+  ]},
+  "今": { furigana: "いま", eng: [
+    "now"
+  ]}, 
 };

@@ -1,3 +1,7 @@
+import {
+  voiceStore
+} from 'store';
+
 export const extractKanji = phrase => {
   if (!phrase) return [];
   const kanjiList = [];
@@ -69,12 +73,10 @@ export const closeDialog = id => {
   }
 };
 
-export const speak = (text, voice) => {
+export const speak = (text) => {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'ja-JP';
-  if (voice) {
-    utterance.voice = voice; //this.selectedVoice;
-  }
+  utterance.voice = voiceStore.selectedVoice;
   window.speechSynthesis.speak(utterance);
 }
 

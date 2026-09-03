@@ -6,6 +6,10 @@ import { ruby } from 'data/kanji.js';
 
 import KanjiWithRuby from './KanjiWithRuby.js';
 
+import {
+  furiganaStore
+} from 'store';
+
 export default {
   props: {
     text: String,
@@ -19,6 +23,11 @@ export default {
       "ruby": ruby,
     };
   },
+  data() {
+    return {
+      furiganaStore,
+    };
+  },
   components: {
     KanjiWithRuby,
   },
@@ -28,8 +37,8 @@ export default {
   },
   template: /*html*/`
     <template v-for="(group, index) in splitByKanji(text, extractKanji(text))" :key="index">
-      <template v-if="furigana && !!ruby[group]">
-        <kanji-with-ruby :key="index" :text="group"></kanji-with-ruby>
+      <template v-if="furiganaStore.showFurigana && !!ruby[group]">
+        <KanjiWithRuby :key="index" :text="group"></KanjiWithRuby>
       </template>
       <template v-else>
         <span>{{ group }}</span>
