@@ -39,11 +39,11 @@ export default /*html*/`
               <div>{{ item.subtitle }}</div>
             </h4>
             <section v-for="(content, contentIndex) in item.content" :key="contentIndex">
-              <h3 v-if="content.heading">{{ content.heading }}</h3>
-              <p v-if="content.text">{{ content.text }}</p>
+              <h3 v-if="content.heading"><PhraseToRuby :text="content.heading"></h3>
+              <p v-if="content.text"><PhraseToRuby :text="content.text"></p>
               <p v-if="content.example">
-                <span class="example-label">Example:</span>
-                <span class="example-text">{{ content.example }}</span>
+                <h4 class="example-label">Example:</h4>
+                <span class="example-text"><PhraseToRuby :text="content.example"></span>
               </p>
             </section>
             <Sources

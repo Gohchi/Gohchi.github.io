@@ -273,6 +273,9 @@ export const ruby = {
   "鮭": { furigana: "さけ", eng: [
     "salmon"
   ]},
+  "猫": { furigana: "ねこ", eng: [
+    "cat"
+  ]},
   "誕生日": { furigana: "たんじょうび", eng: [
     "birthday"
   ]},
@@ -288,4 +291,7 @@ export const ruby = {
   "擬容語": { furigana: "ぎようご", eng: [
     "mimetic words"
   ]},
+  "今": { furigana: "いま", eng: [
+    "now"
+  ]}, 
 };
