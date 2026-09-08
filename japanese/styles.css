@@ -628,3 +628,248 @@ body {
     filter: drop-shadow(2px 4px 4px white)
   }
 }
+
+.print-practice {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f6f3ec;
+  color: #1d2523;
+  min-height: calc(100vh - 4rem);
+
+  .print-toolbar {
+    max-width: 72rem;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    border-bottom: 1px solid #c9c2b5;
+    padding-bottom: 1rem;
+  }
+
+  .print-heading {
+    .eyebrow {
+      margin: 0 0 .3rem;
+      color: #b34f35;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Zen Antique Soft", serif;
+      font-size: clamp(1.8rem, 4vw, 3.3rem);
+      font-weight: 400;
+    }
+
+    p:last-child {
+      margin: .35rem 0 0;
+      color: #58635e;
+    }
+  }
+
+  .print-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .6rem;
+  }
+
+  .segmented-control,
+  .level-control {
+    display: flex;
+    gap: .25rem;
+    align-items: center;
+  }
+
+  .segmented-control button,
+  .level-control button,
+  .print-button {
+    border: 1px solid #a9a196;
+    background: #fffdf8;
+    color: #27312e;
+    padding: .55rem .75rem;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .segmented-control button:first-child { border-radius: 4px 0 0 4px; }
+  .segmented-control button:last-child { border-radius: 0 4px 4px 0; }
+
+  .segmented-control button.active,
+  .level-control button.active {
+    background: #273f3a;
+    color: #fffdf8;
+    border-color: #273f3a;
+  }
+
+  .level-control span {
+    font-size: .75rem;
+    font-weight: 700;
+    color: #58635e;
+    margin-right: .25rem;
+  }
+
+  .print-button {
+    background: #b34f35;
+    border-color: #b34f35;
+    color: white;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .practice-sheet {
+    max-width: 72rem;
+    width: 60vw;
+
+    /*margin: 0 auto;*/
+    background: #fffdf8;
+    border: 1px solid #c9c2b5;
+    padding: 1rem;
+  }
+
+  .sheet-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #58635e;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .practice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
+    gap: .75rem;
+  }
+
+  .practice-card {
+    min-width: 0;
+    min-height: 11rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    grid-template-rows: 1fr auto;
+    gap: .6rem;
+    padding: .7rem;
+    border: 1px solid #d7d0c4;
+    background-color: #fffdf8;
+    background-image: linear-gradient(#e7e0d5 1px, transparent 1px), linear-gradient(90deg, #e7e0d5 1px, transparent 1px);
+    background-size: 2rem 2rem;
+  }
+
+  .character-reference {
+    grid-row: 1 / 3;
+    align-self: center;
+    justify-self: center;
+    color: #273f3a;
+    font-family: "Zen Antique Soft", serif;
+    font-size: 3.25rem;
+    line-height: 1;
+  }
+
+  .writing-boxes {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    /*gap: .35rem;
+    align-self: center;*/
+
+    grid-row: 1 / 3;
+    align-self: center;
+    color: #dbdbdb;
+    font-family: "Zen Antique Soft", serif;
+    font-size: 3.25rem;
+    line-height: 1.4;
+
+    span {
+      aspect-ratio: 1;
+      border: 1px dashed #a9a196;
+      background: rgba(255, 253, 248, .55);
+      text-align: center;
+    }
+  }
+
+  .reading {
+    grid-column: 2;
+    color: #b34f35;
+    font-size: .8rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .print-practice {
+    padding: .75rem;
+
+    .print-toolbar {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .print-controls {
+      align-items: stretch;
+    }
+
+    .segmented-control,
+    .level-control {
+      justify-content: center;
+    }
+
+    .print-button {
+      width: 100%;
+    }
+
+    .practice-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .practice-card {
+      grid-template-columns: 3rem 1fr;
+      min-height: 9rem;
+    }
+
+    .character-reference {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+@media print {
+  body {
+    background: white;
+  }
+
+  header,
+  footer,
+  .print-toolbar {
+    display: none !important;
+  }
+
+  body main.print-practice {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  .print-practice .practice-sheet {
+    max-width: none;
+    border: 0;
+    padding: 0;
+  }
+
+  .print-practice .practice-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: .35cm;
+  }
+
+  .print-practice .practice-card {
+    break-inside: avoid;
+    min-height: 4.8cm;
+  }
+}

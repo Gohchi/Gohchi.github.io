@@ -165,24 +165,17 @@ export const ruby = {
   "顔": { furigana: "かお", JLPT_level: "N4", eng: [
     "face", "look"
   ]},
-  "記録": { furigana: "きろく", JLPT_level: "N3", eng: [] },
-  "暴力": { furigana: "ぼうりょく", JLPT_level: "N3", eng: [] },
-  "支配": { furigana: "しはい", JLPT_level: "N2", eng: [] },
-  "大陸": { furigana: "たいりく", JLPT_level: "N2", eng: [] },
-  "唯一神": { furigana: "ゆいいつしん", JLPT_level: "N1", eng: [] },
-  "信仰": { furigana: "しんこう", JLPT_level: "N1", eng: [] },
-  "絶対": { furigana: "ぜったい", JLPT_level: "N3", eng: [] },
-  "法王庁": { furigana: "ほうおうちょう", JLPT_level: "N1", eng: [] },
-  "異端審問": { furigana: "いたんしんもん", JLPT_level: "N1", eng: [
-  "skill", "expertise"
+  "熟練": { furigana: "じゅくれん", JLPT_level: "N1", eng: [
+    "skill", "expertise"
   ]},
-  "暴威": { furigana: "ぼうい", JLPT_level: "N1", eng: [] },
-  "医師": { furigana: "いし", JLPT_level: "N3", eng: ["doctor" ]},
-  "大国": { furigana: "たいこく", JLPT_level: "N2", eng: [] },
-  "戦乱": { furigana: "せんらん", JLPT_level: "N1", eng: [] },
-  "兵士": { furigana: "へいし", JLPT_level: "N3", eng: ["soldier" ]},
-  "時代": { furigana: "じだい", JLPT_level: "N4", eng: [] },
-  "死休": { furigana: "しきょう", JLPT_level: "N1", eng: [
+  "医師": { furigana: "いし", JLPT_level: "N3", eng: [
+    "doctor", "physician"
+  ]},
+  "見慣": { furigana: "みな", JLPT_level: "N1", eng: []},
+  "兵士": { furigana: "へいし", JLPT_level: "N3", eng: [
+    "soldier"
+  ]},
+  "性別": { furigana: "せいべつ", JLPT_level: "N3", eng: [
     "sex", "gender"
   ]},
   "判別": { furigana: "はんべつ", JLPT_level: "N1", eng: [

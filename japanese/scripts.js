@@ -6,6 +6,7 @@ import Home from 'views/Home.js';
 import Translation from 'views/Translation.js';
 import KanaKeyboard from 'views/KanaKeyboard.js';
 import Topics from 'views/Topics.js';
+import PrintPractice from 'views/PrintPractice.js';
 
 const app = createApp({});
 
@@ -64,6 +65,7 @@ const routes = [
   { path: '/translation', component: Translation, name: 'translation' },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
   { path: '/topics', component: Topics, name: 'topics' },
+  { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
   { path: '/about', component: About, name: 'about' },
   {
     path: '/user/:id(\\d+)',
