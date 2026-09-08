@@ -751,7 +751,7 @@ body {
 
   .practice-card {
     min-width: 0;
-    min-height: 11rem;
+    min-height: 6rem;
     position: relative;
     display: grid;
     grid-template-columns: 4rem 1fr;
@@ -796,7 +796,8 @@ body {
   }
 
   .reading {
-    grid-column: 2;
+    position: absolute;
+    margin: .2rem;
     color: #b34f35;
     font-size: .8rem;
     text-align: center;

@@ -1,5 +1,254 @@
 
 export const ruby = {
+  "一": { furigana: "いち", JLPT_level: "N5", eng: [
+    "one"
+  ]},
+  "二": { furigana: "に", JLPT_level: "N5", eng: [
+    "two"
+  ]},
+  "三": { furigana: "さん", JLPT_level: "N5", eng: [
+    "three"
+  ]},
+  "四": { furigana: "よん", JLPT_level: "N5", eng: [
+    "four"
+  ]},
+  "五": { furigana: "ご", JLPT_level: "N5", eng: [
+    "five"
+  ]},
+  "六": { furigana: "ろく", JLPT_level: "N5", eng: [
+    "six"
+  ]},
+  "七": { furigana: "なな", JLPT_level: "N5", eng: [
+    "seven"
+  ]},
+  "八": { furigana: "はち", JLPT_level: "N5", eng: [
+    "eight"
+  ]},
+  "九": { furigana: "きゅう", JLPT_level: "N5", eng: [
+    "nine"
+  ]},
+  "十": { furigana: "じゅう", JLPT_level: "N5", eng: [
+    "ten"
+  ]},
+  "百": { furigana: "ひゃく", JLPT_level: "N5", eng: [
+    "hundred"
+  ]},
+  "千": { furigana: "せん", JLPT_level: "N5", eng: [
+    "thousand"
+  ]},
+  "万": { furigana: "まん", JLPT_level: "N5", eng: [
+    "ten thousand"
+  ]},
+  "日": { furigana: "ひ", JLPT_level: "N5", eng: [
+    "day", "sun"
+  ]},
+  "月": { furigana: "つき", JLPT_level: "N5", eng: [
+    "moon", "month"
+  ]},
+  "火": { furigana: "ひ", JLPT_level: "N5", eng: [
+    "fire"
+  ]},
+  "水": { furigana: "みず", JLPT_level: "N5", eng: [
+    "water"
+  ]},
+  "木": { furigana: "き", JLPT_level: "N5", eng: [
+    "tree", "wood"
+  ]},
+  "金": { furigana: "かね", JLPT_level: "N5", eng: [
+    "money", "gold"
+  ]},
+  "土": { furigana: "つち", JLPT_level: "N5", eng: [
+    "earth", "soil"
+  ]},
+  "本": { furigana: "ほん", JLPT_level: "N5", eng: [
+    "book"
+  ]},
+  "話": { furigana: "はなし", JLPT_level: "N5", eng: [
+    "talk", "speak"
+  ]},
+  "人": { furigana: "ひと", JLPT_level: "N5", eng: [
+    "person"
+  ]},
+  "女": { furigana: "おんな",
+    JLPT_level: "N5",
+    eng: [
+    "woman",
+  ]},
+  "男": { furigana: "おとこ", JLPT_level: "N5", eng: [
+    "man", "male"
+  ]},
+  "子": { furigana: "こ", JLPT_level: "N5", eng: [
+    "child"
+  ]},
+  "友": { furigana: "とも", JLPT_level: "N5", eng: ["friend"]},
+  "国": { furigana: "くに", JLPT_level: "N5", eng: [
+    "country", "region"
+  ]},
+  "学": { furigana: "まな", JLPT_level: "N5", eng: [
+    "study", "learning"
+  ]},
+  "校": { furigana: "こう", JLPT_level: "N5", eng: [
+    "school"
+  ]},
+  "小": { furigana: "ちい", JLPT_level: "N5", eng: [
+    "small", "little", "tiny"
+  ]},
+  "大": { furigana: "おお", JLPT_level: "N5", eng: [
+    "big", "large"
+  ]},
+  "少": { furigana: "すく", JLPT_level: "N5", eng: [
+    "few", "little"
+  ]},
+  "多": { furigana: "おお", JLPT_level: "N5", eng: [
+    "many"
+  ]},
+  "時": { furigana: "とき", JLPT_level: "N5", eng: [
+    "hour"
+  ]},
+  "右": { furigana: "みぎ", JLPT_level: "N5", eng: [
+    "right"
+  ]},
+  "花": { furigana: "はな", JLPT_level: "N5", eng: [
+    "flower"
+  ]},
+  "貝": { furigana: "かい", JLPT_level: "N5", eng: [
+    "shellfish"
+  ]},
+  "円": { furigana: "えん", JLPT_level: "N5", eng: [
+    "yen", "circle"
+  ]},
+  "王": { furigana: "おう", JLPT_level: "N5", eng: [
+    "king"
+  ]},
+  "音": { furigana: "おと", JLPT_level: "N5", eng: [
+    "sound"
+  ]},
+  "下": { furigana: "した", JLPT_level: "N5", eng: [
+    "below", "down"
+  ]},
+  "気": { furigana: "き", JLPT_level: "N5", eng: [
+    "spirit", "feeling"
+  ]},
+  "休": { furigana: "やす", JLPT_level: "N5", eng: [
+    "rest", "holiday"
+  ]},
+  "玉": { furigana: "たま", JLPT_level: "N5", eng: [
+    "ball", "jewel"
+  ]},
+  "空": { furigana: "そら", JLPT_level: "N5", eng: [
+    "sky", "empty"
+  ]},
+  "犬": { furigana: "いぬ", JLPT_level: "N5", eng: [
+    "dog"
+  ]},
+  "口": { furigana: "くち", JLPT_level: "N5", eng: [
+    "mouth"
+  ]},
+  "左": { furigana: "ひだり", JLPT_level: "N5", eng: [
+    "left"
+  ]},
+  "山": { furigana: "やま", JLPT_level: "N5", eng: [
+    "mountain"
+  ]},
+  "糸": { furigana: "いと", JLPT_level: "N5", eng: [
+    "thread"
+  ]},
+  "字": { furigana: "じ", JLPT_level: "N5", eng: [
+    "character", "letter"
+  ]},
+  "耳": { furigana: "みみ", JLPT_level: "N5", eng: [
+    "ear"
+  ]},
+  "車": { furigana: "くるま", JLPT_level: "N5", eng: [
+    "car", "vehicle"
+  ]},
+  "手": { furigana: "て", JLPT_level: "N5", eng: [
+    "hand"
+  ]},
+  "出": { furigana: "で", JLPT_level: "N5", eng: [
+    "exit", "leave"
+  ]},
+  "上": { furigana: "うえ", JLPT_level: "N5", eng: [
+    "above", "up"
+  ]},
+  "森": { furigana: "もり", JLPT_level: "N5", eng: [
+    "forest"
+  ]},
+  "正": { furigana: "ただ", JLPT_level: "N5", eng: [
+    "correct", "right"
+  ]},
+  "生": { furigana: "い", JLPT_level: "N5", eng: [
+    "life", "living"
+  ]},
+  "青": { furigana: "あお", JLPT_level: "N5", eng: [
+    "blue"
+  ]},
+  "夕": { furigana: "ゆう", JLPT_level: "N5", eng: [
+    "evening"
+  ]},
+  "石": { furigana: "いし", JLPT_level: "N5", eng: [
+    "stone"
+  ]},
+  "赤": { furigana: "あか", JLPT_level: "N5", eng: [
+    "red"
+  ]},
+  "川": { furigana: "かわ", JLPT_level: "N5", eng: [
+    "river"
+  ]},
+  "先": { furigana: "さき", JLPT_level: "N5", eng: [
+    "ahead", "previous"
+  ]},
+  "早": { furigana: "はや", JLPT_level: "N5", eng: [
+    "early", "fast"
+  ]},
+  "草": { furigana: "くさ", JLPT_level: "N5", eng: [
+    "grass"
+  ]},
+  "足": { furigana: "あし", JLPT_level: "N5", eng: [
+    "foot", "leg"
+  ]},
+  "村": { furigana: "むら", JLPT_level: "N5", eng: [
+    "village"
+  ]},
+  "竹": { furigana: "たけ", JLPT_level: "N5", eng: [
+    "bamboo"
+  ]},
+  "中": { furigana: "なか", JLPT_level: "N5", eng: [
+    "middle", "inside"
+  ]},
+  "虫": { furigana: "むし", JLPT_level: "N5", eng: [
+    "insect"
+  ]},
+  "天": { furigana: "てん", JLPT_level: "N5", eng: [
+    "heaven", "sky"
+  ]},
+  "田": { furigana: "た", JLPT_level: "N5", eng: [
+    "rice field"
+  ]},
+  "入": { furigana: "はい", JLPT_level: "N5", eng: [
+    "enter"
+  ]},
+  "年": { furigana: "とし", JLPT_level: "N5", eng: [
+    "year"
+  ]},
+  "白": { furigana: "しろ", JLPT_level: "N5", eng: [
+    "white"
+  ]},
+  "文": { furigana: "ぶん", JLPT_level: "N5", eng: [
+    "sentence", "writing"
+  ]},
+  "名": { furigana: "な", JLPT_level: "N5", eng: [
+    "name"
+  ]},
+  "立": { furigana: "た", JLPT_level: "N5", eng: [
+    "stand"
+  ]},
+  "力": { furigana: "ちから", JLPT_level: "N5", eng: [
+    "power", "strength"
+  ]},
+  "林": { furigana: "はやし", JLPT_level: "N5", eng: [
+    "woods"
+  ]},
   "私": {
     furigana: "わたし",
     JLPT_level: "N5",
@@ -7,19 +256,14 @@ export const ruby = {
       "I", "me"
     ]
   },
-  "女": { furigana: "おんな",
-    JLPT_level: "N5",
-    eng: [
-    "woman",
+  "先生": { furigana: "せんせい", JLPT_level: "N5", eng: [
+    "teacher"
   ]},
   "彼": { furigana: "かれ", JLPT_level: "N4", eng: [
     "he", "him"
   ]},
   "彼女": { furigana: "かのしょ", JLPT_level: "N5", eng: [
     "she", "her"
-  ]},
-  "人": { furigana: "ひと", JLPT_level: "N5", eng: [
-    "person"
   ]},
   "可愛": { furigana: "かわい", JLPT_level: "N3", eng: [] },
   "好": { furigana: "す", JLPT_level: "N5", eng: [
@@ -54,9 +298,6 @@ export const ruby = {
     "make", "work"
   ]},
   "今週何": { furigana: "こんしゅうなに", JLPT_level: "N5", eng: [] },
-  "本": { furigana: "ほん", JLPT_level: "N5", eng: [
-    "book"
-  ]},
   "日本": { furigana: "にほん", JLPT_level: "N5", eng: [] },
   "日本語": { furigana: "にほんご", JLPT_level: "N5", eng: [
     "Japanese language"
@@ -114,9 +355,6 @@ export const ruby = {
   "深見真": { furigana: "マコトフカミ", JLPT_level: "N1", eng: [] },
   "美": { furigana: "うつく", JLPT_level: "N4", eng: [
     "beauty"
-  ]},
-  "話": { furigana: "はなし", JLPT_level: "N5", eng: [
-    "talk", "speak"
   ]},
   "一人": { furigana: "ひとり", JLPT_level: "N5", eng: [
     "one person", "by oneself"
@@ -190,14 +428,8 @@ export const ruby = {
   "以来": { furigana: "いらい", JLPT_level: "N2", eng: [
     "since"
   ]},
-  "小": { furigana: "ちい", JLPT_level: "N5", eng: [
-    "small", "little", "tiny"
-  ]},
   "鳥": { furigana: "とり", JLPT_level: "N5", eng: [
     "bird"
-  ]},
-  "国": { furigana: "くに", JLPT_level: "N5", eng: [
-    "country", "region"
   ]},
   "伝説": { furigana: "でんせつ", JLPT_level: "N3", eng: [
     "legend"
@@ -309,224 +541,5 @@ export const ruby = {
   ]},
   "尊敬語": { furigana: "そんけいご", JLPT_level: "N2", eng: [
     "respectful language"
-  ]},
-  "先生": { furigana: "せんせい", JLPT_level: "N5", eng: [
-    "teacher"
-  ]},
-  "一": { furigana: "いち", JLPT_level: "N5", eng: [
-    "one"
-  ]},
-  "右": { furigana: "みぎ", JLPT_level: "N5", eng: [
-    "right"
-  ]},
-  "花": { furigana: "はな", JLPT_level: "N5", eng: [
-    "flower"
-  ]},
-  "貝": { furigana: "かい", JLPT_level: "N5", eng: [
-    "shellfish"
-  ]},
-  "円": { furigana: "えん", JLPT_level: "N5", eng: [
-    "yen", "circle"
-  ]},
-  "王": { furigana: "おう", JLPT_level: "N5", eng: [
-    "king"
-  ]},
-  "音": { furigana: "おと", JLPT_level: "N5", eng: [
-    "sound"
-  ]},
-  "下": { furigana: "した", JLPT_level: "N5", eng: [
-    "below", "down"
-  ]},
-  "火": { furigana: "ひ", JLPT_level: "N5", eng: [
-    "fire"
-  ]},
-  "学": { furigana: "まな", JLPT_level: "N5", eng: [
-    "study", "learning"
-  ]},
-  "気": { furigana: "き", JLPT_level: "N5", eng: [
-    "spirit", "feeling"
-  ]},
-  "九": { furigana: "きゅう", JLPT_level: "N5", eng: [
-    "nine"
-  ]},
-  "休": { furigana: "やす", JLPT_level: "N5", eng: [
-    "rest", "holiday"
-  ]},
-  "玉": { furigana: "たま", JLPT_level: "N5", eng: [
-    "ball", "jewel"
-  ]},
-  "金": { furigana: "かね", JLPT_level: "N5", eng: [
-    "money", "gold"
-  ]},
-  "空": { furigana: "そら", JLPT_level: "N5", eng: [
-    "sky", "empty"
-  ]},
-  "月": { furigana: "つき", JLPT_level: "N5", eng: [
-    "moon", "month"
-  ]},
-  "犬": { furigana: "いぬ", JLPT_level: "N5", eng: [
-    "dog"
-  ]},
-  "五": { furigana: "ご", JLPT_level: "N5", eng: [
-    "five"
-  ]},
-  "口": { furigana: "くち", JLPT_level: "N5", eng: [
-    "mouth"
-  ]},
-  "校": { furigana: "こう", JLPT_level: "N5", eng: [
-    "school"
-  ]},
-  "左": { furigana: "ひだり", JLPT_level: "N5", eng: [
-    "left"
-  ]},
-  "三": { furigana: "さん", JLPT_level: "N5", eng: [
-    "three"
-  ]},
-  "山": { furigana: "やま", JLPT_level: "N5", eng: [
-    "mountain"
-  ]},
-  "子": { furigana: "こ", JLPT_level: "N5", eng: [
-    "child"
-  ]},
-  "四": { furigana: "よん", JLPT_level: "N5", eng: [
-    "four"
-  ]},
-  "糸": { furigana: "いと", JLPT_level: "N5", eng: [
-    "thread"
-  ]},
-  "字": { furigana: "じ", JLPT_level: "N5", eng: [
-    "character", "letter"
-  ]},
-  "耳": { furigana: "みみ", JLPT_level: "N5", eng: [
-    "ear"
-  ]},
-  "七": { furigana: "なな", JLPT_level: "N5", eng: [
-    "seven"
-  ]},
-  "車": { furigana: "くるま", JLPT_level: "N5", eng: [
-    "car", "vehicle"
-  ]},
-  "手": { furigana: "て", JLPT_level: "N5", eng: [
-    "hand"
-  ]},
-  "十": { furigana: "じゅう", JLPT_level: "N5", eng: [
-    "ten"
-  ]},
-  "出": { furigana: "で", JLPT_level: "N5", eng: [
-    "exit", "leave"
-  ]},
-  "上": { furigana: "うえ", JLPT_level: "N5", eng: [
-    "above", "up"
-  ]},
-  "森": { furigana: "もり", JLPT_level: "N5", eng: [
-    "forest"
-  ]},
-  "水": { furigana: "みず", JLPT_level: "N5", eng: [
-    "water"
-  ]},
-  "正": { furigana: "ただ", JLPT_level: "N5", eng: [
-    "correct", "right"
-  ]},
-  "生": { furigana: "い", JLPT_level: "N5", eng: [
-    "life", "living"
-  ]},
-  "青": { furigana: "あお", JLPT_level: "N5", eng: [
-    "blue"
-  ]},
-  "夕": { furigana: "ゆう", JLPT_level: "N5", eng: [
-    "evening"
-  ]},
-  "石": { furigana: "いし", JLPT_level: "N5", eng: [
-    "stone"
-  ]},
-  "赤": { furigana: "あか", JLPT_level: "N5", eng: [
-    "red"
-  ]},
-  "千": { furigana: "せん", JLPT_level: "N5", eng: [
-    "thousand"
-  ]},
-  "川": { furigana: "かわ", JLPT_level: "N5", eng: [
-    "river"
-  ]},
-  "先": { furigana: "さき", JLPT_level: "N5", eng: [
-    "ahead", "previous"
-  ]},
-  "早": { furigana: "はや", JLPT_level: "N5", eng: [
-    "early", "fast"
-  ]},
-  "草": { furigana: "くさ", JLPT_level: "N5", eng: [
-    "grass"
-  ]},
-  "足": { furigana: "あし", JLPT_level: "N5", eng: [
-    "foot", "leg"
-  ]},
-  "村": { furigana: "むら", JLPT_level: "N5", eng: [
-    "village"
-  ]},
-  "大": { furigana: "おお", JLPT_level: "N5", eng: [
-    "big", "large"
-  ]},
-  "男": { furigana: "おとこ", JLPT_level: "N5", eng: [
-    "man", "male"
-  ]},
-  "竹": { furigana: "たけ", JLPT_level: "N5", eng: [
-    "bamboo"
-  ]},
-  "中": { furigana: "なか", JLPT_level: "N5", eng: [
-    "middle", "inside"
-  ]},
-  "虫": { furigana: "むし", JLPT_level: "N5", eng: [
-    "insect"
-  ]},
-  "天": { furigana: "てん", JLPT_level: "N5", eng: [
-    "heaven", "sky"
-  ]},
-  "田": { furigana: "た", JLPT_level: "N5", eng: [
-    "rice field"
-  ]},
-  "土": { furigana: "つち", JLPT_level: "N5", eng: [
-    "earth", "soil"
-  ]},
-  "二": { furigana: "に", JLPT_level: "N5", eng: [
-    "two"
-  ]},
-  "日": { furigana: "ひ", JLPT_level: "N5", eng: [
-    "day", "sun"
-  ]},
-  "入": { furigana: "はい", JLPT_level: "N5", eng: [
-    "enter"
-  ]},
-  "年": { furigana: "とし", JLPT_level: "N5", eng: [
-    "year"
-  ]},
-  "白": { furigana: "しろ", JLPT_level: "N5", eng: [
-    "white"
-  ]},
-  "八": { furigana: "はち", JLPT_level: "N5", eng: [
-    "eight"
-  ]},
-  "百": { furigana: "ひゃく", JLPT_level: "N5", eng: [
-    "hundred"
-  ]},
-  "文": { furigana: "ぶん", JLPT_level: "N5", eng: [
-    "sentence", "writing"
-  ]},
-  "木": { furigana: "き", JLPT_level: "N5", eng: [
-    "tree", "wood"
-  ]},
-  "名": { furigana: "な", JLPT_level: "N5", eng: [
-    "name"
-  ]},
-  "立": { furigana: "た", JLPT_level: "N5", eng: [
-    "stand"
-  ]},
-  "力": { furigana: "ちから", JLPT_level: "N5", eng: [
-    "power", "strength"
-  ]},
-  "林": { furigana: "はやし", JLPT_level: "N5", eng: [
-    "woods"
-  ]},
-  "六": { furigana: "ろく", JLPT_level: "N5", eng: [
-    "six"
   ]},
 };
