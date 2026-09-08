@@ -246,6 +246,8 @@ body {
     gap: 1rem;
     justify-content: center;
     font-size: x-large;
+    flex-direction: column;
+    align-content: center;
 
     td {
       outline: 1px solid;
