@@ -125,45 +125,41 @@ export const ruby = {
   "乙女": { furigana: "おとめ", JLPT_level: "N1", eng: [] },
   "身": { furigana: "み", JLPT_level: "N4", eng: [] },
   "捧": { furigana: "ささ", JLPT_level: "N1", eng: [] },
-  "残忍": { furigana: "ざんにん", eng: [] },
+  "残忍": { furigana: "ざんにん", JLPT_level: "N1", eng: [] },
   "竜": { furigana: "りゅう", JLPT_level: "N2", eng: [] },
-  "暴虐": { furigana: "ぼうぎゃく", eng: [] },
-  "真実": { furigana: "しんじつ", eng: [] },
-  "世界": { furigana: "せかい", eng: [] },
-  "例外": { furigana: "れいがい", eng: [] },
+  "暴虐": { furigana: "ぼうぎゃく", JLPT_level: "N1", eng: [] },
+  "真実": { furigana: "しんじつ", JLPT_level: "N3", eng: [] },
+  "世界": { furigana: "せかい", JLPT_level: "N5", eng: [] },
+  "例外": { furigana: "れいがい", JLPT_level: "N2", eng: [] },
   "始": { furigana: "はじ", JLPT_level: "N5", eng: [] },
   "前": { furigana: "まえ", JLPT_level: "N5", eng: [] },
-  "生前": { furigana: "せいぜん", eng: [
+  "生前": { furigana: "せいぜん", JLPT_level: "N1", eng: [
     "during one's lifetime"
   ]},
   "戦": { furigana: "いくさ", JLPT_level: "N4", eng: [] },
-  "記録": { furigana: "きろく", eng: [] },
+  "記録": { furigana: "きろく", JLPT_level: "N3", eng: [] },
   "剣": { furigana: "けん", JLPT_level: "N1", eng: [] },
-  "暴力": { furigana: "ぼうりょく", eng: [] },
-  "支配": { furigana: "しはい", eng: [] },
-  "大陸": { furigana: "たいりく", eng: [] },
-  "唯一神": { furigana: "ゆいいつしん", eng: [] },
-  "信仰": { furigana: "しんこう", eng: [] },
-  "絶対": { furigana: "ぜったい", eng: [] },
-  "法王庁": { furigana: "ほうおうちょう", eng: [] },
-  "異端審問": { furigana: "いたんしんもん", eng: [
+  "暴力": { furigana: "ぼうりょく", JLPT_level: "N3", eng: [] },
+  "支配": { furigana: "しはい", JLPT_level: "N2", eng: [] },
+  "大陸": { furigana: "たいりく", JLPT_level: "N2", eng: [] },
+  "唯一神": { furigana: "ゆいいつしん", JLPT_level: "N1", eng: [] },
+  "信仰": { furigana: "しんこう", JLPT_level: "N1", eng: [] },
+  "絶対": { furigana: "ぜったい", JLPT_level: "N3", eng: [] },
+  "法王庁": { furigana: "ほうおうちょう", JLPT_level: "N1", eng: [] },
+  "異端審問": { furigana: "いたんしんもん", JLPT_level: "N1", eng: [
     "inquisition"
   ]},
-  "残忍": { furigana: "ざんにん", JLPT_level: "N1", eng: [] },
-  "暴虐": { furigana: "ぼうぎゃく", JLPT_level: "N1", eng: [] },
-  "真実": { furigana: "しんじつ", JLPT_level: "N3", eng: [] },
-  "大国": { furigana: "たいこく", eng: [] },
-  "世界": { furigana: "せかい", JLPT_level: "N5", eng: [
-    "world"
-  ] },
+  "暴威": { furigana: "ぼうい", JLPT_level: "N1", eng: [] },
+  "大国": { furigana: "たいこく", JLPT_level: "N2", eng: [] },
+  "覇": { furigana: "は", JLPT_level: "N1", eng: [] },
   "競": { furigana: "くら", JLPT_level: "N2", eng: [] },
-  "例外": { furigana: "れいがい", JLPT_level: "N2", eng: [] },
-  "時代": { furigana: "じだい", eng: [] },
-  "生前": { furigana: "せいぜん", JLPT_level: "N1", eng: []},
+  "戦乱": { furigana: "せんらん", JLPT_level: "N1", eng: [] },
+  "時代": { furigana: "じだい", JLPT_level: "N4", eng: [] },
+  "続": { furigana: "ぞく", JLPT_level: "N3" },
   "惨": { furigana: "むご", JLPT_level: "N1", eng: [
     "brutally"
   ]},
-  "死休": { furigana: "しきょう", eng: [
+  "死休": { furigana: "しきょう", JLPT_level: "N1", eng: [
     "death"
   ]},
   "顔": { furigana: "かお", JLPT_level: "N4", eng: [
@@ -181,15 +177,15 @@ export const ruby = {
   "skill", "expertise"
   ]},
   "暴威": { furigana: "ぼうい", JLPT_level: "N1", eng: [] },
-  "医師": { furigana: "いし", eng: ["doctor" ]},
+  "医師": { furigana: "いし", JLPT_level: "N3", eng: ["doctor" ]},
   "大国": { furigana: "たいこく", JLPT_level: "N2", eng: [] },
   "戦乱": { furigana: "せんらん", JLPT_level: "N1", eng: [] },
-  "兵士": { furigana: "へいし", eng: ["soldier" ]},
+  "兵士": { furigana: "へいし", JLPT_level: "N3", eng: ["soldier" ]},
   "時代": { furigana: "じだい", JLPT_level: "N4", eng: [] },
   "死休": { furigana: "しきょう", JLPT_level: "N1", eng: [
     "sex", "gender"
   ]},
-  "判別": { furigana: "はんべつ", eng: [
+  "判別": { furigana: "はんべつ", JLPT_level: "N1", eng: [
     "discrimination"
   ]},
   "縄": { furigana: "なわ", JLPT_level: "N1", eng: [
@@ -198,7 +194,7 @@ export const ruby = {
   "目": { furigana: "め", JLPT_level: "N5", eng: [
     "eye/s", "look"
   ]},
-  "以来": { furigana: "いらい", eng: [
+  "以来": { furigana: "いらい", JLPT_level: "N2", eng: [
     "since"
   ]},
   "小": { furigana: "ちい", JLPT_level: "N5", eng: [
@@ -210,10 +206,10 @@ export const ruby = {
   "国": { furigana: "くに", JLPT_level: "N5", eng: [
     "country", "region"
   ]},
-  "伝説": { furigana: "でんせつ", eng: [
+  "伝説": { furigana: "でんせつ", JLPT_level: "N3", eng: [
     "legend"
   ]},
-  "失礼": { furigana: "しつれい", eng: [
+  "失礼": { furigana: "しつれい", JLPT_level: "N4", eng: [
     "rude", "impoliteness"
   ]},
   "見": { furigana: "み", JLPT_level: "N5", eng: [
@@ -225,22 +221,22 @@ export const ruby = {
   "町": { furigana: "まち", JLPT_level: "N5", eng: [
     "town (small)"
   ]},
-  "治安": { furigana: "ちあん", eng: [
+  "治安": { furigana: "ちあん", JLPT_level: "N2", eng: [
     "public order", "public security"
   ]},
   "守": { furigana: "まも", JLPT_level: "N3", eng: [
     "protection", "defense"
   ]},
-  "衛兵": { furigana: "えいへい", eng: [
+  "衛兵": { furigana: "えいへい", JLPT_level: "N1", eng: [
     "guard", "sentinel"
   ]},
-  "話所": { furigana: "はなししょ", eng: [
+  "話所": { furigana: "はなししょ", JLPT_level: "N1", eng: [
     "topic", "subject"
   ]},
-  "話題": { furigana: "わだい", eng: [
+  "話題": { furigana: "わだい", JLPT_level: "N3", eng: [
     "meeting place"
   ]},
-  "死休置": { furigana: "したいおけ", eng: [
+  "死休置": { furigana: "したいおけ", JLPT_level: "N1", eng: [
     "put the dead body"
   ]},
   "場": { furigana: "ば", JLPT_level: "N4", eng: [
@@ -252,7 +248,7 @@ export const ruby = {
   "乗": { furigana: "の", JLPT_level: "N4", eng: [
     "to get on"
   ]},
-  "両手両足": { furigana: "りょうてりょうあし", eng: [
+  "両手両足": { furigana: "りょうてりょうあし", JLPT_level: "N4", eng: [
     "both hands and feet"
   ]},
   "首": { furigana: "くび", JLPT_level: "N3", eng: [
@@ -264,13 +260,13 @@ export const ruby = {
   "落": { furigana: "お", JLPT_level: "N4", eng: [
     "slip", "omission"
   ]},
-  "胴体": { furigana: "どうたい", eng: [
+  "胴体": { furigana: "どうたい", JLPT_level: "N2", eng: [
     "torso"
   ]},
-  "六個": { furigana: "ろくこ", eng: [
+  "六個": { furigana: "ろくこ", JLPT_level: "N5", eng: [
     "six (small) pieces"
   ]},
-  "部品": { furigana: "ぶひん", eng: [
+  "部品": { furigana: "ぶひん", JLPT_level: "N2", eng: [
     "parts"
   ]},
   "分": { furigana: "ふん", JLPT_level: "N5", eng: [
@@ -279,13 +275,13 @@ export const ruby = {
   "回": { furigana: "ま", JLPT_level: "N4", eng: [
     "times", "repetition"
   ]},
-  "回目": { furigana: "かいめ", eng: [
+  "回目": { furigana: "かいめ", JLPT_level: "N4", eng: [
     "th time"
   ]},
   "同": { furigana: "おな", JLPT_level: "N5", eng: [
     "the same"
   ]},
-  "同様": { furigana: "おなじよう", eng: [
+  "同様": { furigana: "おなじよう", JLPT_level: "N2", eng: [
     "similar", "the same"
   ]},
   "等": { furigana: "ひと", JLPT_level: "N3", eng: [
@@ -297,31 +293,31 @@ export const ruby = {
   "猫": { furigana: "ねこ", JLPT_level: "N3", eng: [
     "cat"
   ]},
-  "誕生日": { furigana: "たんじょうび", eng: [
+  "誕生日": { furigana: "たんじょうび", JLPT_level: "N5", eng: [
     "birthday"
   ]},
-  "擬声語": { furigana: "ぎせいご", eng: [
+  "擬声語": { furigana: "ぎせいご", JLPT_level: "N1", eng: [
     "onomatopoeia"
   ]},
-  "擬音語": { furigana: "ぎおんご", eng: [
+  "擬音語": { furigana: "ぎおんご", JLPT_level: "N1", eng: [
     "onomatopoeia"
   ]},
-  "擬態語": { furigana: "ぎたいご", eng: [
+  "擬態語": { furigana: "ぎたいご", JLPT_level: "N1", eng: [
     "mimetic words"
   ]},
-  "擬容語": { furigana: "ぎようご", eng: [
+  "擬容語": { furigana: "ぎようご", JLPT_level: "N1", eng: [
     "mimetic words"
   ]},
   "今": { furigana: "いま", JLPT_level: "N5", eng: [
     "now"
   ]}, 
-  "敬語": { furigana: "けいご", eng: [
+  "敬語": { furigana: "けいご", JLPT_level: "N3", eng: [
     "honorific language"
   ]},
-  "尊敬語": { furigana: "そんけいご", eng: [
+  "尊敬語": { furigana: "そんけいご", JLPT_level: "N2", eng: [
     "respectful language"
   ]},
-  "先生": { furigana: "せんせい", eng: [
+  "先生": { furigana: "せんせい", JLPT_level: "N5", eng: [
     "teacher"
   ]},
 };
