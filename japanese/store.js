@@ -29,6 +29,9 @@ export const zoomStore = reactive({
   onZoomChange(e) {
     this.zoomLevel = e.target.value;
   },
+  getZoomLevel() {
+    return 'zoom: ' + this.zoomLevel + '%';
+  }
 });
 
 

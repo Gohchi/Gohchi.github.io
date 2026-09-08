@@ -1,7 +1,8 @@
 import { toRefs, defineEmits } from 'vue';
 
 import {
-  voiceStore
+  voiceStore,
+  zoomStore,
 } from 'store';
 
 import {
@@ -28,7 +29,7 @@ export default {
       title,
       isHome,
       onChangeFurigana: () => emit('onChangeFurigana'),
-      onOpenZoom: () => emit('onOpenZoom'),
+      onOpenZoom: () => zoomStore.openZoom(),
       hideFurigana,
       hideZoom,
     };
@@ -37,6 +38,7 @@ export default {
     return {
       "showMenu": false,
       "voices": [],
+      zoomStore,
     };
   },
   components: {
@@ -68,6 +70,7 @@ export default {
         <li><router-link to="/translation">小説 ベルセルク： 炎竜の騎士</router-link></li>
         <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
         <li><router-link to="/topics">TOPICS</router-link></li>
+        <li aria-hidden="true"><hr></li>
         <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
         <li v-if="!hideFurigana"><a href="#" @click.prevent="onChangeFurigana()">Switch furigana</a></li>
         <li v-if="!hideZoom"><a href="#" @click.prevent="onOpenZoom()">Zoom level</a></li>
@@ -77,6 +80,25 @@ export default {
       <div class="icon-menu" @click="showMenu=!showMenu">
       </div>
     </header>
+
+    
+    <div v-if="zoomStore.showZoomMenu" class="zoom-menu">
+      <div class="zoom-level">
+        <input
+          type="range"
+          id="zoom-level"
+          name="zoom-level"
+          min="100"
+          max="200"
+          :value="zoomStore.zoomLevel ?? 100"
+          step="1"
+          @change="e => zoomStore.onZoomChange(e)"
+        />
+        <label for="zoom-level">Zoom</label>
+      </div>
+      <button @click="zoomStore.confirmZoomLevel()">&#10004;</button>
+      <button @click="zoomStore.cancelZoomLevel()">&#10060;</button>
+    </div>
     
     <dialog id="dialog-kana">
       <button class="close-btn" @click="closeDialog('dialog-kana')" aria-label="Close">&times;</button>

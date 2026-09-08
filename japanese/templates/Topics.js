@@ -3,7 +3,6 @@ export default /*html*/`
     <MainHeader
       title="TOPICS"
       @onChangeFurigana="furiganaStore.switchFurigana()"
-      @onOpenZoom="zoomStore.openZoom()"
     >
       <phrase-to-ruby :text="'話題'"></phrase-to-ruby>
     </MainHeader>
@@ -11,12 +10,12 @@ export default /*html*/`
     <main>
       <div class="filters">
         <input
-          type="text"
+          type="search"
           v-model="titleFilters"
           placeholder="Filter by titles..."
         />
         <input
-          type="text"
+          type="search"
           v-model="subtitleFilters"
           placeholder="Filter by content..."
         />
@@ -31,7 +30,9 @@ export default /*html*/`
       
       <template v-for="(item, index) in filteredTopics" :key="index">
         <template v-if="item.type === 'standard'">
-          <article>
+          <article
+            :style="zoomLevel"
+          >
             <h1 class="title">
               <PhraseToRuby :text="item.title">
             </h1>
