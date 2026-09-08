@@ -6,7 +6,7 @@ export default /*html*/`
       @onChangeFurigana="furiganaStore.switchFurigana()"
     >
       <div class="title">
-        <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ
+        <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の<PhraseToRuby text="日本語"/>のメモ
       </div>
       <div class="page-info">
         <span class="info">Phrases: {{ articles.length }}!</span>
