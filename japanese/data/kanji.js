@@ -40,6 +40,9 @@ export const ruby = {
   "弟": { furigana: "おとうと", eng: [
     "(younger) brother"
   ]},
+  "妹": { furigana: "いもうと", eng: [
+    "(younger) sister"
+  ]},
   "晩御飯": { furigana: "ばんごはん", eng: [] },
   "作": { furigana: "つく", eng: [
     "make", "work"
@@ -294,4 +297,13 @@ export const ruby = {
   "今": { furigana: "いま", eng: [
     "now"
   ]}, 
+  "敬語": { furigana: "けいご", eng: [
+    "honorific language"
+  ]},
+  "尊敬語": { furigana: "そんけいご", eng: [
+    "respectful language"
+  ]},
+  "先生": { furigana: "せんせい", eng: [
+    "teacher"
+  ]},
 };

@@ -36,7 +36,7 @@ export default /*html*/`
               <PhraseToRuby :text="item.title">
             </h1>
             <h4 class="subtitle">
-              <div>{{ item.subtitle }}</div>
+              <PhraseToRuby :text="item.subtitle">
             </h4>
             <section v-for="(content, contentIndex) in item.content" :key="contentIndex">
               <h3 v-if="content.heading"><PhraseToRuby :text="content.heading"></h3>
