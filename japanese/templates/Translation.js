@@ -3,7 +3,6 @@ export default /*html*/`
     <MainHeader
       title="小説 ベルセルク"
       @onChangeFurigana="furiganaStore.switchFurigana()"
-      @onOpenZoom="zoomStore.openZoom()"
     >
       <div class="page-info">
         <span class="chapter" v-if="chapter">{{ chapter }}</span>
@@ -66,7 +65,7 @@ export default /*html*/`
       <template v-if="!type">
         <article
           :class="{ 'tategaki': writingDirection === 'tategaki', 'content': true }"
-          :style="'zoom: ' + zoomStore.zoomLevel + '%'"
+          :style="zoomLevel"
         >
           <div class="chapter-title" v-if="chapterFirstPage">{{ chapter }}</div>
           <template v-for="(line, index) in content" :key="index">
@@ -87,58 +86,39 @@ export default /*html*/`
       </template>
       
       <div class="actions">
-        <template v-if="zoomStore.showZoomMenu">
-          <div class="zoom-level">
-            <input
-              type="range"
-              id="zoom-level"
-              name="zoom-level"
-              min="100"
-              max="200"
-              :value="zoomStore.zoomLevel ?? 100"
-              step="1"
-              @change="e => zoomStore.onZoomChange(e)"
-            />
-            <label for="zoom-level">Zoom</label>
-          </div>
-          <button @click="zoomStore.confirmZoomLevel()">&#10004;</button>
-          <button @click="zoomStore.cancelZoomLevel()">&#10060;</button>
-        </template>
-        <template v-else>
-          <button class="next-page" title="つぎ"
-            :disabled="last"
-            @click="nextPage()"
-          >&#8592; 次</button>
-          <div class="lang-actions">
-            <button
-              class="lang-icon"
-              :title="showTranslation ? 'Turn off translation' : 'Turn on translation'"
-              @click="switchTranslation()"
-            >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
-            <template v-if="showTranslation">
-              <button class="lang-eng"
-                @click="setLang('eng')"
-                :class="{ active: lang === 'eng' }"
-              >ENG</button>
-              <button class="lang-esp"
-                @click="setLang('esp')"
-                :class="{ active: lang === 'esp' }"
-              >ESP</button>
-            </template>
-            <template v-if="!showTranslation">
-              <button class="tategaki tategaki-button"
-                :title="!showTranslation ? 'たてがき' : undefined"
-                @click="setWritingDirection('tategaki')"
-                :class="{ active: writingDirection === 'tategaki' }"
-                :disabled="showTranslation"
-              >縦書き</button>
-              <button class="yokogaki tategaki-button"
-                :title="!showTranslation ? 'よこがき' : undefined"
-                @click="setWritingDirection('yokogaki')"
-                :class="{ active: writingDirection === 'yokogaki' }"
-                :disabled="showTranslation"
-              >横書き</button>
-            </template>
+        <button class="next-page" title="つぎ"
+          :disabled="last"
+          @click="nextPage()"
+        >&#8592; 次</button>
+        <div class="lang-actions">
+          <button
+            class="lang-icon"
+            :title="showTranslation ? 'Turn off translation' : 'Turn on translation'"
+            @click="switchTranslation()"
+          >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
+          <template v-if="showTranslation">
+            <button class="lang-eng"
+              @click="setLang('eng')"
+              :class="{ active: lang === 'eng' }"
+            >ENG</button>
+            <button class="lang-esp"
+              @click="setLang('esp')"
+              :class="{ active: lang === 'esp' }"
+            >ESP</button>
+          </template>
+          <template v-if="!showTranslation">
+            <button class="tategaki tategaki-button"
+              :title="!showTranslation ? 'たてがき' : undefined"
+              @click="setWritingDirection('tategaki')"
+              :class="{ active: writingDirection === 'tategaki' }"
+              :disabled="showTranslation"
+            >縦書き</button>
+            <button class="yokogaki tategaki-button"
+              :title="!showTranslation ? 'よこがき' : undefined"
+              @click="setWritingDirection('yokogaki')"
+              :class="{ active: writingDirection === 'yokogaki' }"
+              :disabled="showTranslation"
+            >横書き</button>
           </div>
           <button class="prev-page" title="まえ"
             :disabled="first"

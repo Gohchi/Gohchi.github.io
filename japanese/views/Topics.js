@@ -36,11 +36,13 @@ export default {
       "selectedArticle": null,
       "titleFilters": "",
       "subtitleFilters": "",
-      zoomStore,
       furiganaStore
     }
   },
   computed: {
+    zoomLevel() {
+      return zoomStore.getZoomLevel();
+    },
     filteredTopics() {
       return this.topics.filter(item => {
         if (this.titleFilters === "" && this.subtitleFilters === "") {

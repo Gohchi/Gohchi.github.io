@@ -48,7 +48,6 @@ export default {
 
       "furigana": true,
       "selectedArticle": null,
-      zoomStore,
       furiganaStore,
     }
   },
@@ -56,6 +55,9 @@ export default {
     page() {
       return this.translations[this.pageSelected-1] || {};
     },
+    zoomLevel() {
+      return zoomStore.getZoomLevel();
+    }
   },
   template,
 }

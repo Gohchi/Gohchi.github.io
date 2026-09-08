@@ -29,6 +29,9 @@ export default {
     },
     eng() {
       return this.info.eng;
+    },
+    JLPT_level() {
+      return this.info.JLPT_level;
     }
   },
   methods: {
@@ -39,7 +42,8 @@ export default {
     <ruby class="open-dialog"
       @click="showDialog(dialogId)"
     >{{ text }}<rp>(</rp><rt>{{ furigana }}</rt><rp>)</rp></ruby>
-    <dialog :id="dialogId" @click="closeDialog(dialogId)">
+    <dialog class="kanji-dialog" :id="dialogId" @click="closeDialog(dialogId)">
+      <div v-if="JLPT_level" class="JLPT-level">JLPT {{ JLPT_level }}</div>
       <div class="kanji-furigana">{{ furigana }}</div>
       <div class="kanji-details">{{ text }}</div>
       <ul class="kanji-meaning">

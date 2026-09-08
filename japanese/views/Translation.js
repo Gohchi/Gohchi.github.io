@@ -62,11 +62,13 @@ export default {
       "selectedArticle": null,
       "voices": [],
       "selectedVoice": null,
-      zoomStore,
       furiganaStore,
     }
   },
   computed: {
+    zoomLevel() {
+      return zoomStore.getZoomLevel();
+    },
     page() {
       return this.translations[this.pageSelected-1] || {};
     },

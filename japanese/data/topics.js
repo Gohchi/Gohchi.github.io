@@ -3,6 +3,23 @@ const defaultValues = { type: 'standard' };
 export const topics = [
   {
     ...defaultValues,
+    title: 'Honorifics — 敬語',
+    subtitle: '敬語 is a system of honorific speech in Japanese that shows respect and politeness. It is used to convey social hierarchy, humility, and formality in communication.',
+    content: [
+      {
+        heading: '尊敬語 — Respectful Language',
+        text: '尊敬語 is used to show respect towards the actions or status of others. It often involves using special verbs or verb forms to elevate the subject of the sentence.',
+        example: '先生がいらっしゃいます。 (The teacher is here.)'
+      },
+      {
+        heading: '家族の呼び方 — Family Members',
+        text: 'Family members have specific ways of addressing each other in Japanese, which reflect the social hierarchy and relationships within the family.',
+        example: 'お父さん (father) | お母さん (mother) | お兄さん (older brother) | お姉さん (older sister) | 弟 (younger brother) | 妹 (younger sister)'
+      }
+    ],
+  },
+  {
+    ...defaultValues,
     title: 'Time — 時間',
     subtitle: 'Words used to talk about when something happens.',
     content: [

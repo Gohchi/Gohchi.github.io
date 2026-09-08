@@ -1,7 +1,8 @@
 import { toRefs, defineEmits } from 'vue';
 
 import {
-  voiceStore
+  voiceStore,
+  zoomStore,
 } from 'store';
 
 import {
@@ -28,7 +29,7 @@ export default {
       title,
       isHome,
       onChangeFurigana: () => emit('onChangeFurigana'),
-      onOpenZoom: () => emit('onOpenZoom'),
+      onOpenZoom: () => zoomStore.openZoom(),
       hideFurigana,
       hideZoom,
     };
@@ -37,6 +38,7 @@ export default {
     return {
       "showMenu": false,
       "voices": [],
+      zoomStore,
     };
   },
   components: {
@@ -68,6 +70,7 @@ export default {
         <li><router-link to="/translation">小説 ベルセルク： 炎竜の騎士</router-link></li>
         <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
         <li><router-link to="/topics">TOPICS</router-link></li>
+        <li aria-hidden="true"><hr></li>
         <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
         <li v-if="!hideFurigana"><a href="#" @click.prevent="onChangeFurigana()">Switch furigana</a></li>
         <li v-if="!hideZoom"><a href="#" @click.prevent="onOpenZoom()">Zoom level</a></li>
@@ -77,6 +80,25 @@ export default {
       <div class="icon-menu" @click="showMenu=!showMenu">
       </div>
     </header>
+
+    
+    <div v-if="zoomStore.showZoomMenu" class="zoom-menu">
+      <div class="zoom-level">
+        <input
+          type="range"
+          id="zoom-level"
+          name="zoom-level"
+          min="100"
+          max="200"
+          :value="zoomStore.zoomLevel ?? 100"
+          step="1"
+          @change="e => zoomStore.onZoomChange(e)"
+        />
+        <label for="zoom-level">Zoom</label>
+      </div>
+      <button @click="zoomStore.confirmZoomLevel()">&#10004;</button>
+      <button @click="zoomStore.cancelZoomLevel()">&#10060;</button>
+    </div>
     
     <dialog id="dialog-kana">
       <button class="close-btn" @click="closeDialog('dialog-kana')" aria-label="Close">&times;</button>
@@ -87,34 +109,19 @@ export default {
           <div class="content">
             <table class="hiragana-table">
               <tr>
-                <td>あ</td><td>い</td><td>う</td><td>え</td><td>お</td>
+                <td>わ</td><td>ら</td><td>や</td><td>ま</td><td>は</td><td>な</td><td>た</td><td>さ</td><td>か</td><td>あ</td>
               </tr>
               <tr>
-                <td>か</td><td>き</td><td>く</td><td>け</td><td>こ</td>
+                <td></td><td>り</td><td></td><td>み</td><td>ひ</td><td>に</td><td>ち</td><td>し</td><td>き</td><td>い</td>
               </tr>
               <tr>
-                <td>さ</td><td>し</td><td>す</td><td>せ</td><td>そ</td>
+                <td>を</td><td>る</td><td>ゆ</td><td>む</td><td>ふ</td><td>ぬ</td><td>つ</td><td>す</td><td>く</td><td>う</td>
               </tr>
               <tr>
-                <td>た</td><td>ち</td><td>つ</td><td>て</td><td>と</td>
+                <td></td><td>れ</td><td></td><td>め</td><td>へ</td><td>ね</td><td>て</td><td>せ</td><td>け</td><td>え</td>
               </tr>
               <tr>
-                <td>な</td><td>に</td><td>ぬ</td><td>ね</td><td>の</td>
-              </tr>
-              <tr>
-                <td>は</td><td>ひ</td><td>ふ</td><td>へ</td><td>ほ</td>
-              </tr>
-              <tr>
-                <td>ま</td><td>み</td><td>む</td><td>め</td><td>も</td>
-              </tr>
-              <tr>
-                <td>や</td><td></td><td>ゆ</td><td></td><td>よ</td>
-              </tr>
-              <tr>
-                <td>ら</td><td>り</td><td>る</td><td>れ</td><td>ろ</td>
-              </tr>
-              <tr>
-                <td>わ</td><td></td><td>を</td><td></td><td>ん</td>
+                <td>ん</td><td>ろ</td><td>よ</td><td>も</td><td>ほ</td><td>の</td><td>と</td><td>そ</td><td>こ</td><td>お</td>
               </tr>
             </table>
           </div>
@@ -125,34 +132,19 @@ export default {
           <div class="content">
             <table class="katakana-table">
               <tr>
-            <td>ア</td><td>イ</td><td>ウ</td><td>エ</td><td>オ</td>
+                <td>ワ</td><td>ラ</td><td>ヤ</td><td>マ</td><td>ハ</td><td>ナ</td><td>タ</td><td>サ</td><td>カ</td><td>ア</td>
               </tr>
               <tr>
-            <td>カ</td><td>キ</td><td>ク</td><td>ケ</td><td>コ</td>
+                <td></td><td>リ</td><td></td><td>ミ</td><td>ヒ</td><td>ニ</td><td>チ</td><td>シ</td><td>キ</td><td>イ</td>
               </tr>
               <tr>
-            <td>サ</td><td>シ</td><td>ス</td><td>セ</td><td>ソ</td>
+                <td>ヲ</td><td>ル</td><td>ユ</td><td>ム</td><td>フ</td><td>ヌ</td><td>ツ</td><td>ス</td><td>ク</td><td>ウ</td>
               </tr>
               <tr>
-            <td>タ</td><td>チ</td><td>ツ</td><td>テ</td><td>ト</td>
+                <td></td><td>レ</td><td></td><td>メ</td><td>ヘ</td><td>ネ</td><td>テ</td><td>セ</td><td>ケ</td><td>エ</td>
               </tr>
               <tr>
-            <td>ナ</td><td>ニ</td><td>ヌ</td><td>ネ</td><td>ノ</td>
-              </tr>
-              <tr>
-            <td>ハ</td><td>ヒ</td><td>フ</td><td>ヘ</td><td>ホ</td>
-              </tr>
-              <tr>
-            <td>マ</td><td>ミ</td><td>ム</td><td>メ</td><td>モ</td>
-              </tr>
-              <tr>
-            <td>ヤ</td><td></td><td>ユ</td><td></td><td>ヨ</td>
-              </tr>
-              <tr>
-            <td>ラ</td><td>リ</td><td>ル</td><td>レ</td><td>ロ</td>
-              </tr>
-              <tr>
-            <td>ワ</td><td></td><td>ヲ</td><td></td><td>ン</td>
+                <td>ン</td><td>ロ</td><td>ヨ</td><td>モ</td><td>ホ</td><td>ノ</td><td>ト</td><td>ソ</td><td>コ</td><td>オ</td>
               </tr>
             </table>
           </div>

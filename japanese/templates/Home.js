@@ -4,10 +4,9 @@ export default /*html*/`
     <MainHeader
       isHome="true"
       @onChangeFurigana="furiganaStore.switchFurigana()"
-      @onOpenZoom="zoomStore.openZoom()"
     >
       <div class="title">
-        <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の日本語のメモ
+        <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の<PhraseToRuby text="日本語"/>のメモ
       </div>
       <div class="page-info">
         <span class="info">Phrases: {{ articles.length }}!</span>
@@ -19,7 +18,7 @@ export default /*html*/`
         v-for="([main, eng, refs], index) in articles" :key="index"
         @click="selectedArticle=main"
         :class="{ 'selected': main==selectedArticle }"
-        :style="'zoom: ' + zoomStore.zoomLevel + '%'"
+        :style="zoomLevel"
       >
         <span class="main">
           <PhraseToRuby :text="main">
@@ -30,33 +29,14 @@ export default /*html*/`
     </main>
     <footer>
       <div class="actions">
-        <template v-if="zoomStore.showZoomMenu">
-          <div class="zoom-level">
-            <input
-              type="range"
-              id="zoom-level"
-              name="zoom-level"
-              min="100"
-              max="200"
-              :value="zoomStore.zoomLevel ?? 100"
-              step="1"
-              @change="e => zoomStore.onZoomChange(e)"
-            />
-            <label for="zoom-level">Zoom</label>
-          </div>
-          <button @click="zoomStore.confirmZoomLevel()">&#10004;</button>
-          <button @click="zoomStore.cancelZoomLevel()">&#10060;</button>
-        </template>
-        <template v-else>
-          <button
-            class="voice-active"
-            title="voice"
-            :disabled="!selectedArticle"
-            @click="speak(selectedArticle)"
-          >
-            <span>🗣️</span>
-          </button>
-        </template>
+        <button
+          class="voice-active"
+          title="voice"
+          :disabled="!selectedArticle"
+          @click="speak(selectedArticle)"
+        >
+          <span>🗣️</span>
+        </button>
       </div>
     </footer>
     
