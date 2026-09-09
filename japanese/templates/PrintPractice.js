@@ -10,6 +10,10 @@ export default/*html*/`
         <p v-else>Basic kana practice sheet.</p>
       </div>
       <div class="print-controls">
+        <div class="print-buttons">
+          <button class="refresh-button" @click="drawPracticeSheet" title="Print this worksheet">Refresh</button>
+          <button class="print-button" @click="printWorksheet" title="Print this worksheet">Print worksheet</button>
+        </div>
         <div class="segmented-control" aria-label="Choose script">
           <button :class="{ active: script === 'hiragana' }" @click="script = 'hiragana'">ひらがな</button>
           <button :class="{ active: script === 'katakana' }" @click="script = 'katakana'">カタカナ</button>
@@ -19,7 +23,6 @@ export default/*html*/`
           <span>JLPT</span>
           <button v-for="option in levels" :key="option" :class="{ active: level === option }" @click="level = option">{{ option }}</button>
         </div>
-        <button class="print-button" @click="printWorksheet" title="Print this worksheet">Print worksheet</button>
       </div>
     </section>
 

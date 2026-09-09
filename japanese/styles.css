@@ -638,11 +638,10 @@ body {
   min-height: calc(100vh - 4rem);
 
   .print-toolbar {
-    max-width: 72rem;
+    width: 40rem;
     margin: 0 auto 1.5rem;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
     gap: 1.5rem;
     border-bottom: 1px solid #c9c2b5;
     padding-bottom: 1rem;
@@ -687,13 +686,27 @@ body {
 
   .segmented-control button,
   .level-control button,
+  .refresh-button,
   .print-button {
     border: 1px solid #a9a196;
     background: #fffdf8;
     color: #27312e;
-    padding: .55rem .75rem;
+    padding: .3rem .75rem;
     cursor: pointer;
     font: inherit;
+  }
+  .refresh-button:active,
+  .print-button:active {
+    transform: background 0.1s ease-in-out;
+    background: #273f3a;
+  }
+  .print-buttons {
+    display: flex;
+    gap: .25rem;
+  }
+  .level-control button {
+    padding: .15rem .5rem;
+    font-size: .8rem;
   }
 
   .segmented-control button:first-child { border-radius: 4px 0 0 4px; }
@@ -711,6 +724,15 @@ body {
     font-weight: 700;
     color: #58635e;
     margin-right: .25rem;
+  }
+
+
+  .refresh-button {
+    background: #2b76bd;
+    border-color: #0a3a94;
+    color: white;
+    border-radius: 4px;
+    font-weight: 700;
   }
 
   .print-button {

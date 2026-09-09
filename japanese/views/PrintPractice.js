@@ -107,11 +107,13 @@ export default {
   components: { MainHeader },
   data() {
     return {
-      script: 'kanji',
+      script: 'hiragana',
       level: 'N5',
       levels,
       kana,
       ruby,
+      font: '"Zen Antique Soft", Meiryo, sans-serif',
+      secondaryFont: 'Meiryo, sans-serif',
     };
   },
   computed: {
@@ -186,10 +188,10 @@ export default {
       context.fillRect(0, 0, width, height);
 
       context.fillStyle = '#273f3a';
-      context.font = '700 13px Meiryo, sans-serif';
+      context.font = `700 13px ${this.secondaryFont}`;
       context.fillText(`${this.title}${this.script === 'kanji' ? ` ${this.level}` : ''}  Page ${pageIndex + 1}`, 24, 28);
       context.fillStyle = '#58635e';
-      context.font = '12px Meiryo, sans-serif';
+      context.font = `12px ${this.secondaryFont}`;
       context.fillText('Name: ____________________', width - 220, 28);
       context.strokeStyle = '#c9c2b5';
       context.beginPath();
@@ -204,7 +206,9 @@ export default {
         this.drawPracticeCard(context, item, x, y, cardWidth, cardHeight);
       });
     },
-    drawPracticeCard(context, item, x, y, width, height) {
+    async drawPracticeCard(context, item, x, y, width, height) {
+      await document.fonts.ready;
+
       context.fillStyle = '#fffdf8';
       context.strokeStyle = '#d7d0c4';
       context.fillRect(x, y, width, height);
@@ -231,13 +235,13 @@ export default {
       context.restore();
 
       context.fillStyle = '#273f3a';
-      context.font = '44px "Zen Antique Soft", Meiryo, sans-serif';
+      context.font = `44px ${this.font}`;
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillText(item.character, x + 40, y + 40);
 
       if (item.strokes) {
-        context.font = '6px "Zen Antique Soft", Meiryo, sans-serif';
+        context.font = `6px ${this.font}`;
 
         for (const i in item.strokes) {
           const stroke = item.strokes[i];
@@ -275,13 +279,13 @@ export default {
 
         context.setLineDash([]);
         context.fillStyle = `rgba(39, 63, 58, ${.18 - box * .01})`;
-        context.font = `44px "Zen Antique Soft", Meiryo, sans-serif`;
+        context.font = `44px ${this.font}`;
         context.fillText(item.character, boxX + boxWidth / 2, y + 10 + boxWidth / 2);
       }
 
       if (item.reading) {
         context.fillStyle = '#b34f35';
-        context.font = '12px Meiryo, sans-serif';
+        context.font = `12px ${this.secondaryFont}`;
         context.textAlign = 'left';
         context.fillText(item.reading, x + 4, y + 9);
       }
