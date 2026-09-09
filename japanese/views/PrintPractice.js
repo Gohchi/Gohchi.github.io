@@ -129,10 +129,132 @@ export default {
         .map(([character, entry]) => ({ character, strokes: entry.strokes, reading: '' }));
     }
   },
+  watch: {
+    items: {
+      handler() {
+        this.$nextTick(() => this.drawPracticeSheet());
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.$nextTick(() => this.drawPracticeSheet());
+    window.addEventListener('resize', this.drawPracticeSheet);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.drawPracticeSheet);
+  },
   methods: {
+    drawPracticeSheet() {
+      const canvas = this.$refs.practiceSheet;
+      if (!canvas) return;
+
+      const width = Math.max(canvas.clientWidth, 320);
+      const columns = 1; //width < 640 ? 2 : 4;
+      const cardWidth = (width - 48 - (columns - 1) * 12) / columns;
+      const cardHeight = 80; //width < 640 ? 150 : 176;
+      const rows = Math.ceil(this.items.length / columns);
+      const height = 72 + rows * (cardHeight + 12);
+      const scale = window.devicePixelRatio || 1;
+
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      canvas.style.height = `${height}px`;
+
+      const context = canvas.getContext('2d');
+      context.scale(scale, scale);
+      context.fillStyle = '#fffdf8';
+      context.fillRect(0, 0, width, height);
+
+      context.fillStyle = '#273f3a';
+      context.font = '700 13px Meiryo, sans-serif';
+      context.fillText(`${this.title}${this.script === 'kanji' ? ` ${this.level}` : ''}`, 24, 28);
+      context.fillStyle = '#58635e';
+      context.font = '12px Meiryo, sans-serif';
+      context.fillText('Name: ____________________', width - 220, 28);
+      context.strokeStyle = '#c9c2b5';
+      context.beginPath();
+      context.moveTo(24, 48);
+      context.lineTo(width - 24, 48);
+      context.stroke();
+
+      this.items.forEach((item, index) => {
+        const row = Math.floor(index);
+        const x = 24;
+        const y = 60 + row * cardHeight;
+        this.drawPracticeCard(context, item, x, y, cardWidth, cardHeight);
+      });
+    },
+    drawPracticeCard(context, item, x, y, width, height) {
+      context.fillStyle = '#fffdf8';
+      context.strokeStyle = '#d7d0c4';
+      context.fillRect(x, y, width, height);
+      context.strokeRect(x, y, width, height);
+
+      context.save();
+      context.beginPath();
+      context.rect(x, y, width, height);
+      context.clip();
+      context.strokeStyle = '#e7e0d5';
+      context.lineWidth = 1;
+      for (let gridX = x + 16; gridX < x + width; gridX += 24) {
+        context.beginPath();
+        context.moveTo(gridX, y);
+        context.lineTo(gridX, y + height);
+        context.stroke();
+      }
+      for (let gridY = y + 16; gridY < y + height; gridY += 24) {
+        context.beginPath();
+        context.moveTo(x, gridY);
+        context.lineTo(x + width, gridY);
+        context.stroke();
+      }
+      context.restore();
+
+      context.fillStyle = '#273f3a';
+      context.font = '44px "Zen Antique Soft", Meiryo, sans-serif';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      context.fillText(item.character, x + 40, y + 40);
+
+      const boxStart = x + 80;
+      const boxWidth = 60;
+      context.strokeStyle = '#a9a196';
+      context.setLineDash([3, 3]);
+      context.beginPath();
+      context.moveTo(boxStart, y + 10);
+      context.lineTo(boxStart, y + 10 + boxWidth);
+      context.stroke();
+
+      for (let box = 0; box < 17; box += 1) {
+        const boxX = boxStart + box * boxWidth;
+        context.setLineDash([3, 3]);
+        context.beginPath();
+
+        context.moveTo(boxX, y + 10);
+        context.lineTo(boxX + boxWidth, y + 10);
+        context.lineTo(boxX + boxWidth, y + 10 + boxWidth);
+        context.lineTo(boxX, y + 10 + boxWidth);
+
+        context.stroke();
+
+        context.setLineDash([]);
+        context.fillStyle = `rgba(39, 63, 58, ${.18 - box * .01})`;
+        context.font = `44px "Zen Antique Soft", Meiryo, sans-serif`;
+        context.fillText(item.character, boxX + boxWidth / 2, y + 10 + boxWidth / 2);
+      }
+
+      if (item.reading) {
+        context.fillStyle = '#b34f35';
+        context.font = '12px Meiryo, sans-serif';
+        context.fillText(item.reading, x + width * .2, y + height - 18);
+      }
+      context.textAlign = 'start';
+      context.textBaseline = 'alphabetic';
+    },
     printWorksheet() {
       window.print();
-    }
+    },
   },
   template
 };

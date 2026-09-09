@@ -23,22 +23,11 @@ export default/*html*/`
       </div>
     </section>
 
-    <section class="practice-sheet" :class="{ 'kana-sheet': script !== 'kanji' }">
-      <div class="sheet-meta"><span>{{ title }}</span><span v-if="script === 'kanji'">{{ level }}</span><span>Name: ____________________</span></div>
-      <div class="practice-grid">
-        <article v-for="item in items" :key="item.character" class="practice-card">
-          <div class="character-reference">
-          {{ item.character }}
-          <div v-for="(stroke, index) in item.strokes" class="stroke-guide" aria-hidden="true"
-            :style="{ top: stroke.y + 'rem', left: stroke.x + 'rem' }"
-          >{{ index+1 }}</div>
-          </div>
-          <div class="writing-boxes" aria-hidden="true">
-            <span v-for="box in 14" :key="box">{{ item.character }}</span>
-          </div>
-          <div v-if="item.reading" class="reading">{{ item.reading }}</div>
-        </article>
-      </div>
-    </section>
+    <canvas
+      id="practice-sheet"
+      ref="practiceSheet"
+      class="practice-sheet"
+      :aria-label="title + ' practice worksheet'"
+    ></canvas>
   </main>
 `;
