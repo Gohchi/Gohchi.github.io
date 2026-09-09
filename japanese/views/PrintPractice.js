@@ -11,14 +11,14 @@ const kana = {
     'お': { strokes: [{ x: 1, y: 3.5 }, { x: 1.8, y: 2.2 }, { x: 3.2, y: 2.9 }]},
     'か': { strokes: [{ x: 0.9, y: 3.5 }, { x: 1.9, y: 2.2 }, { x: 3.1, y: 2.9 }]},
     'き': { strokes: [{ x: 1.3, y: 2.8 }, { x: 1.2, y: 3.6 }, { x: 2.0, y: 2 }]},
-    'く': { strokes: [{ x: 1.6, y: 2.8 }, { x: 2.9, y: 2.6 }]},
-    'け': { strokes: [{ x: 1.3, y: 2.8 }, { x: 2.7, y: 3.4 }]},
-    'こ': { strokes: [{ x: 1.6, y: 2.9 }, { x: 2.2, y: 3.4 }, { x: 3.2, y: 2.7 }]},
-    'さ': { strokes: [{ x: 1.3, y: 2.2 }, { x: 2.2, y: 3.1 }, { x: 3.2, y: 2.8 }]},
-    'し': { strokes: [{ x: 2.0, y: 2.8 }, { x: 3.2, y: 2.5 }]},
-    'す': { strokes: [{ x: 1.7, y: 2.7 }, { x: 2.4, y: 2.2 }, { x: 3.0, y: 3.0 }]},
-    'せ': { strokes: [{ x: 1.4, y: 2.8 }, { x: 2.4, y: 2.4 }, { x: 3.3, y: 3.2 }]},
-    'そ': { strokes: [{ x: 1.5, y: 2.9 }, { x: 2.4, y: 1.8 }, { x: 3.0, y: 3.2 }]},
+    'く': { strokes: [{ x: 3.1, y: 2.2 }]},
+    'け': { strokes: [{ x: 1.4, y: 2.2 }, { x: 2.4, y: 2.9 }, { x: 3, y: 2.2 }]},
+    'こ': { strokes: [{ x: 1.4, y: 2.8 }, { x: 2, y: 4 }]},
+    'さ': { strokes: [{ x: 1.2, y: 3.1 }, { x: 2.3, y: 2.2 }]},
+    'し': { strokes: [{ x: 2.0, y: 2.2 }]},
+    'す': { strokes: [{ x: 1, y: 2.7 }, { x: 2.8, y: 2.2 }]},
+    'せ': { strokes: [{ x: 1.1, y: 3.3 }, { x: 3.1, y: 2.3 }, { x: 1.8, y: 2.5 }]},
+    'そ': { strokes: [{ x: 1.5, y: 2.7 }]},
     'た': { strokes: [{ x: 1.5, y: 2.8 }, { x: 2.5, y: 2.4 }, { x: 3.2, y: 3.1 }]},
     'ち': { strokes: [{ x: 1.7, y: 2.7 }, { x: 3.0, y: 2.8 }]},
     'つ': { strokes: [{ x: 1.6, y: 2.3 }, { x: 3.0, y: 2.9 }]},
@@ -176,6 +176,7 @@ export default {
       canvases.forEach((canvas, pageIndex) => {
         this.drawPracticePage(canvas, this.pages[pageIndex], pageIndex);
       });
+      // window.scrollTo(0,1700);
     },
     drawPracticePage(canvas, pageItems, pageIndex) {
       const width = Math.max(canvas.clientWidth, 320);
@@ -183,7 +184,7 @@ export default {
       const cardHeight = 128; //width < 640 ? 150 : 176; // 176.92%
       const rows = pageItems.length;
       const height = cardHeight / 5 + rows * 138;
-      const scale = window.devicePixelRatio || 1;
+      const scale = 3; window.devicePixelRatio || 1;
 
       canvas.width = width * scale;
       canvas.height = height * scale;
