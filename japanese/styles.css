@@ -1,3 +1,8 @@
+:root {
+  --color-salmon: #EF4D4D;
+  --color-chopsticks: #EACA44;
+}
+
 body {
   background-color: Canvas;
   color: CanvasText;
@@ -90,6 +95,9 @@ body {
 
     > .title {
       margin-bottom: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5rem;
     }
 
     .info {
@@ -326,10 +334,6 @@ body {
 .berserk-novel {
   header {
     .title {
-      display: flex;
-      justify-content: space-between;
-      padding-right: 5rem;
-
       .page-info {
         display: flex;
         gap: 1rem;
@@ -629,6 +633,35 @@ body {
   }
 }
 
+.print-buttons {
+  display: flex;
+  gap: .25rem;
+  
+  button {
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: .3rem .75rem;
+
+    &:active {
+      transform: background 0.1s ease-in-out;
+      background: #273f3a;
+    }
+  }
+  .print-button {
+    border: 1px solid #a9a196;
+    background: var(--color-salmon);
+    border-color: var(--color-salmon);
+  }
+  
+
+  .refresh-button {
+    border: 1px solid #a9a196;
+    background: var(--color-chopsticks);
+    border-color: var(--color-chopsticks);
+    color: black;
+  }
+}
 .print-practice {
   display: flex;
   align-items: center;
@@ -685,24 +718,13 @@ body {
   }
 
   .segmented-control button,
-  .level-control button,
-  .refresh-button,
-  .print-button {
+  .level-control button {
     border: 1px solid #a9a196;
     background: #fffdf8;
     color: #27312e;
     padding: .3rem .75rem;
     cursor: pointer;
     font: inherit;
-  }
-  .refresh-button:active,
-  .print-button:active {
-    transform: background 0.1s ease-in-out;
-    background: #273f3a;
-  }
-  .print-buttons {
-    display: flex;
-    gap: .25rem;
   }
   .level-control button {
     padding: .15rem .5rem;
@@ -726,35 +748,23 @@ body {
     margin-right: .25rem;
   }
 
-
-  .refresh-button {
-    background: #2b76bd;
-    border-color: #0a3a94;
-    color: white;
-    border-radius: 4px;
-    font-weight: 700;
-  }
-
-  .print-button {
-    background: #b34f35;
-    border-color: #b34f35;
-    color: white;
-    border-radius: 4px;
-    font-weight: 700;
-  }
-
   .practice-sheet {
     display: block;
     width: 100%;
     max-width: 72rem;
     height: auto;
     margin: 0 auto;
-    background: #fffdf8;
+    background: white;
+    /*background: #fffdf8;*/
     border: 1px solid #c9c2b5;
   }
 }
 
 @media (max-width: 700px) {
+  .print-button {
+    width: 100%;
+  }
+
   .print-practice {
     padding: .75rem;
 
@@ -772,9 +782,6 @@ body {
       justify-content: center;
     }
 
-    .print-button {
-      width: 100%;
-    }
 
   }
 }

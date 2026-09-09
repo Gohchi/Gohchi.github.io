@@ -1,5 +1,10 @@
 export default/*html*/`
-  <MainHeader :title="'PRINT PRACTICE'" :hide-furigana="true" :hide-zoom="true" />
+  <MainHeader :title="'PRINT PRACTICE'" :hide-furigana="true" :hide-zoom="true">
+    <div class="print-buttons">
+      <button class="refresh-button" @click="drawPracticeSheet" title="Print this worksheet">Refresh</button>
+      <button class="print-button" @click="printWorksheet" title="Print this worksheet">Print worksheet</button>
+    </div>
+  </MainHeader>
 
   <main class="print-practice">
     <section class="print-toolbar" aria-label="Print practice options">
@@ -10,10 +15,6 @@ export default/*html*/`
         <p v-else>Basic kana practice sheet.</p>
       </div>
       <div class="print-controls">
-        <div class="print-buttons">
-          <button class="refresh-button" @click="drawPracticeSheet" title="Print this worksheet">Refresh</button>
-          <button class="print-button" @click="printWorksheet" title="Print this worksheet">Print worksheet</button>
-        </div>
         <div class="segmented-control" aria-label="Choose script">
           <button :class="{ active: script === 'hiragana' }" @click="script = 'hiragana'">ひらがな</button>
           <button :class="{ active: script === 'katakana' }" @click="script = 'katakana'">カタカナ</button>
