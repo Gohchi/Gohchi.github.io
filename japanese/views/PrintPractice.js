@@ -107,7 +107,7 @@ export default {
   components: { MainHeader },
   data() {
     return {
-      script: 'hiragana',
+      script: 'kanji',
       level: 'N5',
       levels,
       kana,
@@ -282,7 +282,8 @@ export default {
       if (item.reading) {
         context.fillStyle = '#b34f35';
         context.font = '12px Meiryo, sans-serif';
-        context.fillText(item.reading, x + width * .2, y + height - 18);
+        context.textAlign = 'left';
+        context.fillText(item.reading, x + 4, y + 9);
       }
       context.textAlign = 'start';
       context.textBaseline = 'alphabetic';
