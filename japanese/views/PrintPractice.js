@@ -138,8 +138,11 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(() => this.drawPracticeSheet());
-    window.addEventListener('resize', this.drawPracticeSheet);
+    this.$nextTick(() => {
+      this.drawPracticeSheet();
+      setTimeout(() => this.drawPracticeSheet(), 100); // fix
+    }
+    );
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.drawPracticeSheet);
@@ -151,8 +154,8 @@ export default {
 
       const width = Math.max(canvas.clientWidth, 320);
       const columns = 1; //width < 640 ? 2 : 4;
-      const cardWidth = (width - 48 - (columns - 1) * 12) / columns;
-      const cardHeight = 80; //width < 640 ? 150 : 176;
+      const cardWidth = width - 48;
+      const cardHeight = 78; //width < 640 ? 150 : 176;
       const rows = Math.ceil(this.items.length / columns);
       const height = 72 + rows * (cardHeight + 12);
       const scale = window.devicePixelRatio || 1;
@@ -181,7 +184,8 @@ export default {
       this.items.forEach((item, index) => {
         const row = Math.floor(index);
         const x = 24;
-        const y = 60 + row * cardHeight;
+        const offset = (index === 8 ? 38 : Math.floor(index / 8.5) * 34);
+        const y = 60 + row * cardHeight + (index >= 8 ? offset : 0);
         this.drawPracticeCard(context, item, x, y, cardWidth, cardHeight);
       });
     },
@@ -216,6 +220,22 @@ export default {
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillText(item.character, x + 40, y + 40);
+
+      if (item.strokes) {
+        context.font = '6px "Zen Antique Soft", Meiryo, sans-serif';
+
+        for (const i in item.strokes) {
+          const stroke = item.strokes[i];
+
+          context.beginPath();
+          context.arc(x + stroke.x * 16, y + stroke.y * 16 - 16, 3.5, 0, 2 * Math.PI);
+          context.fillStyle = "red";
+          context.fill();
+
+          context.fillStyle = 'white';
+          context.fillText(1 + +i, x + stroke.x * 16, y + stroke.y * 16 - 16);
+        }
+      }
 
       const boxStart = x + 80;
       const boxWidth = 60;
