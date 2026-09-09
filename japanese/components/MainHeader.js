@@ -70,6 +70,7 @@ export default {
         <li><router-link to="/translation">小説 ベルセルク： 炎竜の騎士</router-link></li>
         <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
         <li><router-link to="/topics">TOPICS</router-link></li>
+        <li><router-link to="/print-practice">PRINT PRACTICE</router-link></li>
         <li aria-hidden="true"><hr></li>
         <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
         <li v-if="!hideFurigana"><a href="#" @click.prevent="onChangeFurigana()">Switch furigana</a></li>
