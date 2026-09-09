@@ -772,6 +772,18 @@ body {
     font-family: "Zen Antique Soft", serif;
     font-size: 3.25rem;
     line-height: 1;
+    
+
+    .stroke-guide {
+      position: absolute;
+      font-size: .35rem;
+      background: red;
+      border-radius: 50%;
+      width: 6px;
+      height: 6px;
+      text-align: center;
+      color: white;
+    }
   }
 
   .writing-boxes {
