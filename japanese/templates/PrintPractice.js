@@ -24,10 +24,12 @@ export default/*html*/`
     </section>
 
     <canvas
-      id="practice-sheet"
-      ref="practiceSheet"
+      v-for="(page, pageIndex) in pages"
+      :key="pageIndex"
+      :id="pageIndex === 0 ? 'practice-sheet' : undefined"
+      ref="practiceSheets"
       class="practice-sheet"
-      :aria-label="title + ' practice worksheet'"
+      :aria-label="title + ' practice worksheet page ' + (pageIndex + 1)"
     ></canvas>
   </main>
 `;

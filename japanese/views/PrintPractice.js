@@ -127,6 +127,15 @@ export default {
 
       return Object.entries(this.kana[this.script])
         .map(([character, entry]) => ({ character, strokes: entry.strokes, reading: '' }));
+    },
+    pages() {
+      const pages = [];
+      const firstPageRows = 8;
+      pages.push(this.items.slice(0, firstPageRows));
+      for (let start = firstPageRows; start < this.items.length; start += firstPageRows) {
+        pages.push(this.items.slice(start, start + firstPageRows));
+      }
+      return pages;
     }
   },
   watch: {
@@ -149,15 +158,22 @@ export default {
   },
   methods: {
     drawPracticeSheet() {
-      const canvas = this.$refs.practiceSheet;
-      if (!canvas) return;
+      const canvases = Array.isArray(this.$refs.practiceSheets)
+        ? this.$refs.practiceSheets
+        : [this.$refs.practiceSheets];
+      if (!canvases[0]) return;
 
+      canvases.forEach((canvas, pageIndex) => {
+        this.drawPracticePage(canvas, this.pages[pageIndex], pageIndex);
+      });
+    },
+    drawPracticePage(canvas, pageItems, pageIndex) {
       const width = Math.max(canvas.clientWidth, 320);
       const columns = 1; //width < 640 ? 2 : 4;
       const cardWidth = width - 48;
       const cardHeight = 78; //width < 640 ? 150 : 176;
-      const rows = Math.ceil(this.items.length / columns);
-      const height = 72 + rows * (cardHeight + 12);
+      const rows = Math.ceil(pageItems.length / columns);
+      const height = 72 + rows * (cardHeight);
       const scale = window.devicePixelRatio || 1;
 
       canvas.width = width * scale;
@@ -171,7 +187,7 @@ export default {
 
       context.fillStyle = '#273f3a';
       context.font = '700 13px Meiryo, sans-serif';
-      context.fillText(`${this.title}${this.script === 'kanji' ? ` ${this.level}` : ''}`, 24, 28);
+      context.fillText(`${this.title}${this.script === 'kanji' ? ` ${this.level}` : ''}  Page ${pageIndex + 1}`, 24, 28);
       context.fillStyle = '#58635e';
       context.font = '12px Meiryo, sans-serif';
       context.fillText('Name: ____________________', width - 220, 28);
@@ -181,11 +197,10 @@ export default {
       context.lineTo(width - 24, 48);
       context.stroke();
 
-      this.items.forEach((item, index) => {
+      pageItems.forEach((item, index) => {
         const row = Math.floor(index);
         const x = 24;
-        const offset = (index === 8 ? 38 : Math.floor(index / 8.5) * 34);
-        const y = 60 + row * cardHeight + (index >= 8 ? offset : 0);
+        const y = 60 + row * cardHeight;
         this.drawPracticeCard(context, item, x, y, cardWidth, cardHeight);
       });
     },

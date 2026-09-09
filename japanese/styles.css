@@ -778,4 +778,9 @@ body {
     max-width: none;
     border: 0;
   }
+
+  .print-practice .practice-sheet:not(:last-child) {
+    break-after: page;
+    page-break-after: always;
+  }
 }
