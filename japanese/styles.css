@@ -749,7 +749,8 @@ body {
     max-width: 72rem;
     height: auto;
     margin: 0 auto;
-    background: #fffdf8;
+    background: white;
+    /*background: #fffdf8;*/
     border: 1px solid #c9c2b5;
   }
 }

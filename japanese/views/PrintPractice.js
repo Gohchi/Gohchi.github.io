@@ -132,10 +132,18 @@ export default {
     },
     pages() {
       const pages = [];
-      const firstPageRows = 8;
+      const firstPageRows = 5;
       pages.push(this.items.slice(0, firstPageRows));
-      for (let start = firstPageRows; start < this.items.length; start += firstPageRows) {
-        pages.push(this.items.slice(start, start + firstPageRows));
+      let rowPerPage = 5;
+      let page = 0;
+      for (let start = firstPageRows; start < this.items.length; start += rowPerPage) {
+        if (['hiragana', 'katakana'].includes(this.script) && [6, 8].includes(page)) {
+          rowPerPage = 3;
+        } else {
+          rowPerPage = 5;
+        }
+        pages.push(this.items.slice(start, start + rowPerPage));
+        page++;
       }
       return pages;
     }
@@ -171,11 +179,10 @@ export default {
     },
     drawPracticePage(canvas, pageItems, pageIndex) {
       const width = Math.max(canvas.clientWidth, 320);
-      const columns = 1; //width < 640 ? 2 : 4;
       const cardWidth = width - 48;
-      const cardHeight = 78; //width < 640 ? 150 : 176;
-      const rows = Math.ceil(pageItems.length / columns);
-      const height = 72 + rows * (cardHeight);
+      const cardHeight = 128; //width < 640 ? 150 : 176; // 176.92%
+      const rows = pageItems.length;
+      const height = cardHeight / 5 + rows * 138;
       const scale = window.devicePixelRatio || 1;
 
       canvas.width = width * scale;
@@ -184,7 +191,7 @@ export default {
 
       const context = canvas.getContext('2d');
       context.scale(scale, scale);
-      context.fillStyle = '#fffdf8';
+      context.fillStyle = 'white'; //'#fffdf8';
       context.fillRect(0, 0, width, height);
 
       context.fillStyle = '#273f3a';
@@ -209,7 +216,7 @@ export default {
     async drawPracticeCard(context, item, x, y, width, height) {
       await document.fonts.ready;
 
-      context.fillStyle = '#fffdf8';
+      context.fillStyle = 'white'; //'#fffdf8';
       context.strokeStyle = '#d7d0c4';
       context.fillRect(x, y, width, height);
       context.strokeRect(x, y, width, height);
@@ -220,13 +227,15 @@ export default {
       context.clip();
       context.strokeStyle = '#e7e0d5';
       context.lineWidth = 1;
-      for (let gridX = x + 16; gridX < x + width; gridX += 24) {
+      const gridStartOffset = 0;
+      const gridSizeOffset = 18;
+      for (let gridX = x + gridStartOffset; gridX < x + width; gridX += gridSizeOffset) {
         context.beginPath();
         context.moveTo(gridX, y);
         context.lineTo(gridX, y + height);
         context.stroke();
       }
-      for (let gridY = y + 16; gridY < y + height; gridY += 24) {
+      for (let gridY = y + gridStartOffset - 4; gridY < y + height; gridY += gridSizeOffset) {
         context.beginPath();
         context.moveTo(x, gridY);
         context.lineTo(x + width, gridY);
@@ -235,10 +244,11 @@ export default {
       context.restore();
 
       context.fillStyle = '#273f3a';
-      context.font = `44px ${this.font}`;
+      const fontSize = 78;
+      context.font = `${fontSize}px ${this.font}`;
       context.textAlign = 'center';
       context.textBaseline = 'middle';
-      context.fillText(item.character, x + 40, y + 40);
+      context.fillText(item.character, x + 54, y + 70);
 
       if (item.strokes) {
         context.font = `6px ${this.font}`;
@@ -247,40 +257,46 @@ export default {
           const stroke = item.strokes[i];
 
           context.beginPath();
-          context.arc(x + stroke.x * 16, y + stroke.y * 16 - 16, 3.5, 0, 2 * Math.PI);
+          const offsetX = 22;
+          const offsetY = 23;
+          context.arc(x + stroke.x * offsetX, y + stroke.y * offsetY - 16, 3.5, 0, 2 * Math.PI);
           context.fillStyle = "red";
           context.fill();
 
           context.fillStyle = 'white';
-          context.fillText(1 + +i, x + stroke.x * 16, y + stroke.y * 16 - 16);
+          context.fillText(1 + +i, x + stroke.x * offsetX, y + stroke.y * offsetY - 16);
         }
       }
 
-      const boxStart = x + 80;
-      const boxWidth = 60;
+      const boxStart = x + 108;
+      const boxWidth = 108;
       context.strokeStyle = '#a9a196';
       context.setLineDash([3, 3]);
       context.beginPath();
-      context.moveTo(boxStart, y + 10);
+      const dashOffset = 18;
+      context.moveTo(boxStart, y + dashOffset);
       context.lineTo(boxStart, y + 10 + boxWidth);
       context.stroke();
 
-      for (let box = 0; box < 17; box += 1) {
+      const amountBoxes = Math.round((width - boxStart) / 108);
+      for (let box = 0; box < amountBoxes; box += 1) {
         const boxX = boxStart + box * boxWidth;
         context.setLineDash([3, 3]);
         context.beginPath();
 
-        context.moveTo(boxX, y + 10);
-        context.lineTo(boxX + boxWidth, y + 10);
+        context.moveTo(boxX, y + dashOffset);
+        context.lineTo(boxX + boxWidth, y + dashOffset);
         context.lineTo(boxX + boxWidth, y + 10 + boxWidth);
         context.lineTo(boxX, y + 10 + boxWidth);
 
         context.stroke();
 
         context.setLineDash([]);
-        context.fillStyle = `rgba(39, 63, 58, ${.18 - box * .01})`;
-        context.font = `44px ${this.font}`;
-        context.fillText(item.character, boxX + boxWidth / 2, y + 10 + boxWidth / 2);
+        const step = 0.18 / amountBoxes;
+        const opacity = Math.max(0, 0.18 - box * step);
+        context.fillStyle = `rgba(39, 63, 58, ${opacity.toFixed(3)})`;
+        context.font = `${fontSize}px ${this.font}`;
+        context.fillText(item.character, boxX + boxWidth / 2, y + dashOffset + boxWidth / 2 - 2);
       }
 
       if (item.reading) {
