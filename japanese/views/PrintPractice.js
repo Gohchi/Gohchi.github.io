@@ -62,7 +62,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.drawPracticeSheet();
-      setTimeout(() => this.drawPracticeSheet(), 100); // fix
+      setTimeout(() => this.drawPracticeSheet(), 200); // fix
     }
     );
   },
@@ -79,7 +79,7 @@ export default {
       canvases.forEach((canvas, pageIndex) => {
         this.drawPracticePage(canvas, this.pages[pageIndex], pageIndex);
       });
-      // window.scrollTo(0,6500);
+      window.scrollTo(0,6300);
     },
     drawPracticePage(canvas, pageItems, pageIndex) {
       const width = Math.max(canvas.clientWidth, 320);
