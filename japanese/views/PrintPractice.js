@@ -79,7 +79,6 @@ export default {
       canvases.forEach((canvas, pageIndex) => {
         this.drawPracticePage(canvas, this.pages[pageIndex], pageIndex);
       });
-      window.scrollTo(0,6300);
     },
     drawPracticePage(canvas, pageItems, pageIndex) {
       const width = Math.max(canvas.clientWidth, 320);
