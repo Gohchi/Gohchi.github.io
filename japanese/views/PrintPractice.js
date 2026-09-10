@@ -2,104 +2,7 @@ import MainHeader from 'components/MainHeader.js';
 import { ruby } from 'data/kanji.js';
 import template from 'templates/PrintPractice.js';
 
-const kana = {
-  hiragana: {
-    'あ': { strokes: [{ x: 1.2, y: 3.2 }, { x: 1.8, y: 2.2 }, { x: 3, y: 3.8 }]},
-    'い': { strokes: [{ x: 1.5, y: 2.5 }, { x: 3.1, y: 2.9 }]},
-    'う': { strokes: [{ x: 1.7, y: 2.6 }, { x: 1.4, y: 3.6 }]},
-    'え': { strokes: [{ x: 1.8, y: 2.7 }, { x: 1.3, y: 3.3 }]},
-    'お': { strokes: [{ x: 1, y: 3.5 }, { x: 1.8, y: 2.2 }, { x: 3.2, y: 2.9 }]},
-    'か': { strokes: [{ x: 0.9, y: 3.5 }, { x: 1.9, y: 2.2 }, { x: 3.1, y: 2.9 }]},
-    'き': { strokes: [{ x: 1.3, y: 2.8 }, { x: 1.2, y: 3.6 }, { x: 2.0, y: 2 }]},
-    'く': { strokes: [{ x: 3.1, y: 2.2 }]},
-    'け': { strokes: [{ x: 1.4, y: 2.2 }, { x: 2.4, y: 2.9 }, { x: 3, y: 2.2 }]},
-    'こ': { strokes: [{ x: 1.4, y: 2.8 }, { x: 2, y: 4 }]},
-    'さ': { strokes: [{ x: 1.2, y: 3.1 }, { x: 2.3, y: 2.2 }]},
-    'し': { strokes: [{ x: 2.0, y: 2.2 }]},
-    'す': { strokes: [{ x: 1, y: 2.7 }, { x: 2.8, y: 2.2 }]},
-    'せ': { strokes: [{ x: 1.1, y: 3.3 }, { x: 3.1, y: 2.3 }, { x: 1.8, y: 2.5 }]},
-    'そ': { strokes: [{ x: 1.5, y: 2.7 }]},
-    'た': { strokes: [{ x: 1.5, y: 2.8 }, { x: 2.5, y: 2.4 }, { x: 3.2, y: 3.1 }]},
-    'ち': { strokes: [{ x: 1.7, y: 2.7 }, { x: 3.0, y: 2.8 }]},
-    'つ': { strokes: [{ x: 1.6, y: 2.3 }, { x: 3.0, y: 2.9 }]},
-    'て': { strokes: [{ x: 1.4, y: 2.8 }, { x: 2.5, y: 3.1 }]},
-    'と': { strokes: [{ x: 1.6, y: 2.7 }, { x: 2.4, y: 2.0 }, { x: 3.3, y: 3.0 }]},
-    'な': { strokes: [{ x: 1.4, y: 2.6 }, { x: 2.8, y: 3.0 }]},
-    'に': { strokes: [{ x: 1.5, y: 2.8 }, { x: 2.7, y: 2.3 }]},
-    'ぬ': { strokes: [{ x: 1.8, y: 2.4 }, { x: 2.8, y: 3.1 }]},
-    'ね': { strokes: [{ x: 1.4, y: 2.8 }, { x: 2.8, y: 3.0 }]},
-    'の': { strokes: [{ x: 1.5, y: 2.7 }, { x: 2.7, y: 3.2 }]},
-    'は': { strokes: [{ x: 1.4, y: 2.8 }, { x: 2.4, y: 2.4 }, { x: 3.2, y: 3.0 }]},
-    'ひ': { strokes: [{ x: 1.7, y: 2.8 }, { x: 3.0, y: 2.7 }]},
-    'ふ': { strokes: [{ x: 1.6, y: 2.4 }, { x: 2.6, y: 2.7 }, { x: 3.1, y: 3.2 }]},
-    'へ': { strokes: [{ x: 1.7, y: 2.8 }, { x: 2.7, y: 3.2 }]},
-    'ほ': { strokes: [{ x: 1.5, y: 2.4 }, { x: 2.4, y: 2.7 }, { x: 3.1, y: 3.0 }]},
-    'ま': { strokes: [{ x: 1.6, y: 3.1 }, { x: 2.6, y: 2.5 }]},
-    'み': { strokes: [{ x: 1.6, y: 2.7 }, { x: 2.9, y: 2.7 }]},
-    'む': { strokes: [{ x: 1.5, y: 2.7 }, { x: 2.6, y: 3.0 }]},
-    'め': { strokes: [{ x: 1.4, y: 2.8 }, { x: 2.8, y: 3.0 }]},
-    'も': { strokes: [{ x: 1.5, y: 2.7 }, { x: 2.5, y: 2.7 }]},
-    'や': { strokes: [{ x: 2.0, y: 2.7 }]},
-    'ゆ': { strokes: [{ x: 1.8, y: 2.8 }]},
-    'よ': { strokes: [{ x: 1.8, y: 2.7 }]},
-    'ら': { strokes: [{ x: 1.4, y: 2.9 }, { x: 2.8, y: 2.6 }]},
-    'り': { strokes: [{ x: 1.6, y: 2.9 }, { x: 2.9, y: 2.7 }]},
-    'る': { strokes: [{ x: 1.5, y: 2.8 }, { x: 2.9, y: 2.9 }]},
-    'れ': { strokes: [{ x: 1.7, y: 3.0 }, { x: 2.7, y: 2.6 }]},
-    'ろ': { strokes: [{ x: 1.5, y: 2.8 }, { x: 2.7, y: 2.7 }]},
-    'わ': { strokes: [{ x: 1.8, y: 2.9 }]},
-    'を': { strokes: [{ x: 1.8, y: 2.8 }, { x: 2.8, y: 3.0 }]},
-    'ん': { strokes: [{ x: 2.3, y: 3.0 }]},
-  },
-  katakana: {
-    'ア': { strokes: [{ x: 1.2, y: 3.2 }, { x: 2, y: 3.5 }]},
-    'イ': {},
-    'ウ': {},
-    'エ': {},
-    'オ': {},
-    'カ': {},
-    'キ': {},
-    'ク': {},
-    'ケ': {},
-    'コ': {},
-    'サ': {},
-    'シ': {},
-    'ス': {},
-    'セ': {},
-    'ソ': {},
-    'タ': {},
-    'チ': {},
-    'ツ': {},
-    'テ': {},
-    'ト': {},
-    'ナ': {},
-    'ニ': {},
-    'ヌ': {},
-    'ネ': {},
-    'ノ': {},
-    'ハ': {},
-    'ヒ': {},
-    'フ': {},
-    'ヘ': {},
-    'ホ': {},
-    'マ': {},
-    'ミ': {},
-    'ム': {},
-    'メ': {},
-    'モ': {},
-    'ヤ': {},
-    'ユ': {},
-    'ヨ': {},
-    'ラ': {},
-    'リ': {},
-    'ル': {},
-    'レ': {},
-    'ロ': {},
-    'ワ': {},
-    'ヲ': {},
-    'ン': {}
-  }
-};
+import kana from 'data/kana.js'; 
 
 const levels = ['N5', 'N4', 'N3', 'N2', 'N1'];
 
@@ -107,7 +10,7 @@ export default {
   components: { MainHeader },
   data() {
     return {
-      script: 'hiragana',
+      script: 'katakana',
       level: 'N5',
       levels,
       kana,
@@ -176,7 +79,7 @@ export default {
       canvases.forEach((canvas, pageIndex) => {
         this.drawPracticePage(canvas, this.pages[pageIndex], pageIndex);
       });
-      // window.scrollTo(0,1700);
+      // window.scrollTo(0,6500);
     },
     drawPracticePage(canvas, pageItems, pageIndex) {
       const width = Math.max(canvas.clientWidth, 320);
