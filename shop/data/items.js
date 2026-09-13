@@ -1,0 +1,102 @@
+// Each item follows this shape:
+// {
+//   id: unique string,
+//   title: string,
+//   type: one of the category ids in ./categories.js ('books' | 'figures' | 'tcg' | 'videogames' | 'tech' | 'other'),
+//   subtype: optional short string shown as a small tag, e.g. platform/series/edition,
+//   description: string,
+//   price: number | null  -> null means "make an offer" / price not decided yet,
+//   currency: string, defaults to 'USD' if omitted,
+//   condition: 'new' | 'like-new' | 'used' | 'for-parts',
+//   status: 'available' | 'reserved' | 'sold',
+//   images: array of image paths. Can be empty - the UI falls back to a placeholder.
+//           Put the most representative photo first; it's used as the card thumbnail.
+//   tags: optional array of strings for search/filter matching (author, franchise, etc.)
+// }
+
+export const items = [
+  {
+    id: 'book-001',
+    title: 'El fin de la Eternidad',
+    type: 'books',
+    subtype: 'Isaac Asimov · Hyspamérica',
+    description: 'Paperback, part of the "Biblioteca de Ciencia Ficción" collection. Good condition, light shelf wear on the spine.',
+    price: 8,
+    condition: 'used',
+    status: 'available',
+    images: [
+      './images/items/book-001-cover.jpg',
+      './images/items/book-001-spine.jpg',
+    ],
+    tags: ['asimov', 'sci-fi', 'ciencia ficcion', 'hyspamerica'],
+  },
+  {
+    id: 'figure-001',
+    title: 'Prinny figure',
+    type: 'figures',
+    subtype: 'Disgaea',
+    description: 'Small vinyl figure, no box. Some paint rub on the base.',
+    price: 15,
+    condition: 'used',
+    status: 'available',
+    images: [
+      './images/items/figure-001-front.jpg',
+      './images/items/figure-001-back.jpg',
+      './images/items/figure-001-base.jpg',
+    ],
+    tags: ['disgaea', 'prinny', 'nippon ichi'],
+  },
+  {
+    id: 'tcg-001',
+    title: 'Cyber Dragon Infinity',
+    type: 'tcg',
+    subtype: 'Yu-Gi-Oh! · Ultra Rare',
+    description: 'From my personal collection, see my Yu-Gi-Oh! page for reference. Sleeved since opening, near mint.',
+    price: 6,
+    condition: 'like-new',
+    status: 'available',
+    images: [],
+    tags: ['yugioh', 'cyber dragon', 'xyz'],
+  },
+  {
+    id: 'videogame-001',
+    title: 'Disgaea 3: Absence of Justice',
+    type: 'videogames',
+    subtype: 'PS3',
+    description: 'Complete in box with manual. Disc has a few light scratches but plays fine.',
+    price: 20,
+    condition: 'used',
+    status: 'reserved',
+    images: [
+      './images/items/videogame-001-box.jpg',
+    ],
+    tags: ['disgaea', 'ps3', 'nippon ichi'],
+  },
+  {
+    id: 'tech-001',
+    title: 'Nintendo 3DS (unlocked region)',
+    type: 'tech',
+    subtype: 'Handheld console',
+    description: 'Works well, battery holds a decent charge. Comes with a charger, no games included. Selling as-is.',
+    price: null,
+    condition: 'used',
+    status: 'available',
+    images: [
+      './images/items/tech-001-front.jpg',
+      './images/items/tech-001-open.jpg',
+    ],
+    tags: ['nintendo', '3ds', 'handheld'],
+  },
+  {
+    id: 'other-001',
+    title: 'Mystery lot of loose stickers',
+    type: 'other',
+    subtype: 'Bundle',
+    description: 'A grab bag of assorted anime/gaming stickers collected over the years. Great for laptops or notebooks.',
+    price: 3,
+    condition: 'used',
+    status: 'sold',
+    images: [],
+    tags: ['stickers', 'bundle'],
+  },
+];
