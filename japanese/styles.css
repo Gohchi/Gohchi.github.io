@@ -577,11 +577,69 @@ body {
     display: flex;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 
     button.active {
       background: #3498db;
       color: white;
+    }
+  }
+
+  .input-mode-toggle button.active {
+    background: #8e44ad;
+    color: white;
+  }
+
+  .memory-bar {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin: 8px 0;
+  }
+
+  .memory-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    border: 1px solid #ccc;
+
+    &.filled {
+      background: #f5a623;
+      border-color: #d38a12;
+    }
+  }
+
+  .memory-stats {
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .choice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .verb-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-button {
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    cursor: pointer;
+
+    &:hover {
+      background: #eee;
+    }
+
+    &:active {
+      background: #ddd;
     }
   }
 
