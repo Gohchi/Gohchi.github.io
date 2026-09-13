@@ -3,7 +3,25 @@ import MainHeader from 'components/MainHeader.js';
 import template from 'templates/KanaKeyboard.js';
 
 import verbsData from 'data/verbs.js';
+import kanaRomaji from 'data/kana-romaji.js';
 import { conjugateVerb, VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
+import {
+  MAX_MEMORY,
+  getEntry,
+  recordAnswer,
+  getStats,
+  resetProgress,
+  weightedPick,
+} from 'data/progress.js';
+
+function shuffle(list) {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
 export default {
   components: {
@@ -16,10 +34,14 @@ export default {
     return { capture, verbInput };
   },
   data() {
+    const inputMode = localStorage.getItem('kana-keyboard-input-mode') || 'type';
+
     return {
       mode: 'kana', // 'kana' | 'verbs'
+      inputMode, // 'type' | 'choice'
+      MAX_MEMORY,
 
-      // --- kana practice (unchanged) ---
+      // --- kana practice ---
       showMenu: false,
       furigana: true,
       KANA: [
@@ -35,6 +57,7 @@ export default {
         "わ","を","ん"
       ],
       target: "",
+      kanaOptions: [],
       score: 0,
       streak: 0,
       last: "-",
@@ -51,6 +74,7 @@ export default {
       targetVerb: null,
       targetForm: '',
       verbAnswer: '',
+      verbOptions: [],
       verbInputValue: '',
       verbStatus: '',
       verbStatusClass: 'status',
@@ -67,29 +91,77 @@ export default {
     formLabel() {
       return FORM_LABELS[this.targetForm] || '';
     },
+    kanaMemory() {
+      return this.target ? getEntry('kana', this.target).memory : 0;
+    },
+    verbMemoryKey() {
+      return this.targetVerb ? `${this.targetVerb.dictionary}:${this.targetForm}` : null;
+    },
+    verbMemory() {
+      return this.verbMemoryKey ? getEntry('verbs', this.verbMemoryKey).memory : 0;
+    },
+    kanaStats() {
+      return getStats('kana', this.KANA);
+    },
+    verbStats() {
+      const keys = [];
+      this.filteredVerbs.forEach(v => this.verbForms.forEach(f => keys.push(`${v.dictionary}:${f}`)));
+      return getStats('verbs', keys);
+    },
   },
   methods: {
+    // --- shared ---
+    switchMode(mode) {
+      this.mode = mode;
+      if (mode === 'verbs' && !this.targetVerb) {
+        this.newVerbTarget();
+      }
+      if (mode === 'kana') {
+        this.$nextTick(() => this.focusInput());
+      }
+    },
+    setInputMode(value) {
+      this.inputMode = value;
+      localStorage.setItem('kana-keyboard-input-mode', value);
+      if (this.mode === 'kana') {
+        this.newTarget();
+      } else {
+        this.newVerbTarget();
+      }
+    },
+
     // --- kana practice ---
-    randomKana() {
-      return this.KANA[Math.floor(Math.random() * this.KANA.length)];
+    buildKanaOptions(correctKana) {
+      const wrongPool = this.KANA.filter(k => k !== correctKana);
+      const wrongs = shuffle(wrongPool).slice(0, 3);
+      return shuffle([correctKana, ...wrongs]).map(k => ({ kana: k, romaji: kanaRomaji[k] }));
     },
     newTarget() {
-      this.target = this.randomKana();
-      this.status = "Type the kana shown above.";
+      this.target = weightedPick('kana', this.KANA, k => k);
+      this.kanaOptions = this.buildKanaOptions(this.target);
+      this.status = this.inputMode === 'type'
+        ? "Type the kana shown above."
+        : "Pick the reading that matches.";
       this.statusClass = "status";
       this.inputValue = "";
-      this.$nextTick(() => this.focusInput());
+      if (this.inputMode === 'type') {
+        this.$nextTick(() => this.focusInput());
+      }
     },
     resetScore() {
       this.score = 0;
       this.streak = 0;
-      this.status = "Score reset.";
+      resetProgress('kana');
+      this.status = "Score and memory reset.";
       this.statusClass = "status";
       this.$nextTick(() => this.focusInput());
     },
     handleKana(kana) {
       this.last = kana;
-      if (kana === this.target) {
+      const correct = kana === this.target;
+      recordAnswer('kana', this.target, correct);
+
+      if (correct) {
         this.score++;
         this.streak++;
         this.status = "Correct!";
@@ -109,20 +181,14 @@ export default {
       this.inputValue = data;
       e.target.value = '';
     },
+    chooseKanaOption(option) {
+      this.handleKana(option.kana);
+    },
     focusInput() {
-      this.$refs.capture.focus();
+      this.$refs.capture && this.$refs.capture.focus();
     },
 
     // --- verb practice ---
-    switchMode(mode) {
-      this.mode = mode;
-      if (mode === 'verbs' && !this.targetVerb) {
-        this.newVerbTarget();
-      }
-      if (mode === 'kana') {
-        this.$nextTick(() => this.focusInput());
-      }
-    },
     toggleLevel(level) {
       this.selectedLevels = this.selectedLevels.includes(level)
         ? this.selectedLevels.filter(l => l !== level)
@@ -140,36 +206,68 @@ export default {
         this.newVerbTarget();
       }
     },
-    randomVerb() {
-      const list = this.filteredVerbs;
-      if (!list.length) return null;
-      return list[Math.floor(Math.random() * list.length)];
+    buildVerbOptions(correctAnswer, form) {
+      const otherVerbs = this.filteredVerbs.filter(v => v !== this.targetVerb);
+      const distractors = shuffle(otherVerbs)
+        .map(v => conjugateVerb(v.dictionary, v.group, form))
+        .filter(answer => answer && answer !== correctAnswer);
+
+      // dedupe, fall back to other forms of the same verb if the pool is too small
+      const unique = [...new Set(distractors)];
+      if (unique.length < 3 && this.targetVerb) {
+        this.verbForms
+          .filter(f => f !== form)
+          .forEach(f => {
+            const alt = conjugateVerb(this.targetVerb.dictionary, this.targetVerb.group, f);
+            if (alt && alt !== correctAnswer && !unique.includes(alt)) unique.push(alt);
+          });
+      }
+
+      return shuffle([correctAnswer, ...unique.slice(0, 3)]);
     },
     randomForm() {
       return this.verbForms[Math.floor(Math.random() * this.verbForms.length)];
     },
     newVerbTarget() {
-      const verb = this.randomVerb();
+      const verb = weightedPick('verbs', this.filteredVerbs, v => `${v.dictionary}:${this.randomForm()}`)
+        || this.filteredVerbs[Math.floor(Math.random() * this.filteredVerbs.length)];
+
       if (!verb) {
         this.targetVerb = null;
         this.verbStatus = 'No verbs match the selected filters.';
         this.verbStatusClass = 'status bad';
         return;
       }
+
       this.targetVerb = verb;
       this.targetForm = this.randomForm();
       this.verbAnswer = conjugateVerb(verb.dictionary, verb.group, this.targetForm);
+      this.verbOptions = this.inputMode === 'choice'
+        ? this.buildVerbOptions(this.verbAnswer, this.targetForm)
+        : [];
       this.verbInputValue = '';
-      this.verbStatus = 'Type the ' + this.formLabel + ' of this verb.';
+      this.verbStatus = this.inputMode === 'type'
+        ? 'Type the ' + this.formLabel + ' of this verb.'
+        : 'Pick the ' + this.formLabel + ' of this verb.';
       this.verbStatusClass = 'status';
-      this.$nextTick(() => this.focusVerbInput());
+      if (this.inputMode === 'type') {
+        this.$nextTick(() => this.focusVerbInput());
+      }
     },
     checkVerbAnswer() {
       if (!this.targetVerb) return;
       const value = this.verbInputValue.trim();
       if (!value) return;
+      this.gradeVerbAnswer(value);
+    },
+    chooseVerbOption(option) {
+      this.gradeVerbAnswer(option);
+    },
+    gradeVerbAnswer(value) {
+      const correct = value === this.verbAnswer;
+      recordAnswer('verbs', this.verbMemoryKey, correct);
 
-      if (value === this.verbAnswer) {
+      if (correct) {
         this.verbScore++;
         this.verbStreak++;
         this.verbStatus = 'Correct! ' + this.verbAnswer;
@@ -189,6 +287,7 @@ export default {
     resetVerbScore() {
       this.verbScore = 0;
       this.verbStreak = 0;
+      resetProgress('verbs');
       this.$nextTick(() => this.focusVerbInput());
     },
     focusVerbInput() {
@@ -198,7 +297,7 @@ export default {
   mounted() {
     this.newTarget();
     document.addEventListener("click", () => {
-      if (this.mode === 'kana') this.focusInput();
+      if (this.mode === 'kana' && this.inputMode === 'type') this.focusInput();
     });
   },
   template
