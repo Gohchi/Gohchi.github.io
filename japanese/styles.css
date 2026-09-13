@@ -572,6 +572,63 @@ body {
     opacity: 0;
     pointer-events: none;
   }
+
+  .mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    button.active {
+      background: #3498db;
+      color: white;
+    }
+  }
+
+  .verb-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+
+    button.active {
+      background: #0a7;
+      color: white;
+    }
+  }
+
+  .verb-meaning {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .verb-prompt {
+    font-size: 56px;
+  }
+
+  .verb-target-label {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 12px;
+  }
+
+  .verb-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+  }
 }
 
 .topics {
