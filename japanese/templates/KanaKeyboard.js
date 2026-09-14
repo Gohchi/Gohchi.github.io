@@ -5,19 +5,19 @@ export default /*html*/`
       hideFurigana="true"
       hideZoom="true"
     >
+      <div class="keyboard-toolbar-buttons">
+        <div class="toolbar-group">
+          <button :class="{ active: mode === 'kana' }" @click="switchMode('kana')">Kana</button>
+          <button :class="{ active: mode === 'verbs' }" @click="switchMode('verbs')">Verbs</button>
+        </div>
+        <div class="toolbar-group">
+          <button :class="{ active: inputMode === 'type' }" @click="setInputMode('type')">⌨️ Type</button>
+          <button :class="{ active: inputMode === 'choice' }" @click="setInputMode('choice')">☑️ Choose</button>
+        </div>
+      </div>
     </MainHeader>
 
     <main>
-      <div class="mode-toggle">
-        <button :class="{ active: mode === 'kana' }" @click="switchMode('kana')">Kana</button>
-        <button :class="{ active: mode === 'verbs' }" @click="switchMode('verbs')">Verbs</button>
-      </div>
-
-      <div class="mode-toggle input-mode-toggle">
-        <button :class="{ active: inputMode === 'type' }" @click="setInputMode('type')">⌨️ Type</button>
-        <button :class="{ active: inputMode === 'choice' }" @click="setInputMode('choice')">☑️ Choose</button>
-      </div>
-
       <template v-if="mode === 'kana'">
         <div class="card">
           <div style="text-align:center">
@@ -103,7 +103,7 @@ export default /*html*/`
                 @keyup.enter="checkVerbAnswer"
                 autocomplete="off"
                 class="verb-input"
-                placeholder="Type the conjugated form..."
+                placeholder="Kanji or hiragana, either works..."
               />
             </template>
             <template v-else>
@@ -139,6 +139,23 @@ export default /*html*/`
           </template>
         </div>
       </template>
+
+      <section v-if="sessionHistory.length" class="session-history">
+        <h3>Session history</h3>
+        <ul>
+          <li
+            v-for="entry in sessionHistory" :key="entry.id"
+            :class="entry.isCorrect ? 'history-ok' : 'history-bad'"
+          >
+            <span class="history-icon">{{ entry.isCorrect ? '✅' : '❌' }}</span>
+            <span class="history-prompt">
+              {{ entry.prompt }}<template v-if="entry.detail"> ({{ entry.detail }})</template>
+            </span>
+            <span class="history-chosen">chose: {{ entry.chosen }}</span>
+            <span v-if="!entry.isCorrect" class="history-correct">correct: {{ entry.correctAnswer }}</span>
+          </li>
+        </ul>
+      </section>
     </main>
   </div>
 `;

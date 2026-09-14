@@ -573,18 +573,6 @@ body {
     pointer-events: none;
   }
 
-  .mode-toggle {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 12px;
-
-    button.active {
-      background: #3498db;
-      color: white;
-    }
-  }
-
   .input-mode-toggle button.active {
     background: #8e44ad;
     color: white;
@@ -687,6 +675,59 @@ body {
     padding: 10px;
     text-align: center;
   }
+
+  .session-history {
+    max-width: 480px;
+    margin: 24px auto 0;
+
+    h3 {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 240px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    li {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      padding: 6px 10px;
+      font-size: 13px;
+      border-bottom: 1px solid #eee;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.history-bad {
+        background: #fff5f5;
+      }
+    }
+
+    .history-prompt {
+      font-weight: 600;
+    }
+
+    .history-chosen {
+      color: #555;
+    }
+
+    .history-correct {
+      color: #c33;
+      font-weight: 600;
+    }
+  }
 }
 
 .topics {
@@ -711,6 +752,33 @@ body {
     gap: 0.5rem;
   }
   
+}
+
+.keyboard-toolbar-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .toolbar-group {
+    display: flex;
+    gap: 6px;
+  }
+
+  button {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    cursor: pointer;
+    color: black;
+
+    &.active {
+      background: #3498db;
+      color: white;
+      border-color: #3498db;
+    }
+  }
 }
 
 @media (max-width: 420px) {

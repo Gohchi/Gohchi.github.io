@@ -4,7 +4,7 @@ import template from 'templates/KanaKeyboard.js';
 
 import verbsData from 'data/verbs.js';
 import kanaRomaji from 'data/kana-romaji.js';
-import { conjugateVerb, VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
+import { conjugateVerb, buildVerbDistractors, VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
 import {
   MAX_MEMORY,
   getEntry,
@@ -23,6 +23,8 @@ function shuffle(list) {
   return arr;
 }
 
+const HISTORY_LIMIT = 50;
+
 export default {
   components: {
     MainHeader,
@@ -40,6 +42,9 @@ export default {
       mode: 'kana', // 'kana' | 'verbs'
       inputMode, // 'type' | 'choice'
       MAX_MEMORY,
+
+      // session-only record of what was practiced (not persisted)
+      sessionHistory: [],
 
       // --- kana practice ---
       showMenu: false,
@@ -74,6 +79,7 @@ export default {
       targetVerb: null,
       targetForm: '',
       verbAnswer: '',
+      verbAnswerKana: '',
       verbOptions: [],
       verbInputValue: '',
       verbStatus: '',
@@ -110,6 +116,14 @@ export default {
     },
   },
   methods: {
+    // --- history (session only, not persisted) ---
+    pushHistory(entry) {
+      this.sessionHistory.unshift({ ...entry, id: Date.now() + '-' + Math.random() });
+      if (this.sessionHistory.length > HISTORY_LIMIT) {
+        this.sessionHistory.length = HISTORY_LIMIT;
+      }
+    },
+
     // --- shared ---
     switchMode(mode) {
       this.mode = mode;
@@ -161,6 +175,15 @@ export default {
       const correct = kana === this.target;
       recordAnswer('kana', this.target, correct);
 
+      this.pushHistory({
+        type: 'kana',
+        prompt: this.target,
+        detail: '',
+        chosen: kana,
+        correctAnswer: this.target,
+        isCorrect: correct,
+      });
+
       if (correct) {
         this.score++;
         this.streak++;
@@ -206,24 +229,9 @@ export default {
         this.newVerbTarget();
       }
     },
-    buildVerbOptions(correctAnswer, form) {
-      const otherVerbs = this.filteredVerbs.filter(v => v !== this.targetVerb);
-      const distractors = shuffle(otherVerbs)
-        .map(v => conjugateVerb(v.dictionary, v.group, form))
-        .filter(answer => answer && answer !== correctAnswer);
-
-      // dedupe, fall back to other forms of the same verb if the pool is too small
-      const unique = [...new Set(distractors)];
-      if (unique.length < 3 && this.targetVerb) {
-        this.verbForms
-          .filter(f => f !== form)
-          .forEach(f => {
-            const alt = conjugateVerb(this.targetVerb.dictionary, this.targetVerb.group, f);
-            if (alt && alt !== correctAnswer && !unique.includes(alt)) unique.push(alt);
-          });
-      }
-
-      return shuffle([correctAnswer, ...unique.slice(0, 3)]);
+    buildVerbOptions(verb, form, correctAnswer) {
+      const distractors = shuffle(buildVerbDistractors(verb, form)).slice(0, 3);
+      return shuffle([correctAnswer, ...distractors]);
     },
     randomForm() {
       return this.verbForms[Math.floor(Math.random() * this.verbForms.length)];
@@ -242,12 +250,13 @@ export default {
       this.targetVerb = verb;
       this.targetForm = this.randomForm();
       this.verbAnswer = conjugateVerb(verb.dictionary, verb.group, this.targetForm);
+      this.verbAnswerKana = conjugateVerb(verb.reading, verb.group, this.targetForm);
       this.verbOptions = this.inputMode === 'choice'
-        ? this.buildVerbOptions(this.verbAnswer, this.targetForm)
+        ? this.buildVerbOptions(verb, this.targetForm, this.verbAnswer)
         : [];
       this.verbInputValue = '';
       this.verbStatus = this.inputMode === 'type'
-        ? 'Type the ' + this.formLabel + ' of this verb.'
+        ? 'Type the ' + this.formLabel + ' (kanji or hiragana are both fine).'
         : 'Pick the ' + this.formLabel + ' of this verb.';
       this.verbStatusClass = 'status';
       if (this.inputMode === 'type') {
@@ -264,13 +273,23 @@ export default {
       this.gradeVerbAnswer(option);
     },
     gradeVerbAnswer(value) {
-      const correct = value === this.verbAnswer;
+      if (!this.targetVerb) return;
+      const correct = value === this.verbAnswer || value === this.verbAnswerKana;
       recordAnswer('verbs', this.verbMemoryKey, correct);
+
+      this.pushHistory({
+        type: 'verb',
+        prompt: this.targetVerb.dictionary,
+        detail: this.formLabel,
+        chosen: value,
+        correctAnswer: this.formattedAnswer(),
+        isCorrect: correct,
+      });
 
       if (correct) {
         this.verbScore++;
         this.verbStreak++;
-        this.verbStatus = 'Correct! ' + this.verbAnswer;
+        this.verbStatus = 'Correct! ' + this.formattedAnswer();
         this.verbStatusClass = 'status ok';
         setTimeout(() => this.newVerbTarget(), 700);
       } else {
@@ -279,9 +298,14 @@ export default {
         this.verbStatusClass = 'status bad';
       }
     },
+    formattedAnswer() {
+      return this.verbAnswerKana !== this.verbAnswer
+        ? `${this.verbAnswer} (${this.verbAnswerKana})`
+        : this.verbAnswer;
+    },
     revealAnswer() {
       if (!this.targetVerb) return;
-      this.verbStatus = 'Answer: ' + this.verbAnswer;
+      this.verbStatus = 'Answer: ' + this.formattedAnswer();
       this.verbStatusClass = 'status';
     },
     resetVerbScore() {
