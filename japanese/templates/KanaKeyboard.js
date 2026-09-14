@@ -6,14 +6,10 @@ export default /*html*/`
       hideZoom="true"
     >
       <div class="keyboard-toolbar-buttons">
-        <div class="toolbar-group">
-          <button :class="{ active: mode === 'kana' }" @click="switchMode('kana')">Kana</button>
-          <button :class="{ active: mode === 'verbs' }" @click="switchMode('verbs')">Verbs</button>
-        </div>
-        <div class="toolbar-group">
-          <button :class="{ active: inputMode === 'type' }" @click="setInputMode('type')">⌨️ Type</button>
-          <button :class="{ active: inputMode === 'choice' }" @click="setInputMode('choice')">☑️ Choose</button>
-        </div>
+        <div class="icon-button kana-icon" title="Kana mode" v-if="mode === 'verbs'" @click="switchMode('kana')"></div>
+        <div class="icon-button kanji-icon" title="Verbs mode" v-if="mode === 'kana'" @click="switchMode('verbs')"></div>
+        <div class="icon-button keyboard-icon" title="Type mode" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
+        <div class="icon-button check-icon" title="Options mode" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
       </div>
     </MainHeader>
 
