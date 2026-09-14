@@ -282,6 +282,7 @@ export default {
         prompt: this.targetVerb.dictionary,
         detail: this.formLabel,
         chosen: value,
+        reading: correct ? this.verbAnswerKana : undefined,
         correctAnswer: this.formattedAnswer(),
         isCorrect: correct,
       });

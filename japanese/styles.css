@@ -712,6 +712,10 @@ body {
 
       &.history-bad {
         background: #fff5f5;
+        
+        .history-prompt {
+          color: black;
+        }
       }
     }
 

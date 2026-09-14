@@ -149,10 +149,13 @@ export default /*html*/`
           >
             <span class="history-icon">{{ entry.isCorrect ? '✅' : '❌' }}</span>
             <span class="history-prompt">
-              {{ entry.prompt }}<template v-if="entry.detail"> ({{ entry.detail }})</template>
+              {{ entry.prompt }}
+              <template v-if="entry.detail"> ({{ entry.detail }})</template>
             </span>
             <span class="history-chosen">chose: {{ entry.chosen }}</span>
-            <span v-if="!entry.isCorrect" class="history-correct">correct: {{ entry.correctAnswer }}</span>
+            <template v-if="entry.reading">({{ entry.reading }})</template>
+
+            <!--span v-if="!entry.isCorrect" class="history-correct">correct: {{ entry.correctAnswer }}</span-->
           </li>
         </ul>
       </section>
