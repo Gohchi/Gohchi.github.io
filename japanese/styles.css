@@ -88,6 +88,7 @@ body {
     background-color: #f0f0f0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    justify-content: center;
     
     &:not(:has(> ul)) {
       height: 2.7rem;
@@ -98,6 +99,7 @@ body {
       display: flex;
       justify-content: space-between;
       padding-right: 5rem;
+      align-items: center;
     }
 
     .info {
@@ -105,6 +107,28 @@ body {
       right: 5rem;
       top: 28px;
     }
+    
+    
+  }
+  
+  .icon-button {
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    background-image: url(./images/question-file.svg);
+    background-size: contain;
+  }
+  .kanji-icon {
+    background-image: url(./images/kanji-study.svg);
+  }
+  .kana-icon {
+    background-image: url(./images/the-kana-quiz.svg);
+  }
+  .keyboard-icon {
+    background-image: url(./images/keyboard.svg);
+  }
+  .check-icon {
+    background-image: url(./images/options-tick.svg);
   }
 
   &.index .articles-wrapper {

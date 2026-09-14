@@ -137,11 +137,11 @@ export default {
     setInputMode(value) {
       this.inputMode = value;
       localStorage.setItem('kana-keyboard-input-mode', value);
-      if (this.mode === 'kana') {
-        this.newTarget();
-      } else {
-        this.newVerbTarget();
-      }
+      // if (this.mode === 'kana') {
+      //   this.newTarget();
+      // } else {
+      //   this.newVerbTarget();
+      // }
     },
 
     // --- kana practice ---
