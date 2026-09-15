@@ -7,6 +7,7 @@ export default /*html*/`
     >
       <div class="keyboard-toolbar-buttons">
         <div class="toolbar-group">
+          <div class="icon-button" :class="{ 'hiragana-icon': kanaMode === 'katakana', 'katakana-icon': kanaMode === 'hiragana' }" title="Kana mode" @click="switchKanaMode()"></div>
           <div class="icon-button keyboard-icon" title="Type mode" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
           <div class="icon-button check-icon" title="Options mode" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
         </div>

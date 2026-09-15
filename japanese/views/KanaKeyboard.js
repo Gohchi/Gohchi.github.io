@@ -3,7 +3,7 @@ import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import template from 'templates/KanaKeyboard.js';
 
-import kanaRomaji from 'data/kana-romaji.js';
+import { hiragana, katakana, kanaMap } from 'data/kana-romaji.js';
 import {
   MAX_MEMORY,
   getEntry,
@@ -36,6 +36,10 @@ export default {
   data() {
     const inputMode = localStorage.getItem('kana-keyboard-input-mode') || 'type';
 
+    const kanaMode = localStorage.getItem('kana-keyboard-kana-mode') || 'hiragana';
+    
+    const kana = Object.keys(kanaMode === 'hiragana' ? hiragana : katakana);
+
     return {
       inputMode, // 'type' | 'choice'
       MAX_MEMORY,
@@ -43,18 +47,8 @@ export default {
 
       showMenu: false,
       furigana: true,
-      KANA: [
-        "あ","い","う","え","お",
-        "か","き","く","け","こ",
-        "さ","し","す","せ","そ",
-        "た","ち","つ","て","と",
-        "な","に","ぬ","ね","の",
-        "は","ひ","ふ","へ","ほ",
-        "ま","み","む","め","も",
-        "や","ゆ","よ",
-        "ら","り","る","れ","ろ",
-        "わ","を","ん"
-      ],
+      KANA: kana,
+      kanaMode,
       target: "",
       kanaOptions: [],
       score: 0,
@@ -72,8 +66,16 @@ export default {
     kanaStats() {
       return getStats('kana', this.KANA);
     },
+    kanaRomaji() {
+      return this.kanaMode === 'hiragana' ? hiragana : katakana;
+    }
   },
   methods: {
+    switchKanaMode() {
+      this.kanaMode = this.kanaMode === 'hiragana' ? 'katakana' : 'hiragana';
+      this.KANA = Object.keys(this.kanaMode === 'hiragana' ? hiragana : katakana);
+      this.newTarget();
+    },
     pushHistory(entry) {
       this.sessionHistory.unshift({ ...entry, id: Date.now() + '-' + Math.random() });
       if (this.sessionHistory.length > HISTORY_LIMIT) {
@@ -83,12 +85,11 @@ export default {
     setInputMode(value) {
       this.inputMode = value;
       localStorage.setItem('kana-keyboard-input-mode', value);
-      // this.newTarget();
     },
     buildKanaOptions(correctKana) {
       const wrongPool = this.KANA.filter(k => k !== correctKana);
       const wrongs = shuffle(wrongPool).slice(0, 3);
-      return shuffle([correctKana, ...wrongs]).map(k => ({ kana: k, romaji: kanaRomaji[k] }));
+      return shuffle([correctKana, ...wrongs]).map(k => ({ kana: k, romaji: this.kanaRomaji[k] }));
     },
     newTarget() {
       this.target = weightedPick('kana', this.KANA, k => k);
@@ -112,6 +113,9 @@ export default {
     },
     handleKana(kana) {
       this.last = kana;
+      if (this.kanaMode === 'katakana') { 
+        kana = kanaMap[kana];
+      }
       const correct = kana === this.target;
       recordAnswer('kana', this.target, correct);
 
@@ -139,7 +143,7 @@ export default {
     onInput(e) {
       const { data } = e;
       if (!data) return;
-      const kana = [...data].at(-1);
+      let kana = [...data].at(-1);
       this.handleKana(kana);
       this.inputValue = data;
       e.target.value = '';
