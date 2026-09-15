@@ -3,7 +3,7 @@ import { createApp, ref } from 'vue';
 import { createRouter, createWebHashHistory, useRouter } from 'vue-router';
 
 import Home from 'views/Home.js';
-import Translation from 'views/Translation.js';
+import Translations from 'views/Translations.js';
 import KanaKeyboard from 'views/KanaKeyboard.js';
 import VerbsPractice from 'views/VerbsPractice.js';
 import Topics from 'views/Topics.js';
@@ -63,7 +63,7 @@ const NotFound = {
 // Routes
 const routes = [
   { path: '/', component: Home, name: 'home' },
-  { path: '/translation', component: Translation, name: 'translation' },
+  { path: '/translations/:book?', component: Translations, name: 'translations', props: true },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
   { path: '/topics', component: Topics, name: 'topics' },
