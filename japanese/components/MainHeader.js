@@ -67,7 +67,7 @@ export default {
       
       <ul class="menu-index" v-if="showMenu">
         <li><a href="#">COMMON PHRASES</a></li>
-        <li><router-link to="/translation">小説 ベルセルク： 炎竜の騎士</router-link></li>
+        <li><router-link to="/translations">翻訳 TRANSLATIONS</router-link></li>
         <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
         <li><router-link to="/verbs-practice">VERB PRACTICE</router-link></li>
         <li><router-link to="/topics">TOPICS</router-link></li>
