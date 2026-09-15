@@ -121,8 +121,11 @@ body {
   .kanji-icon {
     background-image: url(./images/kanji-study.svg);
   }
-  .kana-icon {
-    background-image: url(./images/the-kana-quiz.svg);
+  .katakana-icon {
+    background-image: url(./images/katakana.svg);
+  }
+  .hiragana-icon {
+    background-image: url(./images/hiragana.svg);
   }
   .keyboard-icon {
     background-image: url(./images/keyboard.svg);
