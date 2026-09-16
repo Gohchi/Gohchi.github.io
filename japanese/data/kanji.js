@@ -542,4 +542,7 @@ export const ruby = {
   "尊敬語": { furigana: "そんけいご", JLPT_level: "N2", eng: [
     "respectful language"
   ]},
+  "一般的": { furigana: "いっぱんてき", JLPT_level: "", eng: [
+    "general", "popular", "common", "typical"
+  ]}
 };

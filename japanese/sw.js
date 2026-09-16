@@ -24,6 +24,7 @@ self.addEventListener('install', e => {
           '/japanese/data/translations.js',
           '/japanese/data/verbs.js',
           '/japanese/templates/VerbsPractice.js',
+          '/japanese/views/CommonPhrases.js',
           '/japanese/views/Home.js',
           '/japanese/views/KanaKeyboard.js',
           '/japanese/views/Translation.js',
