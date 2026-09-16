@@ -64,7 +64,7 @@ const NotFound = {
 // Routes
 const routes = [
   { path: '/', component: Home, name: 'home' },
-  { path: '/common-phrases', component: CommonPhrases, name: 'common-phrases' },
+  { path: '/common-phrases/:phrase?', component: CommonPhrases, name: 'common-phrases', props: true },
   { path: '/translations/:book?', component: Translations, name: 'translations', props: true },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
