@@ -1,3 +1,5 @@
+import { useRouter } from 'vue-router';
+
 import PhraseToRuby from 'components/PhraseToRuby.js';
 import MainHeader from 'components/MainHeader.js';
 import ListOfItems from 'components/ListOfItems.js';
@@ -18,26 +20,29 @@ export default {
     ListOfItems,
     Sources,
   },
+  props: {
+    topic: String, // route param slug; undefined = show the preview list
+  },
+  setup() {
+    const router = useRouter();
+    return { router };
+  },
   methods: {
-    goToIndex() {
-      const index = this.topics.findIndex(({ type }) => type === 'index') + 1;
-      this.pageSelected = index;
+    selectTopic(id) {
+      this.router.push({ name: 'topics', params: { topic: id } });
+    },
+    backToList() {
+      this.router.push({ name: 'topics' });
     },
   },
-  mounted() {
-  },
   data() {
-    const lastPageVisited = localStorage.getItem('topics-last-page-visited');
-
     return {
-      "topics": topics,
-      "pageSelected": lastPageVisited ? +lastPageVisited : 1, // Default to the first page
-      "hideDisclaimer": true,
-      "selectedArticle": null,
-      "titleFilters": "",
-      "subtitleFilters": "",
-      furiganaStore
-    }
+      topics,
+      hideDisclaimer: true,
+      titleFilters: '',
+      subtitleFilters: '',
+      furiganaStore,
+    };
   },
   computed: {
     zoomLevel() {
@@ -45,70 +50,46 @@ export default {
     },
     filteredTopics() {
       return this.topics.filter(item => {
-        if (this.titleFilters === "" && this.subtitleFilters === "") {
-          return true; // No filters applied, include all topics
+        if (this.titleFilters === '' && this.subtitleFilters === '') {
+          return true;
         }
 
         let titleFilter = false;
         let subtitleFilter = false;
 
         if (this.titleFilters) {
-          const titleFilters = this.titleFilters?.split(' ').map(filter => filter.toLowerCase());
+          const titleFilters = this.titleFilters.split(' ').map(f => f.toLowerCase());
           titleFilter = item.title.split(' ').some(word => titleFilters.some(filter => word.toLowerCase().includes(filter)));
         }
 
         if (this.subtitleFilters) {
-          const subtitleFilters = this.subtitleFilters?.split(' ').map(filter => filter.toLowerCase());
-          subtitleFilter = subtitleFilters?.length === 0 || item.subtitle.split(' ').some(word => subtitleFilters.some(filter => word.toLowerCase().includes(filter)));
+          const subtitleFilters = this.subtitleFilters.split(' ').map(f => f.toLowerCase());
+          subtitleFilter = item.subtitle
+            ?.split(' ').some(word => subtitleFilters.some(filter => word.toLowerCase().includes(filter))) ?? false;
         }
 
         return titleFilter || subtitleFilter;
       });
     },
-    page() {
-      return this.topics[this.pageSelected-1] || {};
+    currentTopic() {
+      if (!this.topic) return null;
+      return this.topics.find(item => item.id === this.topic) || null;
     },
-    type() {
-      if (!this.topics[this.pageSelected-1]) {
-        return 'unknown';
-      }
+    relatedTopics() {
+      if (!this.currentTopic) return [];
+      const currentTags = this.currentTopic.tags || [];
+      if (!currentTags.length) return [];
 
-      return this.page.type;
+      return this.topics
+        .filter(item => item.id !== this.currentTopic.id)
+        .map(item => ({
+          ...item,
+          sharedTagCount: (item.tags || []).filter(tag => currentTags.includes(tag)).length,
+        }))
+        .filter(item => item.sharedTagCount > 0)
+        .sort((a, b) => b.sharedTagCount - a.sharedTagCount)
+        .slice(0, 4);
     },
-    chapters() {
-      return this.page.chapters;
-    },
-    content() {
-      return this.page.content;
-    },
-    footer() {
-      return this.page.footer;
-    },
-    showPageNumber() {
-      return !this.page.hidePageNumber;
-    },
-    pageNumber() {
-      return this.pageSelected?.toString().padStart(3, '0');
-    },
-    chapter() {
-      return this.page.chapter;
-    },
-    chapterFirstPage() {
-      return this.page.chapterFirstPage;
-    },
-    first() {
-      if (this.pageSelected > this.topics.length) {
-        return true; // If the selected page is out of bounds, consider it as the first page
-      }
-      return this.pageSelected === 1;
-    },
-    last() {
-      if (this.pageSelected > this.topics.length) {
-        return true; // If the selected page is out of bounds, consider it as the last page
-      }
-      return this.pageSelected === this.topics.length;
-    }
-
   },
-  template
+  template,
 }

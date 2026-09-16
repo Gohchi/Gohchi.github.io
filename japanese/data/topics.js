@@ -521,3 +521,34 @@ export const topics = [
     ]
   },
 ];
+
+// Route slug + relation tags for each topic, in the same order they appear above.
+// Tags double as JLPT level markers (N5–N1) and as the grouping used for "related topics".
+const TOPIC_META = [
+  { id: 'honorifics',           tags: ['grammar', 'keigo', 'politeness', 'N4'] },
+  { id: 'time',                 tags: ['grammar', 'time', 'vocabulary', 'N5'] },
+  { id: 'am-pm',                tags: ['grammar', 'time', 'N5'] },
+  { id: 'duration',             tags: ['grammar', 'time', 'particles', 'N4'] },
+  { id: 'from-to',              tags: ['grammar', 'particles', 'time', 'N5'] },
+  { id: 'location',             tags: ['grammar', 'particles', 'location', 'N5'] },
+  { id: 'ago',                  tags: ['grammar', 'time', 'particles', 'N4'] },
+  { id: 'existence',            tags: ['grammar', 'verbs', 'N5'] },
+  { id: 'good',                 tags: ['grammar', 'adjectives', 'N5'] },
+  { id: 'also-too',             tags: ['grammar', 'particles', 'N5'] },
+  { id: 'nominalizing-actions', tags: ['grammar', 'verbs', 'N4'] },
+  { id: 'colors',                tags: ['vocabulary', 'list', 'N5'] },
+  { id: 'counters',              tags: ['vocabulary', 'list', 'grammar', 'N5'] },
+  { id: 'numbers',               tags: ['vocabulary', 'list', 'N5'] },
+  { id: 'days-of-week',          tags: ['vocabulary', 'list', 'time', 'N5'] },
+  { id: 'months-of-year',        tags: ['vocabulary', 'list', 'time', 'N5'] },
+  { id: 'kai-vs-kaime',          tags: ['grammar', 'counters', 'nuance', 'N3'] },
+  { id: 'hitoshii-vs-onaji',     tags: ['grammar', 'nuance', 'N3'] },
+  { id: 'sake-vs-shake',         tags: ['vocabulary', 'nuance', 'N3'] },
+  { id: 'rtk-deck',              tags: ['resource', 'kanji'] },
+  { id: 'onomatopoeia',          tags: ['resource', 'vocabulary', 'N2'] },
+];
+
+// Mutate the array entries in place (const only locks the binding, not the contents),
+// so nothing above needs to be touched when you add/reorder topics later —
+// just keep TOPIC_META in the same order as the entries above it.
+topics.forEach((topic, index) => Object.assign(topic, TOPIC_META[index] || {}));
