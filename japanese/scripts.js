@@ -66,7 +66,7 @@ const routes = [
   { path: '/translations/:book?', component: Translations, name: 'translations', props: true },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
-  { path: '/topics', component: Topics, name: 'topics' },
+  { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },
   { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
   { path: '/about', component: About, name: 'about' },
   {

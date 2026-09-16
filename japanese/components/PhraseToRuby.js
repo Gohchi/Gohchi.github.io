@@ -40,7 +40,7 @@ export default {
       <template v-if="furiganaStore.showFurigana && !!ruby[group]">
         <KanjiWithRuby :key="index" :text="group"></KanjiWithRuby>
       </template>
-      <template v-else>
+      <template v-else-if="!!group">
         <span>{{ group }}</span>
       </template>
     </template>

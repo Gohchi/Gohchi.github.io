@@ -376,7 +376,7 @@ body {
       }
     }
   }
-  
+
   main {
     position: absolute;
     height: calc(100% - 4rem - 8px);
@@ -831,13 +831,106 @@ body {
         font-size: large;
       }
     }
+
+    .topic-list {
+      list-style: none;
+      margin: 0 auto;
+      padding: 0;
+      max-width: 40rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .topic-preview {
+      cursor: pointer;
+      border: 1px solid light-dark(#d0d0d0, #303030);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: light-dark(#f0f0f0, #1c1c1c);
+      }
+    }
+
+    .topic-preview-title {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .topic-preview-subtitle {
+      margin: .3rem 0 0;
+      color: #58635e;
+      font-size: .9rem;
+    }
+
+    .topic-back {
+      display: block;
+      margin: 0 auto 1rem;
+      cursor: pointer;
+    }
+
+    .related-topics {
+      max-width: 40rem;
+      margin: 2rem auto 0;
+      border-top: 1px solid light-dark(#d0d0d0, #303030);
+      padding-top: 1rem;
+
+      h3 {
+        margin: 0 0 .75rem;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+      }
+
+      li {
+        cursor: pointer;
+        border: 1px solid light-dark(#d0d0d0, #303030);
+        border-radius: 8px;
+        padding: .6rem .9rem;
+
+        &:hover {
+          background-color: light-dark(#f0f0f0, #1c1c1c);
+        }
+      }
+
+      .related-title {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-top: .5rem;
+  }
+
+  .tag {
+    font-size: .7rem;
+    padding: .15rem .5rem;
+    border-radius: 999px;
+    background: light-dark(#e0e0e0, #303030);
+    color: light-dark(#333333, #d0d0d0);
+  }
+
+  .tag-jlpt {
+    background: #b34f35;
+    color: white;
   }
 
   .sources {
     display: flex;
     gap: 0.5rem;
   }
-  
 }
 
 .keyboard-toolbar-buttons {
