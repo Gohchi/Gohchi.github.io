@@ -3,6 +3,7 @@ import { createApp, ref } from 'vue';
 import { createRouter, createWebHashHistory, useRouter } from 'vue-router';
 
 import Home from 'views/Home.js';
+import CommonPhrases from 'views/CommonPhrases.js';
 import Translations from 'views/Translations.js';
 import KanaKeyboard from 'views/KanaKeyboard.js';
 import VerbsPractice from 'views/VerbsPractice.js';
@@ -63,18 +64,14 @@ const NotFound = {
 // Routes
 const routes = [
   { path: '/', component: Home, name: 'home' },
+  { path: '/common-phrases', component: CommonPhrases, name: 'common-phrases' },
   { path: '/translations/:book?', component: Translations, name: 'translations', props: true },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
   { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },
   { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
   { path: '/about', component: About, name: 'about' },
-  {
-    path: '/user/:id(\\d+)',
-    component: User,
-    name: 'user',
-    props: true // passes route params as props
-  },
+  { path: '/user/:id(\\d+)', component: User, name: 'user', props: true },
   { path: '/:pathMatch(.*)*', name: '404', component: NotFound }
 ];
 

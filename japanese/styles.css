@@ -923,7 +923,7 @@ body {
   }
 
   .tag-jlpt {
-    background: #b34f35;
+    background: var(--color-salmon);
     color: white;
   }
 
@@ -1045,7 +1045,7 @@ body {
   .print-heading {
     .eyebrow {
       margin: 0 0 .3rem;
-      color: #b34f35;
+      color: var(--color-salmon);
       font-size: .75rem;
       font-weight: 700;
       letter-spacing: .08em;
@@ -1120,6 +1120,98 @@ body {
     /*background: #fffdf8;*/
     border: 1px solid #c9c2b5;
   }
+}
+
+.home-welcome main {
+  padding: 1rem 1rem 3rem;
+  max-width: 48rem;
+  margin: 4rem auto 0;
+}
+
+.home-welcome main section {
+  margin-bottom: 2.5rem;
+}
+
+.home-welcome h1,
+.home-welcome h2 {
+  font-family: "Zen Antique Soft", serif;
+  font-weight: 400;
+}
+
+.home-welcome .hero {
+  text-align: center;
+}
+
+.home-welcome .hero .eyebrow {
+  color: var(--color-salmon);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin: 0 0 .5rem;
+}
+
+.home-welcome .hero h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+.home-welcome .hero .lead {
+  color: #58635e;
+  max-width: 38rem;
+  margin: 0 auto;
+}
+
+.home-welcome .why p,
+.home-welcome .jlpt p {
+  line-height: 1.6;
+}
+
+.home-welcome .jlpt-list {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.home-welcome .jlpt-list li {
+  border: 1px solid light-dark(#d0d0d0, #303030);
+  border-radius: 8px;
+  padding: .6rem .9rem;
+}
+
+.home-welcome .section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.home-welcome .section-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid light-dark(#d0d0d0, #303030);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  transition: background-color .15s ease;
+}
+
+.home-welcome .section-card:hover {
+  background-color: light-dark(#f0f0f0, #1c1c1c);
+}
+
+.home-welcome .section-card h3 {
+  margin: 0 0 .35rem;
+  font-size: 1.05rem;
+}
+
+.home-welcome .section-card p {
+  margin: 0;
+  color: #58635e;
+  font-size: .9rem;
 }
 
 @media (max-width: 700px) {
