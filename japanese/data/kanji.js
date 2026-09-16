@@ -303,7 +303,7 @@ export const ruby = {
     "Japanese language"
   ] },
   "日本料理": { furigana: "にほんりょうり", JLPT_level: "N4", eng: [] },
-  "翻訳": { furigana: "ほにゃく", JLPT_level: "N2", eng: [] },
+  "翻訳": { furigana: "ほにゃく", JLPT_level: "N2", eng: ["translation"] },
   "授業": { furigana: "じゅぎょう", JLPT_level: "N4", eng: [] },
   "全然": { furigana: "ぜんぜん", JLPT_level: "N4", eng: [] },
   "困": { furigana: "こま", JLPT_level: "N4", eng: [] },
