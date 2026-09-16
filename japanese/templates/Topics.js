@@ -4,7 +4,7 @@ export default /*html*/`
       title="TOPICS"
       @onChangeFurigana="furiganaStore.switchFurigana()"
     >
-      <phrase-to-ruby :text="'話題'"></phrase-to-ruby>
+      <PhraseToRuby zoom :text="'話題'"></PhraseToRuby>
     </MainHeader>
 
     <main>

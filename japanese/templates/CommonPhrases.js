@@ -4,7 +4,7 @@ export default /*html*/`
       title="COMMON PHRASES"
       @onChangeFurigana="furiganaStore.switchFurigana()"
     >
-      <PhraseToRuby :text="'一般的なフレーズ'"></PhraseToRuby>
+      <PhraseToRuby zoom :text="'一般的なフレーズ'"></PhraseToRuby>
     </MainHeader>
 
     <main>
@@ -87,10 +87,6 @@ export default /*html*/`
             <span v-for="tag in currentPhrase.tags" :key="tag" class="tag">{{ tag }}</span>
           </div>
 
-          <div class="actions">
-            <button @click="speak(currentPhrase.japanese)">🗣️ Listen</button>
-          </div>
-
           <ul v-if="currentPhrase.refs?.length" class="phrase-refs">
             <li v-for="(ref, index) in currentPhrase.refs" :key="index">{{ ref }}</li>
           </ul>
@@ -114,5 +110,16 @@ export default /*html*/`
         </section>
       </template>
     </main>
+    <footer v-if="currentPhrase?.japanese">
+      <div class="actions">
+        <button
+          class="voice-active"
+          title="voice"
+          @click="speak(currentPhrase.japanese)"
+        >
+          <span>🗣️ Listen</span>
+        </button>
+      </div>
+    </footer>
   </div>
 `;

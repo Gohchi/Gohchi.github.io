@@ -459,7 +459,7 @@ export const ruby = {
     "topic", "subject"
   ]},
   "話題": { furigana: "わだい", JLPT_level: "N3", eng: [
-    "meeting place"
+    "topic", "subject"
   ]},
   "死休置": { furigana: "したいおけ", JLPT_level: "N1", eng: [
     "put the dead body"
