@@ -74,7 +74,7 @@ export default /*html*/`
             <p>A running list of everyday phrases I've picked up, with furigana and translations.</p>
           </router-link>
           <router-link to="/translations" class="section-card">
-            <h3>翻訳 Translations</h3>
+            <h3>Translations</h3>
             <p>Fan translations of books and stories I'm reading, alongside the original text.</p>
           </router-link>
           <router-link to="/kana-keyboard" class="section-card">

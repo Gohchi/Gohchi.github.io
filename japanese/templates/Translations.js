@@ -4,10 +4,13 @@ export default /*html*/`
       :title="book ? (currentBookMeta ? currentBookMeta.title : '') : 'TRANSLATIONS'"
       @onChangeFurigana="furiganaStore.switchFurigana()"
     >
-      <div class="icon-button books-icon" title="select book" @click.prevent="backToBookList()"></div>
-      <div class="page-info" v-if="book && hasContent">
-        <span class="chapter" v-if="chapter">{{ chapter }}</span>
-        <div class="page-number" v-if="showPageNumber">{{ pageNumber }}</div>
+      <div class="header-content">
+        <PhraseToRuby zoom :text="'翻訳'" />
+        <div class="icon-button books-icon" title="select book" @click.prevent="backToBookList()"></div>
+        <div class="page-info" v-if="book && hasContent">
+          <span class="chapter" v-if="chapter">{{ chapter }}</span>
+          <div class="page-number" v-if="showPageNumber">{{ pageNumber }}</div>
+        </div>
       </div>
     </MainHeader>
 
