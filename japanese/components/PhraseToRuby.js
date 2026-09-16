@@ -36,13 +36,15 @@ export default {
     splitByKanji,
   },
   template: /*html*/`
-    <template v-for="(group, index) in splitByKanji(text, extractKanji(text))" :key="index">
-      <template v-if="furiganaStore.showFurigana && !!ruby[group]">
-        <KanjiWithRuby :key="index" :text="group"></KanjiWithRuby>
+    <span>
+      <template v-for="(group, index) in splitByKanji(text, extractKanji(text))" :key="index">
+        <template v-if="furiganaStore.showFurigana && !!ruby[group]">
+          <KanjiWithRuby :key="index" :text="group"></KanjiWithRuby>
+        </template>
+        <template v-else-if="!!group">
+          <span>{{ group }}</span>
+        </template>
       </template>
-      <template v-else-if="!!group">
-        <span>{{ group }}</span>
-      </template>
-    </template>
+    </span>
   `,
 }
