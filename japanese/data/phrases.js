@@ -55,6 +55,8 @@ export const phrases = {
   'n5-049': { id: 'n5-049', japanese: '毎朝コーヒーを飲みます。', english: 'I drink coffee every morning.', level: 'N5', tags: ['daily-life', 'food'] },
   'n5-050': { id: 'n5-050', japanese: 'いってきます。', english: "I'm heading out.", level: 'N5', tags: ['greetings', 'daily-life'] },
   'n5-051': { id: 'n5-051', japanese: 'ただいま。', english: "I'm home.", level: 'N5', tags: ['greetings', 'daily-life'] },
+  'n5-052': { id: 'n5-052', japanese: '母はかっこいいです。', english: "My mother is cool.", level: 'N5', tags: ['family'] },
+  'n5-053': { id: 'n5-053', japanese: 'お母さんについて教えてください。', english: "Please tell me about your mother.", level: 'N5', tags: ['family'] },
 
   // ---------- N4 ----------
   'n4-001': { id: 'n4-001', japanese: '手伝ってくれてありがとう。', english: 'Thank you for helping me.', level: 'N4', tags: ['thanks'] },

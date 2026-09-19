@@ -1,6 +1,6 @@
 import { toRefs } from 'vue';
 
-import { closeDialog, showDialog } from 'tools';
+import { closeDialog, showDialog, alignFurigana } from 'tools';
 
 import { ruby } from 'data/kanji.js';
 
@@ -12,6 +12,7 @@ export default {
   props: {
     text: String,
     zoom: Boolean,
+    entry: Object, // optional: dictionary entry chosen by the tokenizer (words.js or kanji.js)
   },
   setup(props) {
     const { text, zoom } = toRefs(props);
@@ -32,10 +33,14 @@ export default {
       return this.text.split('').reduce((res, value) => res + value.charCodeAt(0), '');
     },
     info() {
-      return this.ruby[this.text];
+      return this.entry || this.ruby[this.text];
     },
     furigana() {
       return this.info.furigana;
+    },
+    // [{ text, rt? }]: the reading only goes over the kanji (お父さん -> お + 父(とう) + さん)
+    parts() {
+      return alignFurigana(this.text, this.furigana, this.info.parts);
     },
     eng() {
       return this.info.eng;
@@ -49,9 +54,12 @@ export default {
     closeDialog,
   },
   template: /*html*/`
-    <ruby class="open-dialog"
-      @click="showDialog(dialogId)"
-    >{{ text }}<rp>(</rp><rt>{{ furigana }}</rt><rp>)</rp></ruby>
+    <span class="open-dialog" @click="showDialog(dialogId)">
+      <template v-for="(part, index) in parts" :key="index">
+        <ruby v-if="part.rt">{{ part.text }}<rp>(</rp><rt>{{ part.rt }}</rt><rp>)</rp></ruby>
+        <template v-else>{{ part.text }}</template>
+      </template>
+    </span>
     <dialog :style="zoomLevel" class="kanji-dialog" :id="dialogId" @click="closeDialog(dialogId)">
       <div v-if="JLPT_level" class="JLPT-level">JLPT {{ JLPT_level }}</div>
       <div class="kanji-furigana">{{ furigana }}</div>
