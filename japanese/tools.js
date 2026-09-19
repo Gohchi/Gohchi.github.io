@@ -2,6 +2,10 @@ import {
   voiceStore
 } from 'store';
 
+// ---------------------------------------------------------------------------
+// Existing helpers (unchanged)
+// ---------------------------------------------------------------------------
+
 export const extractKanji = phrase => {
   if (!phrase) return [];
   const kanjiList = [];
@@ -99,3 +103,129 @@ export const getVoices = async () => {
   // Filter voices by ja-JP language
   return window.speechSynthesis.getVoices().filter(({ lang }) => ['ja-JP', 'ja_JP'].includes(lang));
 }
+
+// ---------------------------------------------------------------------------
+// Context-aware furigana
+// ---------------------------------------------------------------------------
+
+const KANJI_RUN = /[\u4E00-\u9FFF々〆]+|[^\u4E00-\u9FFF々〆]+/g;
+const isKanji = char => /[\u4E00-\u9FFF々〆]/.test(char);
+const escapeRegExp = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// katakana -> hiragana, 1:1 per character so string lengths are preserved
+const toHiragana = str => str.replace(
+  /[\u30A1-\u30F6]/g,
+  char => String.fromCharCode(char.charCodeAt(0) - 0x60)
+);
+
+/**
+ * Splits a word into parts and puts the reading only over the kanji.
+ *
+ *   alignFurigana('お父さん', 'おとうさん')
+ *   -> [{ text: 'お' }, { text: '父', rt: 'とう' }, { text: 'さん' }]
+ *
+ * The kana of the surface (prefixes / okurigana / suffixes) act as anchors
+ * inside the reading; whatever is left between them belongs to the kanji.
+ * If the anchors can't be found (typo in the data, irregular word) it falls
+ * back to one ruby over the whole word, which makes the problem visible.
+ * `parts` ([[text, rt?], ...]) is an optional manual override.
+ */
+export const alignFurigana = (surface, reading, parts) => {
+  if (parts?.length) {
+    return parts.map(([text, rt]) => (rt ? { text, rt } : { text }));
+  }
+
+  const whole = [{ text: surface, rt: reading }];
+  const runs = surface.match(KANJI_RUN) || [];
+
+  // All kanji (e.g. 先生): nothing to align.
+  if (runs.length === 1 && isKanji(runs[0][0])) return whole;
+
+  const pattern = runs
+    .map(run => (isKanji(run[0]) ? '(.+?)' : escapeRegExp(toHiragana(run))))
+    .join('');
+  const match = toHiragana(reading).match(new RegExp(`^${pattern}$`));
+  if (!match) return whole;
+
+  let group = 1;
+  let position = 0;
+  return runs.map(run => {
+    if (isKanji(run[0])) {
+      const length = match[group++].length;
+      const rt = reading.slice(position, position + length);
+      position += length;
+      return { text: run, rt };
+    }
+    position += run.length;
+    return { text: run };
+  });
+};
+
+// Longest surface length in a dictionary, cached per dictionary object.
+const maxLengthCache = new WeakMap();
+const getMaxLength = dictionary => {
+  if (!maxLengthCache.has(dictionary)) {
+    const lengths = Object.keys(dictionary).map(key => key.length);
+    maxLengthCache.set(dictionary, lengths.length ? Math.max(...lengths) : 0);
+  }
+  return maxLengthCache.get(dictionary);
+};
+
+/**
+ * Tokenizes a phrase into [{ surface, entry? }].
+ * `entry` is present when the token has furigana ({ furigana, JLPT_level, eng, parts? }).
+ *
+ * At each position:
+ *  1. Longest match in `words` (full surface, okurigana included): お父さん beats 父.
+ *  2. Legacy lookup of the whole kanji run in `ruby` (e.g. 一日間), as before.
+ *  The longer candidate wins; on a tie `words` wins because it is context-aware.
+ *  Otherwise the character is emitted as plain text and merged with its neighbours.
+ */
+export const tokenize = (text, { ruby = {}, words = {} } = {}) => {
+  if (!text) return [];
+
+  const maxLength = getMaxLength(words);
+  const tokens = [];
+
+  const pushPlain = surface => {
+    const last = tokens[tokens.length - 1];
+    if (last && !last.entry) {
+      last.surface += surface;
+    } else {
+      tokens.push({ surface });
+    }
+  };
+
+  let index = 0;
+  while (index < text.length) {
+    let match = null;
+
+    for (let length = Math.min(maxLength, text.length - index); length > 0; length--) {
+      const surface = text.slice(index, index + length);
+      if (Object.hasOwn(words, surface)) {
+        match = { surface, entry: words[surface] };
+        break;
+      }
+    }
+
+    if (isKanji(text[index])) {
+      let end = index;
+      while (end < text.length && isKanji(text[end])) end++;
+      const run = text.slice(index, end);
+
+      if (Object.hasOwn(ruby, run) && (!match || run.length > match.surface.length)) {
+        match = { surface: run, entry: ruby[run] };
+      }
+    }
+
+    if (match) {
+      tokens.push(match);
+      index += match.surface.length;
+    } else {
+      pushPlain(text[index]);
+      index += 1;
+    }
+  }
+
+  return tokens;
+};

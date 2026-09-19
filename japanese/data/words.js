@@ -112,3 +112,30 @@ export default [
   ...katakanaWords,
   ...kanjiWords,
 ];
+
+// Word-level furigana dictionary.
+//
+// Unlike `ruby` in kanji.js (keyed by a run of kanji only), keys here are the
+// FULL surface form as written in text, okurigana / prefixes / suffixes included.
+// `furigana` is the reading of the WHOLE word. The kanji-only part (e.g. 父 = とう
+// inside お父さん) is computed automatically by alignFurigana() in tools.js.
+//
+// Longest match wins, so お父さん is picked before 父 when both could apply.
+//
+// Optional `parts` overrides the automatic alignment for irregular words:
+//   parts: [['一', 'いっ'], ['日', 'ぴ']]   // [text, rt?]
+export const words = {
+  // family
+  '父': { furigana: 'ちち', JLPT_level: 'N5', eng: ['(my) father'] },
+  'お父さん': { furigana: 'おとうさん', JLPT_level: 'N5', eng: ['father', 'dad'] },
+  '母': { furigana: 'はは', JLPT_level: 'N5', eng: ['(my) mother'] },
+  'お母さん': { furigana: 'おかあさん', JLPT_level: 'N5', eng: ['mother', 'mom'] },
+  '兄': { furigana: 'あに', JLPT_level: 'N5', eng: ['(my) older brother'] },
+  'お兄さん': { furigana: 'おにいさん', JLPT_level: 'N5', eng: ['older brother'] },
+  '姉': { furigana: 'あね', JLPT_level: 'N5', eng: ['(my) older sister'] },
+  'お姉さん': { furigana: 'おねえさん', JLPT_level: 'N5', eng: ['older sister'] },
+
+  // okurigana examples: the reading of 食 here is た (not the whole たべる)
+  '食べる': { furigana: 'たべる', JLPT_level: 'N5', eng: ['to eat'] },
+  '飲む': { furigana: 'のむ', JLPT_level: 'N5', eng: ['to drink'] },
+};
