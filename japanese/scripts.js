@@ -9,6 +9,7 @@ import KanaKeyboard from 'views/KanaKeyboard.js';
 import VerbsPractice from 'views/VerbsPractice.js';
 import Topics from 'views/Topics.js';
 import PrintPractice from 'views/PrintPractice.js';
+import Donate from 'views/Donate.js';
 
 const app = createApp({});
 
@@ -70,6 +71,7 @@ const routes = [
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
   { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },
   { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
+  { path: '/donate', component: Donate, name: 'donate' },
   { path: '/about', component: About, name: 'about' },
   { path: '/user/:id(\\d+)', component: User, name: 'user', props: true },
   { path: '/:pathMatch(.*)*', name: '404', component: NotFound }
