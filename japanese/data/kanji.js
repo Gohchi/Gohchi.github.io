@@ -303,7 +303,7 @@ export const ruby = {
     "Japanese language"
   ] },
   "日本料理": { furigana: "にほんりょうり", JLPT_level: "N4", eng: [] },
-  "翻訳": { furigana: "ほにゃく", JLPT_level: "N2", eng: [] },
+  "翻訳": { furigana: "ほにゃく", JLPT_level: "N2", eng: ["translation"] },
   "授業": { furigana: "じゅぎょう", JLPT_level: "N4", eng: [] },
   "全然": { furigana: "ぜんぜん", JLPT_level: "N4", eng: [] },
   "困": { furigana: "こま", JLPT_level: "N4", eng: [] },
@@ -459,7 +459,7 @@ export const ruby = {
     "topic", "subject"
   ]},
   "話題": { furigana: "わだい", JLPT_level: "N3", eng: [
-    "meeting place"
+    "topic", "subject"
   ]},
   "死休置": { furigana: "したいおけ", JLPT_level: "N1", eng: [
     "put the dead body"
@@ -542,4 +542,7 @@ export const ruby = {
   "尊敬語": { furigana: "そんけいご", JLPT_level: "N2", eng: [
     "respectful language"
   ]},
+  "一般的": { furigana: "いっぱんてき", JLPT_level: "", eng: [
+    "general", "popular", "common", "typical"
+  ]}
 };

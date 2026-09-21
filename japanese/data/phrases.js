@@ -1,147 +1,169 @@
-export const data = [
-  [
-    "こちらは私の彼女です。",
-    "This is my girlfriend.",
-  ], [
-    "彼女はおしゃれな人です。",
-    "My girlfriend is a stylish person.",
-  ], [
-    "私の彼女は元気な人です。 可愛いものが好きです。",
-    "My girlfriend is a lively person. She likes cute things.",
-  ], [
-    "この電車は渋谷駅に行きますか",
-    "Does this train go to Shibuya Station?",
-  ], [
-    "私の趣味はゲームと読みです。",
-    "My hobbies are playing games and reading.",
-  ], [
-    "ビールを飲みますか  いいえ、ビールは 飲みません。",
-    "Do you drink beer？ No, I don’t drink beer.",
-  ], [
-    "毎週木曜日に弟と晩御飯を作ります。 今週何を作りましょうか",
-    "I make dinner with my (younger) brother every Thursday. What should I make this week?",
-  ], [
-    "日本のゲームも翻訳します。",
-    "I also translate Japanese games.",
-  ], [
-    "今日はとても寒いです。 明日も寒いです。 ",
-    "Today is very cold. Tomorrow will also be cold.",
-  ], [
-    "彼はどんな人ですか",
-    "What kind of person is he?",
-  ], [
-    "私の誕生日。",
-    "My birthday.",
-  ], [
-    "毎週 ボードゲームサークルに行きます。",
-    "I got to the board game club every week",
-  ], [
-    "プレゼントは何時までですか",
-    "Until what time is the presentation?",
-  ], [
-    "夏休み家族と京都に行きます。今日授業の後ネットでホテルを探します。",
-    "We are going to Kyoto with my family during summer break. After class today, I'll search for a hotel online.",
-  ], [
-    "日本語の授業が全然わかりません。困ります。",
-    "I do not understand Japanse class at all. I am in trouble.",
-  ], [
-    "いつか日本に行きます。",
-    "I will go to Japan one day.",
-  ], [
-    "日本語は独学です。",
-    "My Japanses is self-taught.",
-  ], [
-    "面白いから日本語を勉強します。",
-    "Because it is interesting, I study Japanese.",
-  ], [
-    "予報によると、明日は雨だそうだ。",
-    "According to the forecast, it will rain tomorrow.",
-  ], [
-    "後でやります。",
-    "I will do it later.",
-  ], [
-    "お手伝いします。",
-    "I will help you",
-  ], [
-    "手伝ってくれてありがとう。",
-    "Thank you for helping me.",
-  ], [
-    "新しい日本料理の本を買おうと思う。",
-    "I think I'll buy a new book about Japanese cuisine.",
-  ], [
-    "二日間ねませんでした。",
-    "I didn't sleep for two days.",
-  ], [
-    "お腹がすきました。",
-    "I am hungry.",
-  ], [
-    "君が必要だ。",
-    "I need you.",
-  ], [
-    "彼ってバカ。",
-    "He's stupid.",
-  ], [
-    "へえ、マジ？",
-    "Whoa! Really?",
-  ], [
-    "彼は変な奴だ。",
-    "He is a weird guy.",
-  ], [
-    "このアニメ、めっちゃ面白い。",
-    "This anime is absurdly funny.",
-  ], [
-    "気に入りましたか。",
-    "Did you like it?",
-  ], [
-    "いつまでもあなたを愛しています。",
-    "I will love you forever.",
-  ], [
-    "はい、喜んで。",
-    "Yes, with pleasure.",
-  ], [
-    "結婚の祝いにこれを贈ります。",
-    "I give this in celebration of your marriage.",
-  ], [
-    "確かなの？",
-    "Are you sure?",
-  ], [
-    "行くな！",
-    "Don't go.",
-  ], [
-    "動くな！",
-    "Don't move!",
-  ], [
-    "ほら、見て！",
-    "Hey, look!",
-  ], [
-    "そんなに驚くなよ。",
-    "Don't be so surprised.",
-  ], [
-    "公園で花見をしました。",
-    "We went cherry blossom viewing in the park.",
-  ], [
-    "花見は楽しかったです。",
-    "Cherry blossom viewing was fun.",
-  ], [
-    "日本語の勉強は楽しいです。",
-    "Studying Japanese is fun.",
-  ], [
-    "日本語の勉強は難しいです。",
-    "Studying Japanese is difficult.",
-  ], [
-    "日本語の勉強は簡単です。",
-    "Studying Japanese is easy.",
-  ], [
-    "日本語の勉強は面白いです。",
-    "Studying Japanese is interesting.",
-  ], [
-    "日本語の勉強は大変です。",
-    "Studying Japanese is hard.",
-  ], [
-    "まず焼きそばを食べましょう",
-    "First, we should eat yakisoba*.",
-    [
-      "Yakisoba is a Japanese stir-fried noodle dish, typically made with wheat noodles, vegetables, and meat or seafood, seasoned with a savory sauce.",
-    ],
-  ]
-];
+export const phrases = {
+  // ---------- N5 ----------
+  'n5-001': { id: 'n5-001', japanese: 'こんにちは。', english: 'Hello.', level: 'N5', tags: ['greetings'] },
+  'n5-002': { id: 'n5-002', japanese: 'おはようございます。', english: 'Good morning.', level: 'N5', tags: ['greetings'] },
+  'n5-003': { id: 'n5-003', japanese: 'こんばんは。', english: 'Good evening.', level: 'N5', tags: ['greetings'] },
+  'n5-004': { id: 'n5-004', japanese: 'おやすみなさい。', english: 'Good night.', level: 'N5', tags: ['greetings'] },
+  'n5-005': { id: 'n5-005', japanese: 'ありがとうございます。', english: 'Thank you.', level: 'N5', tags: ['thanks'] },
+  'n5-006': { id: 'n5-006', japanese: 'どういたしまして。', english: "You're welcome.", level: 'N5', tags: ['thanks'] },
+  'n5-007': { id: 'n5-007', japanese: 'すみません。', english: 'Excuse me.', level: 'N5', tags: ['apologies'] },
+  'n5-008': { id: 'n5-008', japanese: 'ごめんなさい。', english: "I'm sorry.", level: 'N5', tags: ['apologies'] },
+  'n5-009': { id: 'n5-009', japanese: 'はじめまして。', english: 'Nice to meet you.', level: 'N5', tags: ['introductions', 'greetings'] },
+  'n5-010': { id: 'n5-010', japanese: 'こちらは私の彼女です。', english: 'This is my girlfriend.', level: 'N5', tags: ['introductions', 'family'] },
+  'n5-011': { id: 'n5-011', japanese: '彼女はおしゃれな人です。', english: 'My girlfriend is a stylish person.', level: 'N5', tags: ['people', 'opinions'] },
+  'n5-012': { id: 'n5-012', japanese: '私の彼女は元気な人です。可愛いものが好きです。', english: 'My girlfriend is a lively person. She likes cute things.', level: 'N5', tags: ['people', 'opinions'] },
+  'n5-013': { id: 'n5-013', japanese: 'この電車は渋谷駅に行きますか。', english: 'Does this train go to Shibuya Station?', level: 'N5', tags: ['travel', 'questions'] },
+  'n5-014': { id: 'n5-014', japanese: '私の趣味はゲームと読みです。', english: 'My hobbies are playing games and reading.', level: 'N5', tags: ['hobbies'] },
+  'n5-015': { id: 'n5-015', japanese: 'ビールを飲みますか。いいえ、ビールは飲みません。', english: "Do you drink beer? No, I don't drink beer.", level: 'N5', tags: ['food', 'questions'] },
+  'n5-016': { id: 'n5-016', japanese: '毎週木曜日に弟と晩御飯を作ります。今週何を作りましょうか。', english: 'I make dinner with my (younger) brother every Thursday. What should I make this week?', level: 'N5', tags: ['family', 'food', 'daily-life'] },
+  'n5-017': { id: 'n5-017', japanese: '日本のゲームも翻訳します。', english: 'I also translate Japanese games.', level: 'N5', tags: ['work', 'hobbies'] },
+  'n5-018': { id: 'n5-018', japanese: '今日はとても寒いです。明日も寒いです。', english: 'Today is very cold. Tomorrow will also be cold.', level: 'N5', tags: ['weather'] },
+  'n5-019': { id: 'n5-019', japanese: '彼はどんな人ですか。', english: 'What kind of person is he?', level: 'N5', tags: ['questions', 'people'] },
+  'n5-020': { id: 'n5-020', japanese: '私の誕生日。', english: 'My birthday.', level: 'N5', tags: ['celebrations'] },
+  'n5-021': { id: 'n5-021', japanese: '毎週ボードゲームサークルに行きます。', english: 'I go to the board game club every week.', level: 'N5', tags: ['hobbies', 'daily-life'] },
+  'n5-022': { id: 'n5-022', japanese: 'プレゼントは何時までですか。', english: 'Until what time is the presentation?', level: 'N5', tags: ['questions', 'time'] },
+  'n5-023': { id: 'n5-023', japanese: 'いつか日本に行きます。', english: 'I will go to Japan one day.', level: 'N5', tags: ['travel', 'goals'] },
+  'n5-024': { id: 'n5-024', japanese: 'お腹がすきました。', english: 'I am hungry.', level: 'N5', tags: ['food'] },
+  'n5-025': { id: 'n5-025', japanese: 'ほら、見て！', english: 'Hey, look!', level: 'N5', tags: ['exclamations', 'casual'] },
+  'n5-026': { id: 'n5-026', japanese: '公園で花見をしました。', english: 'We went cherry blossom viewing in the park.', level: 'N5', tags: ['nature', 'hobbies'] },
+  'n5-027': { id: 'n5-027', japanese: '花見は楽しかったです。', english: 'Cherry blossom viewing was fun.', level: 'N5', tags: ['nature', 'emotions'] },
+  'n5-028': { id: 'n5-028', japanese: '日本語の勉強は楽しいです。', english: 'Studying Japanese is fun.', level: 'N5', tags: ['school', 'emotions'] },
+  'n5-029': { id: 'n5-029', japanese: '日本語の勉強は難しいです。', english: 'Studying Japanese is difficult.', level: 'N5', tags: ['school', 'emotions'] },
+  'n5-030': { id: 'n5-030', japanese: '日本語の勉強は簡単です。', english: 'Studying Japanese is easy.', level: 'N5', tags: ['school', 'emotions'] },
+  'n5-031': { id: 'n5-031', japanese: '日本語の勉強は面白いです。', english: 'Studying Japanese is interesting.', level: 'N5', tags: ['school', 'emotions'] },
+  'n5-032': {
+    id: 'n5-032', japanese: 'まず焼きそばを食べましょう。', english: 'First, let\'s eat yakisoba.',
+    level: 'N5', tags: ['food'],
+    refs: ['Yakisoba is a Japanese stir-fried noodle dish, typically made with wheat noodles, vegetables, and meat or seafood, seasoned with a savory sauce.'],
+  },
+  'n5-033': { id: 'n5-033', japanese: '後でやります。', english: 'I will do it later.', level: 'N5', tags: ['daily-life'] },
+  'n5-034': { id: 'n5-034', japanese: 'お手伝いします。', english: 'I will help you.', level: 'N5', tags: ['requests', 'daily-life'] },
+  'n5-035': { id: 'n5-035', japanese: 'これは何ですか。', english: 'What is this?', level: 'N5', tags: ['questions'] },
+  'n5-036': { id: 'n5-036', japanese: 'お名前は何ですか。', english: 'What is your name?', level: 'N5', tags: ['introductions', 'questions'] },
+  'n5-037': { id: 'n5-037', japanese: '私の名前は田中です。', english: 'My name is Tanaka.', level: 'N5', tags: ['introductions'] },
+  'n5-038': { id: 'n5-038', japanese: 'トイレはどこですか。', english: 'Where is the bathroom?', level: 'N5', tags: ['questions', 'travel'] },
+  'n5-039': { id: 'n5-039', japanese: '今何時ですか。', english: 'What time is it now?', level: 'N5', tags: ['time', 'questions'] },
+  'n5-040': { id: 'n5-040', japanese: '今日は何曜日ですか。', english: 'What day is it today?', level: 'N5', tags: ['time', 'questions'] },
+  'n5-041': { id: 'n5-041', japanese: 'これをください。', english: 'Please give me this.', level: 'N5', tags: ['shopping', 'requests'] },
+  'n5-042': { id: 'n5-042', japanese: 'いくらですか。', english: 'How much is it?', level: 'N5', tags: ['shopping', 'questions'] },
+  'n5-043': { id: 'n5-043', japanese: '水をください。', english: 'Water, please.', level: 'N5', tags: ['food', 'requests'] },
+  'n5-044': { id: 'n5-044', japanese: '駅はどこですか。', english: 'Where is the station?', level: 'N5', tags: ['travel', 'questions'] },
+  'n5-045': { id: 'n5-045', japanese: '私は学生です。', english: 'I am a student.', level: 'N5', tags: ['school', 'introductions'] },
+  'n5-046': { id: 'n5-046', japanese: '天気がいいですね。', english: "The weather is nice, isn't it?", level: 'N5', tags: ['weather'] },
+  'n5-047': { id: 'n5-047', japanese: '明日雨が降ります。', english: 'It will rain tomorrow.', level: 'N5', tags: ['weather'] },
+  'n5-048': { id: 'n5-048', japanese: '今日は暑いです。', english: 'It is hot today.', level: 'N5', tags: ['weather'] },
+  'n5-049': { id: 'n5-049', japanese: '毎朝コーヒーを飲みます。', english: 'I drink coffee every morning.', level: 'N5', tags: ['daily-life', 'food'] },
+  'n5-050': { id: 'n5-050', japanese: 'いってきます。', english: "I'm heading out.", level: 'N5', tags: ['greetings', 'daily-life'] },
+  'n5-051': { id: 'n5-051', japanese: 'ただいま。', english: "I'm home.", level: 'N5', tags: ['greetings', 'daily-life'] },
+  'n5-052': { id: 'n5-052', japanese: '母はかっこいいです。', english: "My mother is cool.", level: 'N5', tags: ['family'] },
+  'n5-053': { id: 'n5-053', japanese: 'お母さんについて教えてください。', english: "Please tell me about your mother.", level: 'N5', tags: ['family'] },
+
+  // ---------- N4 ----------
+  'n4-001': { id: 'n4-001', japanese: '手伝ってくれてありがとう。', english: 'Thank you for helping me.', level: 'N4', tags: ['thanks'] },
+  'n4-002': { id: 'n4-002', japanese: '新しい日本料理の本を買おうと思う。', english: "I think I'll buy a new book about Japanese cuisine.", level: 'N4', tags: ['shopping', 'food'] },
+  'n4-003': { id: 'n4-003', japanese: '二日間ねませんでした。', english: "I didn't sleep for two days.", level: 'N4', tags: ['health'] },
+  'n4-004': { id: 'n4-004', japanese: '君が必要だ。', english: 'I need you.', level: 'N4', tags: ['relationships', 'casual'] },
+  'n4-005': { id: 'n4-005', japanese: '彼ってバカ。', english: "He's stupid.", level: 'N4', tags: ['casual', 'opinions'] },
+  'n4-006': { id: 'n4-006', japanese: 'へえ、マジ？', english: 'Whoa! Really?', level: 'N4', tags: ['casual', 'exclamations'] },
+  'n4-007': { id: 'n4-007', japanese: '彼は変な奴だ。', english: 'He is a weird guy.', level: 'N4', tags: ['casual', 'opinions'] },
+  'n4-008': { id: 'n4-008', japanese: '気に入りましたか。', english: 'Did you like it?', level: 'N4', tags: ['questions', 'opinions'] },
+  'n4-009': { id: 'n4-009', japanese: 'はい、喜んで。', english: 'Yes, with pleasure.', level: 'N4', tags: ['agreement', 'polite'] },
+  'n4-010': { id: 'n4-010', japanese: '日本語の授業が全然わかりません。困ります。', english: 'I do not understand Japanese class at all. I am in trouble.', level: 'N4', tags: ['school', 'emotions'] },
+  'n4-011': { id: 'n4-011', japanese: '夏休み家族と京都に行きます。今日授業の後ネットでホテルを探します。', english: "We are going to Kyoto with my family during summer break. After class today, I'll search for a hotel online.", level: 'N4', tags: ['travel', 'family'] },
+  'n4-012': { id: 'n4-012', japanese: '日本語は独学です。', english: 'My Japanese is self-taught.', level: 'N4', tags: ['school'] },
+  'n4-013': { id: 'n4-013', japanese: '面白いから日本語を勉強します。', english: 'Because it is interesting, I study Japanese.', level: 'N4', tags: ['school', 'opinions'] },
+  'n4-014': { id: 'n4-014', japanese: '日本語の勉強は大変です。', english: 'Studying Japanese is hard.', level: 'N4', tags: ['school', 'emotions'] },
+  'n4-015': { id: 'n4-015', japanese: '明日は雨が降るかもしれません。', english: 'It might rain tomorrow.', level: 'N4', tags: ['weather', 'opinions'] },
+  'n4-016': { id: 'n4-016', japanese: '電車が遅れているようです。', english: 'It seems the train is delayed.', level: 'N4', tags: ['travel'] },
+  'n4-017': { id: 'n4-017', japanese: 'もう少し待ってください。', english: 'Please wait a little longer.', level: 'N4', tags: ['requests'] },
+  'n4-018': { id: 'n4-018', japanese: '昨日は仕事が忙しかったです。', english: 'Work was busy yesterday.', level: 'N4', tags: ['work'] },
+  'n4-019': { id: 'n4-019', japanese: '来週、友達と旅行に行く予定です。', english: "I'm planning to travel with a friend next week.", level: 'N4', tags: ['travel', 'hobbies'] },
+  'n4-020': { id: 'n4-020', japanese: '引っ越したばかりです。', english: 'I just moved recently.', level: 'N4', tags: ['daily-life'] },
+  'n4-021': { id: 'n4-021', japanese: '日本語が上手になりたいです。', english: 'I want to become good at Japanese.', level: 'N4', tags: ['school', 'goals'] },
+  'n4-022': { id: 'n4-022', japanese: '週末に部屋を掃除しなければなりません。', english: 'I have to clean my room on the weekend.', level: 'N4', tags: ['daily-life', 'obligations'] },
+  'n4-023': { id: 'n4-023', japanese: 'その映画はまだ見たことがありません。', english: 'I have never seen that movie yet.', level: 'N4', tags: ['hobbies'] },
+  'n4-024': { id: 'n4-024', japanese: '会議は三時に始まります。', english: 'The meeting starts at three o\'clock.', level: 'N4', tags: ['work', 'time'] },
+  'n4-025': { id: 'n4-025', japanese: 'すみませんが、もう一度言ってください。', english: "I'm sorry, but please say it again.", level: 'N4', tags: ['requests', 'apologies'] },
+  'n4-026': { id: 'n4-026', japanese: 'この漢字の読み方が分かりません。', english: "I don't know how to read this kanji.", level: 'N4', tags: ['school', 'questions'] },
+  'n4-027': { id: 'n4-027', japanese: '体調が悪いので、今日は休みます。', english: "I feel unwell, so I'll take the day off today.", level: 'N4', tags: ['health', 'work'] },
+  'n4-028': { id: 'n4-028', japanese: 'あとで電話します。', english: 'I will call you later.', level: 'N4', tags: ['daily-life'] },
+  'n4-029': { id: 'n4-029', japanese: '彼女は日本語だけでなく、英語も話せます。', english: 'She can speak not only Japanese but also English.', level: 'N4', tags: ['people', 'language'] },
+  'n4-030': { id: 'n4-030', japanese: '頑張ったのに、テストに落ちてしまいました。', english: 'Even though I tried hard, I failed the test.', level: 'N4', tags: ['school', 'emotions'] },
+  'n4-031': { id: 'n4-031', japanese: 'できるだけ早く来てください。', english: 'Please come as soon as possible.', level: 'N4', tags: ['requests'] },
+  'n4-032': { id: 'n4-032', japanese: 'お先に失礼します。', english: 'Excuse me for leaving first.', level: 'N4', tags: ['work', 'polite'] },
+  'n4-033': { id: 'n4-033', japanese: 'お疲れ様でした。', english: 'Thank you for your hard work.', level: 'N4', tags: ['work', 'polite'] },
+  'n4-034': { id: 'n4-034', japanese: '気をつけてください。', english: 'Please be careful.', level: 'N4', tags: ['requests', 'health'] },
+  'n4-035': { id: 'n4-035', japanese: '楽しみにしています。', english: "I'm looking forward to it.", level: 'N4', tags: ['emotions'] },
+  'n4-036': { id: 'n4-036', japanese: '残念ですが、行けません。', english: "Unfortunately, I can't go.", level: 'N4', tags: ['apologies', 'emotions'] },
+  'n4-037': { id: 'n4-037', japanese: 'これはどういう意味ですか。', english: 'What does this mean?', level: 'N4', tags: ['questions', 'language'] },
+  'n4-038': { id: 'n4-038', japanese: 'だんだん寒くなってきました。', english: "It's gradually getting colder.", level: 'N4', tags: ['weather'] },
+  'n4-039': { id: 'n4-039', japanese: 'そろそろ帰ります。', english: 'I should be heading home soon.', level: 'N4', tags: ['daily-life'] },
+
+  // ---------- N3 ----------
+  'n3-001': { id: 'n3-001', japanese: '予報によると、明日は雨だそうだ。', english: 'According to the forecast, it will rain tomorrow.', level: 'N3', tags: ['weather'] },
+  'n3-002': { id: 'n3-002', japanese: 'このアニメ、めっちゃ面白い。', english: 'This anime is absurdly funny.', level: 'N3', tags: ['casual', 'hobbies'] },
+  'n3-003': { id: 'n3-003', japanese: 'いつまでもあなたを愛しています。', english: 'I will love you forever.', level: 'N3', tags: ['relationships'] },
+  'n3-004': { id: 'n3-004', japanese: '結婚の祝いにこれを贈ります。', english: 'I give this in celebration of your marriage.', level: 'N3', tags: ['celebrations'] },
+  'n3-005': { id: 'n3-005', japanese: '確かなの？', english: 'Are you sure?', level: 'N3', tags: ['casual', 'questions'] },
+  'n3-006': { id: 'n3-006', japanese: '行くな！', english: "Don't go.", level: 'N3', tags: ['requests', 'casual'] },
+  'n3-007': { id: 'n3-007', japanese: '動くな！', english: "Don't move!", level: 'N3', tags: ['requests', 'casual'] },
+  'n3-008': { id: 'n3-008', japanese: 'そんなに驚くなよ。', english: "Don't be so surprised.", level: 'N3', tags: ['casual', 'emotions'] },
+  'n3-009': { id: 'n3-009', japanese: '忙しいふりをして、誘いを断った。', english: 'I pretended to be busy and turned down the invitation.', level: 'N3', tags: ['opinions', 'work'] },
+  'n3-010': { id: 'n3-010', japanese: '彼は約束を守らないことで有名だ。', english: 'He is known for not keeping his promises.', level: 'N3', tags: ['people', 'opinions'] },
+  'n3-011': { id: 'n3-011', japanese: '締め切りに間に合うかどうか心配だ。', english: "I'm worried about whether I'll make the deadline.", level: 'N3', tags: ['work', 'emotions'] },
+  'n3-012': { id: 'n3-012', japanese: 'この問題については、意見が分かれている。', english: 'Opinions are divided on this issue.', level: 'N3', tags: ['opinions'] },
+  'n3-013': { id: 'n3-013', japanese: '経済状況が悪化しつつある。', english: 'The economic situation is worsening.', level: 'N3', tags: ['business', 'opinions'] },
+  'n3-014': { id: 'n3-014', japanese: '彼女の説明を聞いて、ようやく納得した。', english: 'After hearing her explanation, I finally understood.', level: 'N3', tags: ['opinions', 'daily-life'] },
+  'n3-015': { id: 'n3-015', japanese: 'せっかく作った料理が冷めてしまった。', english: 'The dish I went to the trouble of making got cold.', level: 'N3', tags: ['food', 'emotions'] },
+  'n3-016': { id: 'n3-016', japanese: '慣れないうちは大変かもしれません。', english: "It might be hard while you're not used to it.", level: 'N3', tags: ['opinions', 'daily-life'] },
+  'n3-017': { id: 'n3-017', japanese: '交通渋滞のせいで遅刻してしまった。', english: 'I was late because of the traffic jam.', level: 'N3', tags: ['travel', 'apologies'] },
+  'n3-018': { id: 'n3-018', japanese: '一度決めたことは最後までやり遂げたい。', english: 'Once I decide something, I want to see it through to the end.', level: 'N3', tags: ['opinions', 'goals'] },
+  'n3-019': { id: 'n3-019', japanese: '相手の気持ちを考えて発言するべきだ。', english: "One should speak while considering the other person's feelings.", level: 'N3', tags: ['opinions', 'relationships'] },
+  'n3-020': { id: 'n3-020', japanese: 'どんなに疲れていても、諦めたくない。', english: "No matter how tired I am, I don't want to give up.", level: 'N3', tags: ['emotions', 'goals'] },
+  'n3-021': { id: 'n3-021', japanese: '彼は仕事に対して真面目すぎるところがある。', english: 'He has a tendency to be too serious about work.', level: 'N3', tags: ['people', 'work'] },
+  'n3-022': { id: 'n3-022', japanese: '最近、物価がどんどん上がっている。', english: 'Prices have been rising more and more recently.', level: 'N3', tags: ['business', 'opinions'] },
+  'n3-023': { id: 'n3-023', japanese: '誤解を招かないように、はっきり伝えた。', english: 'I stated it clearly so as not to cause misunderstanding.', level: 'N3', tags: ['relationships', 'opinions'] },
+  'n3-024': { id: 'n3-024', japanese: 'その話を聞いて、思わず笑ってしまった。', english: "I couldn't help but laugh when I heard that story.", level: 'N3', tags: ['emotions'] },
+  'n3-025': { id: 'n3-025', japanese: '環境問題への関心が高まっている。', english: 'Interest in environmental issues is growing.', level: 'N3', tags: ['opinions', 'nature'] },
+  'n3-026': { id: 'n3-026', japanese: '一人で悩まずに相談してください。', english: 'Please consult someone instead of worrying alone.', level: 'N3', tags: ['requests', 'emotions'] },
+  'n3-027': { id: 'n3-027', japanese: '予定より早く仕事が終わった。', english: 'The work finished earlier than planned.', level: 'N3', tags: ['work', 'time'] },
+  'n3-028': { id: 'n3-028', japanese: '彼の意見には賛成しかねる。', english: "I find it hard to agree with his opinion.", level: 'N3', tags: ['opinions', 'agreement'] },
+  'n3-029': { id: 'n3-029', japanese: 'あいにく、その日は都合が悪いです。', english: "Unfortunately, that day doesn't work for me.", level: 'N3', tags: ['apologies', 'time'] },
+  'n3-030': { id: 'n3-030', japanese: '努力すればするほど、結果がついてくる。', english: 'The more effort you put in, the more results follow.', level: 'N3', tags: ['opinions', 'goals'] },
+
+  // ---------- N2 ----------
+  'n2-001': { id: 'n2-001', japanese: '事前に準備しておいたおかげで、スムーズに進んだ。', english: 'Thanks to preparing in advance, it went smoothly.', level: 'N2', tags: ['work', 'opinions'] },
+  'n2-002': { id: 'n2-002', japanese: '彼の発言は誤解を招きかねない。', english: 'His remark could potentially cause misunderstanding.', level: 'N2', tags: ['relationships', 'opinions'] },
+  'n2-003': { id: 'n2-003', japanese: 'この制度にはまだ改善の余地がある。', english: 'This system still has room for improvement.', level: 'N2', tags: ['business', 'opinions'] },
+  'n2-004': { id: 'n2-004', japanese: '少子高齢化は深刻な社会問題だ。', english: 'The declining birthrate and aging population is a serious social issue.', level: 'N2', tags: ['business', 'opinions'] },
+  'n2-005': { id: 'n2-005', japanese: '彼女は表面上は冷静を装っていた。', english: 'On the surface, she pretended to be calm.', level: 'N2', tags: ['people', 'emotions'] },
+  'n2-006': { id: 'n2-006', japanese: 'その提案は現実的とは言い難い。', english: "That proposal can hardly be called realistic.", level: 'N2', tags: ['business', 'opinions'] },
+  'n2-007': { id: 'n2-007', japanese: '状況次第で対応を変える必要がある。', english: 'We need to change our response depending on the situation.', level: 'N2', tags: ['work', 'opinions'] },
+  'n2-008': { id: 'n2-008', japanese: '彼の実力からすれば、当然の結果だ。', english: "Given his ability, it's a natural result.", level: 'N2', tags: ['opinions', 'people'] },
+  'n2-009': { id: 'n2-009', japanese: '一見簡単そうに見えるが、実は難しい。', english: "It looks simple at first glance, but it's actually difficult.", level: 'N2', tags: ['opinions'] },
+  'n2-010': { id: 'n2-010', japanese: '期待に反して、結果は思わしくなかった。', english: 'Contrary to expectations, the result was not favorable.', level: 'N2', tags: ['emotions', 'opinions'] },
+  'n2-011': { id: 'n2-011', japanese: 'その計画は資金不足のため中止になった。', english: 'The plan was cancelled due to a lack of funds.', level: 'N2', tags: ['business'] },
+  'n2-012': { id: 'n2-012', japanese: '多少の困難があっても、乗り越えられるはずだ。', english: 'Even if there are some difficulties, we should be able to overcome them.', level: 'N2', tags: ['opinions', 'goals'] },
+  'n2-013': { id: 'n2-013', japanese: '彼は責任を他人に押し付ける傾向がある。', english: 'He has a tendency to push responsibility onto others.', level: 'N2', tags: ['people', 'opinions'] },
+  'n2-014': { id: 'n2-014', japanese: '交渉は難航しているらしい。', english: 'It seems the negotiations are going poorly.', level: 'N2', tags: ['business'] },
+  'n2-015': { id: 'n2-015', japanese: '情報化社会において、正しい判断力が求められる。', english: 'In an information society, the ability to make correct judgments is required.', level: 'N2', tags: ['technology', 'opinions'] },
+  'n2-016': { id: 'n2-016', japanese: '彼女の努力は誰の目にも明らかだ。', english: 'Her effort is obvious to everyone.', level: 'N2', tags: ['people', 'opinions'] },
+  'n2-017': { id: 'n2-017', japanese: 'あの企業は業績が急速に伸びている。', english: "That company's performance is growing rapidly.", level: 'N2', tags: ['business'] },
+  'n2-018': { id: 'n2-018', japanese: '規則を守らない者には罰則が科される。', english: "Those who don't follow the rules are subject to penalties.", level: 'N2', tags: ['business', 'opinions'] },
+  'n2-019': { id: 'n2-019', japanese: '技術の進歩により、生活は便利になった。', english: 'Thanks to technological progress, life has become more convenient.', level: 'N2', tags: ['technology', 'opinions'] },
+  'n2-020': { id: 'n2-020', japanese: '何事も慎重に判断するに越したことはない。', english: "It's best to judge everything carefully.", level: 'N2', tags: ['opinions', 'idioms'] },
+
+  // ---------- N1 ----------
+  'n1-001': { id: 'n1-001', japanese: '彼の意見は的を射ている。', english: 'His opinion hits the mark exactly.', level: 'N1', tags: ['idioms', 'opinions'] },
+  'n1-002': { id: 'n1-002', japanese: '一朝一夕には成し遂げられない目標だ。', english: "It's a goal that cannot be achieved overnight.", level: 'N1', tags: ['idioms', 'goals'] },
+  'n1-003': { id: 'n1-003', japanese: '彼女の才能は疑いの余地がない。', english: 'Her talent is beyond doubt.', level: 'N1', tags: ['people', 'opinions'] },
+  'n1-004': { id: 'n1-004', japanese: '政府はこの問題に対して具体的な対策を講じるべきだ。', english: 'The government should take concrete measures against this issue.', level: 'N1', tags: ['business', 'opinions'] },
+  'n1-005': { id: 'n1-005', japanese: '彼は逆境にもめげず、努力を続けた。', english: 'He continued to make efforts without being discouraged by adversity.', level: 'N1', tags: ['people', 'goals'] },
+  'n1-006': { id: 'n1-006', japanese: 'その主張には一理あるが、全面的には賛成できない。', english: "There is some truth to that claim, but I can't fully agree.", level: 'N1', tags: ['opinions'] },
+  'n1-007': { id: 'n1-007', japanese: '長年の経験に裏打ちされた技術だ。', english: "It's a skill backed by years of experience.", level: 'N1', tags: ['work', 'opinions'] },
+  'n1-008': { id: 'n1-008', japanese: '些細なことにこだわらず、大局を見るべきだ。', english: 'One should not fixate on trivial matters and should look at the big picture.', level: 'N1', tags: ['opinions', 'idioms'] },
+  'n1-009': { id: 'n1-009', japanese: '彼の功績は後世に語り継がれるだろう。', english: 'His achievements will likely be passed down to future generations.', level: 'N1', tags: ['people', 'idioms'] },
+  'n1-010': { id: 'n1-010', japanese: '二の足を踏んでいるうちに、機会を逃してしまった。', english: 'While I hesitated, I missed the opportunity.', level: 'N1', tags: ['idioms', 'emotions'] },
+};
+
+export default phrases;
