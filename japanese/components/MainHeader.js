@@ -68,7 +68,7 @@ export default {
       <ul class="menu-index" v-if="showMenu">
         <li><router-link to="/">HOME</router-link></li>
         <li><router-link to="/common-phrases">COMMON PHRASES</router-link></li>
-        <li><router-link to="/translations">翻訳 TRANSLATIONS</router-link></li>
+        <li><router-link to="/translations">TRANSLATIONS</router-link></li>
         <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
         <li><router-link to="/verbs-practice">VERB PRACTICE</router-link></li>
         <li><router-link to="/topics">TOPICS</router-link></li>
