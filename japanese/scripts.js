@@ -7,10 +7,10 @@ import CommonPhrases from 'views/CommonPhrases.js';
 import Translations from 'views/Translations.js';
 import KanaKeyboard from 'views/KanaKeyboard.js';
 import VerbsPractice from 'views/VerbsPractice.js';
+import AdjectivesPractice from 'views/AdjectivesPractice.js';
 import Topics from 'views/Topics.js';
 import PrintPractice from 'views/PrintPractice.js';
 import Donate from 'views/Donate.js';
-
 const app = createApp({});
 
 
@@ -69,6 +69,7 @@ const routes = [
   { path: '/translations/:book?', component: Translations, name: 'translations', props: true },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
+  { path: '/adjectives-practice', component: AdjectivesPractice, name: 'adjectives-practice' },
   { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },
   { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
   { path: '/donate', component: Donate, name: 'donate' },

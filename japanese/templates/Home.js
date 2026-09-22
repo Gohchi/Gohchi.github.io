@@ -93,6 +93,10 @@ export default /*html*/`
             <h3>Print Practice</h3>
             <p>Printable handwriting worksheets for kana and kanji.</p>
           </router-link>
+          <router-link to="/adjectives-practice" class="section-card">
+            <h3>Adjective Practice</h3>
+            <p>Multiple-choice meanings and hiragana typing drills for い and な adjectives, by JLPT level.</p>
+          </router-link>
         </div>
       </section>
     </main>

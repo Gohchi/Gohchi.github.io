@@ -71,6 +71,7 @@ export default {
         <li><router-link to="/translations">TRANSLATIONS</router-link></li>
         <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
         <li><router-link to="/verbs-practice">VERB PRACTICE</router-link></li>
+        <li><router-link to="/adjectives-practice">ADJECTIVE PRACTICE</router-link></li>
         <li><router-link to="/topics">TOPICS</router-link></li>
         <li><router-link to="/print-practice">PRINT PRACTICE</router-link></li>
         <li><router-link to="/donate">DONATE ♥</router-link></li>
