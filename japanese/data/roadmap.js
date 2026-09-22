@@ -83,8 +83,9 @@ export const roadmap = [
         id: 'adjective-conjugation',
         title: 'Practice い-adjectives and な-adjectives',
         description: 'How they conjugate and combine with nouns and verbs.',
-        comingSoon: true,
-        links: [],
+        links: [
+          { label: 'Adjectives Practice', route: { name: 'adjectives-practice' } },
+        ],
       },
     ],
   },
