@@ -1104,6 +1104,200 @@ body {
   }
 }
 
+.roadmap {
+  main {
+    margin: 5rem 1rem 3rem;
+    max-width: 44rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .roadmap-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .roadmap-intro .eyebrow {
+    color: var(--color-salmon);
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin: 0 0 .5rem;
+  }
+
+  .roadmap-intro h1 {
+    font-family: "Zen Antique Soft", serif;
+    font-weight: 400;
+    margin: 0 0 .75rem;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+  }
+
+  .roadmap-intro .lead {
+    color: #58635e;
+    margin: 0 auto;
+  }
+
+  .stage-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .stage {
+    border: 1px solid light-dark(#d0d0d0, #303030);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .stage-header {
+    display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+    margin-bottom: 1rem;
+  }
+
+  .stage-number {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--color-salmon);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .stage-heading {
+    flex: 1;
+  }
+
+  .stage-heading h2 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .stage-subtitle {
+    margin: .3rem 0 0;
+    color: #58635e;
+    font-size: .9rem;
+  }
+
+  .stage-progress {
+    flex-shrink: 0;
+    font-size: .8rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    background: light-dark(#e0e0e0, #303030);
+    color: light-dark(#333333, #d0d0d0);
+    align-self: flex-start;
+  }
+
+  .step-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+
+  .step {
+    display: flex;
+    gap: .75rem;
+    align-items: flex-start;
+    padding: .75rem;
+    border-radius: 8px;
+    background: light-dark(#f6f6f6, #191919);
+  }
+
+  .step.done {
+    opacity: .6;
+  }
+
+  .step.done h3 {
+    text-decoration: line-through;
+  }
+
+  .step-check {
+    display: flex;
+    align-items: center;
+    padding-top: .15rem;
+  }
+
+  .step-check input {
+    width: 1.1rem;
+    height: 1.1rem;
+    cursor: pointer;
+  }
+
+  .step-body {
+    flex: 1;
+  }
+
+  .step-body h3 {
+    margin: 0 0 .3rem;
+    font-size: 1rem;
+  }
+
+  .step-body p {
+    margin: 0;
+    color: #58635e;
+    font-size: .9rem;
+    line-height: 1.4;
+  }
+
+  .step-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-top: .6rem;
+  }
+
+  .step-link {
+    font-size: .85rem;
+    text-decoration: none;
+    color: var(--color-salmon);
+    font-weight: 600;
+  }
+
+  .step-link:hover {
+    text-decoration: underline;
+  }
+
+  .step-soon {
+    display: inline-block;
+    margin-top: .6rem;
+    font-size: .75rem;
+    padding: .15rem .5rem;
+    border-radius: 999px;
+    background: light-dark(#e0e0e0, #303030);
+    color: light-dark(#333333, #d0d0d0);
+  }
+
+  .roadmap-more {
+    margin-top: 2.5rem;
+    text-align: center;
+    color: #58635e;
+  }
+
+  .roadmap-more h2 {
+    font-size: 1rem;
+    margin: 0 0 .3rem;
+  }
+
+  .roadmap-more p {
+    margin: 0;
+    font-size: .9rem;
+  }
+}
+
 .keyboard-toolbar-buttons {
   display: flex;
   gap: 12px;
@@ -1267,6 +1461,10 @@ body {
         }
       }
     }
+  }
+  
+  .roadmap main {
+    margin-top: 4.5rem;
   }
   
   .common-phrases main .filters {
