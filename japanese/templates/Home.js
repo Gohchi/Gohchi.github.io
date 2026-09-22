@@ -101,6 +101,10 @@ export default /*html*/`
             <h3>Adjective Practice</h3>
             <p>Multiple-choice meanings and hiragana typing drills for い and な adjectives, by JLPT level.</p>
           </router-link>
+          <router-link to="/donate" class="section-card">
+            <h3>Donate ♥</h3>
+            <p>Found this useful? Here's how you can help me keep it going. I'd be so grateful.</p>
+          </router-link>
         </div>
       </section>
     </main>

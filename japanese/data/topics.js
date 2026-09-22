@@ -238,6 +238,53 @@ export const topics = [
     ],
   },
   {
+    ...defaultValues,
+    title: 'Kanji basics — 漢字',
+    subtitle: 'A quick reference for common kanji-related symbols, notation, and writing conventions you may see while studying Japanese.',
+    content: [
+      {
+        heading: 'Radical — 部首',
+        text: 'A radical is the core component or key element of a kanji. In practice, radicals help organize kanji by shape and meaning, and they are often used as a study shortcut in dictionaries and drills.',
+        example: '部首 is a dictionary grouping method; knowing a radical can help you find and remember a kanji more easily.'
+      },
+      {
+        heading: 'Repetition mark — 々',
+        text: 'The kanji repetition mark is used to show that a previous kanji or word is repeated without writing it again. It is common in older texts and some formal writing, although modern writing often avoids it in casual contexts.',
+        example: '時々 (sometimes)'
+      },
+      {
+        heading: '〆 — 締め — conclusion / ending',
+        text: 'This entry reminds us that Japanese writing uses small symbols and vocabulary to indicate closure, conclusion, or summary. It is useful when reading headings, chapter endings, or formal prose that marks a logical finish.',
+        example: '締めくくり (closing remarks) | 締め (ending, finish)'
+      },
+      {
+        heading: 'Zero — 〇 / ゼロ / 0',
+        text: 'Zero is commonly written as ゼロ in Japanese, especially in spoken or technical contexts, but the numeric symbol 0 is also widely used. It is a useful example of how Japanese often mixes native readings, borrowed readings, and numeric notation.',
+        example: 'ゼロから始める (to start from zero)'
+      },
+      {
+        heading: '長音符 — long vowel mark',
+        text: 'The long vowel mark ー is used in Japanese writing to indicate that a vowel sound is held longer than usual. It is especially common in katakana and in loanwords, but it also appears in stylized or emphatic writing in other contexts.',
+        example: 'トランプ (Trump) | すーぱー (super) | きー (long “ki” sound)'
+      },
+      {
+        heading: 'ダッシュ — dash',
+        text: 'A dash is a straight or horizontal punctuation mark used to separate ideas, create emphasis, or add a pause in writing. In Japanese typography, it can serve a similar role to an em dash in English, especially in titles, notes, and dramatic text.',
+        example: '私のことは――忘れない。 (I will not forget about it.)'
+      },
+      {
+        heading: '波ダッシュ — wave dash',
+        text: 'The wave dash 〜 is commonly used as a Japanese tilde-like symbol. It often stands for a range, a pause, or an approximate value, and it is widely used in writing to indicate “around,” “from...to...,” or a slight stylistic break.',
+        example: '3〜4人 (about three to four people) | 10時〜11時 (from 10 to 11)'
+      }
+    ],
+    sources: [
+      { title: 'Japanese typographic symbols', url: 'https://en.wikipedia.org/wiki/List_of_Japanese_typographic_symbols' },
+      { title: 'Unicode Japanese symbols', url: 'https://unicodes.jessetane.com/' },
+      { title: 'Free Japanese fonts', url: 'https://www.freejapanesefont.com/category/calligraphy-2/' }
+    ]
+  },
+  {
     type: 'list',
     title: 'Colors',
     subtitle: 'A list of common colors in Japanese.',
@@ -536,6 +583,7 @@ const TOPIC_META = [
   { id: 'good',                 tags: ['grammar', 'adjectives', 'N5'] },
   { id: 'also-too',             tags: ['grammar', 'particles', 'N5'] },
   { id: 'nominalizing-actions', tags: ['grammar', 'verbs', 'N4'] },
+  { id: 'kanji-basics',         tags: ['kanji', 'writing', 'vocabulary', 'N5'] },
   { id: 'colors',                tags: ['vocabulary', 'list', 'N5'] },
   { id: 'counters',              tags: ['vocabulary', 'list', 'grammar', 'N5'] },
   { id: 'numbers',               tags: ['vocabulary', 'list', 'N5'] },

@@ -544,5 +544,11 @@ export const ruby = {
   ]},
   "一般的": { furigana: "いっぱんてき", JLPT_level: "", eng: [
     "general", "popular", "common", "typical"
-  ]}
+  ]},
+  "長音符": { furigana: "ちょうおんぷ", JLPT_level: "N5", eng: [
+    "(long sound mark)"
+  ]},
+  "波": { furigana: "なみ", JLPT_level: "N3", eng: [
+    "wave"
+  ]},
 };
