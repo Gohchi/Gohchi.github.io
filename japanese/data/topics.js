@@ -263,9 +263,14 @@ export const topics = [
         example: 'ゼロから始める (to start from zero)'
       },
       {
+        heading: 'っ/ッ — Sokuon',
+        text: 'The small っ is not a separate vowel sound; it functions as a strong pause that forces the following consonant to be pronounced more sharply.',
+        example: 'ネット (net) | もっと (more; even more; longer; further)'
+      },
+      {
         heading: '長音符 — long vowel mark',
         text: 'The long vowel mark ー is used in Japanese writing to indicate that a vowel sound is held longer than usual. It is especially common in katakana and in loanwords, but it also appears in stylized or emphatic writing in other contexts.',
-        example: 'トランプ (Trump) | すーぱー (super) | きー (long “ki” sound)'
+        example: 'スーパー (super) | キー (key)'
       },
       {
         heading: 'ダッシュ — dash',
