@@ -74,7 +74,7 @@ export default /*html*/`
             <p>A running list of everyday phrases I've picked up, with furigana and translations.</p>
           </router-link>
           <router-link to="/translations" class="section-card">
-            <h3>翻訳 Translations</h3>
+            <h3>Translations</h3>
             <p>Fan translations of books and stories I'm reading, alongside the original text.</p>
           </router-link>
           <router-link to="/kana-keyboard" class="section-card">
@@ -93,9 +93,9 @@ export default /*html*/`
             <h3>Print Practice</h3>
             <p>Printable handwriting worksheets for kana and kanji.</p>
           </router-link>
-          <router-link to="/donate" class="section-card">
-            <h3>Donate ♥</h3>
-            <p>Found this useful? Here's how you can help me keep it going. I'd be so grateful.</p>
+          <router-link to="/adjectives-practice" class="section-card">
+            <h3>Adjective Practice</h3>
+            <p>Multiple-choice meanings and hiragana typing drills for い and な adjectives, by JLPT level.</p>
           </router-link>
         </div>
       </section>
