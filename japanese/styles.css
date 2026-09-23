@@ -346,6 +346,11 @@ body {
 }
 
 #dialog-kana {
+  .close-btn {
+    right: 16px;
+    position: absolute;
+  }
+  
   .tables {
     display: flex;
     flex-wrap: wrap;
@@ -359,6 +364,63 @@ body {
       outline: 1px solid;
       padding: 0 3px;
     }
+  }
+
+  .word-builder {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    max-width: 26rem;
+    margin: 0 auto 1rem;
+  }
+
+  .word-builder-input {
+    flex: 1;
+    font-size: 1.3rem;
+    padding: .5rem .75rem;
+    text-align: center;
+    border: 1px solid light-dark(#d0d0d0, #303030);
+    border-radius: 6px;
+    background: light-dark(#fff, #1c1c1c);
+    color: inherit;
+  }
+
+  .word-builder-action {
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: .5rem .7rem;
+    border: 1px solid light-dark(#d0d0d0, #303030);
+    border-radius: 6px;
+    background: light-dark(#fff, #1c1c1c);
+    color: inherit;
+
+    &:hover {
+      background: light-dark(#f0f0f0, #303030);
+    }
+  }
+
+  .kana-table td.kana-cell,
+  .kana-table td.kana-action {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color .12s ease;
+  }
+
+  .kana-table td.kana-cell:hover,
+  .kana-table td.kana-action:hover {
+    background: light-dark(#e5e5e5, #303030);
+  }
+
+  .kana-table td.kana-cell:active,
+  .kana-table td.kana-action:active {
+    background: var(--color-salmon);
+    color: white;
+  }
+
+  .kana-table td.kana-action {
+    font-weight: 700;
+    color: var(--color-salmon);
   }
 }
 
