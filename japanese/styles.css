@@ -1,26 +1,35 @@
 :root {
+  color-scheme: light dark;
+
   --color-salmon: #EF4D4D;
   --color-chopsticks: #EACA44;
+  --color-nori: #112A12;
+  --color-nori-seaweed: #464826;
+  
+  --color-header: light-dark(var(--color-chopsticks), var(--color-nori));
+
+  --color-button-disabled: #919191;
+  --color-button-disabled-shadow: #646464;
 }
 
 body {
-  background-color: Canvas;
+  background-color: light-dark(#dfdfdf, #000000);;
   color: CanvasText;
-  color-scheme: light dark;
 }
+
 @media (prefers-color-scheme: dark) {
   body {
     header {
-      background-color: #303030 !important;
+      background-color: light-dark(#303030, #303030);
     }
 
     .active {
-      background-color: #919191 !important;
+      background-color: light-dark(var(--color-button-disabled), var(--color-button-disabled));
       color: #bababa;
     }
 
     footer {
-      background-color: #323232 !important;
+      background-color: light-dark(#323232, #323232);
     }
   }
 }
@@ -153,7 +162,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: var(--color-header);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     justify-content: center;
@@ -350,7 +359,7 @@ body {
     right: 16px;
     position: absolute;
   }
-  
+
   .tables {
     display: flex;
     flex-wrap: wrap;
@@ -866,11 +875,13 @@ body {
   button {
     padding: 10px 16px;
     border-radius: 12px;
-    border: 1px solid #ccc;
-    background: #fafafa;
+    border: none;
+    background: var(--color-chopsticks);
     cursor: pointer;
     font-size: 14px;
     color: black;
+    box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);
+    transition: all 0.05s ease;
   }
 
   .stats {
@@ -959,9 +970,24 @@ body {
     gap: 6px;
     flex-wrap: wrap;
 
-    button.active {
-      background: #0a7;
+    button {
+      background-color: var(--color-button-disabled);
       color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      /* Gives the button a raised 3D look */
+      box-shadow: 0 4px var(--color-button-disabled-shadow);
+      transition: all 0.05s ease;
+      
+      &.active {
+        background: var(--color-nori);
+        color: white;
+    
+        box-shadow: 0 0px #1e7e34; /* Removes the bottom shadow */
+        transform: translateY(4px); /* Moves the button down by the exact height of the shadow */
+      }
     }
   }
 
@@ -1379,11 +1405,26 @@ body {
     cursor: pointer;
     color: black;
 
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    /* Gives the button a raised 3D look */
+    box-shadow: 0 4px #1e7e34; 
+    transition: all 0.05s ease;
+
     &.active {
       background: #3498db;
       color: white;
       border-color: #3498db;
+
+      box-shadow: 0 0px #1e7e34; /* Removes the bottom shadow */
+      transform: translateY(4px); /* Moves the button down by the exact height of the shadow */
+
     }
+
   }
 }
 
