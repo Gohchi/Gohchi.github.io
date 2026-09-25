@@ -22,7 +22,7 @@ export const roadmap = [
         title: 'Learn Hiragana',
         description: 'All 46 base characters, plus dakuten/handakuten and combo sounds. Drill until recognizing them is instant, not a translation step.',
         links: [
-          { label: 'Kana Keyboard', route: { name: 'kana-keyboard' } },
+          { label: 'Hiragana Practice', route: { name: 'hiragana-practice' } },
           { label: 'Handwriting worksheets', route: { name: 'print-practice' } },
         ],
       },
@@ -31,7 +31,7 @@ export const roadmap = [
         title: 'Learn Katakana',
         description: 'Same shapes to learn, different job: foreign words, names, sound effects. Easy to neglect since it shows up less at first — don\'t.',
         links: [
-          { label: 'Kana Keyboard', route: { name: 'kana-keyboard' } },
+          { label: 'Katakana Practice', route: { name: 'katakana-practice' } },
           { label: 'Handwriting worksheets', route: { name: 'print-practice' } },
         ],
       },
@@ -103,6 +103,14 @@ export const roadmap = [
         ],
       },
       {
+        id: 'kanji-reading',
+        title: 'Practice reading kanji words',
+        description: 'Write the reading in hiragana — or the kanji word itself — for common kanji words, drilled with the same memory system as the other practice modes.',
+        links: [
+          { label: 'Kanji Practice', route: { name: 'kanji-practice' } },
+        ],
+      },
+      {
         id: 'kanji-in-context',
         title: 'Look kanji up as you read',
         description: 'Any kanji across the site is clickable — tap it for furigana and meaning instead of skipping past it.',
@@ -144,9 +152,11 @@ export const roadmap = [
       {
         id: 'daily-review',
         title: 'Review a little every day',
-        description: 'Kana Keyboard and Verb Practice both track memory per item and weight toward what you\'re weakest at — a few minutes a day compounds.',
+        description: 'Hiragana, Katakana, Kanji and Verb Practice all track memory per item and weight toward what you\'re weakest at — a few minutes a day compounds.',
         links: [
-          { label: 'Kana Keyboard', route: { name: 'kana-keyboard' } },
+          { label: 'Hiragana Practice', route: { name: 'hiragana-practice' } },
+          { label: 'Katakana Practice', route: { name: 'katakana-practice' } },
+          { label: 'Kanji Practice', route: { name: 'kanji-practice' } },
           { label: 'Verb Practice', route: { name: 'verbs-practice' } },
         ],
       },

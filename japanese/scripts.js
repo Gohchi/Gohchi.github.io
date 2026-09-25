@@ -1,4 +1,3 @@
-
 import { createApp, ref } from 'vue';
 import { createRouter, createWebHashHistory, useRouter } from 'vue-router';
 
@@ -6,6 +5,9 @@ import Home from 'views/Home.js';
 import CommonPhrases from 'views/CommonPhrases.js';
 import Translations from 'views/Translations.js';
 import KanaKeyboard from 'views/KanaKeyboard.js';
+import HiraganaPractice from 'views/HiraganaPractice.js';
+import KatakanaPractice from 'views/KatakanaPractice.js';
+import KanjiPractice from 'views/KanjiPractice.js';
 import VerbsPractice from 'views/VerbsPractice.js';
 import AdjectivesPractice from 'views/AdjectivesPractice.js';
 import Topics from 'views/Topics.js';
@@ -26,6 +28,9 @@ const routes = [
   { path: '/common-phrases/:phrase?', component: CommonPhrases, name: 'common-phrases', props: true },
   { path: '/translations/:book?', component: Translations, name: 'translations', props: true },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
+  { path: '/hiragana-practice', component: HiraganaPractice, name: 'hiragana-practice' },
+  { path: '/katakana-practice', component: KatakanaPractice, name: 'katakana-practice' },
+  { path: '/kanji-practice', component: KanjiPractice, name: 'kanji-practice' },
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
   { path: '/adjectives-practice', component: AdjectivesPractice, name: 'adjectives-practice' },
   { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },

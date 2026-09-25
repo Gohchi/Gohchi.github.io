@@ -111,12 +111,48 @@ export const getVoices = async () => {
 const KANJI_RUN = /[\u4E00-\u9FFF々〆]+|[^\u4E00-\u9FFF々〆]+/g;
 const isKanji = char => /[\u4E00-\u9FFF々〆]/.test(char);
 const escapeRegExp = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// Shared helpers for the hiragana/katakana/kanji practice views.
+
+export function shuffle(list) {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Vowel (a/i/u/e/o) that each hiragana ends with, used to expand the long
+// vowel mark: こーひー -> こおひい (the same thing an IME types for "koohii").
+const VOWEL_ROWS = {
+  'あ': 'ぁあかがさざただなはばぱまゃやらゎわ',
+  'い': 'ぃいきぎしじちぢにひびぴみり',
+  'う': 'ぅうくぐすずつづぬふぶぷむゅゆる',
+  'え': 'ぇえけげせぜてでねへべぺめれ',
+  'お': 'ぉおこごそぞとどのほぼぽもょよろを',
+};
+const VOWEL_OF = {};
+for (const [vowel, chars] of Object.entries(VOWEL_ROWS)) {
+  for (const char of chars) VOWEL_OF[char] = vowel;
+}
 
 // katakana -> hiragana, 1:1 per character so string lengths are preserved
-const toHiragana = str => str.replace(
+export const toHiragana = str => str.replace(
   /[\u30A1-\u30F6]/g,
   char => String.fromCharCode(char.charCodeAt(0) - 0x60)
 );
+
+export const expandLongVowels = text => {
+  let result = '';
+  for (const char of text) {
+    result += char === 'ー' ? (VOWEL_OF[result.slice(-1)] || char) : char;
+  }
+  return result;
+};
+
+// Katakana typed by mistake counts as hiragana, and both "ー" and the plain
+// vowel are accepted for long sounds, on either side of the comparison.
+export const normalizeReading = text => expandLongVowels(toHiragana(text.replace(/\s+/g, '')));
 
 /**
  * Splits a word into parts and puts the reading only over the kanji.
