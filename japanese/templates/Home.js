@@ -85,6 +85,18 @@ export default /*html*/`
             <h3>Kana Keyboard</h3>
             <p>Quick drills to practice recognizing and typing hiragana and katakana.</p>
           </router-link>
+          <router-link to="/hiragana-practice" class="section-card">
+            <h3>Hiragana Practice</h3>
+            <p>Drill hiragana characters and hiragana words, with typing and multiple-choice modes.</p>
+          </router-link>
+          <router-link to="/katakana-practice" class="section-card">
+            <h3>Katakana Practice</h3>
+            <p>Same drills as hiragana, for katakana characters and loanwords.</p>
+          </router-link>
+          <router-link to="/kanji-practice" class="section-card">
+            <h3>Kanji Practice</h3>
+            <p>Write the reading in hiragana or the word itself in kanji, by JLPT-adjacent vocabulary.</p>
+          </router-link>
           <router-link to="/verbs-practice" class="section-card">
             <h3>Verb Practice</h3>
             <p>Conjugation practice for godan, ichidan and irregular verbs, by JLPT level.</p>

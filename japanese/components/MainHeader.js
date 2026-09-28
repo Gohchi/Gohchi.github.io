@@ -126,6 +126,9 @@ export default {
         <li><router-link to="/common-phrases">COMMON PHRASES</router-link></li>
         <li><router-link to="/translations">TRANSLATIONS</router-link></li>
         <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
+        <li><router-link to="/hiragana-practice">HIRAGANA PRACTICE</router-link></li>
+        <li><router-link to="/katakana-practice">KATAKANA PRACTICE</router-link></li>
+        <li><router-link to="/kanji-practice">KANJI PRACTICE</router-link></li>
         <li><router-link to="/verbs-practice">VERB PRACTICE</router-link></li>
         <li><router-link to="/adjectives-practice">ADJECTIVE PRACTICE</router-link></li>
         <li><router-link to="/topics">TOPICS</router-link></li>

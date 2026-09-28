@@ -1,10 +1,11 @@
 import { ref } from 'vue';
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
-import template from 'templates/KanaKeyboard.js';
+import template from 'templates/HiraganaPractice.js';
 
-import { hiragana, katakana, kanaMap } from 'data/kana-romaji.js';
+import { hiragana } from 'data/kana-romaji.js';
 import wordsData from 'data/words.js';
+import { shuffle, normalizeReading } from 'tools';
 import {
   MAX_MEMORY,
   getEntry,
@@ -14,19 +15,8 @@ import {
   weightedPick,
 } from 'data/progress.js';
 
-import {
-  shuffle,
-  normalizeReading,
-} from 'tools';
-
 const HISTORY_LIMIT = 50;
 const WORD_CORRECT_DELAY = 700; // ms before moving to the next word
-
-const WORD_TYPES = [
-  { id: 'hiragana', label: 'ひらがな', hint: 'Write this word in hiragana' },
-  { id: 'katakana', label: 'カタカナ', hint: 'Write this katakana word in hiragana' },
-  { id: 'kanji', label: '漢字', hint: 'Write the reading of this kanji word in hiragana' },
-];
 
 export default {
   components: {
@@ -38,23 +28,16 @@ export default {
     return { capture };
   },
   data() {
-    const inputMode = localStorage.getItem('kana-keyboard-input-mode') || 'type';
-    const practiceMode = localStorage.getItem('kana-keyboard-practice-mode') || 'kana';
-
-    const kanaMode = localStorage.getItem('kana-keyboard-kana-mode') || 'hiragana';
-    
-    const kana = Object.keys(kanaMode === 'hiragana' ? hiragana : katakana);
+    const inputMode = localStorage.getItem('hiragana-practice-input-mode') || 'type';
+    const practiceMode = localStorage.getItem('hiragana-practice-mode') || 'kana';
 
     return {
-      inputMode, // 'type' | 'choice' (kana practice only)
+      inputMode, // 'type' | 'choice' (characters practice only)
       practiceMode, // 'kana' | 'words'
       MAX_MEMORY,
       sessionHistory: [],
 
-      showMenu: false,
-      furigana: true,
-      KANA: kana,
-      kanaMode,
+      KANA: Object.keys(hiragana),
       target: "",
       kanaOptions: [],
       score: 0,
@@ -65,9 +48,7 @@ export default {
       inputValue: "",
 
       // words practice
-      words: wordsData,
-      wordTypes: WORD_TYPES,
-      selectedWordTypes: WORD_TYPES.map(({ id }) => id),
+      words: wordsData.filter(({ type }) => type === 'hiragana'),
       targetWord: null,
       wordInputValue: "",
       wordStatus: "",
@@ -82,31 +63,20 @@ export default {
   },
   computed: {
     kanaMemory() {
-      return this.target ? getEntry('kana', this.target).memory : 0;
+      return this.target ? getEntry('kana-hiragana', this.target).memory : 0;
     },
     kanaStats() {
-      return getStats('kana', this.KANA);
-    },
-    kanaRomaji() {
-      return this.kanaMode === 'hiragana' ? hiragana : katakana;
-    },
-
-    filteredWords() {
-      return this.words.filter(({ type }) => this.selectedWordTypes.includes(type));
+      return getStats('kana-hiragana', this.KANA);
     },
     wordMemory() {
       this.wordProgressVersion; // reactive dependency, progress lives in localStorage
-      return this.targetWord ? getEntry('words', this.targetWord.word).memory : 0;
+      return this.targetWord ? getEntry('words-hiragana', this.targetWord.word).memory : 0;
     },
     wordStats() {
       this.wordProgressVersion;
-      return getStats('words', this.filteredWords.map(({ word }) => word));
+      return getStats('words-hiragana', this.words.map(({ word }) => word));
     },
-    wordHint() {
-      const type = this.wordTypes.find(({ id }) => id === this.targetWord?.type);
-      return type ? type.hint : '';
-    },
-    // Long words (アイスクリーム) would overflow the card at the default size
+    // Long words would overflow the card at the default size
     wordPromptStyle() {
       const length = this.targetWord ? [...this.targetWord.word].length : 0;
       const size = length > 7 ? 32 : length > 5 ? 40 : length > 3 ? 52 : 64;
@@ -114,11 +84,6 @@ export default {
     },
   },
   methods: {
-    switchKanaMode() {
-      this.kanaMode = this.kanaMode === 'hiragana' ? 'katakana' : 'hiragana';
-      this.KANA = Object.keys(this.kanaMode === 'hiragana' ? hiragana : katakana);
-      this.newTarget();
-    },
     pushHistory(entry) {
       this.sessionHistory.unshift({ ...entry, id: Date.now() + '-' + Math.random() });
       if (this.sessionHistory.length > HISTORY_LIMIT) {
@@ -127,12 +92,13 @@ export default {
     },
     setInputMode(value) {
       this.inputMode = value;
-      localStorage.setItem('kana-keyboard-input-mode', value);
+      localStorage.setItem('hiragana-practice-input-mode', value);
+      if (this.practiceMode === 'kana') this.newTarget();
     },
     setPracticeMode(value) {
       if (value === this.practiceMode) return;
       this.practiceMode = value;
-      localStorage.setItem('kana-keyboard-practice-mode', value);
+      localStorage.setItem('hiragana-practice-mode', value);
       this.startPractice();
     },
     startPractice() {
@@ -146,10 +112,10 @@ export default {
     buildKanaOptions(correctKana) {
       const wrongPool = this.KANA.filter(k => k !== correctKana);
       const wrongs = shuffle(wrongPool).slice(0, 3);
-      return shuffle([correctKana, ...wrongs]).map(k => ({ kana: k, romaji: this.kanaRomaji[k] }));
+      return shuffle([correctKana, ...wrongs]).map(k => ({ kana: k, romaji: hiragana[k] }));
     },
     newTarget() {
-      this.target = weightedPick('kana', this.KANA, k => k);
+      this.target = weightedPick('kana-hiragana', this.KANA, k => k);
       this.kanaOptions = this.buildKanaOptions(this.target);
       this.status = this.inputMode === 'type'
         ? "Type the kana shown above."
@@ -163,24 +129,21 @@ export default {
     resetScore() {
       this.score = 0;
       this.streak = 0;
-      resetProgress('kana');
+      resetProgress('kana-hiragana');
       this.status = "Score and memory reset.";
       this.statusClass = "status";
       this.$nextTick(() => this.focusInput());
     },
-    handleKana(kana) {
-      this.last = kana;
-      if (this.kanaMode === 'katakana') { 
-        kana = kanaMap[kana];
-      }
-      const correct = kana === this.target;
-      recordAnswer('kana', this.target, correct);
+    handleKana(candidate) {
+      this.last = candidate;
+      const correct = candidate === this.target;
+      recordAnswer('kana-hiragana', this.target, correct);
 
       this.pushHistory({
         type: 'kana',
         prompt: this.target,
         detail: '',
-        chosen: kana,
+        chosen: candidate,
         correctAnswer: this.target,
         isCorrect: correct,
       });
@@ -193,15 +156,15 @@ export default {
         this.newTarget();
       } else {
         this.streak = 0;
-        this.status = `Wrong: "${kana}"`;
+        this.status = `Wrong: "${candidate}"`;
         this.statusClass = "status bad";
       }
     },
     onInput(e) {
       const { data } = e;
       if (!data) return;
-      let kana = [...data].at(-1);
-      this.handleKana(kana);
+      const candidate = [...data].at(-1);
+      this.handleKana(candidate);
       this.inputValue = data;
       e.target.value = '';
     },
@@ -214,27 +177,16 @@ export default {
       clearTimeout(this.wordTimer);
       this.wordTimer = null;
     },
-    toggleWordType(type) {
-      this.selectedWordTypes = this.selectedWordTypes.includes(type)
-        ? this.selectedWordTypes.filter(t => t !== type)
-        : [...this.selectedWordTypes, type];
-
-      if (!this.targetWord || !this.selectedWordTypes.includes(this.targetWord.type)) {
-        this.newWordTarget();
-      } else {
-        this.$nextTick(() => this.focusInput());
-      }
-    },
     newWordTarget() {
       this.clearWordTimer();
 
       // avoid showing the same word twice in a row when there are other options
       const previous = this.targetWord?.word;
-      const pool = this.filteredWords.length > 1
-        ? this.filteredWords.filter(({ word }) => word !== previous)
-        : this.filteredWords;
+      const pool = this.words.length > 1
+        ? this.words.filter(({ word }) => word !== previous)
+        : this.words;
 
-      const word = weightedPick('words', pool, item => item.word);
+      const word = weightedPick('words-hiragana', pool, item => item.word);
 
       this.wordInputValue = '';
       this.wordRevealed = false;
@@ -242,7 +194,7 @@ export default {
 
       if (!word) {
         this.targetWord = null;
-        this.wordStatus = 'No words match the selected types.';
+        this.wordStatus = 'No words available.';
         this.wordStatusClass = 'status bad';
         return;
       }
@@ -272,7 +224,7 @@ export default {
       const { word, reading, meaning } = this.targetWord;
       const correct = normalizeReading(value) === normalizeReading(reading);
 
-      recordAnswer('words', word, correct);
+      recordAnswer('words-hiragana', word, correct);
       this.wordProgressVersion++;
 
       this.pushHistory({
@@ -304,7 +256,7 @@ export default {
       // giving up counts as a miss, once per word
       if (!this.wordRevealed) {
         const { word, reading, meaning } = this.targetWord;
-        recordAnswer('words', word, false);
+        recordAnswer('words-hiragana', word, false);
         this.wordProgressVersion++;
         this.wordStreak = 0;
         this.pushHistory({
@@ -325,7 +277,7 @@ export default {
     resetWordScore() {
       this.wordScore = 0;
       this.wordStreak = 0;
-      resetProgress('words');
+      resetProgress('words-hiragana');
       this.wordProgressVersion++;
       this.wordStatus = 'Score and memory reset.';
       this.wordStatusClass = 'status';
@@ -333,8 +285,11 @@ export default {
     },
 
     focusInput() {
-      const input = this.practiceMode === 'words' ? this.$refs.wordInput : this.$refs.capture;
-      input && input.focus();
+      if (this.practiceMode === 'words') {
+        this.$refs.wordInput && this.$refs.wordInput.focus();
+      } else if (this.inputMode === 'type') {
+        this.$refs.capture && this.$refs.capture.focus();
+      }
     },
     onDocumentClick() {
       if (this.practiceMode === 'words' || this.inputMode === 'type') this.focusInput();
