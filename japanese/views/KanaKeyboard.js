@@ -14,14 +14,10 @@ import {
   weightedPick,
 } from 'data/progress.js';
 
-function shuffle(list) {
-  const arr = [...list];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
+import {
+  shuffle,
+  normalizeReading,
+} from 'tools';
 
 const HISTORY_LIMIT = 50;
 const WORD_CORRECT_DELAY = 700; // ms before moving to the next word
@@ -31,39 +27,6 @@ const WORD_TYPES = [
   { id: 'katakana', label: 'カタカナ', hint: 'Write this katakana word in hiragana' },
   { id: 'kanji', label: '漢字', hint: 'Write the reading of this kanji word in hiragana' },
 ];
-
-// --- word answer checking ---------------------------------------------------
-
-// Vowel (a/i/u/e/o) that each hiragana ends with, used to expand the long
-// vowel mark: こーひー -> こおひい (the same thing an IME types for "koohii").
-const VOWEL_ROWS = {
-  'あ': 'ぁあかがさざただなはばぱまゃやらゎわ',
-  'い': 'ぃいきぎしじちぢにひびぴみり',
-  'う': 'ぅうくぐすずつづぬふぶぷむゅゆる',
-  'え': 'ぇえけげせぜてでねへべぺめれ',
-  'お': 'ぉおこごそぞとどのほぼぽもょよろを',
-};
-const VOWEL_OF = {};
-for (const [vowel, chars] of Object.entries(VOWEL_ROWS)) {
-  for (const char of chars) VOWEL_OF[char] = vowel;
-}
-
-const toHiragana = text => text.replace(
-  /[\u30A1-\u30F6]/g,
-  char => String.fromCharCode(char.charCodeAt(0) - 0x60)
-);
-
-const expandLongVowels = text => {
-  let result = '';
-  for (const char of text) {
-    result += char === 'ー' ? (VOWEL_OF[result.slice(-1)] || char) : char;
-  }
-  return result;
-};
-
-// Katakana typed by mistake counts as hiragana, and both "ー" and the plain
-// vowel are accepted for long sounds, on either side of the comparison.
-const normalizeReading = text => expandLongVowels(toHiragana(text.replace(/\s+/g, '')));
 
 export default {
   components: {
