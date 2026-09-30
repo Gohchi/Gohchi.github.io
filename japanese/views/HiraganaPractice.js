@@ -28,10 +28,7 @@ export default {
     return { capture };
   },
   data() {
-    const inputMode = localStorage.getItem('hiragana-practice-input-mode') || 'type';
-
     return {
-      inputMode, // 'type' | 'choice' (characters practice only)
       MAX_MEMORY,
       sessionHistory: [],
 
@@ -88,10 +85,6 @@ export default {
         this.sessionHistory.length = HISTORY_LIMIT;
       }
     },
-    setInputMode(value) {
-      this.inputMode = value;
-      localStorage.setItem('hiragana-practice-input-mode', value);
-    },
     startPractice() {
       this.clearWordTimer();
       this.newWordTarget();
@@ -104,14 +97,10 @@ export default {
     newTarget() {
       this.target = weightedPick('kana-hiragana', this.KANA, k => k);
       this.kanaOptions = this.buildKanaOptions(this.target);
-      this.status = this.inputMode === 'type'
-        ? "Type the kana shown above."
-        : "Pick the reading that matches.";
+      this.status = "Type the kana shown above.";
       this.statusClass = "status";
       this.inputValue = "";
-      if (this.inputMode === 'type') {
-        this.$nextTick(() => this.focusInput());
-      }
+      this.$nextTick(() => this.focusInput());
     },
     resetScore() {
       this.score = 0;
@@ -275,7 +264,7 @@ export default {
       this.$refs.wordInput && this.$refs.wordInput.focus();
     },
     onDocumentClick() {
-      if (this.inputMode === 'type') this.focusInput();
+      this.focusInput();
     },
   },
   mounted() {
