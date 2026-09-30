@@ -6,6 +6,23 @@
 // A long vowel mark (ー) in a reading is also matched by the vowel it stands for
 // (こーひー = こおひい), see normalizeReading() in views/KanaKeyboard.js.
 
+// JLPT level for hiragana / katakana words (approximate, JLPT has no official vocabulary lists)
+const KANA_WORD_LEVELS = {
+  'ありがとう': 'N5', 'おはよう': 'N5', 'こんにちは': 'N5', 'さようなら': 'N5',
+  'さくら': 'N4', 'はな': 'N5', 'ほし': 'N4', 'ねこ': 'N5', 'いぬ': 'N5', 'さかな': 'N5',
+  'みず': 'N5', 'やま': 'N5', 'うみ': 'N5', 'そら': 'N4', 'ゆき': 'N4', 'あめ': 'N5',
+  'くるま': 'N5', 'いす': 'N5', 'つくえ': 'N5', 'かばん': 'N5', 'ぼうし': 'N5', 'たまご': 'N5',
+  'とけい': 'N4', 'ひこうき': 'N4', 'おかね': 'N5', 'おにぎり': 'N4',
+  'おかあさん': 'N5', 'おとうさん': 'N5',
+
+  'コーヒー': 'N5', 'ビール': 'N5', 'ジュース': 'N5', 'ミルク': 'N4', 'ケーキ': 'N5',
+  'チョコレート': 'N5', 'アイスクリーム': 'N5', 'ハンバーガー': 'N5', 'ラーメン': 'N5',
+  'テレビ': 'N5', 'パソコン': 'N4', 'スマホ': 'N4', 'カメラ': 'N5', 'ゲーム': 'N4',
+  'アニメ': 'N4', 'ピアノ': 'N4', 'サッカー': 'N4', 'テニス': 'N5', 'ホテル': 'N5',
+  'レストラン': 'N5', 'バス': 'N5', 'タクシー': 'N5', 'ドア': 'N5', 'ノート': 'N5',
+  'ペン': 'N5', 'テスト': 'N5', 'シャワー': 'N5', 'トイレ': 'N5',
+};
+
 const hiraganaWords = [
   ['ありがとう', 'thank you'],
   ['おはよう', 'good morning'],
@@ -35,7 +52,7 @@ const hiraganaWords = [
   ['おにぎり', 'rice ball'],
   ['おかあさん', 'mother'],
   ['おとうさん', 'father'],
-].map(([word, meaning]) => ({ word, reading: word, meaning, type: 'hiragana' }));
+].map(([word, meaning]) => ({ word, reading: word, meaning, level: KANA_WORD_LEVELS[word], type: 'hiragana' }));
 
 const katakanaWords = [
   ['コーヒー', 'こーひー', 'coffee'],
@@ -66,7 +83,18 @@ const katakanaWords = [
   ['テスト', 'てすと', 'test'],
   ['シャワー', 'しゃわー', 'shower'],
   ['トイレ', 'といれ', 'toilet'],
-].map(([word, reading, meaning]) => ({ word, reading, meaning, type: 'katakana' }));
+].map(([word, reading, meaning]) => ({ word, reading, meaning, level: KANA_WORD_LEVELS[word], type: 'katakana' }));
+
+const KANJI_LEVELS = {
+  '学校': 'N5', '先生': 'N5', '学生': 'N5', '日本語': 'N5', '教室': 'N4',
+  '友達': 'N5', '家族': 'N5', '大人': 'N4', '一人': 'N5',
+  '今日': 'N5', '明日': 'N5', '昨日': 'N5', '毎日': 'N5', '誕生日': 'N5', '水曜日': 'N5',
+  '時間': 'N5', '午後': 'N5', '天気': 'N5', '元気': 'N5',
+  '食べ物': 'N5', '飲み物': 'N5', '果物': 'N4', '料理': 'N5', '買い物': 'N5',
+  '電車': 'N5', '駅': 'N5', '空港': 'N4', '旅行': 'N5',
+  '図書館': 'N5', '病院': 'N5', '会社': 'N5',
+  '電話': 'N5', '映画': 'N5', '音楽': 'N5', '写真': 'N5', '新聞': 'N5',
+};
 
 const kanjiWords = [
   ['学校', 'がっこう', 'school'],
@@ -105,7 +133,7 @@ const kanjiWords = [
   ['音楽', 'おんがく', 'music'],
   ['写真', 'しゃしん', 'photograph'],
   ['新聞', 'しんぶん', 'newspaper'],
-].map(([word, reading, meaning]) => ({ word, reading, meaning, type: 'kanji' }));
+].map(([word, reading, meaning]) => ({ word, reading, meaning, level: KANJI_LEVELS[word], type: 'kanji' }));
 
 export default [
   ...hiraganaWords,

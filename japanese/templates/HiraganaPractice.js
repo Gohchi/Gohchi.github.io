@@ -8,8 +8,10 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card verb-card">
+      <div class="card verb-card kanji-card">
         <template v-if="targetWord">
+          <WordCorner :word="targetWord.word" :level="targetWord.level" />
+
           <div class="verb-meaning">{{ targetWord.meaning }}</div>
           <div class="prompt" :style="wordPromptStyle">{{ targetWord.word }}</div>
 

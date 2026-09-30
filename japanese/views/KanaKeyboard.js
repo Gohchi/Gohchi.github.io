@@ -1,6 +1,8 @@
 import { ref } from 'vue';
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
+import WordCorner from 'components/WordCorner.js';
+
 import template from 'templates/KanaKeyboard.js';
 
 import { hiragana, katakana, kanaMap } from 'data/kana-romaji.js';
@@ -20,6 +22,7 @@ export default {
   components: {
     MainHeader,
     SessionHistory,
+    WordCorner,
   },
   setup() {
     const capture = ref(null);
