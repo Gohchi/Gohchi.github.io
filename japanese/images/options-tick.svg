@@ -3,8 +3,32 @@
 <svg
   width="800px" height="800px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
->
-  <rect width="16" height="16" id="icon-bound" fill="none" />
-  <path
-    d="M16,5l-11.012,0l0,9l11.012,0l0,1.988l-13,0l0,-12.976l13,0l0,1.988Zm-16,-4.988l14,0l0,1.988l-12.012,0l0,12l-1.988,0l0,-12l0,-1.988Zm8.2,8.36l-1.406,1.422l3.243,3.206l5.169,-5.747l-1.484,-1.338l-3.769,4.187l-1.753,-1.73Z" />
+> 
+  <defs>
+    <style>
+      path {
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke: black;
+        fill: none;
+      }
+      .salmon {
+        stroke: #EF4D4D;
+      }
+      .seaweed {
+        stroke: black;
+      }
+      .rice {
+        stroke: #EAEAEA;
+      }
+      .chopsticks {
+        stroke: #EACA44;
+      }
+    </style>
+  </defs>
+  <path class="salmon" d="M 14 7 L 6 7 L 6 15 L 14 15" />
+  <path class="chopsticks" d="M 13 5 L 4 5 L 4 14" />
+  <path class="seaweed" d="M 12 3 L 2 3 L 2 13 " />
+  <path class="rice" d="M 14 9 L 10 13 L 8 11" />
 </svg>
