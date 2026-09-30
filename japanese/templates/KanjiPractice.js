@@ -4,16 +4,7 @@ export default /*html*/`
       title="KANJI PRACTICE"
       hideFurigana="true"
       hideZoom="true"
-    >
-      <div class="keyboard-toolbar-buttons">
-        <div class="toolbar-group">
-          <button @click="checkWordAnswer">Check</button>
-          <button @click="revealWordAnswer">Reveal</button>
-          <button @click="newWordTarget">Skip</button>
-          <button @click="resetWordScore">Reset</button>
-        </div>
-      </div>
-    </MainHeader>
+    ></MainHeader>
 
     <main>
       <div class="card verb-card">
@@ -41,6 +32,13 @@ export default /*html*/`
           />
 
           <div :class="wordStatusClass">{{ wordStatus }}</div>
+
+          <div class="row">
+            <button @click="checkWordAnswer">Check</button>
+            <button @click="revealWordAnswer">Reveal</button>
+            <button @click="newWordTarget">Skip</button>
+            <button @click="resetWordScore">Reset</button>
+          </div>
 
           <div class="stats">
             <div>Score: <span>{{ wordScore }}</span></div>

@@ -28,12 +28,7 @@ export default {
     return { capture };
   },
   data() {
-    const inputMode = localStorage.getItem('katakana-practice-input-mode') || 'type';
-    const practiceMode = localStorage.getItem('katakana-practice-mode') || 'kana';
-
     return {
-      inputMode, // 'type' | 'choice' (characters practice only)
-      practiceMode, // 'kana' | 'words'
       MAX_MEMORY,
       sessionHistory: [],
 
@@ -90,24 +85,9 @@ export default {
         this.sessionHistory.length = HISTORY_LIMIT;
       }
     },
-    setInputMode(value) {
-      this.inputMode = value;
-      localStorage.setItem('katakana-practice-input-mode', value);
-      if (this.practiceMode === 'kana') this.newTarget();
-    },
-    setPracticeMode(value) {
-      if (value === this.practiceMode) return;
-      this.practiceMode = value;
-      localStorage.setItem('katakana-practice-mode', value);
-      this.startPractice();
-    },
     startPractice() {
       this.clearWordTimer();
-      if (this.practiceMode === 'words') {
-        this.newWordTarget();
-      } else {
-        this.newTarget();
-      }
+      this.newWordTarget();
     },
     buildKanaOptions(correctKana) {
       const wrongPool = this.KANA.filter(k => k !== correctKana);
@@ -117,14 +97,10 @@ export default {
     newTarget() {
       this.target = weightedPick('kana-katakana', this.KANA, k => k);
       this.kanaOptions = this.buildKanaOptions(this.target);
-      this.status = this.inputMode === 'type'
-        ? "Type the kana shown above."
-        : "Pick the reading that matches.";
+      this.status = "Type the kana shown above.";
       this.statusClass = "status";
       this.inputValue = "";
-      if (this.inputMode === 'type') {
-        this.$nextTick(() => this.focusInput());
-      }
+      this.$nextTick(() => this.focusInput());
     },
     resetScore() {
       this.score = 0;
@@ -286,16 +262,11 @@ export default {
       this.wordStatusClass = 'status';
       this.$nextTick(() => this.focusInput());
     },
-
     focusInput() {
-      if (this.practiceMode === 'words') {
-        this.$refs.wordInput && this.$refs.wordInput.focus();
-      } else if (this.inputMode === 'type') {
-        this.$refs.capture && this.$refs.capture.focus();
-      }
+      this.$refs.wordInput && this.$refs.wordInput.focus();
     },
     onDocumentClick() {
-      if (this.practiceMode === 'words' || this.inputMode === 'type') this.focusInput();
+      this.focusInput();
     },
   },
   mounted() {
