@@ -1,5 +1,7 @@
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
+import WordCorner from 'components/WordCorner.js';
+
 import template from 'templates/KanjiPractice.js';
 
 import wordsData from 'data/words.js';
@@ -24,6 +26,7 @@ export default {
   components: {
     MainHeader,
     SessionHistory,
+    WordCorner,
   },
   data() {
     const inputMode = localStorage.getItem('kanji-practice-input-mode') || 'type';

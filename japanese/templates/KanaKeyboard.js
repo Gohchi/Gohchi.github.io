@@ -15,7 +15,9 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card">
+      <div class="card kanji-card">
+        <WordCorner :word="target" />
+
         <div style="text-align:center">
           {{ inputMode === 'type' ? 'Type this kana:' : 'Which reading matches?' }}
         </div>

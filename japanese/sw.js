@@ -19,6 +19,7 @@ self.addEventListener('install', e => {
           '/japanese/components/PhraseToRuby.js',
           '/japanese/components/SessionHistory.js',
           '/japanese/components/Sources.js',
+          '/japanese/components/WordCorner.js',
           '/japanese/data/adjectives.js',
           '/japanese/data/books/berserk.js',
           '/japanese/data/books/eoe.js',

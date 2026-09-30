@@ -1017,6 +1017,38 @@ body {
     text-align: center;
   }
 
+  .kanji-card {
+    position: relative;
+  }
+
+  /* same look as .kanji-dialog .JLPT-level */
+  .kanji-corner {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .JLPT-level {
+      font-size: 8px;
+      outline: 1px solid;
+      width: 2.5rem;
+      text-align: center;
+      border-radius: 4px;
+    }
+
+    .jisho-link {
+      font-size: 10px;
+      text-decoration: none;
+      color: black;
+      background: var(--color-chopsticks);
+      padding: 2px 8px;
+      border-radius: 6px;
+      box-shadow: 0 2px hsl(from var(--color-chopsticks) h s 20%);
+    }
+  }
+
   .session-history {
     max-width: 480px;
     margin: 24px auto 0;
