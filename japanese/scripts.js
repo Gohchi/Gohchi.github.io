@@ -26,7 +26,7 @@ const routes = [
   { path: '/', component: Home, name: 'home' },
   { path: '/roadmap', component: Roadmap, name: 'roadmap' },
   { path: '/common-phrases/:phrase?', component: CommonPhrases, name: 'common-phrases', props: true },
-  { path: '/translations/:book?', component: Translations, name: 'translations', props: true },
+  { path: '/translations/:type?/:id?', component: Translations, name: 'translations', props: true },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
   { path: '/hiragana-practice', component: HiraganaPractice, name: 'hiragana-practice' },
   { path: '/katakana-practice', component: KatakanaPractice, name: 'katakana-practice' },
