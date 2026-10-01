@@ -1,7 +1,7 @@
 export default /*html*/`
   <div class="book-translations">
     <MainHeader
-      :title="book ? (currentBookMeta ? currentBookMeta.title : '') : 'TRANSLATIONS'"
+      :title="id ? (currentBookMeta ? currentBookMeta.title : '') : 'TRANSLATIONS'"
       @onChangeFurigana="furiganaStore.switchFurigana()"
     >
       <div class="header-content">
@@ -15,7 +15,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <template v-if="!book">
+      <template v-if="!id">
         <section class="book-list">
           <h1 class="title">Translations</h1>
           <h2 class="subtitle">Select a book to read</h2>
@@ -29,10 +29,22 @@ export default /*html*/`
               <div class="book-eng-title">{{ item.engTitle }}</div>
             </li>
           </ul>
+
+          <h2 class="subtitle">Select a song to read</h2>
+          <ul class="book-grid">
+            <li v-for="item in songs" :key="item.id"
+              class="book-item"
+              @click="selectSong(item.id)"
+            >
+              <div class="book-title">{{ item.title }}</div>
+              <div class="book-subtitle">{{ item.subtitle }}</div>
+              <div class="book-eng-title">{{ item.engTitle }}</div>
+            </li>
+          </ul>
         </section>
       </template>
 
-      <template v-else-if="loadingBook">
+      <template v-else-if="loadingItem">
         <article class="unknown">
           <h1 class="title">Loading...</h1>
         </article>
@@ -48,7 +60,7 @@ export default /*html*/`
       </template>
 
       <template v-else>
-        <template v-if="type === 'unknown'">
+        <template v-if="pageType === 'unknown'">
           <article class="unknown">
             <h1 class="title">Unknown Page</h1>
             <h2 class="subtitle">This page is not available.</h2>
@@ -56,7 +68,7 @@ export default /*html*/`
           </article>
         </template>
 
-        <template v-if="type === 'main'">
+        <template v-if="pageType === 'main'">
           <article :class="{ 'tategaki': writingDirection === 'tategaki', 'main': true }">
             <h1 class="title">
               <PhraseToRuby :text="title">
@@ -75,7 +87,7 @@ export default /*html*/`
           </article>
         </template>
 
-        <template v-if="type === 'index'">
+        <template v-if="pageType === 'index'">
           <article class="index">
             <h1 class="title">{{ title }}</h1>
             <h2 class="subtitle"><PhraseToRuby :text="subtitle"></h2>
@@ -93,7 +105,7 @@ export default /*html*/`
           </article>
         </template>
 
-        <template v-if="!type">
+        <template v-if="!pageType">
           <article
             :class="{ 'tategaki': writingDirection === 'tategaki', 'content': true }"
             :style="zoomLevel"

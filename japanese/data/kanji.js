@@ -551,4 +551,55 @@ export const ruby = {
   "波": { furigana: "なみ", JLPT_level: "N3", eng: [
     "wave"
   ]},
+  "自尊心": { furigana: "じそんしん", JLPT_level: "N2", eng: [
+    "self-respect"
+  ]},
+  "縫": { furigana: "ぬう", JLPT_level: "N2", eng: [
+    "to sew", "to mend"
+  ]},
+  "結": { furigana: "ゆ", JLPT_level: "N3", eng: [
+    "result", "consequence", "effect"
+  ]},
+  "誇": { furigana: "ほこ", JLPT_level: "N2", eng: [
+    "to boast", "to be proud of"
+  ]},
+  "言": { furigana: "い", JLPT_level: "N5", eng: [
+    "word", "speech"
+  ]},
+  "時計": { furigana: "とけい", JLPT_level: "N5", eng: [
+    "clock", "watch"
+  ]},
+  "公": { furigana: "こう", JLPT_level: "N2", eng: [
+    "public", "official"
+  ]},
+  "風雨": { furigana: "ふうう", JLPT_level: "N2", eng: [
+    "wind and rain"
+  ]},
+  "素晴": { furigana: "すば", JLPT_level: "N5", eng: [
+    "wonderful", "splendid"
+  ]},
+  "温度計": { furigana: "おんどけい", JLPT_level: "N5", eng: [
+    "thermometer"
+  ]},
+  "音": { furigana: "おと", JLPT_level: "N5", eng: [
+    "sound", "noise"
+  ]},
+  "選": { furigana: "えら", JLPT_level: "N4", eng: [
+    "to choose", "to select"
+  ]},
+  "配列": { furigana: "はいれつ", JLPT_level: "N2", eng: [
+    "arrangement", "array"
+  ]},
+  "言葉": { furigana: "ことば", JLPT_level: "N5", eng: [
+    "word", "language", "phrase"
+  ]},
+  "踊": { furigana: "おど", JLPT_level: "N5", eng: [
+    "to dance"
+  ]},
+  "意味無": { furigana: "いみない", JLPT_level: "N4", eng: [
+    "meaningless"
+  ]},
+  "確": { furigana: "たし", JLPT_level: "N4", eng: [
+    "certain", "sure"
+  ]}
 };

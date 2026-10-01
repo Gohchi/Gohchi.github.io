@@ -5,6 +5,7 @@ import MainHeader from 'components/MainHeader.js';
 import template from 'templates/Translations.js';
 
 import { books, getBookMeta, loadBook } from 'data/books/index.js';
+import { songs, getSongMeta, loadSong } from 'data/songs/index.js';
 
 import {
   zoomStore,
@@ -17,7 +18,8 @@ export default {
     MainHeader,
   },
   props: {
-    book: String, // route param, undefined = show book picker
+    type: String,
+    id: String,
   },
   setup(props) {
     const router = useRouter()
@@ -55,32 +57,35 @@ export default {
       localStorage.setItem('writing-direction', value);
     },
     selectBook(id) {
-      this.router.push('translations/' + id);
+      this.router.push('translations/book/' + id);
+    },
+    selectSong(id) {
+      this.router.push('translations/song/' + id);
     },
     backToBookList() {
       this.router.push('/translations');
     },
     async loadSelectedBook(id) {
-      this.loadingBook = true;
+      this.loadingItem = true;
       this.translations = [];
 
-      const meta = getBookMeta(id);
+      const meta = this.getItemMeta(id);
       if (!meta) {
-        this.loadingBook = false;
+        this.loadingItem = false;
         return;
       }
 
-      const data = await loadBook(id);
+      const data = await this.loadItem(id);
       this.translations = data?.translations || [];
 
       const lastPageVisited = localStorage.getItem(this.pageStorageKey);
       this.pageSelected = lastPageVisited ? +lastPageVisited : 1;
 
-      this.loadingBook = false;
+      this.loadingItem = false;
     },
   },
   watch: {
-    book: {
+    id: {
       immediate: true,
       handler(newId) {
         if (newId) {
@@ -98,6 +103,7 @@ export default {
 
     return {
       books,
+      songs,
       "translations": [],
       "pageSelected": 1,
       "hideDisclaimer": true,
@@ -107,19 +113,27 @@ export default {
       "selectedArticle": null,
       "voices": [],
       "selectedVoice": null,
-      "loadingBook": false,
+      "loadingItem": false,
       furiganaStore,
     }
   },
   computed: {
+    getItemMeta() {
+      if (this.type == 'book') return getBookMeta;
+      if (this.type == 'song') return getSongMeta;
+    },
+    loadItem() {
+      if (this.type == 'book') return loadBook;
+      if (this.type == 'song') return loadSong;
+    },
     zoomLevel() {
       return zoomStore.getZoomLevel();
     },
     pageStorageKey() {
-      return `last-page-visited:${this.book}`;
+      return `last-page-visited:${this.id}`;
     },
     currentBookMeta() {
-      return getBookMeta(this.book);
+      return getBookMeta(this.id);
     },
     hasContent() {
       return this.translations.length > 0;
@@ -127,7 +141,7 @@ export default {
     page() {
       return this.translations[this.pageSelected-1] || {};
     },
-    type() {
+    pageType() {
       if (!this.translations[this.pageSelected-1]) {
         return 'unknown';
       }
