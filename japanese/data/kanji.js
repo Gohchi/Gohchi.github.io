@@ -265,7 +265,9 @@ export const ruby = {
   "彼女": { furigana: "かのしょ", JLPT_level: "N5", eng: [
     "she", "her"
   ]},
-  "可愛": { furigana: "かわい", JLPT_level: "N3", eng: [] },
+  "可愛": { furigana: "かわい", JLPT_level: "N3", eng: [
+    "cute", "lovely"
+  ] },
   "好": { furigana: "す", JLPT_level: "N5", eng: [
     "like"
   ]},
@@ -275,18 +277,30 @@ export const ruby = {
   "電車": { furigana: "でんしゃ", JLPT_level: "N5", eng: [
     "train"
   ]},
-  "渋谷駅": { furigana: "しぶやえき", JLPT_level: "N5", eng: [] },
+  "渋谷駅": { furigana: "しぶやえき", JLPT_level: "N5", eng: [
+    "Shibuya Station"
+  ] },
   "駅": { furigana: "えき", JLPT_level: "N5", eng: [
     "(train) station"
   ]},
   "行": { furigana: "い", JLPT_level: "N5", eng: [
     "go"
   ]},
-  "趣味": { furigana: "しゅみ", JLPT_level: "N4", eng: [] },
-  "読": { furigana: "よ", JLPT_level: "N5", eng: [] },
-  "飲": { furigana: "の", JLPT_level: "N5", eng: [] },
-  "毎週": { furigana: "まいしゅう", JLPT_level: "N5", eng: [] },
-  "毎週木曜日": { furigana: "まいしゅうもくようび", JLPT_level: "N5", eng: [] },
+  "趣味": { furigana: "しゅみ", JLPT_level: "N4", eng: [
+    "hobby", "interest"
+  ] },
+  "読": { furigana: "よ", JLPT_level: "N5", eng: [
+    "read"
+  ] },
+  "飲": { furigana: "の", JLPT_level: "N5", eng: [
+    "drink"
+  ] },
+  "毎週": { furigana: "まいしゅう", JLPT_level: "N5", eng: [
+    "every week"
+  ] },
+  "毎週木曜日": { furigana: "まいしゅうもくようび", JLPT_level: "N5", eng: [
+    "every Thursday"
+  ] },
   "月曜日": { furigana: "げつようび", JLPT_level: "N5", eng: ["Monday"] },
   "火曜日": { furigana: "かようび", JLPT_level: "N5", eng: ["Tuesday"] },
   "水曜日": { furigana: "すいようび", JLPT_level: "N5", eng: ["Wednesday"] },
@@ -300,20 +314,34 @@ export const ruby = {
   "妹": { furigana: "いもうと", JLPT_level: "N5", eng: [
     "(younger) sister"
   ]},
-  "晩御飯": { furigana: "ばんごはん", JLPT_level: "N5", eng: [] },
+  "晩御飯": { furigana: "ばんごはん", JLPT_level: "N5", eng: [
+    "dinner"
+  ] },
   "作": { furigana: "つく", JLPT_level: "N5", eng: [
     "make", "work"
   ]},
-  "今週何": { furigana: "こんしゅうなに", JLPT_level: "N5", eng: [] },
-  "日本": { furigana: "にほん", JLPT_level: "N5", eng: [] },
+  "今週何": { furigana: "こんしゅうなに", JLPT_level: "N5", eng: [
+    "what this week"
+  ] },
+  "日本": { furigana: "にほん", JLPT_level: "N5", eng: [
+    "Japan"
+  ] },
   "日本語": { furigana: "にほんご", JLPT_level: "N5", eng: [
     "Japanese language"
   ] },
-  "日本料理": { furigana: "にほんりょうり", JLPT_level: "N4", eng: [] },
+  "日本料理": { furigana: "にほんりょうり", JLPT_level: "N4", eng: [
+    "Japanese cuisine", "Japanese food"
+  ] },
   "翻訳": { furigana: "ほにゃく", JLPT_level: "N2", eng: ["translation"] },
-  "授業": { furigana: "じゅぎょう", JLPT_level: "N4", eng: [] },
-  "全然": { furigana: "ぜんぜん", JLPT_level: "N4", eng: [] },
-  "困": { furigana: "こま", JLPT_level: "N4", eng: [] },
+  "授業": { furigana: "じゅぎょう", JLPT_level: "N4", eng: [
+    "class", "lesson"
+  ] },
+  "全然": { furigana: "ぜんぜん", JLPT_level: "N4", eng: [
+    "not at all", "not really"
+  ] },
+  "困": { furigana: "こま", JLPT_level: "N4", eng: [
+    "trouble", "difficulty"
+  ] },
   "今日": { furigana: "きょう", JLPT_level: "N5", eng: [
     "today"
   ]},
@@ -323,43 +351,91 @@ export const ruby = {
   "明日": { furigana: "あした", JLPT_level: "N5", eng: [
     "yesterday",
   ]},
-  "独学": { furigana: "どくがく", JLPT_level: "N2", eng: [] },
-  "面白": { furigana: "おもしろ", JLPT_level: "N5", eng: [] },
-  "勉強": { furigana: "べんきょう", JLPT_level: "N5", eng: [] },
-  "予報": { furigana: "よほう", JLPT_level: "N3", eng: [] },
+  "独学": { furigana: "どくがく", JLPT_level: "N2", eng: [
+    "self-study"
+  ] },
+  "面白": { furigana: "おもしろ", JLPT_level: "N5", eng: [
+    "interesting", "fun"
+  ] },
+  "勉強": { furigana: "べんきょう", JLPT_level: "N5", eng: [
+    "study", "practice"
+  ] },
+  "予報": { furigana: "よほう", JLPT_level: "N3", eng: [
+    "forecast", "weather report"
+  ] },
   "買": { furigana: "か", JLPT_level: "N5", eng: [
     "buy", "purchase"
   ]},
-  "思": { furigana: "おも", JLPT_level: "N5", eng: [] },
+  "思": { furigana: "おも", JLPT_level: "N5", eng: [
+    "think", "believe"
+  ] },
   "雨": { furigana: "あめ", JLPT_level: "N5", eng: [
     "rain", "rainy"
   ]},
-  "後": { furigana: "あと", JLPT_level: "N5", eng: [] },
-  "新": { furigana: "あたら", JLPT_level: "N5", eng: [] },
-  "一日間": { furigana: "いちにちかん", JLPT_level: "N5", eng: [] },
-  "二日間": { furigana: "ふつかかん", JLPT_level: "N5", eng: [] },
-  "三日間": { furigana: "みっかかん", JLPT_level: "N5", eng: [] },
-  "腹": { furigana: "なか", JLPT_level: "N4", eng: [] },
-  "公園": { furigana: "こうえん", JLPT_level: "N5", eng: [] },
-  "花見": { furigana: "はなみ", JLPT_level: "N3", eng: [] },
-  "楽": { furigana: "たの", JLPT_level: "N4", eng: [] },
-  "難": { furigana: "むずか", JLPT_level: "N4", eng: [] },
-  "簡単": { furigana: "かんたん", JLPT_level: "N4", eng: [] },
-  "焼": { furigana: "や", JLPT_level: "N4", eng: [] },
-  "食": { furigana: "た", JLPT_level: "N5", eng: [] },
+  "後": { furigana: "あと", JLPT_level: "N5", eng: [
+    "after", "later"
+  ] },
+  "新": { furigana: "あたら", JLPT_level: "N5", eng: [
+    "new"
+  ] },
+  "一日間": { furigana: "いちにちかん", JLPT_level: "N5", eng: [
+    "for one day"
+  ] },
+  "二日間": { furigana: "ふつかかん", JLPT_level: "N5", eng: [
+    "for two days"
+  ] },
+  "三日間": { furigana: "みっかかん", JLPT_level: "N5", eng: [
+    "for three days"
+  ] },
+  "腹": { furigana: "なか", JLPT_level: "N4", eng: [
+    "belly", "stomach"
+  ] },
+  "公園": { furigana: "こうえん", JLPT_level: "N5", eng: [
+    "park"
+  ] },
+  "花見": { furigana: "はなみ", JLPT_level: "N3", eng: [
+    "flower viewing"
+  ] },
+  "楽": { furigana: "たの", JLPT_level: "N4", eng: [
+    "fun", "pleasant"
+  ] },
+  "難": { furigana: "むずか", JLPT_level: "N4", eng: [
+    "difficult", "hard"
+  ] },
+  "簡単": { furigana: "かんたん", JLPT_level: "N4", eng: [
+    "easy", "simple"
+  ] },
+  "焼": { furigana: "や", JLPT_level: "N4", eng: [
+    "grill", "roast"
+  ] },
+  "食": { furigana: "た", JLPT_level: "N5", eng: [
+    "eat"
+  ] },
   "大変": { furigana: "たいへん", JLPT_level: "N4", eng: [
     "difficult", "hard"
   ]},
-  "炎竜": { furigana: "ほのおりゅう", JLPT_level: "N1", eng: [] },
-  "騎士": { furigana: "きし", JLPT_level: "N1", eng: [] },
+  "炎竜": { furigana: "ほのおりゅう", JLPT_level: "N1", eng: ["flame", "blaze" ] },
+  "騎士": { furigana: "きし", JLPT_level: "N1", eng: [
+    "knight"
+  ] },
   "小説": { furigana: "しょうせつ", JLPT_level: "N3", eng: [
     "novel"
   ]},
-  "原作": { furigana: "げんさく", JLPT_level: "N2", eng: [] },
-  "三浦": { furigana: "ミウラ", JLPT_level: "N1", eng: [] },
-  "建太郎": { furigana: "ケンタロウ", JLPT_level: "N1", eng: [] },
-  "三浦建太郎": { furigana: "ミウラケンタロウ", JLPT_level: "N1", eng: [] },
-  "深見真": { furigana: "マコトフカミ", JLPT_level: "N1", eng: [] },
+  "原作": { furigana: "げんさく", JLPT_level: "N2", eng: [
+    "original work"
+  ] },
+  "三浦": { furigana: "ミウラ", JLPT_level: "N1", eng: [
+    "Miura"
+  ] },
+  "建太郎": { furigana: "ケンタロウ", JLPT_level: "N1", eng: [
+    "Kentaro"
+  ] },
+  "三浦建太郎": { furigana: "ミウラケンタロウ", JLPT_level: "N1", eng: [
+    "Kentaro Miura"
+  ] },
+  "深見真": { furigana: "マコトフカミ", JLPT_level: "N1", eng: [
+    "Makoto Fukami"
+  ] },
   "美": { furigana: "うつく", JLPT_level: "N4", eng: [
     "beauty"
   ]},
@@ -369,18 +445,42 @@ export const ruby = {
   "大人": { furigana: "おとな", JLPT_level: "N5", eng: [
     "adult", "grown-up"
   ]},
-  "勇敢": { furigana: "ゆうかん", JLPT_level: "N2", eng: [] },
-  "乙女": { furigana: "おとめ", JLPT_level: "N1", eng: [] },
-  "身": { furigana: "み", JLPT_level: "N4", eng: [] },
-  "捧": { furigana: "ささ", JLPT_level: "N1", eng: [] },
-  "残忍": { furigana: "ざんにん", JLPT_level: "N1", eng: [] },
-  "竜": { furigana: "りゅう", JLPT_level: "N2", eng: [] },
-  "暴虐": { furigana: "ぼうぎゃく", JLPT_level: "N1", eng: [] },
-  "真実": { furigana: "しんじつ", JLPT_level: "N3", eng: [] },
-  "世界": { furigana: "せかい", JLPT_level: "N5", eng: [] },
-  "例外": { furigana: "れいがい", JLPT_level: "N2", eng: [] },
-  "始": { furigana: "はじ", JLPT_level: "N5", eng: [] },
-  "前": { furigana: "まえ", JLPT_level: "N5", eng: [] },
+  "勇敢": { furigana: "ゆうかん", JLPT_level: "N2", eng: [
+    "brave", "courageous"
+  ] },
+  "乙女": { furigana: "おとめ", JLPT_level: "N1", eng: [
+    "maiden", "young woman"
+  ] },
+  "身": { furigana: "み", JLPT_level: "N4", eng: [
+    "body", "self"
+  ] },
+  "捧": { furigana: "ささ", JLPT_level: "N1", eng: [
+    "offer", "present"
+  ] },
+  "残忍": { furigana: "ざんにん", JLPT_level: "N1", eng: [
+    "cruel", "brutal"
+  ] },
+  "竜": { furigana: "りゅう", JLPT_level: "N2", eng: [
+    "dragon"
+  ] },
+  "暴虐": { furigana: "ぼうぎゃく", JLPT_level: "N1", eng: [
+    "tyranny", "cruelty"
+  ] },
+  "真実": { furigana: "しんじつ", JLPT_level: "N3", eng: [
+    "truth", "reality"
+  ] },
+  "世界": { furigana: "せかい", JLPT_level: "N5", eng: [
+    "world"
+  ] },
+  "例外": { furigana: "れいがい", JLPT_level: "N2", eng: [
+    "exception"
+  ] },
+  "始": { furigana: "はじ", JLPT_level: "N5", eng: [
+    "begin", "start"
+  ] },
+  "前": { furigana: "まえ", JLPT_level: "N5", eng: [
+    "before", "front"
+  ] },
   "生前": { furigana: "せいぜん", JLPT_level: "N1", eng: [
     "during one's lifetime"
   ]},

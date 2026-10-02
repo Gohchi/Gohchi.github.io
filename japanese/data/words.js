@@ -6,6 +6,8 @@
 // A long vowel mark (ー) in a reading is also matched by the vowel it stands for
 // (こーひー = こおひい), see normalizeReading() in views/KanaKeyboard.js.
 
+import { ruby } from 'data/kanji.js';
+
 // JLPT level for hiragana / katakana words (approximate, JLPT has no official vocabulary lists)
 const KANA_WORD_LEVELS = {
   'ありがとう': 'N5', 'おはよう': 'N5', 'こんにちは': 'N5', 'さようなら': 'N5',
@@ -96,7 +98,7 @@ const KANJI_LEVELS = {
   '電話': 'N5', '映画': 'N5', '音楽': 'N5', '写真': 'N5', '新聞': 'N5',
 };
 
-const kanjiWords = [
+const kanjiWords = /*[
   ['学校', 'がっこう', 'school'],
   ['先生', 'せんせい', 'teacher'],
   ['学生', 'がくせい', 'student'],
@@ -139,7 +141,18 @@ const kanjiWords = [
   ['音楽', 'おんがく', 'music'],
   ['写真', 'しゃしん', 'photograph'],
   ['新聞', 'しんぶん', 'newspaper'],
-].map(([word, reading, meaning]) => ({ word, reading, meaning, level: KANJI_LEVELS[word], type: 'kanji' }));
+]*/
+Object.entries(ruby)
+.map(([word, { furigana, JLPT_level, eng }]) => {
+
+  return ({
+    word,
+    reading: furigana,
+    meaning: eng?.join(', '),
+    level: JLPT_level,
+    type: 'kanji'
+  });
+});
 
 export default [
   ...hiraganaWords,

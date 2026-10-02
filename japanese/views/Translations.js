@@ -136,7 +136,7 @@ export default {
     headerTitle() {
       if (this.id) {
         if (this.type == 'book' && this.currentMeta) {
-          return currentMeta.title;
+          return this.currentMeta.title;
         }
         if (this.type == 'song' && this.currentMeta) { 
           const { title, subtitle } = this.currentMeta;
