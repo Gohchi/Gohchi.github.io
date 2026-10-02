@@ -111,7 +111,13 @@ const kanjiWords = [
   ['昨日', 'きのう', 'yesterday'],
   ['毎日', 'まいにち', 'every day'],
   ['誕生日', 'たんじょうび', 'birthday'],
+  ['月曜日', 'げつようび', 'Monday'],
+  ['火曜日', 'かようび', 'Tuesday'],
   ['水曜日', 'すいようび', 'Wednesday'],
+  ['木曜日', 'もくようび', 'Thursday'],
+  ['金曜日', 'きんようび', 'Friday'],
+  ['土曜日', 'どようび', 'Saturday'],
+  ['日曜日', 'にちようび', 'Sunday'],
   ['時間', 'じかん', 'time'],
   ['午後', 'ごご', 'afternoon, PM'],
   ['天気', 'てんき', 'weather'],
@@ -166,4 +172,8 @@ export const words = {
   // okurigana examples: the reading of 食 here is た (not the whole たべる)
   '食べる': { furigana: 'たべる', JLPT_level: 'N5', eng: ['to eat'] },
   '飲む': { furigana: 'のむ', JLPT_level: 'N5', eng: ['to drink'] },
+  '食べ物': { furigana: 'たべもの', JLPT_level: 'N5', eng: ['food'] },
+  '買い物': { furigana: 'かいもの', JLPT_level: 'N5', eng: ['shopping'] },
+  '飲み物': { furigana: 'のみもの', JLPT_level: 'N5', eng: ['drink', 'beverage'] },
+  '水曜日': { furigana: 'すいようび', JLPT_level: 'N5', eng: ['Wednesday'] },
 };
