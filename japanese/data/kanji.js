@@ -287,6 +287,13 @@ export const ruby = {
   "飲": { furigana: "の", JLPT_level: "N5", eng: [] },
   "毎週": { furigana: "まいしゅう", JLPT_level: "N5", eng: [] },
   "毎週木曜日": { furigana: "まいしゅうもくようび", JLPT_level: "N5", eng: [] },
+  "月曜日": { furigana: "げつようび", JLPT_level: "N5", eng: ["Monday"] },
+  "火曜日": { furigana: "かようび", JLPT_level: "N5", eng: ["Tuesday"] },
+  "水曜日": { furigana: "すいようび", JLPT_level: "N5", eng: ["Wednesday"] },
+  "木曜日": { furigana: "もくようび", JLPT_level: "N5", eng: ["Thursday"] },
+  "金曜日": { furigana: "きんようび", JLPT_level: "N5", eng: ["Friday"] },
+  "土曜日": { furigana: "どようび", JLPT_level: "N5", eng: ["Saturday"] },
+  "日曜日": { furigana: "にちようび", JLPT_level: "N5", eng: ["Sunday"] },
   "弟": { furigana: "おとうと", JLPT_level: "N5", eng: [
     "(younger) brother"
   ]},
@@ -358,6 +365,9 @@ export const ruby = {
   ]},
   "一人": { furigana: "ひとり", JLPT_level: "N5", eng: [
     "one person", "by oneself"
+  ]},
+  "大人": { furigana: "おとな", JLPT_level: "N5", eng: [
+    "adult", "grown-up"
   ]},
   "勇敢": { furigana: "ゆうかん", JLPT_level: "N2", eng: [] },
   "乙女": { furigana: "おとめ", JLPT_level: "N1", eng: [] },
@@ -601,5 +611,71 @@ export const ruby = {
   ]},
   "確": { furigana: "たし", JLPT_level: "N4", eng: [
     "certain", "sure"
-  ]}
+  ]},
+  "写真": { furigana: "しゃしん", JLPT_level: "N5", eng: [
+    "photograph", "photo"
+  ]},
+  "昨日": { furigana: "きのう", JLPT_level: "N5", eng: [
+    "yesterday"
+  ]},
+  "旅行": { furigana: "りょこう", JLPT_level: "N5", eng: [
+    "travel", "trip"
+  ]},
+  "午後": { furigana: "ごご", JLPT_level: "N5", eng: [
+    "afternoon", "p.m."
+  ]},
+  "電話": { furigana: "でんわ", JLPT_level: "N5", eng: [
+    "phone call"
+  ]},
+  "音楽": { furigana: "おんがく", JLPT_level: "N5", eng: [
+    "music"
+  ]},
+  "学校": { furigana: "がっこう", JLPT_level: "N5", eng: [
+    "school"
+  ]},
+  "果物": { furigana: "くだもの", JLPT_level: "N5", eng: [
+    "fruit"
+  ]},
+  "家族": { furigana: "かぞく", JLPT_level: "N5", eng: [
+    "family"
+  ]},
+  "動画": { furigana: "どうが", JLPT_level: "N5", eng: [
+    "video"
+  ]},
+  "映画": { furigana: "えいが", JLPT_level: "N5", eng: [
+    "movie", "film"
+  ]},
+  "料理": { furigana: "りょうり", JLPT_level: "N5", eng: [
+    "cooking", "cuisine"
+  ]},
+  "病院": { furigana: "びょういん", JLPT_level: "N5", eng: [
+    "hospital", "clinic"
+  ]},
+  "学生": { furigana: "がくせい", JLPT_level: "N5", eng: [
+    "student"
+  ]},
+  "新聞": { furigana: "しんぶん", JLPT_level: "N5", eng: [
+    "newspaper"
+  ]},
+  "時間": { furigana: "じかん", JLPT_level: "N5", eng: [
+    "time"
+  ]},
+  "友達": { furigana: "ともだち", JLPT_level: "N5", eng: [
+    "friend", "companion"
+  ]},
+  "会社": { furigana: "かいしゃ", JLPT_level: "N5", eng: [
+    "company", "corporation", "firm"
+  ]},
+  "教室": { furigana: "きょうしつ", JLPT_level: "N5", eng: [
+    "classroom"
+  ]},
+  "空港": { furigana: "くうこう", JLPT_level: "N4", eng: [
+    "airport"
+  ]},
+  "天気": { furigana: "てんき", JLPT_level: "N5", eng: [
+    "weather"
+  ]},
+  "図書館": { furigana: "としょかん", JLPT_level: "N5", eng: [
+    "library"
+  ]},
 };

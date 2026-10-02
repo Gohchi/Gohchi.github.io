@@ -2,7 +2,6 @@ export default /*html*/`
   <div class="kana-keyboard">
     <MainHeader
       title="KANJI PRACTICE"
-      hideFurigana="true"
       hideZoom="true"
     >
       <div class="keyboard-toolbar-buttons">
@@ -20,7 +19,12 @@ export default /*html*/`
 
           <!-- the meaning is the answer in choice mode, so it is hidden there -->
           <div class="verb-meaning" v-if="inputMode === 'type'">{{ targetWord.meaning }}</div>
-          <div class="prompt" :style="wordPromptStyle">{{ targetWord.word }}</div>
+          <template v-if="inputMode === 'type'">
+            <div class="prompt" :style="wordPromptStyle">{{ targetWord.word }}</div>
+          </template>
+          <template v-else>
+            <PhraseToRuby class="prompt" :style="wordPromptStyle" :text="targetWord.word" />
+          </template>
           <div class="verb-target-label">
             {{ inputMode === 'choice' ? 'Pick the meaning' : 'Write the reading in hiragana, or the word in kanji' }}
           </div>

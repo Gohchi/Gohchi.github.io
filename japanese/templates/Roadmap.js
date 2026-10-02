@@ -2,7 +2,6 @@ export default /*html*/`
   <div class="roadmap">
     <MainHeader
       title="ROADMAP"
-      @onChangeFurigana="furiganaStore.switchFurigana()"
     ></MainHeader>
 
     <main>

@@ -1,6 +1,7 @@
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
+import PhraseToRuby from 'components/PhraseToRuby.js';
 
 import template from 'templates/KanjiPractice.js';
 
@@ -27,6 +28,7 @@ export default {
     MainHeader,
     SessionHistory,
     WordCorner,
+    PhraseToRuby,
   },
   data() {
     const inputMode = localStorage.getItem('kanji-practice-input-mode') || 'type';

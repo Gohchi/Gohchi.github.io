@@ -9,7 +9,6 @@ import { getFavorites, toggleFavorite } from 'data/favorites.js';
 
 import {
   zoomStore,
-  furiganaStore,
 } from 'store';
 
 import { speak } from 'tools';
@@ -58,7 +57,6 @@ export default {
       queryText: '',
       selectedLevels: [],
       favoritesOnly: false,
-      furiganaStore,
     };
   },
   computed: {

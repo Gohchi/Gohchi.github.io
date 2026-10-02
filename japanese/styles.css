@@ -10,6 +10,12 @@
 
   --color-button-disabled: #919191;
   --color-button-disabled-shadow: #646464;
+
+  --color-level-N5: #7cfcff;
+  --color-level-N4: #7cff92;
+  --color-level-N3: #e8ff7c;
+  --color-level-N2: #ffc87c;
+  --color-level-N1: #ff7c7c;
 }
 
 body {
@@ -176,11 +182,14 @@ body {
     }
 
     > .title {
-      margin-bottom: 1.2rem;
       display: flex;
       justify-content: space-between;
       padding-right: 5rem;
+      top: 0.5rem;
+      position: absolute;
+      width: calc(100% - 6rem);
       align-items: center;
+      height: 3rem;
     }
 
     .info {
@@ -329,32 +338,96 @@ body {
 .menu-index {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 2.7rem 1rem 1rem 1rem;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding-right: 2rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .5rem;
+  /* keep clear of the sushi menu icon (fixed, top right) */
+  padding-right: 2.5rem;
 
-  hr {
-    width: 15rem;
-    border-color: light-dark(#ffffff, #303030);
-  }
   li {
-    margin-bottom: 10px;
+    margin: 0;
+  }
 
-    a {
-      text-decoration: none;
-      color: #337ab7;
-      transition: color 0.2s ease;
+  .menu-divider {
+    flex-basis: 100%;
+    height: 0;
 
-      &:hover {
-        color: #23527c;
-      }
+    hr {
+      display: none;
     }
+  }
+}
 
-    &.active a {
-      color: #23527c;
-    }
+.chip {
+  --chip-fg: light-dark(#1d1b20, #e6e0e9);
+  --chip-outline: light-dark(#79747e, #938f99);
+  --chip-selected-bg: light-dark(#e8def8, #4a4458);
+  --chip-selected-fg: light-dark(#1d192b, #e8def8);
+
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  box-sizing: border-box;
+  height: 32px;
+  padding: 0 16px;
+  border: 1px solid var(--chip-outline);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--chip-fg);
+  font: 500 .875rem/1.25rem Meiryo, sans-serif;
+  letter-spacing: .01em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow .15s ease, background-color .15s ease;
+
+  /* state layer */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity .15s ease;
+    pointer-events: none;
+  }
+
+  &:hover::before { opacity: .08; }
+  &:focus-visible::before { opacity: .12; }
+  &:active::before { opacity: .12; }
+
+  &:focus-visible {
+    outline: 2px solid var(--chip-fg);
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    color: var(--chip-fg);
+  }
+
+  /* filter chip: selected = current page */
+  &.filter-chip.selected {
+    background: var(--chip-selected-bg);
+    color: var(--chip-selected-fg);
+    border-color: transparent;
+    padding-left: 8px;
+  }
+
+  .chip-check {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  /* assist chip: subtle elevation to tell actions from navigation */
+  &.assist-chip {
+    border-style: dashed;
   }
 }
 
@@ -854,6 +927,7 @@ body {
   }
 
   .prompt {
+    display: block;
     font-size: 72px;
     text-align: center;
     margin: 20px 0;
@@ -876,16 +950,18 @@ body {
     margin-top: 16px;
   }
 
-  button {
-    padding: 10px 16px;
-    border-radius: 12px;
-    border: none;
-    background: var(--color-chopsticks);
-    cursor: pointer;
-    font-size: 14px;
-    color: black;
-    box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);
-    transition: all 0.05s ease;
+  main {
+    button {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: none;
+      background: var(--color-chopsticks);
+      cursor: pointer;
+      font-size: 14px;
+      color: black;
+      box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);
+      transition: all 0.05s ease;
+    }
   }
 
   .stats {
@@ -1035,11 +1111,29 @@ body {
     gap: 6px;
 
     .JLPT-level {
+      padding: 2px;
       font-size: 8px;
       outline: 1px solid;
       width: 2.5rem;
       text-align: center;
       border-radius: 4px;
+      color: black;
+
+      &.level-N5 {
+        background-color: var(--color-level-N5);
+      }
+      &.level-N4 {
+        background-color: var(--color-level-N4);
+      }
+      &.level-N3 {
+        background-color: var(--color-level-N3);
+      }
+      &.level-N2 {
+        background-color: var(--color-level-N2);
+      }
+      &.level-N1 {
+        background-color: var(--color-level-N1);
+      }
     }
 
     .jisho-link {

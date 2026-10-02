@@ -2,7 +2,6 @@ export default /*html*/`
   <div class="topics">
     <MainHeader
       title="TOPICS"
-      @onChangeFurigana="furiganaStore.switchFurigana()"
     >
       <PhraseToRuby zoom :text="'話題'"></PhraseToRuby>
     </MainHeader>
