@@ -10,7 +10,7 @@ export default {
   },
   template: /*html*/`
     <div class="kanji-corner">
-      <div v-if="level" class="JLPT-level">JLPT {{ level }}</div>
+      <div v-if="level" class="JLPT-level" :class="{ ['level-'+level]: true }">JLPT {{ level }}</div>
       <a
         v-if="jishoUrl"
         class="jisho-link"

@@ -10,6 +10,12 @@
 
   --color-button-disabled: #919191;
   --color-button-disabled-shadow: #646464;
+
+  --color-level-N5: #7cfcff;
+  --color-level-N4: #7cff92;
+  --color-level-N3: #e8ff7c;
+  --color-level-N2: #ffc87c;
+  --color-level-N1: #ff7c7c;
 }
 
 body {
@@ -1105,11 +1111,29 @@ body {
     gap: 6px;
 
     .JLPT-level {
+      padding: 2px;
       font-size: 8px;
       outline: 1px solid;
       width: 2.5rem;
       text-align: center;
       border-radius: 4px;
+      color: black;
+
+      &.level-N5 {
+        background-color: var(--color-level-N5);
+      }
+      &.level-N4 {
+        background-color: var(--color-level-N4);
+      }
+      &.level-N3 {
+        background-color: var(--color-level-N3);
+      }
+      &.level-N2 {
+        background-color: var(--color-level-N2);
+      }
+      &.level-N1 {
+        background-color: var(--color-level-N1);
+      }
     }
 
     .jisho-link {

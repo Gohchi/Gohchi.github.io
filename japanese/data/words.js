@@ -175,5 +175,4 @@ export const words = {
   '食べ物': { furigana: 'たべもの', JLPT_level: 'N5', eng: ['food'] },
   '買い物': { furigana: 'かいもの', JLPT_level: 'N5', eng: ['shopping'] },
   '飲み物': { furigana: 'のみもの', JLPT_level: 'N5', eng: ['drink', 'beverage'] },
-  '水曜日': { furigana: 'すいようび', JLPT_level: 'N5', eng: ['Wednesday'] },
 };
