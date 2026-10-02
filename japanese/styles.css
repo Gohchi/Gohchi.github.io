@@ -129,12 +129,52 @@ body {
     
     .JLPT-level {
       position: absolute;
-      right: 2px;
       top: 3px;
-      font-size: 8px;
+      right: 29px;
+      display: flex;
+      height: 9px;
+      font-size: 5px;
       outline: 1px solid;
-      width: 2.5rem;
-      border-radius: 4px;
+      width: 1.6rem;
+      color: black;
+      border-radius: 3px;
+      box-shadow: 0 2px color(srgb 0.33 0.33 0.33);
+      align-items: center;
+      justify-content: center;
+
+      &.level-N5 {
+        background-color: var(--color-level-N5);
+      }
+      &.level-N4 {
+        background-color: var(--color-level-N4);
+      }
+      &.level-N3 {
+        background-color: var(--color-level-N3);
+      }
+      &.level-N2 {
+        background-color: var(--color-level-N2);
+      }
+      &.level-N1 {
+        background-color: var(--color-level-N1);
+      }
+    }
+
+    .jisho-link {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      display: flex;
+      height: 5px;
+      font-size: 5px;
+      text-decoration: none;
+      color: black;
+      background: var(--color-chopsticks);
+      padding: 2px 3px;
+      border-radius: 6px;
+      box-shadow: 0 2px hsl(from var(--color-chopsticks) h s 20%);
+      align-items: center;
+      outline-offset: 0;
+      outline: 0;
     }
 
     .kanji-details {
@@ -154,7 +194,7 @@ body {
       font-style: normal;
       font-size: 3rem;
       line-height: 3rem;
-      margin: 2rem 0;
+      margin: 1rem 0;
     }
   }
 
@@ -1111,13 +1151,14 @@ body {
     gap: 6px;
 
     .JLPT-level {
-      padding: 2px;
+      padding: 3.5px;
       font-size: 8px;
       outline: 1px solid;
       width: 2.5rem;
       text-align: center;
-      border-radius: 4px;
       color: black;
+      border-radius: 6px;
+      box-shadow: 0 2px color(srgb 0.33 0.33 0.33);
 
       &.level-N5 {
         background-color: var(--color-level-N5);

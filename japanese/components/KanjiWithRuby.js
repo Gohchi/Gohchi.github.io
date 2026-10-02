@@ -47,7 +47,10 @@ export default {
     },
     JLPT_level() {
       return this.info.JLPT_level;
-    }
+    },
+    jishoUrl() {
+      return this.text ? 'https://jisho.org/search/' + encodeURIComponent(this.text) : '';
+    },
   },
   methods: {
     showDialog,
@@ -61,7 +64,16 @@ export default {
       </template>
     </span>
     <dialog :style="zoomLevel" class="kanji-dialog" :id="dialogId" @click="closeDialog(dialogId)">
-      <div v-if="JLPT_level" class="JLPT-level">JLPT {{ JLPT_level }}</div>
+      <div v-if="JLPT_level" class="JLPT-level" :class="{ ['level-'+JLPT_level]: true }">JLPT {{ JLPT_level }}</div>
+      <a
+        v-if="jishoUrl"
+        class="jisho-link"
+        :href="jishoUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Look it up on Jisho"
+        @click.stop
+      >Jisho ↗</a>
       <div class="kanji-furigana">{{ furigana }}</div>
       <div class="kanji-details">{{ text }}</div>
       <ul class="kanji-meaning">
