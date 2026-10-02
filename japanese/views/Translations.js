@@ -9,7 +9,6 @@ import { songs, getSongMeta, loadSong } from 'data/songs/index.js';
 
 import {
   zoomStore,
-  furiganaStore
 } from 'store';
 
 export default {
@@ -114,7 +113,6 @@ export default {
       "voices": [],
       "selectedVoice": null,
       "loadingItem": false,
-      furiganaStore,
     }
   },
   computed: {
@@ -132,8 +130,21 @@ export default {
     pageStorageKey() {
       return `last-page-visited:${this.id}`;
     },
-    currentBookMeta() {
-      return getBookMeta(this.id);
+    currentMeta() {
+      return this.getItemMeta(this.id);
+    },
+    headerTitle() {
+      if (this.id) {
+        if (this.type == 'book' && this.currentMeta) {
+          return currentMeta.title;
+        }
+        if (this.type == 'song' && this.currentMeta) { 
+          const { title, subtitle } = this.currentMeta;
+          return title + ' ' + subtitle;
+        }
+      } else {
+        return 'TRANSLATIONS';
+      }
     },
     hasContent() {
       return this.translations.length > 0;

@@ -2,7 +2,6 @@ export default /*html*/`
   <div class="common-phrases">
     <MainHeader
       title="COMMON PHRASES"
-      @onChangeFurigana="furiganaStore.switchFurigana()"
     >
       <PhraseToRuby zoom :text="'一般的なフレーズ'"></PhraseToRuby>
     </MainHeader>

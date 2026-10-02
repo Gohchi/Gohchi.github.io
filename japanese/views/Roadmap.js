@@ -4,7 +4,6 @@ import template from 'templates/Roadmap.js';
 import { roadmap } from 'data/roadmap.js';
 import { getCompleted, toggleCompleted } from 'data/roadmap-progress.js';
 
-import { furiganaStore } from 'store';
 
 export default {
   components: {
@@ -14,7 +13,6 @@ export default {
     return {
       roadmap,
       completed: getCompleted(),
-      furiganaStore,
     };
   },
   methods: {

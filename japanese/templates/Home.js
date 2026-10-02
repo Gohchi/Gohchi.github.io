@@ -2,7 +2,6 @@ export default /*html*/`
   <div class="home-welcome">
     <MainHeader
       isHome="true"
-      @onChangeFurigana="furiganaStore.switchFurigana()"
     >
       <div class="title">
         <ruby>万灯<rp>(</rp><rt>マンドー</rt><rp>)</rp></ruby>の<PhraseToRuby zoom text="日本語"/>のメモ

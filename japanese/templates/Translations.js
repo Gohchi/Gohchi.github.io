@@ -1,8 +1,7 @@
 export default /*html*/`
   <div class="book-translations">
     <MainHeader
-      :title="id ? (currentBookMeta ? currentBookMeta.title : '') : 'TRANSLATIONS'"
-      @onChangeFurigana="furiganaStore.switchFurigana()"
+      :title="headerTitle"
     >
       <div class="header-content">
         <PhraseToRuby zoom :text="'翻訳'" />
@@ -52,8 +51,8 @@ export default /*html*/`
 
       <template v-else-if="!hasContent">
         <article class="unknown">
-          <h1 class="title">{{ currentBookMeta ? currentBookMeta.title : 'Unknown book' }}</h1>
-          <h2 class="subtitle">{{ currentBookMeta ? currentBookMeta.subtitle : '' }}</h2>
+          <h1 class="title">{{ currentMeta ? currentMeta.title : 'Unknown book' }}</h1>
+          <h2 class="subtitle">{{ currentMeta ? currentMeta.subtitle : '' }}</h2>
           <p>Translation not started yet.</p>
           <button class="go-back" @click.prevent="backToBookList()">Back to book list</button>
         </article>

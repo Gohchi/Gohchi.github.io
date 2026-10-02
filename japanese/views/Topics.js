@@ -10,7 +10,6 @@ import { topics } from 'data/topics.js';
 
 import {
   zoomStore,
-  furiganaStore
 } from 'store';
 
 export default {
@@ -41,7 +40,6 @@ export default {
       hideDisclaimer: true,
       titleFilters: '',
       subtitleFilters: '',
-      furiganaStore,
     };
   },
   computed: {

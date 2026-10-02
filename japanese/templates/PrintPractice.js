@@ -2,7 +2,7 @@ export default/*html*/`
   <MainHeader :title="'PRINT PRACTICE'" :hide-furigana="true" :hide-zoom="true">
     <div class="print-buttons">
       <button class="refresh-button" @click="drawPracticeSheet" title="Print this worksheet">Refresh</button>
-      <button class="print-button" @click="printWorksheet" title="Print this worksheet">Print worksheet</button>
+      <button class="print-button" @click="printWorksheet" title="Print this worksheet">Print</button>
     </div>
   </MainHeader>
 

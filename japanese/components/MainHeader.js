@@ -3,6 +3,7 @@ import { toRefs, defineEmits } from 'vue';
 import {
   voiceStore,
   zoomStore,
+  furiganaStore,
 } from 'store';
 
 import {
@@ -30,6 +31,23 @@ const HANDAKUTEN_MAP = {
   'ハ': 'パ', 'ヒ': 'ピ', 'フ': 'プ', 'ヘ': 'ペ', 'ホ': 'ポ',
 };
 
+// Navigation chips, in menu order. To add a section, add one line here.
+const NAV_ITEMS = [
+  { to: '/', label: 'HOME' },
+  { to: '/roadmap', label: 'ROADMAP' },
+  { to: '/common-phrases', label: 'COMMON PHRASES' },
+  { to: '/kana-keyboard', label: 'KANA KEYBOARD' },
+  { to: '/hiragana-practice', label: 'HIRAGANA PRACTICE' },
+  { to: '/katakana-practice', label: 'KATAKANA PRACTICE' },
+  { to: '/kanji-practice', label: 'KANJI PRACTICE' },
+  { to: '/verbs-practice', label: 'VERB PRACTICE' },
+  { to: '/adjectives-practice', label: 'ADJECTIVE PRACTICE' },
+  { to: '/topics', label: 'TOPICS' },
+  { to: '/translations', label: 'TRANSLATIONS' },
+  { to: '/print-practice', label: 'PRINT PRACTICE' },
+  { to: '/donate', label: 'DONATE ♥' },
+];
+
 export default {
   props: {
     title: String,
@@ -48,7 +66,10 @@ export default {
     return {
       title,
       isHome,
-      onChangeFurigana: () => emit('onChangeFurigana'),
+      onChangeFurigana: () => {
+        furiganaStore.switchFurigana();
+        emit('onChangeFurigana')
+      },
       onOpenZoom: () => zoomStore.openZoom(),
       hideFurigana,
       hideZoom,
@@ -60,6 +81,7 @@ export default {
       "voices": [],
       "wordBuilder": '', // word being assembled by clicking kana in the dialog
       zoomStore,
+      navItems: NAV_ITEMS,
     };
   },
   components: {
@@ -67,6 +89,11 @@ export default {
   methods: {
     showDialog,
     closeDialog,
+    // "/" only matches exactly; the rest also match their sub-routes (/topics/time)
+    isActive(to) {
+      const path = this.$route?.path || '/';
+      return to === '/' ? path === '/' : path === to || path.startsWith(to + '/');
+    },
     selectVoice(voice) {
       voiceStore.selectVoice(voice);
       voiceStore.speak("これはテストです");
@@ -121,24 +148,40 @@ export default {
       </div>
       
       <ul class="menu-index" v-if="showMenu">
-        <li><router-link to="/">HOME</router-link></li>
-        <li><router-link to="/roadmap">ROADMAP</router-link></li>
-        <li><router-link to="/common-phrases">COMMON PHRASES</router-link></li>
-        <li><router-link to="/translations">TRANSLATIONS</router-link></li>
-        <li><router-link to="/kana-keyboard">KANA KEYBOARD</router-link></li>
-        <li><router-link to="/hiragana-practice">HIRAGANA PRACTICE</router-link></li>
-        <li><router-link to="/katakana-practice">KATAKANA PRACTICE</router-link></li>
-        <li><router-link to="/kanji-practice">KANJI PRACTICE</router-link></li>
-        <li><router-link to="/verbs-practice">VERB PRACTICE</router-link></li>
-        <li><router-link to="/adjectives-practice">ADJECTIVE PRACTICE</router-link></li>
-        <li><router-link to="/topics">TOPICS</router-link></li>
-        <li><router-link to="/print-practice">PRINT PRACTICE</router-link></li>
-        <li><router-link to="/donate">DONATE ♥</router-link></li>
-        <li aria-hidden="true"><hr></li>
-        <li><a href="#" @click.prevent="showDialog('dialog-kana')">Hiragana and Katakana</a></li>
-        <li v-if="!hideFurigana"><a href="#" @click.prevent="onChangeFurigana()">Switch furigana</a></li>
-        <li v-if="!hideZoom"><a href="#" @click.prevent="onOpenZoom()">Zoom level</a></li>
-        <li v-if="!!voices.length"><a href="#" @click.prevent="showDialog('dialog-voices'); showMenu=false;">Change voice</a></li>
+        <li v-for="item in navItems" :key="item.to">
+          <router-link
+            :to="item.to"
+            class="chip filter-chip"
+            :class="{ selected: isActive(item.to) }"
+            :aria-current="isActive(item.to) ? 'page' : undefined"
+          >
+            <span v-if="isActive(item.to)" class="chip-check" aria-hidden="true">✓</span>
+            {{ item.label }}
+          </router-link>
+        </li>
+
+        <li class="menu-divider" aria-hidden="true"><hr></li>
+
+        <li>
+          <button type="button" class="chip assist-chip" @click="showDialog('dialog-kana'); showMenu=false;">
+            Hiragana and Katakana
+          </button>
+        </li>
+        <li v-if="!hideFurigana">
+          <button type="button" class="chip assist-chip" @click="onChangeFurigana()">
+            Switch furigana
+          </button>
+        </li>
+        <li v-if="!hideZoom">
+          <button type="button" class="chip assist-chip" @click="onOpenZoom()">
+            Zoom level
+          </button>
+        </li>
+        <li v-if="!!voices.length">
+          <button type="button" class="chip assist-chip" @click="showDialog('dialog-voices'); showMenu=false;">
+            Change voice
+          </button>
+        </li>
       </ul>
       
       <div class="icon-menu" @click="showMenu=!showMenu">
