@@ -72,6 +72,10 @@ export default /*html*/`
             <h3>Roadmap</h3>
             <p>Not sure where to start? A suggested order through everything below, starting with dropping romaji.</p>
           </router-link>
+          <router-link to="/progress" class="section-card">
+            <h3>Progress</h3>
+            <p>Your streak, when you started, and how every kana, word, verb and adjective is going, all in one place.</p>
+          </router-link>
           <router-link to="/common-phrases" class="section-card">
             <h3>Common Phrases</h3>
             <p>A running list of everyday phrases I've picked up, with furigana and translations.</p>

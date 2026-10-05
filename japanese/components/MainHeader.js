@@ -35,6 +35,7 @@ const HANDAKUTEN_MAP = {
 const NAV_ITEMS = [
   { to: '/', label: 'HOME' },
   { to: '/roadmap', label: 'ROADMAP' },
+  { to: '/progress', label: 'PROGRESS' },
   { to: '/common-phrases', label: 'COMMON PHRASES' },
   { to: '/kana-keyboard', label: 'KANA KEYBOARD' },
   { to: '/hiragana-practice', label: 'HIRAGANA PRACTICE' },
