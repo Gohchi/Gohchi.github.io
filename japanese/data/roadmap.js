@@ -160,6 +160,14 @@ export const roadmap = [
           { label: 'Verb Practice', route: { name: 'verbs-practice' } },
         ],
       },
+      {
+        id: 'check-progress',
+        title: 'Check your progress and streak',
+        description: 'See what you\'ve practiced, what is still weak, and how many days in a row you\'ve kept going.',
+        links: [
+          { label: 'Progress', route: { name: 'progress' } },
+        ],
+      },
     ],
   },
 ];

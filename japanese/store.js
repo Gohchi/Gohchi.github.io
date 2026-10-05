@@ -5,6 +5,12 @@ import {
   getVoices,
 } from 'tools';
 
+import {
+  loadProfile,
+  saveProfile,
+  resetProfile,
+} from 'data/profile.js';
+
 const zoomLevel = localStorage.getItem('zoom-level');
 
 export const zoomStore = reactive({
@@ -66,4 +72,38 @@ export const voiceStore = reactive({
     this.selectVoice(voices.find(v => v.voiceURI === selectedVoiceURI) || voices[0]);
     return voices;
   }
+});
+
+
+// User profile.
+// Firebase seam:
+//  - on login/logout call `profileStore.setUser(firebaseUser | null)` (e.g. from onAuthStateChanged)
+//  - persist remotely inside `save()` (and load the remote profile after `setUser`)
+export const profileStore = reactive({
+  "user": null, // { uid, email, displayName, photoURL } once signed in
+  "profile": loadProfile(),
+
+  setUser(user) {
+    this.user = user
+      ? {
+        uid: user.uid,
+        email: user.email ?? '',
+        displayName: user.displayName ?? '',
+        photoURL: user.photoURL ?? '',
+      }
+      : null;
+
+    // First login: start from the name the account already has.
+    if (this.user?.displayName && !this.profile.displayName) {
+      this.save({ displayName: this.user.displayName });
+    }
+  },
+  async save(changes) {
+    this.profile = saveProfile({ ...this.profile, ...changes });
+    // Firebase: await setDoc(doc(db, 'users', this.user.uid), this.profile, { merge: true })
+    return this.profile;
+  },
+  async reset() {
+    this.profile = resetProfile();
+  },
 });

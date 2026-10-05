@@ -4,6 +4,7 @@ import {
   voiceStore,
   zoomStore,
   furiganaStore,
+  profileStore,
 } from 'store';
 
 import {
@@ -35,6 +36,7 @@ const HANDAKUTEN_MAP = {
 const NAV_ITEMS = [
   { to: '/', label: 'HOME' },
   { to: '/roadmap', label: 'ROADMAP' },
+  { to: '/progress', label: 'PROGRESS' },
   { to: '/common-phrases', label: 'COMMON PHRASES' },
   { to: '/kana-keyboard', label: 'KANA KEYBOARD' },
   { to: '/hiragana-practice', label: 'HIRAGANA PRACTICE' },
@@ -81,10 +83,9 @@ export default {
       "voices": [],
       "wordBuilder": '', // word being assembled by clicking kana in the dialog
       zoomStore,
+      profileStore,
       navItems: NAV_ITEMS,
     };
-  },
-  components: {
   },
   methods: {
     showDialog,
@@ -183,6 +184,17 @@ export default {
           </button>
         </li>
       </ul>
+      
+      <router-link
+        to="/profile"
+        class="icon-profile"
+        :class="{ selected: isActive('/profile') }"
+        title="Profile"
+        aria-label="Profile"
+      >
+        <img v-if="profileStore.user && profileStore.user.photoURL" :src="profileStore.user.photoURL" alt="" />
+        <span v-else>{{ profileStore.profile.avatar || '👤' }}</span>
+      </router-link>
       
       <div class="icon-menu" @click="showMenu=!showMenu">
       </div>
