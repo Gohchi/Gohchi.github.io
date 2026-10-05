@@ -14,6 +14,7 @@ import Topics from 'views/Topics.js';
 import PrintPractice from 'views/PrintPractice.js';
 import Roadmap from 'views/Roadmap.js';
 import Progress from 'views/Progress.js';
+import Profile from 'views/Profile.js';
 import Donate from 'views/Donate.js';
 
 const app = createApp({});
@@ -27,6 +28,7 @@ const routes = [
   { path: '/', component: Home, name: 'home' },
   { path: '/roadmap', component: Roadmap, name: 'roadmap' },
   { path: '/progress', component: Progress, name: 'progress' },
+  { path: '/profile', component: Profile, name: 'profile' },
   { path: '/common-phrases/:phrase?', component: CommonPhrases, name: 'common-phrases', props: true },
   { path: '/translations/:type?/:id?', component: Translations, name: 'translations', props: true },
   { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
