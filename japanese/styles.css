@@ -250,6 +250,25 @@ body {
     cursor: pointer;
     background-image: url(./images/question-file.svg);
     background-size: contain;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    line-height: 1;
+    text-decoration: none;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background-color: light-dark(#ffffffaa, #ffffff22);
+    background-repeat: no-repeat;
+    background-size: 28px;
+    background-position: center;
+    overflow: hidden;
+    cursor: pointer;
+      
+    &:hover {
+      filter: drop-shadow(1px 3px 2px black);
+    }
   }
   .kanji-icon {
     background-image: url(./images/kanji-study.svg);
@@ -2212,7 +2231,7 @@ body {
 /* two icons on the right now: leave room for both */
 body header > .title {
   padding-right: 8rem;
-  width: calc(100% - 9rem);
+  width: calc(100% - 8.2rem);
 }
 
 .profile {
