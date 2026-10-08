@@ -13,6 +13,7 @@ self.addEventListener('install', e => {
           '/japanese/styles.css',
           '/japanese/register.js',
           '/japanese/tools.js',
+          '/japanese/components/FilterMenu.js',
           '/japanese/components/KanjiWithRuby.js',
           '/japanese/components/ListOfItems.js',
           '/japanese/components/MainHeader.js',

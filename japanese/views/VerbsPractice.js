@@ -1,5 +1,6 @@
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
+import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import template from 'templates/VerbsPractice.js';
 
 import verbsData from 'data/verbs.js';
@@ -17,10 +18,20 @@ import { shuffle } from 'tools';
 
 const HISTORY_LIMIT = 50;
 
+const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
+const GROUPS = [
+  { key: 1, label: 'Group 1 · godan (う)' },
+  { key: 2, label: 'Group 2 · ichidan (る)' },
+  { key: 3, label: 'Group 3 · irregular' },
+];
+const LEVELS_KEY = 'verbs-practice-levels';
+const GROUPS_KEY = 'verbs-practice-groups';
+
 export default {
   components: {
     MainHeader,
     SessionHistory,
+    FilterMenu,
   },
   setup() {
     return {};
@@ -35,9 +46,10 @@ export default {
 
       verbs: verbsData,
       verbForms: VERB_FORMS,
-      verbLevels: ['N5', 'N4', 'N3', 'N2', 'N1'],
-      selectedLevels: ['N5', 'N4'],
-      selectedGroups: [1, 2, 3],
+      levelOptions: LEVELS.map(level => ({ key: level, label: level })),
+      groupOptions: GROUPS,
+      selectedLevels: loadSelection(LEVELS_KEY, ['N5', 'N4']).filter(l => LEVELS.includes(l)),
+      selectedGroups: loadSelection(GROUPS_KEY, [1, 2, 3]).filter(g => GROUPS.some(o => o.key === g)),
       targetVerb: null,
       targetForm: '',
       verbAnswer: '',
@@ -83,16 +95,14 @@ export default {
       localStorage.setItem('verbs-practice-input-mode', value);
       this.newVerbTarget();
     },
-    toggleLevel(level) {
-      this.selectedLevels = this.selectedLevels.includes(level)
-        ? this.selectedLevels.filter(l => l !== level)
-        : [...this.selectedLevels, level];
+    setLevels(levels) {
+      this.selectedLevels = levels;
+      saveSelection(LEVELS_KEY, levels);
       this.refreshVerbTargetIfNeeded();
     },
-    toggleGroup(group) {
-      this.selectedGroups = this.selectedGroups.includes(group)
-        ? this.selectedGroups.filter(g => g !== group)
-        : [...this.selectedGroups, group];
+    setGroups(groups) {
+      this.selectedGroups = groups;
+      saveSelection(GROUPS_KEY, groups);
       this.refreshVerbTargetIfNeeded();
     },
     refreshVerbTargetIfNeeded() {

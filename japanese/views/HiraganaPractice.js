@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
+import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 
 import template from 'templates/HiraganaPractice.js';
 
@@ -20,11 +21,15 @@ import {
 const HISTORY_LIMIT = 50;
 const WORD_CORRECT_DELAY = 700; // ms before moving to the next word
 
+const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
+const LEVELS_KEY = 'hiragana-practice-levels';
+
 export default {
   components: {
     MainHeader,
     SessionHistory,
     WordCorner,
+    FilterMenu,
   },
   setup() {
     const capture = ref(null);
@@ -57,6 +62,8 @@ export default {
       wordLocked: false, // correct answer shown, waiting for the next word
       wordTimer: null,
       wordProgressVersion: 0, // bumped after each save so the memory bar/stats refresh
+      levelOptions: LEVELS.map(level => ({ key: level, label: level })),
+      selectedLevels: loadSelection(LEVELS_KEY, LEVELS).filter(l => LEVELS.includes(l)),
     }
   },
   computed: {
@@ -72,13 +79,18 @@ export default {
     },
     wordStats() {
       this.wordProgressVersion;
-      return getStats('words-hiragana', this.words.map(({ word }) => word));
+      return getStats('words-hiragana', this.filteredWords.map(({ word }) => word));
     },
     // Long words would overflow the card at the default size
     wordPromptStyle() {
       const length = this.targetWord ? [...this.targetWord.word].length : 0;
       const size = length > 7 ? 32 : length > 5 ? 40 : length > 3 ? 52 : 64;
       return { fontSize: size + 'px' };
+    },
+    // with every level selected nothing is filtered, so words without a level still show up
+    filteredWords() {
+      if (this.selectedLevels.length === LEVELS.length) return this.words;
+      return this.words.filter(({ level }) => this.selectedLevels.includes(level));
     },
   },
   methods: {
@@ -161,9 +173,9 @@ export default {
 
       // avoid showing the same word twice in a row when there are other options
       const previous = this.targetWord?.word;
-      const pool = this.words.length > 1
-        ? this.words.filter(({ word }) => word !== previous)
-        : this.words;
+      const pool = this.filteredWords.length > 1
+        ? this.filteredWords.filter(({ word }) => word !== previous)
+        : this.filteredWords;
 
       const word = weightedPick('words-hiragana', pool, item => item.word);
 
@@ -268,6 +280,13 @@ export default {
     },
     onDocumentClick() {
       this.focusInput();
+    },
+    setLevels(levels) {
+      this.selectedLevels = levels;
+      saveSelection(LEVELS_KEY, levels);
+      if (!this.targetWord || !this.filteredWords.includes(this.targetWord)) {
+        this.newWordTarget();
+      }
     },
   },
   mounted() {

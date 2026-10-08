@@ -1,5 +1,6 @@
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
+import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import template from 'templates/AdjectivesPractice.js';
 
 import adjectivesData from 'data/adjectives.js';
@@ -18,10 +19,19 @@ import { shuffle } from 'tools';
 
 const HISTORY_LIMIT = 50;
 
+const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
+const TYPES = [
+  { key: 'i', label: 'い-adjectives' },
+  { key: 'na', label: 'な-adjectives' },
+];
+const LEVELS_KEY = 'adjectives-practice-levels';
+const TYPES_KEY = 'adjectives-practice-types';
+
 export default {
   components: {
     MainHeader,
     SessionHistory,
+    FilterMenu,
   },
   data() {
     const inputMode = localStorage.getItem('adjectives-practice-input-mode') || 'choice';
@@ -32,13 +42,10 @@ export default {
       sessionHistory: [],
 
       adjectives: adjectivesData,
-      adjLevels: ['N5', 'N4', 'N3', 'N2', 'N1'],
-      adjTypes: [
-        { key: 'i', label: 'い-adjectives' },
-        { key: 'na', label: 'な-adjectives' },
-      ],
-      selectedLevels: ['N5', 'N4'],
-      selectedTypes: ['i', 'na'],
+      levelOptions: LEVELS.map(level => ({ key: level, label: level })),
+      adjTypes: TYPES,
+      selectedLevels: loadSelection(LEVELS_KEY, ['N5', 'N4']).filter(l => LEVELS.includes(l)),
+      selectedTypes: loadSelection(TYPES_KEY, ['i', 'na']).filter(t => TYPES.some(o => o.key === t)),
 
       targetAdj: null,
       choiceOptions: [],
@@ -84,16 +91,14 @@ export default {
       localStorage.setItem('adjectives-practice-input-mode', value);
       this.newTarget();
     },
-    toggleLevel(level) {
-      this.selectedLevels = this.selectedLevels.includes(level)
-        ? this.selectedLevels.filter(l => l !== level)
-        : [...this.selectedLevels, level];
+    setLevels(levels) {
+      this.selectedLevels = levels;
+      saveSelection(LEVELS_KEY, levels);
       this.refreshTargetIfNeeded();
     },
-    toggleType(type) {
-      this.selectedTypes = this.selectedTypes.includes(type)
-        ? this.selectedTypes.filter(t => t !== type)
-        : [...this.selectedTypes, type];
+    setTypes(types) {
+      this.selectedTypes = types;
+      saveSelection(TYPES_KEY, types);
       this.refreshTargetIfNeeded();
     },
     refreshTargetIfNeeded() {

@@ -6,6 +6,13 @@ export default /*html*/`
     >
       <div class="keyboard-toolbar-buttons">
         <div class="toolbar-group">
+          <FilterMenu
+            label="JLPT"
+            title="JLPT levels"
+            :options="levelOptions"
+            :modelValue="selectedLevels"
+            @update:modelValue="setLevels"
+          />
           <div class="icon-button check-icon" title="Options mode (meaning)" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
           <div class="icon-button keyboard-icon" title="Type mode (reading)" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
         </div>
