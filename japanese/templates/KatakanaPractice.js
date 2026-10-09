@@ -5,6 +5,17 @@ export default /*html*/`
       hideFurigana="true"
       hideZoom="true"
     >
+      <div class="keyboard-toolbar-buttons">
+        <div class="toolbar-group">
+          <FilterMenu
+            label="JLPT"
+            title="JLPT levels"
+            :options="levelOptions"
+            :modelValue="selectedLevels"
+            @update:modelValue="setLevels"
+          />
+        </div>
+      </div>
     </MainHeader>
 
     <main>

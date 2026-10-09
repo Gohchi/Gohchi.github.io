@@ -3,6 +3,20 @@ export default /*html*/`
     <MainHeader title="ADJECTIVE PRACTICE" hideZoom="true">
       <div class="keyboard-toolbar-buttons">
         <div class="toolbar-group">
+          <FilterMenu
+            label="JLPT"
+            title="JLPT levels"
+            :options="levelOptions"
+            :modelValue="selectedLevels"
+            @update:modelValue="setLevels"
+          />
+          <FilterMenu
+            label="Type"
+            title="Adjective types"
+            :options="adjTypes"
+            :modelValue="selectedTypes"
+            @update:modelValue="setTypes"
+          />
           <div class="icon-button keyboard-icon" title="Type mode" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
           <div class="icon-button check-icon" title="Options mode" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
         </div>
@@ -11,25 +25,6 @@ export default /*html*/`
 
     <main>
       <div class="card verb-card">
-        <div class="verb-filters">
-          <div class="filter-group">
-            <span>JLPT:</span>
-            <button
-              v-for="level in adjLevels" :key="level"
-              :class="{ active: selectedLevels.includes(level) }"
-              @click="toggleLevel(level)"
-            >{{ level }}</button>
-          </div>
-          <div class="filter-group">
-            <span>Type:</span>
-            <button
-              v-for="option in adjTypes" :key="option.key"
-              :class="{ active: selectedTypes.includes(option.key) }"
-              @click="toggleType(option.key)"
-            >{{ option.label }}</button>
-          </div>
-        </div>
-
         <template v-if="targetAdj">
           <div class="verb-target-label">
             {{ typeLabel }} · {{ targetAdj.level }}<template v-if="targetAdj.tags?.length"> · {{ targetAdj.tags.join(', ') }}</template>

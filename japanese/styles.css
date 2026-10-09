@@ -2455,6 +2455,120 @@ body header > .title {
   }
 }
 
+/* Header filter menus (JLPT level, type, group...) */
+.filter-menu {
+  position: relative;
+  display: inline-block;
+
+  .filter-popover {
+    position: absolute;
+    top: calc(100% + .4rem);
+    left: 0;
+    min-width: 12rem;
+    z-index: 1001;
+    padding: .5rem;
+    border-radius: 10px;
+    border: 1px solid light-dark(#d0d0d0, #303030);
+    background: light-dark(#ffffff, #1c1c1c);
+    color: light-dark(#1d1b20, #e6e0e9);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+  }
+
+  .filter-popover-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .75rem;
+    margin-bottom: .25rem;
+  }
+
+  .filter-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .45rem .6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: .9rem;
+    white-space: nowrap;
+    user-select: none;
+
+    input {
+      width: 1.05rem;
+      height: 1.05rem;
+      cursor: pointer;
+      accent-color: var(--color-salmon);
+    }
+
+    &:hover {
+      background: light-dark(#f0f0f0, #303030);
+    }
+
+    &.on {
+      font-weight: 700;
+    }
+  }
+}
+
+/* higher specificity to beat the generic ".keyboard-toolbar-buttons button" look */
+.keyboard-toolbar-buttons .filter-menu .filter-button {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  height: 32px;
+  padding: 0 .75rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: light-dark(#ffffffaa, #ffffff22);
+  color: inherit;
+  box-shadow: none;
+  transform: none;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    filter: drop-shadow(1px 3px 2px black);
+  }
+
+  &.open {
+    border-color: var(--color-salmon);
+  }
+
+  .filter-count {
+    font-size: .7rem;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--color-salmon);
+    color: white;
+  }
+}
+
+.keyboard-toolbar-buttons .filter-menu .filter-link {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  transform: none;
+  color: var(--color-salmon);
+  font-size: .75rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 @media (max-width: 700px) {
   .print-button {
     width: 100%;
@@ -2484,6 +2598,13 @@ body header > .title {
   
   .profile main {
     margin-top: 4.5rem;
+  }
+  
+  .filter-menu .filter-popover {
+    position: fixed;
+    top: 3.4rem;
+    left: .5rem;
+    right: .5rem;
   }
 }
 
