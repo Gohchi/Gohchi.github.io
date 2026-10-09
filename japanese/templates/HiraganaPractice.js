@@ -1,5 +1,5 @@
 export default /*html*/`
-  <div class="kana-keyboard">
+  <div class="hiragana-practice practice-sections">
     <MainHeader
       title="HIRAGANA PRACTICE"
       hideFurigana="true"
@@ -19,7 +19,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card verb-card kanji-card">
+      <div class="card kanji-card">
         <template v-if="targetWord">
           <WordCorner :word="targetWord.word" :level="targetWord.level" />
 

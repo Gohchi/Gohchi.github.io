@@ -1,5 +1,5 @@
 export default /*html*/`
-  <div class="kana-keyboard">
+  <div class="kanji-practice practice-sections">
     <MainHeader
       title="KANJI PRACTICE"
       hideZoom="true"
@@ -20,7 +20,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card verb-card kanji-card">
+      <div class="card kanji-card">
         <template v-if="targetWord">
           <WordCorner :word="targetWord.word" :level="targetWord.level" />
 

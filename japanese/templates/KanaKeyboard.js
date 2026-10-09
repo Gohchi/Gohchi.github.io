@@ -1,5 +1,5 @@
 export default /*html*/`
-  <div class="kana-keyboard">
+  <div class="kana-keyboard practice-sections">
     <MainHeader
       title="KANA PRACTICE"
       hideFurigana="true"

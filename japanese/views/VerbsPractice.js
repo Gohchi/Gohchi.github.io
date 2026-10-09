@@ -1,5 +1,6 @@
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
+import WordCorner from 'components/WordCorner.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import template from 'templates/VerbsPractice.js';
 
@@ -32,6 +33,7 @@ export default {
     MainHeader,
     SessionHistory,
     FilterMenu,
+    WordCorner,
   },
   setup() {
     return {};
