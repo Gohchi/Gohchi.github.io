@@ -22,7 +22,12 @@ const HISTORY_LIMIT = 50;
 const WORD_CORRECT_DELAY = 700; // ms before moving to the next word
 
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
-const LEVELS_KEY = 'kanji-practice-levels'; // 'hiragana-practice-levels' / 'katakana-practice-levels'
+const LEVELS_KEY = 'katakana-practice-levels';
+const INPUT_MODE_KEY = 'katakana-practice-input-mode';
+
+// Progress is stored per mode, so "meaning" progress never mixes with typing progress
+const CATEGORY_TYPE = 'words-katakana';
+const CATEGORY_MEANING = 'words-katakana-meaning';
 
 export default {
   components: {
@@ -36,7 +41,10 @@ export default {
     return { capture };
   },
   data() {
+    const inputMode = localStorage.getItem(INPUT_MODE_KEY) || 'type';
+
     return {
+      inputMode, // 'type' (write the reading) | 'choice' (pick the meaning)
       MAX_MEMORY,
       sessionHistory: [],
 
@@ -53,12 +61,14 @@ export default {
       // words practice
       words: wordsData.filter(({ type }) => type === 'katakana'),
       targetWord: null,
+      wordOptions: [], // meanings shown in choice mode
+      wrongOptions: [], // meanings already tried wrong for the current word
       wordInputValue: "",
       wordStatus: "",
       wordStatusClass: "status",
       wordScore: 0,
       wordStreak: 0,
-      wordRevealed: false, // answer was revealed, Enter goes to the next word
+      wordRevealed: false, // answer was revealed, Enter / Skip goes to the next word
       wordLocked: false, // correct answer shown, waiting for the next word
       wordTimer: null,
       wordProgressVersion: 0, // bumped after each save so the memory bar/stats refresh
@@ -67,6 +77,9 @@ export default {
     }
   },
   computed: {
+    category() {
+      return this.inputMode === 'choice' ? CATEGORY_MEANING : CATEGORY_TYPE;
+    },
     kanaMemory() {
       return this.target ? getEntry('kana-katakana', this.target).memory : 0;
     },
@@ -75,11 +88,11 @@ export default {
     },
     wordMemory() {
       this.wordProgressVersion; // reactive dependency, progress lives in localStorage
-      return this.targetWord ? getEntry('words-katakana', this.targetWord.word).memory : 0;
+      return this.targetWord ? getEntry(this.category, this.targetWord.word).memory : 0;
     },
     wordStats() {
       this.wordProgressVersion;
-      return getStats('words-katakana', this.filteredWords.map(({ word }) => word));
+      return getStats(this.category, this.filteredWords.map(({ word }) => word));
     },
     // Long words would overflow the card at the default size
     wordPromptStyle() {
@@ -99,6 +112,11 @@ export default {
       if (this.sessionHistory.length > HISTORY_LIMIT) {
         this.sessionHistory.length = HISTORY_LIMIT;
       }
+    },
+    setInputMode(value) {
+      this.inputMode = value;
+      localStorage.setItem(INPUT_MODE_KEY, value);
+      this.newWordTarget();
     },
     startPractice() {
       this.clearWordTimer();
@@ -171,6 +189,17 @@ export default {
       clearTimeout(this.wordTimer);
       this.wordTimer = null;
     },
+    buildMeaningOptions(target) {
+      // Distractors come from the other katakana words' meanings (same script, so
+      // nothing gives the answer away), taken from the whole list rather than the
+      // current JLPT filter so there are always enough of them.
+      const pool = [...new Set(
+        this.words
+          .filter(({ word, meaning }) => word !== target.word && meaning !== target.meaning)
+          .map(({ meaning }) => meaning)
+      )];
+      return shuffle([target.meaning, ...shuffle(pool).slice(0, 3)]);
+    },
     newWordTarget() {
       this.clearWordTimer();
 
@@ -180,9 +209,11 @@ export default {
         ? this.filteredWords.filter(({ word }) => word !== previous)
         : this.filteredWords;
 
-      const word = weightedPick('words-katakana', pool, item => item.word);
+      const word = weightedPick(this.category, pool, item => item.word);
 
       this.wordInputValue = '';
+      this.wordOptions = [];
+      this.wrongOptions = [];
       this.wordRevealed = false;
       this.wordLocked = false;
 
@@ -194,7 +225,13 @@ export default {
       }
 
       this.targetWord = word;
-      this.wordStatus = 'Type the answer and press Enter.';
+
+      if (this.inputMode === 'choice') {
+        this.wordOptions = this.buildMeaningOptions(word);
+        this.wordStatus = 'Pick the meaning of this word.';
+      } else {
+        this.wordStatus = 'Type the answer and press Enter.';
+      }
       this.wordStatusClass = 'status';
       this.$nextTick(() => this.focusInput());
     },
@@ -218,7 +255,7 @@ export default {
       const { word, reading, meaning } = this.targetWord;
       const correct = normalizeReading(value) === normalizeReading(reading);
 
-      recordAnswer('words-katakana', word, correct);
+      recordAnswer(CATEGORY_TYPE, word, correct);
       this.wordProgressVersion++;
 
       this.pushHistory({
@@ -244,34 +281,72 @@ export default {
         this.$nextTick(() => this.$refs.wordInput && this.$refs.wordInput.select());
       }
     },
+    chooseMeaning(option) {
+      if (!this.targetWord || this.wordLocked || this.wordRevealed) return;
+      if (this.wrongOptions.includes(option)) return;
+
+      const { word, reading, meaning } = this.targetWord;
+      const correct = option === meaning;
+
+      recordAnswer(CATEGORY_MEANING, word, correct);
+      this.wordProgressVersion++;
+
+      this.pushHistory({
+        type: 'word',
+        prompt: word,
+        detail: 'meaning',
+        chosen: option,
+        correctAnswer: meaning,
+        isCorrect: correct,
+      });
+
+      if (correct) {
+        this.wordScore++;
+        this.wordStreak++;
+        this.wordStatus = `Correct! ${meaning} (${reading})`;
+        this.wordStatusClass = 'status ok';
+        this.wordLocked = true;
+        this.wordTimer = setTimeout(() => this.newWordTarget(), WORD_CORRECT_DELAY);
+      } else {
+        this.wordStreak = 0;
+        this.wrongOptions.push(option);
+        this.wordStatus = 'Not quite, try another one.';
+        this.wordStatusClass = 'status bad';
+      }
+    },
     revealWordAnswer() {
       if (!this.targetWord || this.wordLocked) return;
 
+      const { word, reading, meaning } = this.targetWord;
+      const isChoice = this.inputMode === 'choice';
+
       // giving up counts as a miss, once per word
       if (!this.wordRevealed) {
-        const { word, reading, meaning } = this.targetWord;
-        recordAnswer('words-katakana', word, false);
+        recordAnswer(this.category, word, false);
         this.wordProgressVersion++;
         this.wordStreak = 0;
         this.pushHistory({
           type: 'word',
           prompt: word,
-          detail: meaning,
+          detail: isChoice ? 'meaning' : meaning,
           chosen: '(revealed)',
-          correctAnswer: reading,
+          correctAnswer: isChoice ? meaning : reading,
           isCorrect: false,
         });
       }
 
       this.wordRevealed = true;
-      this.wordStatus = `Answer: ${this.targetWord.reading}. Press Enter for the next word.`;
+      this.wordStatus = isChoice
+        ? `Answer: ${meaning} (${reading}). Press Skip for the next word.`
+        : `Answer: ${reading}. Press Enter for the next word.`;
       this.wordStatusClass = 'status';
       this.focusInput();
     },
     resetWordScore() {
       this.wordScore = 0;
       this.wordStreak = 0;
-      resetProgress('words-katakana');
+      // only the current mode's progress is reset
+      resetProgress(this.category);
       this.wordProgressVersion++;
       this.wordStatus = 'Score and memory reset.';
       this.wordStatusClass = 'status';
