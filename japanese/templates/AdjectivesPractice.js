@@ -1,5 +1,5 @@
 export default /*html*/`
-  <div class="kana-keyboard">
+  <div class="adjectives-practice practice-sections">
     <MainHeader title="ADJECTIVE PRACTICE" hideZoom="true">
       <div class="keyboard-toolbar-buttons">
         <div class="toolbar-group">
@@ -24,17 +24,19 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card verb-card">
+      <div class="card">
         <template v-if="targetAdj">
-          <div class="verb-target-label">
-            {{ typeLabel }} · {{ targetAdj.level }}<template v-if="targetAdj.tags?.length"> · {{ targetAdj.tags.join(', ') }}</template>
-          </div>
+          <WordCorner :word="targetAdj.dictionary" :level="targetAdj.level" />
 
           <div class="prompt verb-prompt">
             <template v-if="furiganaStore.showFurigana">
               <ruby>{{ targetAdj.dictionary }}<rp>(</rp><rt>{{ targetAdj.reading }}</rt><rp>)</rp></ruby>
             </template>
             <template v-else>{{ targetAdj.dictionary }}</template>
+          </div>
+
+          <div class="verb-target-label">
+            {{ typeLabel }} · {{ targetAdj.level }}<template v-if="targetAdj.tags?.length"> · {{ targetAdj.tags.join(', ') }}</template>
           </div>
 
           <div class="memory-bar" :title="'Memory: ' + adjMemory + '/' + MAX_MEMORY">

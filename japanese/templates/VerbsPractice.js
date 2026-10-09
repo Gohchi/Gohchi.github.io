@@ -1,5 +1,5 @@
 export default /*html*/`
-  <div class="kana-keyboard">
+  <div class="verbs-practice practice-sections">
     <MainHeader
       title="VERB PRACTICE"
       hideFurigana="true"
@@ -28,8 +28,10 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card verb-card">
+      <div class="card">
         <template v-if="targetVerb">
+          <WordCorner :word="targetVerb.dictionary" :level="targetVerb.level" />
+
           <div class="verb-meaning">{{ targetVerb.meaning }}</div>
           <div class="prompt verb-prompt">
             <ruby>{{ targetVerb.dictionary }}<rp>(</rp><rt>{{ targetVerb.reading }}</rt><rp>)</rp></ruby>

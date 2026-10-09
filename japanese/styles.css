@@ -973,7 +973,15 @@ body {
   }
 }
 
-.kana-keyboard {
+.verbs-practice, .adjectives-practice {
+  main {
+    & > .card {
+      position: relative;
+    }
+  }
+}
+
+.practice-sections {
 
   h1 {
     text-align: center;
@@ -1584,6 +1592,7 @@ body {
   .toolbar-group {
     display: flex;
     gap: 6px;
+    align-items: center;
   }
 
   button {
