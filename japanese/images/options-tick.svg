@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg
+  width="800px" height="800px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+> 
+  <defs>
+    <style>
+      path {
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke: black;
+        fill: none;
+      }
+      .salmon {
+        stroke: #EF4D4D;
+      }
+      .seaweed {
+        stroke: black;
+      }
+      .rice {
+        stroke: #EAEAEA;
+      }
+      .chopsticks {
+        stroke: #EACA44;
+      }
+    </style>
+  </defs>
+  <path class="salmon" d="M 14 6 L 6 6 L 6 14 L 14 14" />
+  <path class="chopsticks" d="M 13 4 L 4 4 L 4 13" />
+  <path class="seaweed" d="M 12 2 L 2 2 L 2 12 " />
+  <path class="rice" d="M 14 8 L 10 12 L 8 10" />
+</svg>

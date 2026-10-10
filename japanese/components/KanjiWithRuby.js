@@ -1,45 +1,79 @@
 import { toRefs } from 'vue';
 
-import { closeDialog, showDialog } from 'tools';
+import { closeDialog, showDialog, alignFurigana } from 'tools';
 
 import { ruby } from 'data/kanji.js';
+
+import {
+  zoomStore,
+} from 'store';
 
 export default {
   props: {
     text: String,
+    zoom: Boolean,
+    entry: Object, // optional: dictionary entry chosen by the tokenizer (words.js or kanji.js)
   },
   setup(props) {
-
-    const { text } = toRefs(props);
+    const { text, zoom } = toRefs(props);
 
     return {
       "text": text,
       "ruby": ruby,
+      "zoom": zoom,
     };
   },
   computed: {
+    zoomLevel() {
+      if (this.zoom) {
+        return zoomStore.getZoomLevel();
+      }
+    },
     dialogId() {
       return this.text.split('').reduce((res, value) => res + value.charCodeAt(0), '');
     },
     info() {
-      return this.ruby[this.text];
+      return this.entry || this.ruby[this.text];
     },
     furigana() {
       return this.info.furigana;
     },
+    // [{ text, rt? }]: the reading only goes over the kanji (お父さん -> お + 父(とう) + さん)
+    parts() {
+      return alignFurigana(this.text, this.furigana, this.info.parts);
+    },
     eng() {
       return this.info.eng;
-    }
+    },
+    JLPT_level() {
+      return this.info.JLPT_level;
+    },
+    jishoUrl() {
+      return this.text ? 'https://jisho.org/search/' + encodeURIComponent(this.text) : '';
+    },
   },
   methods: {
     showDialog,
     closeDialog,
   },
   template: /*html*/`
-    <ruby class="open-dialog"
-      @click="showDialog(dialogId)"
-    >{{ text }}<rp>(</rp><rt>{{ furigana }}</rt><rp>)</rp></ruby>
-    <dialog :id="dialogId" @click="closeDialog(dialogId)">
+    <span class="open-dialog" @click="showDialog(dialogId)">
+      <template v-for="(part, index) in parts" :key="index">
+        <ruby v-if="part.rt">{{ part.text }}<rp>(</rp><rt>{{ part.rt }}</rt><rp>)</rp></ruby>
+        <template v-else>{{ part.text }}</template>
+      </template>
+    </span>
+    <dialog :style="zoomLevel" class="kanji-dialog" :id="dialogId" @click="closeDialog(dialogId)">
+      <div v-if="JLPT_level" class="JLPT-level" :class="{ ['level-'+JLPT_level]: true }">JLPT {{ JLPT_level }}</div>
+      <a
+        v-if="jishoUrl"
+        class="jisho-link"
+        :href="jishoUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Look it up on Jisho"
+        @click.stop
+      >Jisho ↗</a>
       <div class="kanji-furigana">{{ furigana }}</div>
       <div class="kanji-details">{{ text }}</div>
       <ul class="kanji-meaning">

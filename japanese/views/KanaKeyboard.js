@@ -1,62 +1,127 @@
 import { ref } from 'vue';
 import MainHeader from 'components/MainHeader.js';
+import SessionHistory from 'components/SessionHistory.js';
+import WordCorner from 'components/WordCorner.js';
 
+import template from 'templates/KanaKeyboard.js';
+
+import { hiragana, katakana, kanaMap } from 'data/kana-romaji.js';
+import { shuffle } from 'tools';
+import {
+  MAX_MEMORY,
+  getEntry,
+  recordAnswer,
+  getStats,
+  resetProgress,
+  weightedPick,
+} from 'data/progress.js';
+
+const HISTORY_LIMIT = 50;
 
 export default {
   components: {
     MainHeader,
+    SessionHistory,
+    WordCorner,
   },
   setup() {
     const capture = ref(null);
-
     return { capture };
   },
   data() {
+    const inputMode = localStorage.getItem('kana-practice-input-mode') || 'type';
+    const kanaMode = localStorage.getItem('kana-practice-kana-mode') || 'hiragana';
+
     return {
-      showMenu: false,
-      furigana: true,
-      KANA: [
-        "あ","い","う","え","お",
-        "か","き","く","け","こ",
-        "さ","し","す","せ","そ",
-        "た","ち","つ","て","と",
-        "な","に","ぬ","ね","の",
-        "は","ひ","ふ","へ","ほ",
-        "ま","み","む","め","も",
-        "や","ゆ","よ",
-        "ら","り","る","れ","ろ",
-        "わ","を","ん"
-      ],
+      inputMode, // 'type' | 'choice'
+      kanaMode, // 'hiragana' | 'katakana'
+      MAX_MEMORY,
+      sessionHistory: [],
+
+      KANA: Object.keys(kanaMode === 'hiragana' ? hiragana : katakana),
       target: "",
+      kanaOptions: [],
       score: 0,
       streak: 0,
       last: "-",
       status: "Click anywhere and start typing.",
       statusClass: "status",
-      inputValue: ""
+      inputValue: "",
     }
   },
+  computed: {
+    // hiragana-practice and katakana-practice share these same categories,
+    // so progress carries over regardless of which page you drill from.
+    category() {
+      return this.kanaMode === 'hiragana' ? 'kana-hiragana' : 'kana-katakana';
+    },
+    kanaMemory() {
+      return this.target ? getEntry(this.category, this.target).memory : 0;
+    },
+    kanaStats() {
+      return getStats(this.category, this.KANA);
+    },
+    kanaRomaji() {
+      return this.kanaMode === 'hiragana' ? hiragana : katakana;
+    },
+  },
   methods: {
-    randomKana() {
-      return this.KANA[Math.floor(Math.random() * this.KANA.length)];
+    switchKanaMode() {
+      this.kanaMode = this.kanaMode === 'hiragana' ? 'katakana' : 'hiragana';
+      localStorage.setItem('kana-practice-kana-mode', this.kanaMode);
+      this.KANA = Object.keys(this.kanaMode === 'hiragana' ? hiragana : katakana);
+      this.newTarget();
+    },
+    setInputMode(value) {
+      this.inputMode = value;
+      localStorage.setItem('kana-practice-input-mode', value);
+    },
+    pushHistory(entry) {
+      this.sessionHistory.unshift({ ...entry, id: Date.now() + '-' + Math.random() });
+      if (this.sessionHistory.length > HISTORY_LIMIT) {
+        this.sessionHistory.length = HISTORY_LIMIT;
+      }
+    },
+    buildKanaOptions(correctKana) {
+      const wrongPool = this.KANA.filter(k => k !== correctKana);
+      const wrongs = shuffle(wrongPool).slice(0, 3);
+      return shuffle([correctKana, ...wrongs]).map(k => ({ kana: k, romaji: this.kanaRomaji[k] }));
     },
     newTarget() {
-      this.target = this.randomKana();
-      this.status = "Type the kana shown above.";
+      this.target = weightedPick(this.category, this.KANA, k => k);
+      this.kanaOptions = this.buildKanaOptions(this.target);
+      this.status = this.inputMode === 'type'
+        ? "Type the kana shown above."
+        : "Pick the reading that matches.";
       this.statusClass = "status";
       this.inputValue = "";
-      this.$nextTick(() => this.focusInput());
+      if (this.inputMode === 'type') {
+        this.$nextTick(() => this.focusInput());
+      }
     },
     resetScore() {
       this.score = 0;
       this.streak = 0;
-      this.status = "Score reset.";
+      resetProgress(this.category);
+      this.status = "Score and memory reset.";
       this.statusClass = "status";
       this.$nextTick(() => this.focusInput());
     },
-    handleKana(kana) {
-      this.last = kana;
-      if (kana === this.target) {
+    handleKana(candidate) {
+      this.last = candidate;
+      const correct = candidate === this.target;
+      recordAnswer(this.category, this.target, correct);
+
+      this.pushHistory({
+        type: 'kana',
+        prompt: this.target,
+        detail: '',
+        chosen: candidate,
+        correctAnswer: this.target,
+        isCorrect: correct,
+      });
+
+      if (correct) {
         this.score++;
         this.streak++;
         this.status = "Correct!";
@@ -64,59 +129,39 @@ export default {
         this.newTarget();
       } else {
         this.streak = 0;
-        this.status = `Wrong: "${kana}"`;
+        this.status = `Wrong: "${candidate}"`;
         this.statusClass = "status bad";
       }
     },
     onInput(e) {
       const { data } = e;
       if (!data) return;
-      const kana = [...data].at(-1);
-      this.handleKana(kana);
+      // typing is usually done through a romaji->hiragana IME, so the raw
+      // character needs converting to its katakana counterpart to compare
+      const raw = [...data].at(-1);
+      const candidate = this.kanaMode === 'katakana' ? (kanaMap[raw] || raw) : raw;
+      this.handleKana(candidate);
       this.inputValue = data;
       e.target.value = '';
     },
+    chooseKanaOption(option) {
+      this.handleKana(option.kana);
+    },
     focusInput() {
-      this.$refs.capture.focus();
-    }
+      if (this.inputMode === 'type') {
+        this.$refs.capture && this.$refs.capture.focus();
+      }
+    },
+    onDocumentClick() {
+      if (this.inputMode === 'type') this.focusInput();
+    },
   },
   mounted() {
     this.newTarget();
-    document.addEventListener("click", () => this.focusInput());
+    document.addEventListener("click", this.onDocumentClick);
   },
-  template: /*html*/`
-    <div class="kana-keyboard">
-      <main-header
-        title="KANA KEYBOARD"
-        hideFurigana="true"
-        hideZoom="true"
-      >
-      </main-header>
-
-      <main>
-        <div class="card">
-          <div style="text-align:center">Type this kana:</div>
-          <div id="prompt" class="prompt">{{ target }}</div>
-
-          <div id="status" :class="statusClass">{{ status }}</div>
-
-          <div class="row">
-            <button @click="newTarget">Next</button>
-            <button @click="resetScore">Reset</button>
-            <button @click="focusInput">Focus</button>
-          </div>
-
-          <div class="stats">
-            <div>Score: <span id="score">{{ score }}</span></div>
-            <div>Streak: <span id="streak">{{ streak }}</span></div>
-            <div>Last: <span id="last">{{ last }}</span></div>
-          </div>
-        </div>
-
-        <!-- Hidden input for IME-safe capture -->
-        <input ref="capture" autocomplete="off" v-model="inputValue" @input="onInput" id="capture" />
-      </main>
-    </div>
-  `
+  beforeUnmount() {
+    document.removeEventListener("click", this.onDocumentClick);
+  },
+  template
 }
-

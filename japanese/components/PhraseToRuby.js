@@ -1,39 +1,55 @@
 import { toRefs } from 'vue';
 
-import { extractKanji, splitByKanji } from 'tools';
+import { tokenize } from 'tools';
 
 import { ruby } from 'data/kanji.js';
+import { words } from 'data/words.js';
 
 import KanjiWithRuby from './KanjiWithRuby.js';
+
+import {
+  furiganaStore
+} from 'store';
 
 export default {
   props: {
     text: String,
     furigana: Boolean,
+    zoom: Boolean,
   },
   setup(props) {
-    const { text } = toRefs(props);
-    
+    const { text, zoom } = toRefs(props);
+
     return {
       "text": text,
-      "ruby": ruby,
+      "zoom": zoom,
+    };
+  },
+  data() {
+    return {
+      furiganaStore,
     };
   },
   components: {
     KanjiWithRuby,
   },
-  methods: {
-    extractKanji,
-    splitByKanji,
+  computed: {
+    // [{ surface, entry? }] - `entry` is set when the token has furigana
+    tokens() {
+      return tokenize(this.text, { ruby, words });
+    },
   },
   template: /*html*/`
-    <template v-for="(group, index) in splitByKanji(text, extractKanji(text))" :key="index">
-      <template v-if="furigana && !!ruby[group]">
-        <kanji-with-ruby :key="index" :text="group"></kanji-with-ruby>
+    <span>
+      <template v-for="(token, index) in tokens" :key="index">
+        <KanjiWithRuby
+          v-if="furiganaStore.showFurigana && token.entry"
+          :zoom="zoom"
+          :text="token.surface"
+          :entry="token.entry"
+        ></KanjiWithRuby>
+        <span v-else>{{ token.surface }}</span>
       </template>
-      <template v-else>
-        <span>{{ group }}</span>
-      </template>
-    </template>
+    </span>
   `,
 }

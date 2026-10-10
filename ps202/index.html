@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5.0, minimum-scale=1, user-scalable=yes"/>
     <meta charset="UTF-8">
 
-		<title>日本語 メモ</title>
+		<title>Gamelist editor</title>
 		<link rel="stylesheet" href="styles.css">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,36 +22,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
     
     <meta name="mobile-web-app-capable" content="yes">
-
-    <meta property="og:url" content="https://www.fromprototype.com/japanese/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="日本語 メモ | Japanese notes" />
-    <meta property="og:description" content="Learn Japanese with comprehensive notes, resources, and study materials. Perfect for language learners of all levels." />
-    <meta property="og:image" content="https://www.fromprototype.com/japanese/images/sushi.png" />
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="fromprototype.com">
-    <meta property="twitter:url" content="https://www.fromprototype.com/japanese/">
-    <meta name="twitter:title" content="日本語 メモ | Japanese notes">
-    <meta name="twitter:description" content="Learn Japanese with comprehensive notes, resources, and study materials. Perfect for language learners of all levels.">
-    <meta name="twitter:image" content="https://www.fromprototype.com/japanese/images/sushi.png">
-
+  
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="apple-touch-icon" href="favicon.ico">
-    <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#ffffff">
-    
     <script defer src="../common.js"></script>
-    <script defer charset="utf-8" src="register.js"></script>
+    <!-- <link rel="manifest" href="manifest.webmanifest"> -->
+    <!-- <script defer charset="utf-8" src="register.js"></script> -->
     <script type="importmap">
       {
         "imports": {
           "vue": "/cdn/vue.esm-browser.prod.js",
           "vue-router": "/cdn/vue-router.esm-browser.prod.js",
           "components/": "./components/",
-          "templates/": "./templates/",
           "views/": "./views/",
+          "templates/": "./templates/",
           "data/": "./data/",
-          "store": "./store.js",
           "tools": "./tools.js"
         } 
       }
@@ -61,8 +47,9 @@
 	<body id="app" class="index">
     <div id="loading">
       <p>Please wait...</p>
-      <p>お<ruby>待<rp>(</rp><rt>ま</rt><rp>)</rp></ruby>ちください…</p>
-      <div class="spinner"></div>
+      <div class="spinner-container">
+        <div class="spinner"></div>
+      </div>
     </div>
 
     <div class="main hidden">
