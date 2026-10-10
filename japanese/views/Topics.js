@@ -63,7 +63,19 @@ export default {
         if (this.subtitleFilters) {
           const subtitleFilters = this.subtitleFilters.split(' ').map(f => f.toLowerCase());
           subtitleFilter = item.subtitle
-            ?.split(' ').some(word => subtitleFilters.some(filter => word.toLowerCase().includes(filter))) ?? false;
+            ?.split(' ').some(word => subtitleFilters.some(filter => word.toLowerCase().includes(filter)))
+            ?? false;
+
+          if (!subtitleFilter) {
+            if (typeof item?.content === 'string') {
+              subtitleFilter = item?.content.includes(subtitleFilters);
+            } else {
+              subtitleFilter = item?.content?.some(({ heading, text, example }) => {
+                const contentText = [heading, text, example].filter(Boolean).join(' ');
+                return subtitleFilters.some(filter => contentText.toLowerCase().includes(filter));
+              })
+            }
+          }
         }
 
         return titleFilter || subtitleFilter;
