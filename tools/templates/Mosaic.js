@@ -72,8 +72,20 @@ export default /*html*/`
 
         <div class="paper-info" aria-live="polite">
           <span>{{ infoText }}</span>
-          <span>{{ sizeText }}</span>
+          <button
+            type="button"
+            class="chip-btn"
+            :title="'Tocá para ver en ' + (unitPaper === 'px' ? 'cm' : 'px')"
+            @click="toggleUnit('unitPaper')"
+          >{{ paperSizeLabel }}</button>
           <span v-if="images.length">{{ tiles }} {{ tiles === 1 ? 'pieza' : 'piezas' }}</span>
+          <button
+            v-if="pieceSizeLabel"
+            type="button"
+            class="chip-btn"
+            :title="'Tamaño de cada pieza. Tocá para ver en ' + (unitPiece === 'px' ? 'cm' : 'px')"
+            @click="toggleUnit('unitPiece')"
+          >{{ pieceSizeLabel }}</button>
         </div>
 
         <div class="zoom-bar" role="group" aria-label="Zoom">
@@ -239,6 +251,36 @@ export default /*html*/`
           </template>
 
           <template v-else>
+            <section class="group">
+              <h2 class="group-title">Filtro de imagen</h2>
+              <SegmentedControl
+                label="Filtro de imagen"
+                style="grid-auto-flow: row; grid-template-columns: 1fr 1fr;"
+                v-model="settings.filter"
+                :options="filterOptions"
+              />
+              <NumberField
+                v-if="showFilterAmount"
+                label="Intensidad"
+                unit="%"
+                slider
+                v-model="settings.filterAmount"
+                :min="limits.amount[0]"
+                :max="limits.amount[1]"
+              />
+              <p v-if="settings.filter === 'print'" class="hint">
+                <strong>Corrección de impresión</strong> aclara las sombras y los tonos medios porque el papel
+                se ve más oscuro que la pantalla. La vista previa también se ve más clara, es normal: el
+                archivo exportado lleva la misma corrección. Empezá con 50% y subí si todavía sale oscuro.
+              </p>
+              <p v-else-if="settings.filter === 'fade'" class="hint">
+                Aclara y desatura las imágenes para gastar menos tinta.
+              </p>
+              <p v-if="settings.filter !== 'none'" class="hint">
+                El filtro se aplica solo a las imágenes, no al fondo, el borde ni el texto.
+              </p>
+            </section>
+
             <section class="group">
               <h2 class="group-title">Fondo del área de imágenes</h2>
               <SegmentedControl label="Fondo" v-model="settings.background" :options="backgroundOptions" />

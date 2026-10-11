@@ -13,6 +13,8 @@ import {
   ORIENTATION_OPTIONS,
   BACKGROUND_OPTIONS,
   LINE_OPTIONS,
+  FILTER_OPTIONS,
+  FILTERS_WITHOUT_AMOUNT,
   LIMITS,
   clamp,
   dimensionsFromWidth,
@@ -66,7 +68,10 @@ export default {
       dragging: false,
       exportOpen: false,
       busy: '', // '' | 'png' | 'pdf' | 'print' | 'share'
+      unitPaper: 'px', // 'px' | 'cm' (paper size chip)
+      unitPiece: 'cm', // 'px' | 'cm' (piece size chip)
       toast: null,
+      
 
       limits: LIMITS,
       paperOptions: PAPER_OPTIONS,
@@ -74,6 +79,7 @@ export default {
       orientationOptions: ORIENTATION_OPTIONS,
       backgroundOptions: BACKGROUND_OPTIONS,
       lineOptions: LINE_OPTIONS,
+      filterOptions: FILTER_OPTIONS,
     };
   },
   computed: {
@@ -88,6 +94,38 @@ export default {
     },
     sizeText() {
       return `${this.paperSize.width} × ${this.paperSize.height} px`;
+    },
+    // real size of the paper: the base paper (A4/A3) defines how long a px is in mm
+    mmPerPx() {
+      const s = this.settings;
+      const base = s.paper === 'CUSTOM' ? s.customRatioBase : s.paper;
+      const realHeightMm = { A4: 297, A3: 420 }[base];
+      const heightPx = s.paper === 'CUSTOM' ? s.customHeight : PAPERS[s.paper].height;
+      return realHeightMm / heightPx;
+    },
+    paperSizeLabel() {
+      return `${this.fmtSize(this.paperSize.width, this.unitPaper)} × ${this.fmtSize(this.paperSize.height, this.unitPaper)} ${this.unitPaper}`;
+    },
+    pieceSizeLabel() {
+      if (!this.images.length || !this.tiles) return '';
+
+      const s = this.settings;
+      const columns = Math.max(1, s.columns);
+      const innerWidth = this.paperSize.width - s.marginLeft - s.marginRight;
+      const cellWidth = (innerWidth - s.gap * (columns - 1)) / columns;
+      if (cellWidth <= 0) return '';
+
+      const heights = this.images.map(({ width, height }) => height * (cellWidth / width));
+      const min = Math.min(...heights);
+      const max = Math.max(...heights);
+
+      const unit = this.unitPiece;
+      const w = this.fmtSize(cellWidth, unit);
+      const h = this.fmtSize(min, unit) === this.fmtSize(max, unit)
+        ? this.fmtSize(min, unit)
+        : `${this.fmtSize(min, unit)}–${this.fmtSize(max, unit)}`;
+
+      return `${w} × ${h} ${unit}`;
     },
     marginSliderMax() {
       return Math.round(Math.min(this.paperSize.width, this.paperSize.height) * 0.12);
@@ -135,6 +173,9 @@ export default {
       return hasLabel && this.settings.marginTop < 24
         ? 'El texto usa el margen superior. Aumentalo en la pestaña Diseño para verlo mejor.'
         : '';
+    },
+    showFilterAmount() {
+      return !FILTERS_WITHOUT_AMOUNT.includes(this.settings.filter);
     },
   },
   watch: {
@@ -238,6 +279,15 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+    
+    // --- units ---
+    // value in px -> text in the chosen unit (cm with one decimal)
+    fmtSize(px, unit) {
+      return unit === 'cm' ? (px * this.mmPerPx / 10).toFixed(1) : String(Math.round(px));
+    },
+    toggleUnit(key) {
+      this[key] = this[key] === 'px' ? 'cm' : 'px';
     },
 
     // --- feedback ---

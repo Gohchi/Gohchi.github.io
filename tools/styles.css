@@ -239,7 +239,8 @@ h1, h2, p { margin: 0; }
   gap: 6px;
   pointer-events: none;
 }
-.paper-info span {
+.paper-info span,
+.paper-info .chip-btn {
   padding: 3px 9px;
   border-radius: 999px;
   background: rgba(26, 29, 34, .85);
@@ -247,6 +248,18 @@ h1, h2, p { margin: 0; }
   color: var(--muted);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
+}
+
+/* the container ignores pointer events (so it doesn't block panning), the chips don't */
+.paper-info .chip-btn {
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: inherit;
+  touch-action: manipulation;
+  
+  &:hover { border-color: var(--muted); color: var(--text); }
+  &:active { background: var(--surface-2); }
 }
 
 .zoom-bar {
