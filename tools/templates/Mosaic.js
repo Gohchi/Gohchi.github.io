@@ -72,8 +72,20 @@ export default /*html*/`
 
         <div class="paper-info" aria-live="polite">
           <span>{{ infoText }}</span>
-          <span>{{ sizeText }}</span>
+          <button
+            type="button"
+            class="chip-btn"
+            :title="'Tocá para ver en ' + (unitPaper === 'px' ? 'cm' : 'px')"
+            @click="toggleUnit('unitPaper')"
+          >{{ paperSizeLabel }}</button>
           <span v-if="images.length">{{ tiles }} {{ tiles === 1 ? 'pieza' : 'piezas' }}</span>
+          <button
+            v-if="pieceSizeLabel"
+            type="button"
+            class="chip-btn"
+            :title="'Tamaño de cada pieza. Tocá para ver en ' + (unitPiece === 'px' ? 'cm' : 'px')"
+            @click="toggleUnit('unitPiece')"
+          >{{ pieceSizeLabel }}</button>
         </div>
 
         <div class="zoom-bar" role="group" aria-label="Zoom">
