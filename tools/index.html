@@ -46,7 +46,7 @@
   <body>
     <div id="app">
       <div id="loading">
-        <p>Cargando…</p>
+        <p id="loading-text">Cargando…</p>
         <div class="spinner"></div>
       </div>
 
@@ -56,6 +56,17 @@
     </div>
   </body>
   <script>
+    // Same storage key as data/i18n.js. Runs before the app mounts, so the loading screen is already translated.
+    (function () {
+      var lang = 'es';
+      try { if (localStorage.getItem('mosaic-lang') === 'en') lang = 'en'; } catch (e) {}
+      if (lang === 'en') {
+        document.documentElement.lang = 'en';
+        document.title = 'Mosaics';
+        document.getElementById('loading-text').textContent = 'Loading…';
+      }
+    })();
+
     const intervalId = setInterval(() => {
       const mountPoint = document.getElementById('app');
       if (mountPoint && mountPoint.__vue_app__) {

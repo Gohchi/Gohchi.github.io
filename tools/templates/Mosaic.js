@@ -3,13 +3,15 @@ export default /*html*/`
     <header class="topbar">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        <h1>Mosaicos</h1>
+        <h1>{{ t('app.title') }}</h1>
       </div>
 
       <div class="topbar-actions">
-        <button type="button" class="btn" aria-label="Agregar imágenes" @click="pickFiles">
+        <LanguageSwitch />
+
+        <button type="button" class="btn" :aria-label="t('top.addImages')" @click="pickFiles">
           <i class="material-icons" aria-hidden="true">add_photo_alternate</i>
-          <span class="label-long">Agregar imágenes</span>
+          <span class="label-long">{{ t('top.addImages') }}</span>
         </button>
 
         <div class="menu-wrap" @click.stop>
@@ -22,25 +24,25 @@ export default /*html*/`
             @click="exportOpen = !exportOpen"
           >
             <i class="material-icons" aria-hidden="true">file_download</i>
-            <span>{{ busy ? 'Generando…' : 'Exportar' }}</span>
+            <span>{{ busy ? t('top.generating') : t('top.export') }}</span>
           </button>
 
           <div v-if="exportOpen" class="menu" role="menu">
             <button type="button" role="menuitem" class="menu-item" @click="runExport('png')">
               <i class="material-icons" aria-hidden="true">image</i>
-              <span><strong>Imagen PNG</strong><small>{{ sizeText }}</small></span>
+              <span><strong>{{ t('export.png') }}</strong><small>{{ sizeText }}</small></span>
             </button>
             <button type="button" role="menuitem" class="menu-item" @click="runExport('pdf')">
               <i class="material-icons" aria-hidden="true">picture_as_pdf</i>
-              <span><strong>PDF</strong><small>Listo para imprimir o enviar</small></span>
+              <span><strong>{{ t('export.pdf') }}</strong><small>{{ t('export.pdfHint') }}</small></span>
             </button>
             <button v-if="!isCoarse" type="button" role="menuitem" class="menu-item" @click="runExport('print')">
               <i class="material-icons" aria-hidden="true">print</i>
-              <span><strong>Imprimir</strong><small>Abre el diálogo de impresión</small></span>
+              <span><strong>{{ t('export.print') }}</strong><small>{{ t('export.printHint') }}</small></span>
             </button>
             <button v-if="canShare" type="button" role="menuitem" class="menu-item" @click="runExport('share')">
               <i class="material-icons" aria-hidden="true">share</i>
-              <span><strong>Compartir</strong><small>Enviar a otra app</small></span>
+              <span><strong>{{ t('export.share') }}</strong><small>{{ t('export.shareHint') }}</small></span>
             </button>
           </div>
         </div>
@@ -65,7 +67,7 @@ export default /*html*/`
               class="paper"
               :style="canvasStyle"
               role="img"
-              :aria-label="'Vista previa de la hoja ' + infoText"
+              :aria-label="t('info.preview') + ' ' + infoText"
             ></canvas>
           </div>
         </div>
@@ -75,25 +77,25 @@ export default /*html*/`
           <button
             type="button"
             class="chip-btn"
-            :title="'Tocá para ver en ' + (unitPaper === 'px' ? 'cm' : 'px')"
+            :title="t('info.toggleUnit', { unit: unitPaper === 'px' ? 'cm' : 'px' })"
             @click="toggleUnit('unitPaper')"
           >{{ paperSizeLabel }}</button>
-          <span v-if="images.length">{{ tiles }} {{ tiles === 1 ? 'pieza' : 'piezas' }}</span>
+          <span v-if="images.length">{{ tiles }} {{ tiles === 1 ? t('info.piece') : t('info.pieces') }}</span>
           <button
             v-if="pieceSizeLabel"
             type="button"
             class="chip-btn"
-            :title="'Tamaño de cada pieza. Tocá para ver en ' + (unitPiece === 'px' ? 'cm' : 'px')"
+            :title="t('info.pieceTitle', { unit: unitPiece === 'px' ? 'cm' : 'px' })"
             @click="toggleUnit('unitPiece')"
           >{{ pieceSizeLabel }}</button>
         </div>
 
-        <div class="zoom-bar" role="group" aria-label="Zoom">
-          <button type="button" class="icon-btn" aria-label="Alejar" :disabled="zoom <= 1" @click="zoomBy(1 / 1.25)">
+        <div class="zoom-bar" role="group" :aria-label="t('zoom.label')">
+          <button type="button" class="icon-btn" :aria-label="t('zoom.out')" :disabled="zoom <= 1" @click="zoomBy(1 / 1.25)">
             <i class="material-icons" aria-hidden="true">zoom_out</i>
           </button>
-          <button type="button" class="zoom-label" title="Ajustar a la pantalla" @click="setZoom(1)">{{ zoomLabel }}</button>
-          <button type="button" class="icon-btn" aria-label="Acercar" :disabled="zoom >= 6" @click="zoomBy(1.25)">
+          <button type="button" class="zoom-label" :title="t('zoom.fitTitle')" @click="setZoom(1)">{{ zoomLabel }}</button>
+          <button type="button" class="icon-btn" :aria-label="t('zoom.in')" :disabled="zoom >= 6" @click="zoomBy(1.25)">
             <i class="material-icons" aria-hidden="true">zoom_in</i>
           </button>
         </div>
@@ -101,15 +103,15 @@ export default /*html*/`
         <div v-if="!images.length" class="empty">
           <div class="empty-card">
             <i class="material-icons" aria-hidden="true">add_photo_alternate</i>
-            <h2>Empezá con tus imágenes</h2>
+            <h2>{{ t('empty.title') }}</h2>
             <p>{{ emptyText }}</p>
-            <button type="button" class="btn primary" @click="pickFiles">Elegir imágenes</button>
+            <button type="button" class="btn primary" @click="pickFiles">{{ t('empty.choose') }}</button>
           </div>
         </div>
 
         <div v-if="dragging" class="drop-hint">
           <i class="material-icons" aria-hidden="true">add_photo_alternate</i>
-          <span>Soltá las imágenes para agregarlas</span>
+          <span>{{ t('drop.hint') }}</span>
         </div>
       </section>
 
@@ -117,11 +119,11 @@ export default /*html*/`
         <button
           type="button"
           class="sheet-handle"
-          :aria-label="sheetOpen ? 'Ocultar opciones' : 'Mostrar opciones'"
+          :aria-label="sheetOpen ? t('sheet.hide') : t('sheet.show')"
           @click="sheetOpen = !sheetOpen"
         ><span></span></button>
 
-        <nav class="tabs" role="tablist" aria-label="Opciones">
+        <nav class="tabs" role="tablist" :aria-label="t('tabs.label')">
           <button
             v-for="tab in tabs"
             :key="tab.key"
@@ -133,7 +135,7 @@ export default /*html*/`
             @click="selectTab(tab.key)"
           >
             <i class="material-icons" aria-hidden="true">{{ tab.icon }}</i>
-            <span>{{ tab.label }}</span>
+            <span>{{ t('tab.' + tab.key) }}</span>
             <em v-if="tab.key === 'images' && images.length" class="badge">{{ images.length }}</em>
           </button>
         </nav>
@@ -142,34 +144,32 @@ export default /*html*/`
 
           <template v-if="activeTab === 'paper'">
             <section class="group">
-              <h2 class="group-title">Tamaño de hoja</h2>
+              <h2 class="group-title">{{ t('paper.title') }}</h2>
               <SegmentedControl
-                label="Tamaño de hoja"
+                :label="t('paper.title')"
                 :modelValue="settings.paper"
                 :options="paperOptions"
                 @update:modelValue="setPaper"
               />
               <SegmentedControl
-                label="Orientación"
+                :label="t('orientation.title')"
                 v-model="settings.orientation"
                 :options="orientationOptions"
               />
             </section>
 
             <section v-if="settings.paper === 'CUSTOM'" class="group">
-              <h2 class="group-title">Medidas personalizadas</h2>
-              <p class="hint">
-                Mantiene la proporción de la hoja elegida. Con la hoja en vertical, una más chica se genera más rápido.
-              </p>
+              <h2 class="group-title">{{ t('custom.title') }}</h2>
+              <p class="hint">{{ t('custom.hint') }}</p>
               <SegmentedControl
-                label="Proporción"
+                :label="t('custom.ratio')"
                 :modelValue="settings.customRatioBase"
                 :options="ratioOptions"
                 @update:modelValue="setRatio"
               />
               <div class="field-row">
                 <NumberField
-                  label="Ancho"
+                  :label="t('custom.width')"
                   unit="px"
                   compact
                   :step="100"
@@ -179,7 +179,7 @@ export default /*html*/`
                   @update:modelValue="value => setCustom('width', value)"
                 />
                 <NumberField
-                  label="Alto"
+                  :label="t('custom.height')"
                   unit="px"
                   compact
                   :step="100"
@@ -194,9 +194,9 @@ export default /*html*/`
 
           <template v-else-if="activeTab === 'layout'">
             <section class="group">
-              <h2 class="group-title">Distribución</h2>
+              <h2 class="group-title">{{ t('layout.title') }}</h2>
               <NumberField
-                label="Imágenes por línea"
+                :label="t('layout.perRow')"
                 slider
                 :sliderMax="12"
                 v-model="settings.columns"
@@ -204,7 +204,7 @@ export default /*html*/`
                 :max="limits.columns[1]"
               />
               <NumberField
-                label="Espacio entre imágenes"
+                :label="t('layout.gap')"
                 unit="px"
                 slider
                 :sliderMax="120"
@@ -215,12 +215,12 @@ export default /*html*/`
             </section>
 
             <section class="group">
-              <h2 class="group-title">Márgenes</h2>
+              <h2 class="group-title">{{ t('margins.title') }}</h2>
               <div class="field-grid">
-                <NumberField label="Arriba" unit="px" compact :step="5" v-model="settings.marginTop" :min="limits.margin[0]" :max="limits.margin[1]" />
-                <NumberField label="Abajo" unit="px" compact :step="5" v-model="settings.marginBottom" :min="limits.margin[0]" :max="limits.margin[1]" />
-                <NumberField label="Izquierda" unit="px" compact :step="5" v-model="settings.marginLeft" :min="limits.margin[0]" :max="limits.margin[1]" />
-                <NumberField label="Derecha" unit="px" compact :step="5" v-model="settings.marginRight" :min="limits.margin[0]" :max="limits.margin[1]" />
+                <NumberField :label="t('margins.top')" unit="px" compact :step="5" v-model="settings.marginTop" :min="limits.margin[0]" :max="limits.margin[1]" />
+                <NumberField :label="t('margins.bottom')" unit="px" compact :step="5" v-model="settings.marginBottom" :min="limits.margin[0]" :max="limits.margin[1]" />
+                <NumberField :label="t('margins.left')" unit="px" compact :step="5" v-model="settings.marginLeft" :min="limits.margin[0]" :max="limits.margin[1]" />
+                <NumberField :label="t('margins.right')" unit="px" compact :step="5" v-model="settings.marginRight" :min="limits.margin[0]" :max="limits.margin[1]" />
               </div>
             </section>
           </template>
@@ -228,40 +228,40 @@ export default /*html*/`
           <template v-else-if="activeTab === 'images'">
             <section class="group">
               <div class="group-head">
-                <h2 class="group-title">{{ images.length }} {{ images.length === 1 ? 'imagen' : 'imágenes' }}</h2>
+                <h2 class="group-title">{{ images.length }} {{ images.length === 1 ? t('images.one') : t('images.many') }}</h2>
                 <div class="group-actions">
                   <button type="button" class="btn small" @click="pickFiles">
-                    <i class="material-icons" aria-hidden="true">add</i><span>Agregar</span>
+                    <i class="material-icons" aria-hidden="true">add</i><span>{{ t('images.add') }}</span>
                   </button>
                   <button type="button" class="btn small danger" :disabled="!images.length" @click="clearImages">
-                    <i class="material-icons" aria-hidden="true">delete_sweep</i><span>Quitar todas</span>
+                    <i class="material-icons" aria-hidden="true">delete_sweep</i><span>{{ t('images.removeAll') }}</span>
                   </button>
                 </div>
               </div>
 
-              <p v-if="!images.length" class="hint">Todavía no hay imágenes. Agregá algunas para armar la hoja.</p>
+              <p v-if="!images.length" class="hint">{{ t('images.empty') }}</p>
 
               <ImageList :items="images" @remove="removeImage" @repeat="setRepeat" />
 
               <p v-if="images.length" class="hint">
-                <strong>Cantidad</strong> pone esa cantidad de copias primero.
-                <strong>Resto</strong> reparte el espacio que queda entre las imágenes marcadas así.
+                <strong>{{ t('repeat.fixed') }}</strong> {{ t('images.hintFixed') }}
+                <strong>{{ t('repeat.rest') }}</strong> {{ t('images.hintRest') }}
               </p>
             </section>
           </template>
 
           <template v-else>
             <section class="group">
-              <h2 class="group-title">Filtro de imagen</h2>
+              <h2 class="group-title">{{ t('filter.title') }}</h2>
               <SegmentedControl
-                label="Filtro de imagen"
+                :label="t('filter.title')"
                 style="grid-auto-flow: row; grid-template-columns: 1fr 1fr;"
                 v-model="settings.filter"
                 :options="filterOptions"
               />
               <NumberField
                 v-if="showFilterAmount"
-                label="Intensidad"
+                :label="t('filter.amount')"
                 unit="%"
                 slider
                 v-model="settings.filterAmount"
@@ -269,38 +269,32 @@ export default /*html*/`
                 :max="limits.amount[1]"
               />
               <p v-if="settings.filter === 'print'" class="hint">
-                <strong>Corrección de impresión</strong> aclara las sombras y los tonos medios porque el papel
-                se ve más oscuro que la pantalla. La vista previa también se ve más clara, es normal: el
-                archivo exportado lleva la misma corrección. Empezá con 50% y subí si todavía sale oscuro.
+                <strong>{{ t('filter.print') }}</strong> {{ t('filter.printHint') }}
               </p>
-              <p v-else-if="settings.filter === 'fade'" class="hint">
-                Aclara y desatura las imágenes para gastar menos tinta.
-              </p>
-              <p v-if="settings.filter !== 'none'" class="hint">
-                El filtro se aplica solo a las imágenes, no al fondo, el borde ni el texto.
-              </p>
+              <p v-else-if="settings.filter === 'fade'" class="hint">{{ t('filter.fadeHint') }}</p>
+              <p v-if="settings.filter !== 'none'" class="hint">{{ t('filter.note') }}</p>
             </section>
 
             <section class="group">
-              <h2 class="group-title">Fondo del área de imágenes</h2>
-              <SegmentedControl label="Fondo" v-model="settings.background" :options="backgroundOptions" />
+              <h2 class="group-title">{{ t('background.title') }}</h2>
+              <SegmentedControl :label="t('background.label')" v-model="settings.background" :options="backgroundOptions" />
             </section>
 
             <section class="group">
-              <h2 class="group-title">Borde del área</h2>
-              <SegmentedControl label="Borde" v-model="settings.lineStyle" :options="lineOptions" />
+              <h2 class="group-title">{{ t('line.title') }}</h2>
+              <SegmentedControl :label="t('line.label')" v-model="settings.lineStyle" :options="lineOptions" />
             </section>
 
             <section class="group">
-              <h2 class="group-title">Texto en el margen superior</h2>
+              <h2 class="group-title">{{ t('text.title') }}</h2>
               <label class="switch">
-                <span>Mostrar tamaño de hoja</span>
+                <span>{{ t('text.showPaper') }}</span>
                 <input type="checkbox" v-model="settings.showPaperType" />
                 <span class="track" aria-hidden="true"></span>
               </label>
               <label class="text-field">
-                <span class="field-label">Leyenda</span>
-                <input type="text" v-model="settings.legend" maxlength="80" placeholder="Opcional" autocomplete="off" />
+                <span class="field-label">{{ t('text.legend') }}</span>
+                <input type="text" v-model="settings.legend" maxlength="80" :placeholder="t('text.optional')" autocomplete="off" />
               </label>
               <p v-if="labelHint" class="hint">{{ labelHint }}</p>
             </section>
