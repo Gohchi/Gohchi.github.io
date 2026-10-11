@@ -13,6 +13,8 @@ import {
   ORIENTATION_OPTIONS,
   BACKGROUND_OPTIONS,
   LINE_OPTIONS,
+  FILTER_OPTIONS,
+  FILTERS_WITHOUT_AMOUNT,
   LIMITS,
   clamp,
   dimensionsFromWidth,
@@ -77,6 +79,7 @@ export default {
       orientationOptions: ORIENTATION_OPTIONS,
       backgroundOptions: BACKGROUND_OPTIONS,
       lineOptions: LINE_OPTIONS,
+      filterOptions: FILTER_OPTIONS,
     };
   },
   computed: {
@@ -170,6 +173,9 @@ export default {
       return hasLabel && this.settings.marginTop < 24
         ? 'El texto usa el margen superior. Aumentalo en la pestaña Diseño para verlo mejor.'
         : '';
+    },
+    showFilterAmount() {
+      return !FILTERS_WITHOUT_AMOUNT.includes(this.settings.filter);
     },
   },
   watch: {
