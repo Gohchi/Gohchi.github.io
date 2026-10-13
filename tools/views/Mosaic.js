@@ -3,8 +3,11 @@ import { markRaw } from 'vue';
 import NumberField from 'components/NumberField.js';
 import SegmentedControl from 'components/SegmentedControl.js';
 import ImageList from 'components/ImageList.js';
+import LanguageSwitch from 'components/LanguageSwitch.js';
 
 import template from 'templates/Mosaic.js';
+
+import { t } from 'data/i18n.js';
 
 import {
   PAPERS,
@@ -31,24 +34,25 @@ import {
   buildPdfBlob,
   printPdfBlob,
   nextPaint,
-} from 'data/mosaic.js';
+} from 'data/Mosaic.js';
 
 const STAGE_PADDING = 24; // must match .paper-wrap padding in styles.css
 const MAX_ZOOM = 6;
 const MAX_PREVIEW_PIXELS = 4000; // longest side of the preview bitmap
 
+// labels come from i18n: 'tab.<key>'
 const TABS = [
-  { key: 'paper', label: 'Hoja', icon: 'description' },
-  { key: 'layout', label: 'Diseño', icon: 'grid_view' },
-  { key: 'images', label: 'Imágenes', icon: 'photo_library' },
-  { key: 'style', label: 'Estilo', icon: 'palette' },
+  { key: 'paper', icon: 'description' },
+  { key: 'layout', icon: 'grid_view' },
+  { key: 'images', icon: 'photo_library' },
+  { key: 'style', icon: 'palette' },
 ];
 
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 const hasFiles = e => [...(e.dataTransfer?.types || [])].includes('Files');
 
 export default {
-  components: { NumberField, SegmentedControl, ImageList },
+  components: { NumberField, SegmentedControl, ImageList, LanguageSwitch },
   data() {
     return {
       settings: loadSettings(),
@@ -71,18 +75,19 @@ export default {
       unitPaper: 'px', // 'px' | 'cm' (paper size chip)
       unitPiece: 'cm', // 'px' | 'cm' (piece size chip)
       toast: null,
-      
 
       limits: LIMITS,
-      paperOptions: PAPER_OPTIONS,
-      ratioOptions: RATIO_OPTIONS,
-      orientationOptions: ORIENTATION_OPTIONS,
-      backgroundOptions: BACKGROUND_OPTIONS,
-      lineOptions: LINE_OPTIONS,
-      filterOptions: FILTER_OPTIONS,
     };
   },
   computed: {
+    // option labels are translated from their value: '<prefix>.<value>'
+    paperOptions() { return this.localize(PAPER_OPTIONS, 'paper'); },
+    ratioOptions() { return this.localize(RATIO_OPTIONS, 'ratio'); },
+    orientationOptions() { return this.localize(ORIENTATION_OPTIONS, 'orientation'); },
+    backgroundOptions() { return this.localize(BACKGROUND_OPTIONS, 'background'); },
+    lineOptions() { return this.localize(LINE_OPTIONS, 'line'); },
+    filterOptions() { return this.localize(FILTER_OPTIONS, 'filter'); },
+
     paperSize() {
       return getPaperSize(this.settings);
     },
@@ -156,23 +161,18 @@ export default {
       return Math.ceil(raw * 20) / 20; // steps of 5% to avoid redrawing on every pixel
     },
     zoomLabel() {
-      if (this.zoom <= 1.001) return 'Ajustar';
+      if (this.zoom <= 1.001) return this.t('zoom.fit');
       return Math.round((this.displaySize.width / this.paperSize.width) * 100) + '%';
     },
     infoText() {
-      const orientation = this.settings.orientation === 'v' ? 'vertical' : 'horizontal';
-      return `${this.paperName} ${orientation}`;
+      return `${this.paperName} ${this.t('info.' + this.settings.orientation)}`;
     },
     emptyText() {
-      return this.isCoarse
-        ? 'Elegí las imágenes desde tu dispositivo.'
-        : 'Arrastralas hasta acá, pegalas con Ctrl+V o elegilas desde tu equipo.';
+      return this.isCoarse ? this.t('empty.touch') : this.t('empty.desktop');
     },
     labelHint() {
       const hasLabel = this.settings.showPaperType || this.settings.legend.trim();
-      return hasLabel && this.settings.marginTop < 24
-        ? 'El texto usa el margen superior. Aumentalo en la pestaña Diseño para verlo mejor.'
-        : '';
+      return hasLabel && this.settings.marginTop < 24 ? this.t('margins.labelHint') : '';
     },
     showFilterAmount() {
       return !FILTERS_WITHOUT_AMOUNT.includes(this.settings.filter);
@@ -259,6 +259,11 @@ export default {
     this.images.forEach(({ url }) => URL.revokeObjectURL(url));
   },
   methods: {
+    t,
+    localize(options, prefix) {
+      return options.map(option => ({ ...option, label: this.t(`${prefix}.${option.value}`) }));
+    },
+
     // --- rendering ---
     scheduleRender() {
       if (this.internals.raf) return;
@@ -280,7 +285,7 @@ export default {
         console.error(error);
       }
     },
-    
+
     // --- units ---
     // value in px -> text in the chosen unit (cm with one decimal)
     fmtSize(px, unit) {
@@ -309,7 +314,7 @@ export default {
     async addFiles(fileList) {
       const files = [...(fileList || [])].filter(file => file.type.startsWith('image/'));
       if (!files.length) {
-        this.notify('Elegí archivos de imagen.', true);
+        this.notify(this.t('images.pickError'), true);
         return;
       }
 
@@ -322,9 +327,11 @@ export default {
       this.images.push(...loaded);
 
       if (failed) {
-        this.notify(`${failed} archivo(s) no se pudieron abrir.`, true);
+        this.notify(this.t('images.failed', { n: failed }), true);
       } else {
-        this.notify(loaded.length === 1 ? 'Imagen agregada.' : `${loaded.length} imágenes agregadas.`);
+        this.notify(loaded.length === 1
+          ? this.t('images.addedOne')
+          : this.t('images.addedMany', { n: loaded.length }));
       }
     },
     removeImage(id) {
@@ -334,7 +341,7 @@ export default {
       this.images.splice(index, 1);
     },
     clearImages() {
-      if (!this.images.length || !confirm('¿Quitar todas las imágenes?')) return;
+      if (!this.images.length || !confirm(this.t('images.confirmClear'))) return;
       this.images.forEach(({ url }) => URL.revokeObjectURL(url));
       this.images = [];
     },
@@ -496,27 +503,27 @@ export default {
       const canvas = document.createElement('canvas');
 
       try {
-        await nextPaint(); // let the "Generando…" state show up before the heavy work
+        await nextPaint(); // let the "Generating…" state show up before the heavy work
         renderMosaic(canvas, this.renderItems(), this.renderOptions, 1);
         const name = `mosaico_${fileStamp()}`;
 
         if (kind === 'png') {
           downloadBlob(await canvasToBlob(canvas, 'image/png'), `${name}.png`);
-          this.notify('Imagen descargada.');
+          this.notify(this.t('export.pngDone'));
         } else if (kind === 'pdf') {
           downloadBlob(buildPdfBlob(canvas), `${name}.pdf`);
-          this.notify('PDF descargado.');
+          this.notify(this.t('export.pdfDone'));
         } else if (kind === 'print') {
           printPdfBlob(buildPdfBlob(canvas));
         } else if (kind === 'share') {
           const blob = await canvasToBlob(canvas, 'image/png');
           const file = new File([blob], `${name}.png`, { type: 'image/png' });
-          await navigator.share({ files: [file], title: 'Mosaico' });
+          await navigator.share({ files: [file], title: this.t('export.shareTitle') });
         }
       } catch (error) {
         if (error?.name !== 'AbortError') { // AbortError = the person closed the share sheet
           console.error(error);
-          this.notify('No se pudo generar el archivo. Probá con una hoja más chica (Hoja → Personalizado).', true);
+          this.notify(this.t('export.error'), true);
         }
       } finally {
         canvas.width = canvas.height = 0; // frees the memory right away

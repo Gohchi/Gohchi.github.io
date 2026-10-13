@@ -1,4 +1,5 @@
-import { clamp } from 'data/mosaic.js';
+import { clamp } from 'data/Mosaic.js';
+import { t } from 'data/i18n.js';
 
 // Number field made for touch and mouse:
 //  - big − / + buttons (hold to repeat)
@@ -27,6 +28,7 @@ export default {
     },
   },
   methods: {
+    t,
     commit(value) {
       const result = clamp(Math.round(value), this.min, this.max);
       if (result !== this.modelValue) this.$emit('update:modelValue', result);
@@ -75,7 +77,7 @@ export default {
           <button
             type="button"
             class="step"
-            aria-label="Disminuir"
+            :aria-label="t('number.decrease')"
             :disabled="modelValue <= min"
             @pointerdown="startHold(-1)"
             @pointerup="stopHold"
@@ -98,7 +100,7 @@ export default {
           <button
             type="button"
             class="step"
-            aria-label="Aumentar"
+            :aria-label="t('number.increase')"
             :disabled="modelValue >= max"
             @pointerdown="startHold(1)"
             @pointerup="stopHold"
