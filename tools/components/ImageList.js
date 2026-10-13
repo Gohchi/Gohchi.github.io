@@ -1,7 +1,7 @@
 import NumberField from 'components/NumberField.js';
 import SegmentedControl from 'components/SegmentedControl.js';
 
-import { LIMITS } from 'data/mosaic.js';
+import { LIMITS } from 'data/Mosaic.js';
 import { t } from 'data/i18n.js';
 
 // List of loaded images. Each row has a thumbnail and its repetition:

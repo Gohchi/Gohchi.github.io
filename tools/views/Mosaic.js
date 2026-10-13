@@ -34,7 +34,7 @@ import {
   buildPdfBlob,
   printPdfBlob,
   nextPaint,
-} from 'data/mosaic.js';
+} from 'data/Mosaic.js';
 
 const STAGE_PADDING = 24; // must match .paper-wrap padding in styles.css
 const MAX_ZOOM = 6;

@@ -1,4 +1,4 @@
-import { clamp } from 'data/mosaic.js';
+import { clamp } from 'data/Mosaic.js';
 import { t } from 'data/i18n.js';
 
 // Number field made for touch and mouse:
