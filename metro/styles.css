@@ -1,0 +1,2 @@
+.dd-slide-enter-active, .dd-slide-leave-active { transition: opacity .15s, transform .15s; }
+.dd-slide-enter-from, .dd-slide-leave-to { opacity: 0; transform: translateY(-6px); }
