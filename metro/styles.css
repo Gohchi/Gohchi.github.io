@@ -1,2 +1,13 @@
 .dd-slide-enter-active, .dd-slide-leave-active { transition: opacity .15s, transform .15s; }
 .dd-slide-enter-from, .dd-slide-leave-to { opacity: 0; transform: translateY(-6px); }
+.metro .wizard .actions::after { content: ""; display: table; clear: both; }
+
+/* Metro hides these by default; v-show + inline display:block handles visibility now */
+.metro .accordion > .accordion-frame > .content { display: block; }
+.metro .tab-control .frames .frame { display: block; }
+
+/* shared transitions */
+.collapse-enter-active, .collapse-leave-active { transition: opacity .2s ease; }
+.collapse-enter-from, .collapse-leave-to,
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+.fade-enter-active, .fade-leave-active { transition: opacity .15s ease; }
