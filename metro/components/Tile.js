@@ -1,13 +1,14 @@
 export default {
   props: {
-    color: String,                       // 'bg-cyan', ...
-    size: String,                        // 'half' | 'double' | 'double-vertical' | 'triple' | 'quadro'
+    color: String,
+    size: String,
     selectable: { type: Boolean, default: true },
-    modelValue: Boolean,                 // selected
-    transform: Boolean,                  // tilt on press
+    modelValue: Boolean,
+    transform: Boolean,
+    draggable: Boolean,                  // replaces metro-drag-tile
   },
-  emits: ['update:modelValue'],
-  data: () => ({ tilt: '' }),
+  emits: ['update:modelValue', 'dragstart', 'dragend'],
+  data: () => ({ tilt: '', dragging: false }),
   computed: {
     classes() {
       return [this.color, this.size, { selected: this.modelValue }, this.tilt && `tile-transform-${this.tilt}`];
@@ -26,10 +27,14 @@ export default {
         : y > r.height / 2 ? 'bottom' : 'top';
     },
     release() { this.tilt = ''; },
+    onDragStart(e) { this.dragging = true; this.$emit('dragstart', e); },
+    onDragEnd(e) { this.dragging = false; this.$emit('dragend', e); },
   },
   template: /*html*/`
-    <div class="tile" :class="classes"
-      @click="toggle" @mousedown="press" @mouseup="release" @mouseleave="release">
+    <div class="tile" :class="classes" :draggable="draggable || null"
+      :style="dragging ? { opacity: .4 } : null"
+      @click="toggle" @mousedown="press" @mouseup="release" @mouseleave="release"
+      @dragstart="onDragStart" @dragend="onDragEnd">
       <slot />
     </div>`,
 };
