@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1FG5RC4F7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-P1FG5RC4F7');
+    </script>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" name="viewport">
+
+		<title>👾Portfolio</title>
+		<link rel="stylesheet" href="main.css">
+		<link rel="stylesheet" href="site.css">
+		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+		<script type="importmap">
+			{
+				"imports": {
+          "vue": "/cdn/vue.esm-browser.prod.js",
+          "vue-router": "/cdn/vue-router.esm-browser.prod.js"
+				}
+			}
+		</script>
+    <script type="module" src="scripts.js" defer></script>
+	</head>
+	<body id="app">
+    <div class="app-wrapper" :class="{ svg: bgSvgMode }">
+      <div id="loading">
+        <p>Loading...</p>
+      </div>
+      <div class="main-content hidden">
+        <header>
+          <h1>Hi. My name is Mart&iacute;n A. Farias</h1>
+          <!-- <div id="menu"></div> -->
+          <div class="menu">
+            <nav class="dropdown-menu">
+              <button @click="showDropdown = !showDropdown" class="dropdown-toggle">
+                Menu ▼
+              </button>
+              <ul v-if="showDropdown" class="dropdown-list">
+                <li><a href="#about-me" @click="selectTab('about-me')">About me</a></li>
+                <li><a href="#projects" @click="selectTab('projects')">Projects</a></li>
+                <li><a href="#contact" @click="selectTab('contact')">Contact</a></li>
+              </ul>
+            </nav>
+           </div>
+        </header>
+        <section class="content">
+          <ul v-if="selectedTab === 'projects'" class="projects">
+            <li
+              v-for="project in projects"
+              :key="project.id"
+            >
+              <button
+                :id="project.id"
+                :title="project.title"
+                @click="openWindow(project.url)"
+              >{{ project.text }}</button>
+            </li>
+          </ul>
+        </section>
+      </div>	
+    
+      <div class="duolingo" v-if="showDuolingo">
+        <img
+          class="info"
+          src="https://duolingo-stats-card.vercel.app/api?username=gohchi"
+          alt="Duolingo Stats"
+          title="Check my Duolingo stats"
+          @click.prevent="goToDuolingo"
+        />
+        <img
+          class="close"
+          src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gU3ZnIFZlY3RvciBJY29ucyA6IGh0dHA6Ly93d3cub25saW5ld2ViZm9udHMuY29tL2ljb24gLS0+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjU2IDI1NiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8bWV0YWRhdGE+IFN2ZyBWZWN0b3IgSWNvbnMgOiBodHRwOi8vd3d3Lm9ubGluZXdlYmZvbnRzLmNvbS9pY29uIDwvbWV0YWRhdGE+DQo8Zz48Zz48cGF0aCBmaWxsPSIjMDAwMDAwIiBkPSJNMTk4LjgsMTA0LjRWODAuOGgyMy42VjU3LjJIMjQ2VjEwaC00Ny4ydjIzLjZoLTIzLjZ2MjMuNmgtMjMuNnYyMy42aC00Ny4yVjU3LjJIODAuOFYzMy42SDU3LjJWMTBIMTB2NDcuMmgyMy42djIzLjZoMjMuNnYyMy42aDIzLjZ2NDcuMkg1Ny4ydjIzLjZIMzMuNnYyMy42SDEwVjI0Nmg0Ny4ydi0yMy42aDIzLjZ2LTIzLjZoMjMuNnYtMjMuNmg0Ny4ydjIzLjZoMjMuNnYyMy42aDIzLjZWMjQ2SDI0NnYtNDcuMmgtMjMuNnYtMjMuNmgtMjMuNnYtMjMuNmgtMjMuNnYtNDcuMkgxOTguOHoiLz48L2c+PC9nPg0KPC9zdmc+" width="16" height="16"
+          @click.prevent="showDuolingo=false"
+        >
+      </div>
+      
+      <footer>
+        <!-- <button
+          @click="bgSvgMode=!bgSvgMode"
+          :title="bgSvgMode ? 'I couldn\' found the owner to give the credits :C' : 'Under construction hehe'"
+          class="button-toggle"
+        >
+          {{ bgSvgMode ? 'BG: SVG' : 'BG: GIF' }}
+        </button>
+        <button
+          @click="showBook=!showBook"
+          class="button-toggle"
+        >
+          {{ (showBook ? 'hide' : 'show') + ' book' }}
+        </button> -->
+        <p class="thanks">Thank you for visiting my site!</p>
+      </footer>
+      <book :show="showBook"></book>
+
+<!--       
+      <button @click="count++">
+        Count is: {{ count }}
+      </button> -->
+  <!-- 
+      <element title="1"></element>
+
+      <button-test></button-test> -->
+    </div>
+	</body>
+  <script src="legacy.js"></script>
+  <script>
+    const intervalId = setInterval(() => {
+      const mountPoint = document.getElementById('app');
+      if (mountPoint && mountPoint.__vue_app__) {
+        console.log('Vue app mounted successfully');
+        const loadingElement = document.getElementById('loading');
+        loadingElement.classList.add('hidden');
+        const mainContent = document.querySelector('.main-content');
+        mainContent.classList.remove('hidden'); 
+        clearInterval(intervalId);
+      }
+    }, 100);
+  </script>
+</html>

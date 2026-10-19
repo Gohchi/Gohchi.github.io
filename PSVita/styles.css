@@ -11,7 +11,7 @@ input {
 }
 
 body {
-  background: url(https://i.pinimg.com/originals/11/eb/cf/11ebcfd6f503c64033dd3b47dd77efd6.gif);
+  background: url(./img/hld.gif) repeat center center fixed;
   background-size: cover;
 }
 

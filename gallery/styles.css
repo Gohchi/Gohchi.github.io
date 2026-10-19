@@ -1,0 +1,113 @@
+/*body {
+  background-color: Canvas;
+  color: CanvasText;
+  color-scheme: light dark;
+}*/
+
+body {
+  font-family: Inter, sans-serif;
+  background: #09090b;
+  margin: 0;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    header {
+      background-color: #303030 !important;
+    }
+
+    .active {
+      background-color: #919191 !important;
+      color: #bababa;
+    }
+
+    footer {
+      background-color: #5d5d5d !important;
+    }
+  }
+}
+
+.hidden {
+	display: none !important;
+}
+
+#loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 9999;
+	display: flex;
+  flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	// font-family: 'Press Start 2P', cursive;
+	font-size: 24px;
+
+  animation: grayPulse 2s ease-in-out infinite;
+  /* ensure the filter animates smoothly */
+  will-change: transform, filter;
+}
+
+.spinner-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.spinner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f5f5f5 12%, transparent 13%),
+              radial-gradient(circle at 65% 35%, #f5f5f5 12%, transparent 13%),
+              radial-gradient(circle at 35% 65%, #f5f5f5 12%, transparent 13%),
+              radial-gradient(circle at 65% 65%, #f5f5f5 12%, transparent 13%),
+              radial-gradient(circle at 50% 50%, #ececec 30%, #555 31%, #111 48%, #0c0c0e 50%);
+  box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.15),
+              0 0 0 2px rgba(255, 255, 255, 0.08);
+  animation: spin 1.2s linear infinite;
+}
+
+.spinner::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 38%, rgba(0, 0, 0, 0.25) 39%, rgba(0, 0, 0, 0.35) 52%, transparent 53%);
+}
+
+.spinner::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background: #111;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.12);
+}
+
+.box {
+  color: white;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+  /* keyframes to pulse grayscale (gray scale emphasis) */
+@keyframes grayPulse {
+  0%   { filter: grayscale(1) brightness(0.2); }
+  50%  { filter: grayscale(0.1) brightness(1.08); }
+  100% { filter: grayscale(1) brightness(0.2); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

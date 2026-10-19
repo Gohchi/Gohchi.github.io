@@ -24,3 +24,9 @@ Install the vscode extension `es6-string-html` and add `/*html*/` before a Vue t
 # Notes:
 
 Remove the `.prod` to `"vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js"` to use the `dev version` locally.
+
+# inspo
+
+## 3DS
+  - https://3dspaint.com/
+  - http://www.froxot.de/

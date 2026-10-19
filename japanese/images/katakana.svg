@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="800px" height="800px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .kana {
+        font-family: "Yu Gothic UI", "Meiryo", "Noto Sans CJK JP", "Segoe UI", sans-serif;
+        font-size: 22px;
+        font-weight: 500;
+        text-anchor: middle;
+      }
+      .salmon {
+        fill: #EF4D4D;
+      }
+      .seaweed {
+        fill: black;
+      }
+      .rice {
+        fill: #EAEAEA;
+      }
+      .chopsticks {
+        fill: #EACA44;
+      }
+    </style>
+  </defs>
+
+  <!-- katakana version of the same four-sound visual: ア, カ, ザ, セ -->
+  <text class="kana salmon" x="13" y="22">ア</text>
+  <text class="kana chopsticks" x="33" y="22">カ</text>
+  <text class="kana rice" x="13" y="44">ザ</text>
+  <text class="kana seaweed" x="33" y="44">セ</text>
+</svg>

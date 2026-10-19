@@ -1,0 +1,180 @@
+import { useRouter } from 'vue-router';
+
+import PhraseToRuby from 'components/PhraseToRuby.js';
+import MainHeader from 'components/MainHeader.js';
+import template from 'templates/Translations.js';
+
+import { books, getBookMeta, loadBook } from 'data/books/index.js';
+import { songs, getSongMeta, loadSong } from 'data/songs/index.js';
+
+import {
+  zoomStore,
+} from 'store';
+
+export default {
+  components: {
+    PhraseToRuby,
+    MainHeader,
+  },
+  props: {
+    type: String,
+    id: String,
+  },
+  setup(props) {
+    const router = useRouter()
+    return {
+      "router": router,
+    };
+  },
+  methods: {
+    goToIndex() {
+      const index = this.translations.findIndex(({ type }) => type === 'index') + 1;
+      this.pageSelected = index;
+    },
+    nextPage() {
+      document.querySelector('article').scrollTo(0, 0);
+      this.pageSelected += 1;
+      localStorage.setItem(this.pageStorageKey, this.pageSelected);
+    },
+    prevPage() {
+      document.querySelector('article').scrollTo(0, 0);
+      this.pageSelected -= 1;
+      localStorage.setItem(this.pageStorageKey, this.pageSelected);
+    },
+    switchTranslation() {
+      this.showTranslation = !this.showTranslation;
+      this.writingDirection = 'yokogaki';
+      localStorage.setItem('show-translation', this.showTranslation);
+      localStorage.setItem('writing-direction', this.writingDirection);
+    },
+    setLang(value) {
+      this.lang = value;
+      localStorage.setItem('lang', value);
+    },
+    setWritingDirection(value) {
+      this.writingDirection = value;
+      localStorage.setItem('writing-direction', value);
+    },
+    selectBook(id) {
+      this.router.push('translations/book/' + id);
+    },
+    selectSong(id) {
+      this.router.push('translations/song/' + id);
+    },
+    backToBookList() {
+      this.router.push('/translations');
+    },
+    async loadSelectedBook(id) {
+      this.loadingItem = true;
+      this.translations = [];
+
+      const meta = this.getItemMeta(id);
+      if (!meta) {
+        this.loadingItem = false;
+        return;
+      }
+
+      const data = await this.loadItem(id);
+      this.translations = data?.translations || [];
+
+      const lastPageVisited = localStorage.getItem(this.pageStorageKey);
+      this.pageSelected = lastPageVisited ? +lastPageVisited : 1;
+
+      this.loadingItem = false;
+    },
+  },
+  watch: {
+    id: {
+      immediate: true,
+      handler(newId) {
+        if (newId) {
+          this.loadSelectedBook(newId);
+        } else {
+          this.translations = [];
+        }
+      },
+    },
+  },
+  data() {
+    const showTranslation = localStorage.getItem('show-translation');
+    const writingDirection = localStorage.getItem('writing-direction');
+    const lang = localStorage.getItem('lang');
+
+    return {
+      books,
+      songs,
+      "translations": [],
+      "pageSelected": 1,
+      "hideDisclaimer": true,
+      "lang": lang ?? 'eng',
+      "showTranslation": showTranslation !== null ? showTranslation === 'true' : true,
+      "writingDirection": writingDirection ?? 'yokogaki',
+      "selectedArticle": null,
+      "voices": [],
+      "selectedVoice": null,
+      "loadingItem": false,
+    }
+  },
+  computed: {
+    getItemMeta() {
+      if (this.type == 'book') return getBookMeta;
+      if (this.type == 'song') return getSongMeta;
+    },
+    loadItem() {
+      if (this.type == 'book') return loadBook;
+      if (this.type == 'song') return loadSong;
+    },
+    zoomLevel() {
+      return zoomStore.getZoomLevel();
+    },
+    pageStorageKey() {
+      return `last-page-visited:${this.id}`;
+    },
+    currentMeta() {
+      return this.getItemMeta(this.id);
+    },
+    headerTitle() {
+      if (this.id) {
+        if (this.type == 'book' && this.currentMeta) {
+          return this.currentMeta.title;
+        }
+        if (this.type == 'song' && this.currentMeta) { 
+          const { title, subtitle } = this.currentMeta;
+          return title + ' ' + subtitle;
+        }
+      } else {
+        return 'TRANSLATIONS';
+      }
+    },
+    hasContent() {
+      return this.translations.length > 0;
+    },
+    page() {
+      return this.translations[this.pageSelected-1] || {};
+    },
+    pageType() {
+      if (!this.translations[this.pageSelected-1]) {
+        return 'unknown';
+      }
+      return this.page.type;
+    },
+    title() { return this.page.title; },
+    subtitle() { return this.page.subtitle; },
+    chapters() { return this.page.chapters; },
+    content() { return this.page.content; },
+    footer() { return this.page.footer; },
+    showPageNumber() { return !this.page.hidePageNumber; },
+    pageNumber() { return this.pageSelected?.toString().padStart(3, '0'); },
+    chapter() { return this.page.chapter; },
+    chapterFirstPage() { return this.page.chapterFirstPage; },
+    first() {
+      if (this.pageSelected > this.translations.length) return true;
+      return this.pageSelected === 1;
+    },
+    last() {
+      if (this.pageSelected > this.translations.length) return true;
+      return this.pageSelected === this.translations.length;
+    }
+  },
+  template
+}
