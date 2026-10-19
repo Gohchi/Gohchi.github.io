@@ -1,12 +1,68 @@
-<link rel="stylesheet" href="css/metro-bootstrap.css">
-<link rel="stylesheet" href="styles.css">
-<!-- <link rel="stylesheet" href="min/iconFont.min.css"> -->
-<script type="importmap">
-{ "imports": {
-  "vue": "https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.esm-browser.prod.js",
-  "components/": "./components/",
-  "store": "./store.js"
-} }
-</script>
-<div id="app"></div>
-<script type="module" src="app.js"></script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A showcase of Metro UI components and interactions.">
+    <meta name="theme-color" content="#ffffff">
+    <title>Metro UI Components</title>
+    <link rel="icon" type="image/png" href="images/fisheye-placebo-icon.png">
+    <link rel="stylesheet" href="css/metro-bootstrap.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      #app[hidden] { display: none; }
+      #loading {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      .spinner {
+        animation: spin 0.8s linear infinite;
+        border: 3px solid #d8d8d8;
+        border-right-color: #008a00;
+        border-radius: 50%;
+        height: 28px;
+        width: 28px;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) {
+        .spinner { animation-duration: 2s; }
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "/cdn/vue.esm-browser.prod.js",
+          "components/": "./components/",
+          "store": "./store.js"
+        }
+      }
+    </script>
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <div id="loading" role="status" aria-live="polite">
+      <span>Loading Metro UI...</span>
+      <span class="spinner" aria-hidden="true"></span>
+    </div>
+    <div id="app" class="hidden"></div>
+    <script>
+    const intervalId = setInterval(() => {
+      const mountPoint = document.getElementById('app');
+      if (mountPoint && mountPoint.__vue_app__) {
+        console.log('Vue app mounted successfully');
+        
+        const loadingElement = document.getElementById('loading');
+        loadingElement.classList.add('hidden');
+
+        const mainContent = document.getElementById('app');
+        mainContent.classList.remove('hidden'); 
+        clearInterval(intervalId);
+      }
+    }, 100);
+    </script>
+  </body>
+</html>
