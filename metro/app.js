@@ -75,43 +75,45 @@ createApp({
         </Dropdown>
       </NavigationBar>
 
-      <TileArea color="darkCobalt">
-        <TileGroup title="Tiles" size="three">
-          <Tile color="bg-cyan" size="double-vertical" v-model="selected.a" draggable>
-            <div class="brand"><div class="badge">59</div></div>
-          </Tile>
-          <Tile color="bg-cyan" transform @click="notifyStore.show({ caption: 'Tile', content: 'Clicked' })">
-            <div class="brand"><div class="badge">12</div></div>
-          </Tile>
-          <LiveTile :frames="frames" size="double" />
-        </TileGroup>
-      </TileArea>
+      <div class="content">
+        <TileArea color="darkCobalt">
+          <TileGroup title="Tiles" size="three">
+            <Tile color="bg-cyan" size="double-vertical" v-model="selected.a" draggable>
+              <div class="brand"><div class="badge">59</div></div>
+            </Tile>
+            <Tile color="bg-cyan" transform @click="notifyStore.show({ caption: 'Tile', content: 'Clicked' })">
+              <div class="brand"><div class="badge">12</div></div>
+            </Tile>
+            <LiveTile :frames="frames" size="double" />
+          </TileGroup>
+        </TileArea>
 
-      <div style="clear:both;padding:20px;max-width:760px">
-        <Carousel :slides="slides" effect="fade" :height="200" />
-        <br>
-        <Countdown :days="2" /> <Clock />
-        <br>
-        <Hint text="I am a tooltip" title="Hint"><button>Hover me</button></Hint>
-        <Popover text="Popover!" position="bottom"><button>Click me</button></Popover>
-        <br><br>
-        <InputControl v-model="text" placeholder="Text with clear" />
-        <InputControl v-model="pass" type="password" placeholder="Password" />
-        <InputControl type="search" v-model="text" placeholder="Search" />
-        <Check v-model="agree" caption="Agree" />
-        <Check v-model="agree" type="switch" caption="Switch" />
-        <Check v-model="mode" type="radio" value="a" caption="Radio A" />
-        <Check v-model="mode" type="radio" value="b" caption="Radio B" />
-        <ButtonSet v-model="tags" :options="options" multiple />
-        <ButtonSet v-model="mode" :options="options" />
-        <DataTable :columns="columns" :rows="rows" striped hovered sortable selectable v-model="rowSel" />
-        <Listview :items="items" v-model="listActive" variant="outlook" />
-        <FluentMenu :tabs="fluentTabs" v-model="fluentTab" @special="exit">
-          <template #home><span style="padding:10px">Home tools</span></template>
-          <template #view><span style="padding:10px">View tools</span></template>
-        </FluentMenu>
+        <div style="clear:both;padding:20px;max-width:760px">
+          <Carousel :slides="slides" effect="fade" :height="200" />
+          <br>
+          <Countdown :days="2" /> <Clock />
+          <br>
+          <Hint text="I am a tooltip" title="Hint"><button>Hover me</button></Hint>
+          <Popover text="Popover!" position="bottom"><button>Click me</button></Popover>
+          <br><br>
+          <InputControl v-model="text" placeholder="Text with clear" />
+          <InputControl v-model="pass" type="password" placeholder="Password" />
+          <InputControl type="search" v-model="text" placeholder="Search" />
+          <Check v-model="agree" caption="Agree" />
+          <Check v-model="agree" type="switch" caption="Switch" />
+          <Check v-model="mode" type="radio" value="a" caption="Radio A" />
+          <Check v-model="mode" type="radio" value="b" caption="Radio B" />
+          <ButtonSet v-model="tags" :options="options" multiple />
+          <ButtonSet v-model="mode" :options="options" />
+          <DataTable :columns="columns" :rows="rows" striped hovered sortable selectable v-model="rowSel" />
+          <Listview :items="items" v-model="listActive" variant="outlook" />
+          <FluentMenu :tabs="fluentTabs" v-model="fluentTab" @special="exit">
+            <template #home><span style="padding:10px">Home tools</span></template>
+            <template #view><span style="padding:10px">View tools</span></template>
+          </FluentMenu>
+        </div>
+
       </div>
-
       <Notify /><Dialog />
     </div>`,
 }).mount('#app');

@@ -1,5 +1,21 @@
+html, body, .app, .metro {
+  margin: 0;
+  padding: 0;
+  height: 100dvh; /* Takes full viewport height, adjusting for mobile browser bars */
+}
+
 .hidden {
 	display: none !important;
+}
+
+.metro {
+	display: flex;
+	flex-direction: column;
+
+	> .content {
+		flex: 1;          /* Shorthand for flex-grow: 1; flex-shrink: 1; flex-basis: 0%; */
+		overflow-y: auto; /* Adds a scrollbar ONLY to this section if content overflows */
+	}
 }
 
 .dd-slide-enter-active, .dd-slide-leave-active { transition: opacity .15s, transform .15s; }

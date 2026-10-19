@@ -1,4 +1,3 @@
-// Treeview.js
 import TreeNode from './TreeNode.js';
 
 export default {
