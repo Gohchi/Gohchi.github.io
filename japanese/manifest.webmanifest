@@ -7,8 +7,8 @@
   "start_url": "/japanese/index.html",
   "scope": "/japanese/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#112A12",
+  "theme_color": "#112A12",
   "icons": [
     {
       "src": "images/icons/favicon.ico",
