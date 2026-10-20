@@ -7,6 +7,7 @@
   --color-nori-seaweed: #464826;
   
   --color-header: light-dark(var(--color-chopsticks), var(--color-nori));
+  --color-footer: light-dark(var(--color-chopsticks), var(--color-nori));
 
   --color-button-disabled: #919191;
   --color-button-disabled-shadow: #646464;
@@ -230,6 +231,10 @@ body {
       width: calc(100% - 6rem);
       align-items: center;
       height: 3rem;
+
+      .subtitle-text {
+        font-size: .6rem;
+      }
     }
 
     .info {
@@ -241,6 +246,7 @@ body {
     .header-content {
       display: flex;
       gap: 10px;
+      align-items: center;
     }
   }
   
@@ -359,7 +365,7 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: var(--color-footer);
     text-align: center;
     padding: 2px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -499,7 +505,7 @@ body {
   .tables {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: .1rem;
     justify-content: center;
     font-size: x-large;
     flex-direction: column;
@@ -509,20 +515,28 @@ body {
       outline: 1px solid;
       padding: 0 3px;
     }
+    
+    .kana-title {
+      margin: .5rem 0.2rem;
+      display: inline-block;
+    }
+  }
+
+  .kana-info {
+    font-size: .7rem;
   }
 
   .word-builder {
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    height: 2.2rem;
     gap: .5rem;
-    max-width: 26rem;
-    margin: 0 auto 1rem;
+    justify-content: center;
   }
 
   .word-builder-input {
     flex: 1;
-    font-size: 1.3rem;
-    padding: .5rem .75rem;
+    font-size: 1rem;
     text-align: center;
     border: 1px solid light-dark(#d0d0d0, #303030);
     border-radius: 6px;
@@ -534,7 +548,6 @@ body {
     cursor: pointer;
     font-size: 1.1rem;
     line-height: 1;
-    padding: .5rem .7rem;
     border: 1px solid light-dark(#d0d0d0, #303030);
     border-radius: 6px;
     background: light-dark(#fff, #1c1c1c);
@@ -910,9 +923,14 @@ body {
         display: flex;
         // gap: 1rem;
 
+        .lang-icon {
+          margin-right: .5rem;
+        }
+
         .active {
           background-color: #f0f0f0;
           border: 1px solid #ccc;
+          color: black;
         }
       }
     }
@@ -1744,6 +1762,9 @@ body {
   .tategaki-button {
     writing-mode: vertical-rl;
   }
+  .filter-menu .filter-count {
+    display: none;
+  }
 }
 
 
@@ -1772,6 +1793,12 @@ body {
   .common-phrases main .filters {
     flex-direction: column;
     align-items: stretch;
+  }
+  
+  #dialog-kana {
+    .word-builder {
+      margin-top: 2rem;
+    }
   }
 }
 
@@ -2587,6 +2614,7 @@ body header > .title {
     padding: .75rem;
 
     .print-toolbar {
+      width: unset;
       align-items: stretch;
       flex-direction: column;
     }

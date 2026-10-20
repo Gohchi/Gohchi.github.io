@@ -47,10 +47,6 @@ export default {
       localStorage.setItem('show-translation', this.showTranslation);
       localStorage.setItem('writing-direction', this.writingDirection);
     },
-    setLang(value) {
-      this.lang = value;
-      localStorage.setItem('lang', value);
-    },
     setWritingDirection(value) {
       this.writingDirection = value;
       localStorage.setItem('writing-direction', value);
@@ -135,15 +131,21 @@ export default {
     },
     headerTitle() {
       if (this.id) {
-        if (this.type == 'book' && this.currentMeta) {
+        if (this.currentMeta) {
           return this.currentMeta.title;
-        }
-        if (this.type == 'song' && this.currentMeta) { 
-          const { title, subtitle } = this.currentMeta;
-          return title + ' ' + subtitle;
         }
       } else {
         return 'TRANSLATIONS';
+      }
+    },
+    headerSubtitle() {
+      if (this.id) {
+        if (this.currentMeta) { 
+          const { subtitle } = this.currentMeta;
+          return subtitle;
+        }
+      } else {
+        return '';
       }
     },
     hasContent() {
