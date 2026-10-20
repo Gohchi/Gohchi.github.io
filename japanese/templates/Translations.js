@@ -2,6 +2,7 @@ export default /*html*/`
   <div class="book-translations">
     <MainHeader
       :title="headerTitle"
+      :subtitle="headerSubtitle"
     >
       <div class="header-content">
         <PhraseToRuby zoom :text="'翻訳'" />
@@ -132,24 +133,18 @@ export default /*html*/`
               :title="showTranslation ? 'Turn off translation' : 'Turn on translation'"
               @click="switchTranslation()"
             >&#127760; {{ showTranslation ? 'on' : 'off' }}</button>
-            <template v-if="showTranslation">
-              <button class="lang-eng" @click="setLang('eng')" :class="{ active: lang === 'eng' }">ENG</button>
-              <button class="lang-esp" @click="setLang('esp')" :class="{ active: lang === 'esp' }">ESP</button>
-            </template>
-            <template v-if="!showTranslation">
-              <button class="tategaki tategaki-button"
-                :title="!showTranslation ? 'たてがき' : undefined"
-                @click="setWritingDirection('tategaki')"
-                :class="{ active: writingDirection === 'tategaki' }"
-                :disabled="showTranslation"
-              >縦書き</button>
-              <button class="yokogaki tategaki-button"
-                :title="!showTranslation ? 'よこがき' : undefined"
-                @click="setWritingDirection('yokogaki')"
-                :class="{ active: writingDirection === 'yokogaki' }"
-                :disabled="showTranslation"
-              >横書き</button>
-            </template>
+            <button class="tategaki tategaki-button"
+              :title="!showTranslation ? 'たてがき' : undefined"
+              @click="setWritingDirection('tategaki')"
+              :class="{ active: writingDirection === 'tategaki' && !showTranslation }"
+              :disabled="showTranslation"
+            >縦書き</button>
+            <button class="yokogaki tategaki-button"
+              :title="!showTranslation ? 'よこがき' : undefined"
+              @click="setWritingDirection('yokogaki')"
+              :class="{ active: writingDirection === 'yokogaki' && !showTranslation }"
+              :disabled="showTranslation"
+            >横書き</button>
           </div>
           <button class="prev-page" title="まえ" :disabled="first" @click="prevPage()">前 &#8594;</button>
         </div>

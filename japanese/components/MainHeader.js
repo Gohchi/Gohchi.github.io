@@ -53,6 +53,7 @@ const NAV_ITEMS = [
 export default {
   props: {
     title: String,
+    subtitle: String,
     isHome: Boolean,
     hideFurigana: Boolean,
     hideZoom: Boolean,
@@ -60,6 +61,7 @@ export default {
   setup(props, { emit }) {
     const {
       title,
+      subtitle,
       isHome,
       hideFurigana,
       hideZoom,
@@ -67,6 +69,7 @@ export default {
 
     return {
       title,
+      subtitle,
       isHome,
       onChangeFurigana: () => {
         furiganaStore.switchFurigana();
@@ -144,7 +147,10 @@ export default {
     <div class="backdrop" v-if="showMenu" @click="showMenu=false"></div>
     <header>
       <div class="title">
-        {{ title }}
+        <div>
+          <div>{{ title }}</div>
+          <div v-if="subtitle" class="subtitle-text">{{ subtitle }}</div>
+        </div>
         <slot></slot>
       </div>
       
@@ -236,7 +242,7 @@ export default {
 
       <div class="tables">
         <div>
-          <h2>Hiragana</h2>
+          <span class="kana-title">Hiragana</span>
           <div class="content">
             <table class="hiragana-table kana-table">
               <tr>
@@ -264,7 +270,7 @@ export default {
         </div>
 
         <div>
-          <h2>Katakana</h2>
+          <span class="kana-title">Katakana</span>
           <div class="content">
             <table class="katakana-table kana-table">
               <tr>
@@ -292,7 +298,7 @@ export default {
         </div>
       </div>
 
-      <p>Hiragana and Katakana are two of the three main scripts used in Japanese writing. Hiragana is used for native Japanese words, while Katakana is typically used for foreign words and names. Click any kana to add it to the word above — the leftmost column and the former blank cells hold ー (chōonpu), ゠ (dasshu), ゛ (dakuten), ゜ (handakuten), ␣ (space), ⌫ (backspace), and 「」『』。、 (closing/ending punctuation).</p>
+      <p class="kana-info">Hiragana and Katakana are two of the three main scripts used in Japanese writing. Hiragana is used for native Japanese words, while Katakana is typically used for foreign words and names. Click any kana to add it to the word above — the leftmost column and the former blank cells hold ー (chōonpu), ゠ (dasshu), ゛ (dakuten), ゜ (handakuten), ␣ (space), ⌫ (backspace), and 「」『』。、 (closing/ending punctuation).</p>
     </dialog>
     
     <dialog id="dialog-voices">
