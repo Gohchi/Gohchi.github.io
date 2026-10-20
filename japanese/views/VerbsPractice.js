@@ -15,6 +15,8 @@ import {
   weightedPick,
 } from 'data/progress.js';
 
+import { furiganaStore } from 'store';
+
 import { shuffle } from 'tools';
 
 const HISTORY_LIMIT = 50;
@@ -62,6 +64,8 @@ export default {
       verbStatusClass: 'status',
       verbScore: 0,
       verbStreak: 0,
+      
+      furiganaStore,
     }
   },
   computed: {
