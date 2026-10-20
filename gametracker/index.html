@@ -8,6 +8,7 @@
   <title>Disgaea - Game Tracker</title>
   <link rel="shortcut icon" type="image/png" href="img/favicon-prinny.ico"/>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="modules/disgaea-ds/ds.css">
   <script defer src="../common.js"></script>
   <script defer type="module" src="scripts.js"></script>
 </head>
@@ -19,41 +20,49 @@
       id="game-id"
       onchange="trackerChanged(event)"
     >
-      <option value="D-DS" selected>Disgaea DS</option>
+      <option value="D-DS">Disgaea DS</option>
       <!--<option value="D-2">Disgaea 2</option> -->
-      <option value="D-3">Disgaea 3</option>
+      <option value="D-3"selected>Disgaea 3</option>
     </select>
     <div id="game-actions"></div>
   </div>
   <div id="game-body"></div>
 </body>
 
-<template id="disgaea-ds-body">
-  <div id="config">
-    <fieldset>
-      <legend>Sprite</legend>
-      <select id="sprite"></select>
-    </fieldset>
-    <fieldset>
-      <legend>Class/Title</legend>
-      <select id="classes"></select>
-    </fieldset>
-    <fieldset>
-      <legend>Portrait</legend>
-      <select id="portraits"></select>
-    </fieldset>
-  </div>
-  <textarea id="code" readonly>
+<!-- ===================== Disgaea DS ===================== -->
+<template id="disgaea-ds-actions">
+  <button id="ds-copy" type="button">Copy codes</button>
+  <span id="ds-count" class="ds-count"></span>
+</template>
 
-  </textarea>
-  <div class="generator">
-    <input id="code-base" placeholder="base" value="221D10E" />
-    <input id="value" placeholder="value" value="0" />
-    <textarea id="codes" readonly></textarea>
+<template id="disgaea-ds-body">
+  <div class="ds-tool" id="ds-root">
+    <section class="ds-editor" aria-label="Editor">
+      <nav class="ds-tabs" role="tablist" aria-label="Sections">
+        <button type="button" role="tab" data-tab="character">Character</button>
+        <button type="button" role="tab" data-tab="item">Item</button>
+        <button type="button" role="tab" data-tab="notes">Notes</button>
+      </nav>
+
+      <div id="ds-panes"></div>
+
+      <fieldset class="ds-output">
+        <legend>Action Replay codes</legend>
+        <textarea id="ds-master" class="ds-master" data-master placeholder="Master code (one line each, goes on top)" aria-label="Master code" spellcheck="false"></textarea>
+        <div class="ds-output-options">
+          <label><input type="checkbox" data-opt="labels"> Add ;labels to each line</label>
+          <label><input type="checkbox" data-opt="nameAsWords"> Write the name as 32-bit words (fewer lines)</label>
+          <label><input type="checkbox" data-opt="stabilizePortrait"> Stabilize portraits (021D10D3 = 00)</label>
+        </div>
+        <textarea id="ds-code" class="ds-code" readonly spellcheck="false" aria-label="Generated codes"></textarea>
+      </fieldset>
+    </section>
+
+    <aside class="ds-preview" id="ds-preview" aria-label="Preview"></aside>
   </div>
 </template>
 
-
+<!-- ===================== Disgaea 3 ===================== -->
 <template id="disgaea-3-body">
   <div id="items">
   </div>

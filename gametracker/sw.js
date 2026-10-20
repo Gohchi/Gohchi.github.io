@@ -6,7 +6,8 @@ self.addEventListener('install', e => {
         '/gametracker/',
         '/gametracker/index.html',
         '/gametracker/scripts.js',
-        '/gametracker/styles.css'
+        '/gametracker/styles.css',
+        '/gametracker/modules/disgaea-ds/ds.css'
       ]
     )
   );

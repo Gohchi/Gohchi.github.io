@@ -1,0 +1,420 @@
+/* Disgaea DS tool. Everything is scoped under .ds-tool, so Disgaea 3 is not affected.
+   Load it AFTER ../../styles.css (the global "* { font-size: 10px }" is reset below). */
+
+/* ---------- layout ---------- */
+
+.ds-tool {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  gap: 12px;
+  align-items: start;
+  margin-top: 64px;
+  padding: 8px;
+  font-size: 10px;
+  line-height: 1.7;
+  color: #2d1000;
+}
+
+.ds-tool * {
+  font-size: inherit;
+  box-sizing: border-box;
+}
+
+.ds-tool :focus-visible {
+  outline: 3px solid #f6c548;
+  outline-offset: 2px;
+}
+
+.ds-preview {
+  position: sticky;
+  top: 56px;
+}
+
+#game-actions.disgaea-ds {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------- editor ---------- */
+
+.ds-tool fieldset,
+.ds-tool .ds-group {
+  margin: 0 0 12px;
+  padding: 8px 10px 10px;
+  background-color: #cabaa1d9;
+  border: 2px solid #59432cd9;
+  border-radius: 4px;
+}
+
+.ds-tool legend,
+.ds-tool summary {
+  font-weight: bold;
+  color: #2d1000;
+}
+
+.ds-tool summary {
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.ds-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.ds-tabs button.active {
+  background: #f6c548;
+  color: #2a1600;
+  box-shadow: 0 0 #8a5c08;
+  transform: translateY(3px);
+}
+
+.ds-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.ds-row {
+  display: grid;
+  grid-template-columns: 18px minmax(90px, 140px) minmax(90px, 1fr) auto;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 3px 0;
+}
+
+.ds-row > small {
+  grid-column: 2 / -1;
+  opacity: 0.8;
+}
+
+.ds-pick input[type="search"] {
+  grid-column: 3 / -1;
+}
+
+.ds-pick select {
+  grid-column: 2 / -1;
+}
+
+.ds-skill {
+  grid-template-columns: minmax(70px, 100px) minmax(70px, 1fr) minmax(70px, 1fr);
+}
+
+.ds-tool input[type="number"],
+.ds-tool input[type="text"],
+.ds-tool input[type="search"],
+.ds-tool select,
+.ds-tool textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 5px 6px;
+  color: #2d1000;
+  background: #fff8e6;
+  border: 2px solid #59432c;
+  border-radius: 4px;
+}
+
+.ds-tool input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #59432c;
+}
+
+.ds-tool button {
+  padding: 6px 10px;
+  color: #fff3d6;
+  background: #59432c;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 3px #2d1f10;
+  cursor: pointer;
+}
+
+.ds-tool button:active {
+  box-shadow: 0 0 #2d1f10;
+  transform: translateY(3px);
+}
+
+.ds-hint {
+  margin: 0 0 12px;
+}
+
+.ds-hint a {
+  color: #2d1000;
+}
+
+.ds-notes {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-notes li {
+  padding: 8px 10px;
+  background: #cabaa1d9;
+  border-left: 6px solid #59432c;
+  border-radius: 4px;
+}
+
+.ds-notes li.warn {
+  border-left-color: #b3361b;
+}
+
+/* ---------- output ---------- */
+
+.ds-output-options {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+.ds-output-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ds-master {
+  height: 56px;
+  margin-bottom: 8px;
+  resize: vertical;
+}
+
+.ds-code {
+  height: 240px;
+  color: #bff7c8 !important;
+  background: #0b1230 !important;
+  border-color: #9db4ff !important;
+  white-space: pre;
+  resize: vertical;
+}
+
+.ds-count {
+  color: #fff3d6;
+}
+
+/* ---------- preview: Disgaea status window ---------- */
+
+.ds-window {
+  overflow: hidden;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000a;
+  background: linear-gradient(180deg, #22397f 0%, #0f1b45 55%, #0a122f 100%);
+  border: 2px solid #b8c9ff;
+  border-radius: 12px;
+  box-shadow: 0 0 0 3px #070c20, inset 0 0 0 2px #324d9e, 0 10px 24px #0008;
+}
+
+.ds-window-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  color: #2a1600;
+  text-shadow: none;
+  background: linear-gradient(#ffd966, #d9961a);
+}
+
+.ds-window-body {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+}
+
+.ds-head {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+}
+
+.ds-portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 96px;
+  height: 96px;
+  padding: 4px;
+  overflow: hidden;
+  text-align: center;
+  background: repeating-linear-gradient(45deg, #16265c 0 6px, #1b3070 6px 12px);
+  border: 3px solid #ffd966;
+  border-radius: 8px;
+}
+
+.ds-portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ds-tool .ds-portrait-id {
+  font-size: 20px;
+  color: #ffd966;
+}
+
+.ds-tool .ds-portrait-name {
+  font-size: 7px;
+  line-height: 1.4;
+  color: #b8c9ff;
+}
+
+.ds-who {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ds-tool .ds-name {
+  font-size: 14px;
+}
+
+.ds-name.off {
+  color: #8da0d8;
+}
+
+.ds-class {
+  color: #ffb347;
+}
+
+.ds-sprite {
+  color: #b8c9ff;
+}
+
+.ds-tag {
+  color: #ffb347;
+}
+
+.ds-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ds-vital {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.ds-track {
+  height: 12px;
+  overflow: hidden;
+  background: #050a1c;
+  border: 2px solid #6f87d6;
+  border-radius: 7px;
+}
+
+.ds-fill {
+  height: 100%;
+  transition: width 0.2s;
+}
+
+.ds-fill.hp {
+  background: linear-gradient(#a6ff8f, #35b82d);
+}
+
+.ds-fill.sp {
+  background: linear-gradient(#9fd6ff, #2f7fe0);
+}
+
+.ds-track.off .ds-fill {
+  background: repeating-linear-gradient(45deg, #2a3a73 0 6px, #202e5e 6px 12px);
+}
+
+.ds-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px 14px;
+}
+
+.ds-stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  border-bottom: 1px solid #324d9e;
+}
+
+.ds-list {
+  color: #b8c9ff;
+}
+
+.ds-block h3 {
+  margin: 0 0 6px;
+  padding-bottom: 4px;
+  color: #ffd966;
+  border-bottom: 2px solid #324d9e;
+}
+
+.ds-skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-skills em {
+  color: #b8c9ff;
+  font-style: normal;
+}
+
+.ds-empty,
+.ds-foot {
+  margin: 0;
+  color: #8da0d8;
+}
+
+.ds-badges {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-badge {
+  padding: 6px 8px;
+  line-height: 1.6;
+  border-radius: 6px;
+}
+
+.ds-badge.info {
+  background: #16305f;
+  border: 1px solid #7ea0ff;
+}
+
+.ds-badge.warn {
+  background: #6b2414;
+  border: 1px solid #ff9a6b;
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 900px) {
+  .ds-tool {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ds-preview {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-fill {
+    transition: none;
+  }
+}
