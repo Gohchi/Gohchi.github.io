@@ -29,7 +29,7 @@ export default /*html*/`
           <WordCorner :word="targetAdj.dictionary" :level="targetAdj.level" />
 
           <div class="prompt verb-prompt">
-            <template v-if="furiganaStore.showFurigana">
+            <template v-if="furiganaStore.showFurigana && inputMode === 'choice'">
               <ruby>{{ targetAdj.dictionary }}<rp>(</rp><rt>{{ targetAdj.reading }}</rt><rp>)</rp></ruby>
             </template>
             <template v-else>{{ targetAdj.dictionary }}</template>

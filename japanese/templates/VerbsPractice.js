@@ -2,7 +2,6 @@ export default /*html*/`
   <div class="verbs-practice practice-sections">
     <MainHeader
       title="VERB PRACTICE"
-      hideFurigana="true"
       hideZoom="true"
     >
       <div class="keyboard-toolbar-buttons">
@@ -33,9 +32,16 @@ export default /*html*/`
           <WordCorner :word="targetVerb.dictionary" :level="targetVerb.level" />
 
           <div class="verb-meaning">{{ targetVerb.meaning }}</div>
-          <div class="prompt verb-prompt">
-            <ruby>{{ targetVerb.dictionary }}<rp>(</rp><rt>{{ targetVerb.reading }}</rt><rp>)</rp></ruby>
-          </div>
+          <template v-if="furiganaStore.showFurigana">
+            <div class="prompt verb-prompt">
+              <ruby>{{ targetVerb.dictionary }}<rp>(</rp><rt>{{ targetVerb.reading }}</rt><rp>)</rp></ruby>
+            </div>
+          </template>
+          <template v-else>
+            <div class="prompt verb-prompt">
+              {{ targetVerb.dictionary }}
+            </div>
+          </template>
           <div class="verb-target-label">{{ formLabel }} · Group {{ targetVerb.group }} · {{ targetVerb.level }}</div>
 
           <div class="memory-bar" :title="'Memory: ' + verbMemory + '/' + MAX_MEMORY">

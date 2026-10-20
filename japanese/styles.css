@@ -1015,7 +1015,6 @@ body {
     display: block;
     font-size: 72px;
     text-align: center;
-    margin: 20px 0;
   }
 
   .status {
@@ -1186,23 +1185,52 @@ body {
     position: relative;
   }
 
-  /* same look as .kanji-dialog .JLPT-level */
+  /* Top row of the card: Listen on the left, JLPT level + Jisho on the right.
+     All three pills share the same fixed height so they line up. */
   .kanji-corner {
+    --corner-pill-height: 22px;
+
     position: absolute;
+    left: 6px;
     right: 6px;
     top: 6px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 6px;
+    pointer-events: none; /* only the pills are clickable, not the whole row */
+
+    .kanji-corner-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto; /* stays on the right even when Listen is hidden */
+    }
+
+    .JLPT-level,
+    .jisho-link,
+    .listen-link {
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--corner-pill-height);
+      margin: 0;
+      padding: 0 8px;
+      font-family: inherit;
+      font-size: 10px;
+      line-height: 1;
+      color: black;
+      text-decoration: none;
+      border: none;
+      border-radius: 6px;
+      pointer-events: auto;
+    }
 
     .JLPT-level {
-      padding: 3.5px;
-      font-size: 8px;
+      width: 3.5rem;
+      padding: 0;
       outline: 1px solid;
-      width: 2.5rem;
-      text-align: center;
-      color: black;
-      border-radius: 6px;
       box-shadow: 0 2px color(srgb 0.33 0.33 0.33);
 
       &.level-N5 {
@@ -1222,14 +1250,16 @@ body {
       }
     }
 
-    .jisho-link {
-      font-size: 10px;
-      text-decoration: none;
-      color: black;
+    .jisho-link,
+    .listen-link {
       background: var(--color-chopsticks);
-      padding: 2px 8px;
-      border-radius: 6px;
       box-shadow: 0 2px hsl(from var(--color-chopsticks) h s 20%);
+      cursor: pointer;
+    }
+
+    .listen-link:active {
+      transform: translateY(2px);
+      box-shadow: 0 0 hsl(from var(--color-chopsticks) h s 20%);
     }
   }
 
