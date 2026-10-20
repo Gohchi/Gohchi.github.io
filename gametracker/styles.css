@@ -317,4 +317,15 @@ body:has(.disgaea-ds) {
     width: 208px;
     height: 42px;
   }
+
+  .generator {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    #codes {
+      width: 183px;
+      height: 177px;
+    }
+  }
 }

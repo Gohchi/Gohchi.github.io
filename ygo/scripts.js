@@ -5,6 +5,8 @@ import cards from './cards.json' with { type: 'json' };
 
 const CARD_API = 'db.ygoprodeck.com/api/v7/cardinfo.php?name=';
 
+// https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=barbaroid
+
 console.log(cards);
 createApp({
   components: {
