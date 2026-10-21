@@ -25,6 +25,12 @@ export default /*html*/`
         <template v-if="targetWord">
           <WordCorner :word="targetWord.word" :level="targetWord.level" />
 
+          <InfoIcons
+            :streak="wordStreak"
+            :score="wordScore"
+            :mastered="wordStats"
+          />
+
           <!-- the meaning is the answer in choice mode, so it is hidden there -->
           <div class="verb-meaning" v-if="inputMode === 'type'">{{ targetWord.meaning }}</div>
           <div class="prompt" :style="wordPromptStyle">{{ targetWord.word }}</div>
@@ -69,14 +75,6 @@ export default /*html*/`
             <button @click="revealWordAnswer">Reveal</button>
             <button @click="newWordTarget">Skip</button>
             <button @click="resetWordScore">Reset</button>
-          </div>
-
-          <div class="stats">
-            <div>Score: <span>{{ wordScore }}</span></div>
-            <div>Streak: <span>{{ wordStreak }}</span></div>
-          </div>
-          <div class="stats memory-stats">
-            <div>🧠 Mastered: <span>{{ wordStats.mastered }}/{{ wordStats.total }}</span></div>
           </div>
         </template>
 

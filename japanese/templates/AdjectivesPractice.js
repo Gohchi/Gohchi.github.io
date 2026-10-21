@@ -28,6 +28,12 @@ export default /*html*/`
         <template v-if="targetAdj">
           <WordCorner :word="targetAdj.dictionary" :level="targetAdj.level" />
 
+          <InfoIcons
+            :streak="streak"
+            :score="score"
+            :mastered="adjStats"
+          />
+
           <div class="prompt verb-prompt">
             <template v-if="furiganaStore.showFurigana && inputMode === 'choice'">
               <ruby>{{ targetAdj.dictionary }}<rp>(</rp><rt>{{ targetAdj.reading }}</rt><rp>)</rp></ruby>
@@ -70,14 +76,6 @@ export default /*html*/`
             <button @click="revealAnswer">Reveal</button>
             <button @click="newTarget">Skip</button>
             <button @click="resetScore">Reset</button>
-          </div>
-
-          <div class="stats">
-            <div>Score: <span>{{ score }}</span></div>
-            <div>Streak: <span>{{ streak }}</span></div>
-          </div>
-          <div class="stats memory-stats">
-            <div>🧠 Mastered: <span>{{ adjStats.mastered }}/{{ adjStats.total }}</span></div>
           </div>
         </template>
 

@@ -3,6 +3,7 @@ import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import PhraseToRuby from 'components/PhraseToRuby.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
+import InfoIcons from 'components/InfoIcons.js';
 
 import template from 'templates/KanjiPractice.js';
 
@@ -34,6 +35,7 @@ export default {
     WordCorner,
     PhraseToRuby,
     FilterMenu,
+    InfoIcons,
   },
   data() {
     const inputMode = localStorage.getItem('kanji-practice-input-mode') || 'type';

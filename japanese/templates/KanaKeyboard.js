@@ -18,24 +18,12 @@ export default /*html*/`
       <div class="card kanji-card">
         <WordCorner :word="target" />
 
-        <div class="info-icons">
-          <div class="streak">
-            <div class="icon fire-mask" :class="{ active: streak > 0 }"></div>
-            {{ streak }}
-          </div>
-          <div class="score">
-            <div class="icon star-mask"></div>
-            {{ score }}
-          </div>
-          <div class="last">
-            <div class="icon return-mask"></div>
-            {{ last }}
-          </div>
-          <div class="mastered">
-            <div class="icon mastered-mask"></div>
-            {{ kanaStats.mastered }}/{{ kanaStats.total }}
-          </div>
-        </div>
+        <InfoIcons
+          :streak="streak"
+          :score="score"
+          :last="last"
+          :mastered="kanaStats"
+        />
 
         <div style="text-align:center">
           {{ inputMode === 'type' ? 'Type this kana:' : 'Which reading matches?' }}

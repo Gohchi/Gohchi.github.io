@@ -3,6 +3,7 @@ import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import template from 'templates/VerbsPractice.js';
+import InfoIcons from 'components/InfoIcons.js';
 
 import verbsData from 'data/verbs.js';
 import { conjugateVerb, buildVerbDistractors, VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
@@ -36,6 +37,7 @@ export default {
     SessionHistory,
     FilterMenu,
     WordCorner,
+    InfoIcons,
   },
   setup() {
     return {};
