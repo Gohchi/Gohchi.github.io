@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
+import InfoIcons from 'components/InfoIcons.js';
 
 import template from 'templates/KanaKeyboard.js';
 
@@ -23,6 +24,7 @@ export default {
     MainHeader,
     SessionHistory,
     WordCorner,
+    InfoIcons,
   },
   setup() {
     const capture = ref(null);

@@ -3,6 +3,7 @@ import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
+import InfoIcons from 'components/InfoIcons.js';
 
 import template from 'templates/KatakanaPractice.js';
 
@@ -35,6 +36,7 @@ export default {
     SessionHistory,
     WordCorner,
     FilterMenu,
+    InfoIcons,
   },
   setup() {
     const capture = ref(null);

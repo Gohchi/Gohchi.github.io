@@ -31,6 +31,12 @@ export default /*html*/`
         <template v-if="targetVerb">
           <WordCorner :word="targetVerb.dictionary" :level="targetVerb.level" />
 
+          <InfoIcons
+            :streak="verbStreak"
+            :score="verbScore"
+            :mastered="verbStats"
+          />
+
           <div class="verb-meaning">{{ targetVerb.meaning }}</div>
           <template v-if="furiganaStore.showFurigana">
             <div class="prompt verb-prompt">
@@ -75,14 +81,6 @@ export default /*html*/`
             <button @click="revealAnswer">Reveal</button>
             <button @click="newVerbTarget">Skip</button>
             <button @click="resetVerbScore">Reset</button>
-          </div>
-
-          <div class="stats">
-            <div>Score: <span>{{ verbScore }}</span></div>
-            <div>Streak: <span>{{ verbStreak }}</span></div>
-          </div>
-          <div class="stats memory-stats">
-            <div>🧠 Mastered: <span>{{ verbStats.mastered }}/{{ verbStats.total }}</span></div>
           </div>
         </template>
 
