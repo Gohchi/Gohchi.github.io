@@ -12,7 +12,7 @@
   --color-button-disabled: #919191;
   --color-button-disabled-shadow: #646464;
 
-  --color-level-N5: #7cfcff;
+  --color-level-N5: #1bebef;
   --color-level-N4: #7cff92;
   --color-level-N3: #e8ff7c;
   --color-level-N2: #ffc87c;
@@ -293,6 +293,58 @@ body {
   }
   .books-icon {
     background-image: url(./images/books.svg);
+  }
+  .fire-icon {
+    background-image: url(./images/fire.svg);
+  }
+
+  .fire-mask {
+    -webkit-mask: url(./images/fire.svg) no-repeat left / contain;
+    mask: url(./images/fire.svg) no-repeat left / contain;
+
+    background-color: gray; 
+    transition: background-color 0.3s ease;
+
+    &.active {
+      background-color: var(--color-salmon); 
+    }
+  }
+
+  .star-mask {
+    -webkit-mask: url(./images/star.svg) no-repeat left / contain;
+    mask: url(./images/star.svg) no-repeat left / contain;
+
+    background-color: var(--color-chopsticks); 
+  }
+
+  .return-mask {
+    -webkit-mask: url(./images/return.svg) no-repeat left / contain;
+    mask: url(./images/return.svg) no-repeat left / contain;
+
+    background-color: var(--color-nori-seaweed); 
+  }
+
+  .mastered-mask {
+    -webkit-mask: url(./images/graduation-hat.svg) no-repeat left / contain;
+    mask: url(./images/graduation-hat.svg) no-repeat left / contain;
+
+    background-color: var(--color-chopsticks);
+  }
+
+  .info-icons {
+    position: absolute;
+    left: 6px;
+    margin-top: 1rem;
+
+    > div {
+      display: flex;
+      
+      .icon {
+        height: 22px;
+        width: 22px;
+      }
+
+    }
   }
 
   &.index .articles-wrapper {
@@ -584,6 +636,13 @@ body {
 
 .close-btn {
   cursor: pointer;
+}
+
+
+.kana-keyboard {
+  main {
+    height: calc(100dvh - 4rem);
+  }
 }
 
 .common-phrases {
@@ -1252,16 +1311,22 @@ body {
       }
     }
 
-    .jisho-link,
     .listen-link {
+      background: var(--color-salmon);
+      color: white;
+      box-shadow: 0 2px hsl(from var(--color-salmon) h s 20%);
+      cursor: pointer;
+
+      &:active {
+        transform: translateY(2px);
+        box-shadow: 0 0 hsl(from var(--color-chopsticks) h s 20%);
+      }
+    }
+
+    .jisho-link {
       background: var(--color-chopsticks);
       box-shadow: 0 2px hsl(from var(--color-chopsticks) h s 20%);
       cursor: pointer;
-    }
-
-    .listen-link:active {
-      transform: translateY(2px);
-      box-shadow: 0 0 hsl(from var(--color-chopsticks) h s 20%);
     }
   }
 

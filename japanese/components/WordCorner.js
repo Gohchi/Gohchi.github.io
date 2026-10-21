@@ -27,7 +27,7 @@ export default {
         class="listen-link"
         title="Listen"
         @click="listen"
-      >🗣️ Listen</button>
+      >Listen</button>
 
       <div class="kanji-corner-info">
         <div v-if="level" class="JLPT-level" :class="{ ['level-'+level]: true }">JLPT {{ level }}</div>
