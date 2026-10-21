@@ -18,6 +18,25 @@ export default /*html*/`
       <div class="card kanji-card">
         <WordCorner :word="target" />
 
+        <div class="info-icons">
+          <div class="streak">
+            <div class="icon fire-mask" :class="{ active: streak > 0 }"></div>
+            {{ streak }}
+          </div>
+          <div class="score">
+            <div class="icon star-mask"></div>
+            {{ score }}
+          </div>
+          <div class="last">
+            <div class="icon return-mask"></div>
+            {{ last }}
+          </div>
+          <div class="mastered">
+            <div class="icon mastered-mask"></div>
+            {{ kanaStats.mastered }}/{{ kanaStats.total }}
+          </div>
+        </div>
+
         <div style="text-align:center">
           {{ inputMode === 'type' ? 'Type this kana:' : 'Which reading matches?' }}
         </div>
@@ -43,15 +62,6 @@ export default /*html*/`
           <button @click="newTarget">Next</button>
           <button @click="resetScore">Reset</button>
           <button v-if="inputMode === 'type'" @click="focusInput">Focus</button>
-        </div>
-
-        <div class="stats">
-          <div>Score: <span id="score">{{ score }}</span></div>
-          <div>Streak: <span id="streak">{{ streak }}</span></div>
-          <div>Last: <span id="last">{{ last }}</span></div>
-        </div>
-        <div class="stats memory-stats">
-          <div>🧠 Mastered: <span>{{ kanaStats.mastered }}/{{ kanaStats.total }}</span></div>
         </div>
       </div>
 
