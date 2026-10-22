@@ -1159,6 +1159,8 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     margin: 16px 0;
+    max-width: 30rem;
+    width: 100%;
   }
 
   .verb-choice-grid {
@@ -1242,8 +1244,11 @@ body {
     text-align: center;
   }
 
-  .kanji-card {
+  .choice-card {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   /* Top row of the card: Listen on the left, JLPT level + Jisho on the right.
