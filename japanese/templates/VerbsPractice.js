@@ -60,7 +60,7 @@ export default /*html*/`
               v-model="verbInputValue"
               @keyup.enter="checkVerbAnswer"
               autocomplete="off"
-              class="verb-input"
+              class="type-input"
               placeholder="Kanji or hiragana, either works..."
             />
           </template>
