@@ -173,7 +173,7 @@ export default {
       this.pushHistory({
         type: 'word',
         prompt: word,
-        detail: meaning,
+        detail: reading + ' | ' + meaning,
         chosen: value,
         correctAnswer: reading,
         isCorrect: correct,
@@ -206,7 +206,7 @@ export default {
       this.pushHistory({
         type: 'word',
         prompt: word,
-        detail: 'meaning',
+        detail: reading,
         chosen: option,
         correctAnswer: meaning,
         isCorrect: correct,
@@ -240,7 +240,7 @@ export default {
         this.pushHistory({
           type: 'word',
           prompt: word,
-          detail: isChoice ? 'meaning' : meaning,
+          detail: isChoice ? reading : meaning,
           chosen: '(revealed)',
           correctAnswer: isChoice ? meaning : reading,
           isCorrect: false,

@@ -1376,6 +1376,11 @@ body {
           color: black;
         }
       }
+
+      &.buttons {
+        justify-content: center;
+        cursor: pointer;
+      }
     }
 
     .history-prompt {
