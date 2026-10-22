@@ -33,7 +33,7 @@ const CATEGORY_MEANING = 'words-hiragana-meaning';
 export default {
   components: {
     MainHeader,
-    SessionHistory,
+    SessionHistory, 
     WordCorner,
     FilterMenu,
     InfoIcons,
@@ -293,7 +293,6 @@ export default {
       this.pushHistory({
         type: 'word',
         prompt: word,
-        detail: 'meaning',
         chosen: option,
         correctAnswer: meaning,
         isCorrect: correct,

@@ -170,9 +170,7 @@ export default {
         setTimeout(() => this.newTarget(), this.inputMode === 'choice' ? 500 : 700);
       } else {
         this.streak = 0;
-        this.status = this.inputMode === 'type'
-          ? `Not quite. Answer: ${adj.reading}`
-          : `Not quite. Answer: ${adj.meaning}`;
+        this.status = 'Not quite, try another one.';
         this.statusClass = 'status bad';
       }
     },

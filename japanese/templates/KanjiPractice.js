@@ -20,7 +20,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card kanji-card">
+      <div class="card choice-card">
         <template v-if="targetWord">
           <WordCorner :word="targetWord.word" :level="targetWord.level" />
 

@@ -27,7 +27,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card">
+      <div class="card choice-card">
         <template v-if="targetVerb">
           <WordCorner :word="targetVerb.dictionary" :level="targetVerb.level" />
 

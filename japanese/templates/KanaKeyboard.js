@@ -15,7 +15,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card kanji-card">
+      <div class="card choice-card">
         <WordCorner :word="target" />
 
         <InfoIcons

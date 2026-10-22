@@ -163,13 +163,14 @@ export default {
     },
     gradeVerbAnswer(value) {
       if (!this.targetVerb) return;
+      const { dictionary, reading } = this.targetVerb;
       const correct = value === this.verbAnswer || value === this.verbAnswerKana;
       recordAnswer('verbs', this.verbMemoryKey, correct);
 
       this.pushHistory({
         type: 'verb',
-        prompt: this.targetVerb.dictionary,
-        detail: this.formLabel,
+        prompt: dictionary,
+        detail: reading + ' | ' + this.formLabel,
         chosen: value,
         correctAnswer: this.formattedAnswer(),
         isCorrect: correct,
@@ -183,7 +184,7 @@ export default {
         setTimeout(() => this.newVerbTarget(), 700);
       } else {
         this.verbStreak = 0;
-        this.verbStatus = 'Not quite, try again.';
+        this.verbStatus = 'Not quite, try another one.';
         this.verbStatusClass = 'status bad';
       }
     },

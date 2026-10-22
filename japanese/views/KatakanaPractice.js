@@ -296,7 +296,6 @@ export default {
       this.pushHistory({
         type: 'word',
         prompt: word,
-        detail: 'meaning',
         chosen: option,
         correctAnswer: meaning,
         isCorrect: correct,
