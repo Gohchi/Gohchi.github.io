@@ -194,7 +194,7 @@ export default {
       <router-link
         to="/profile"
         class="icon-profile"
-        :class="{ selected: isActive('/profile') }"
+        :class="{ selected: isActive('/profile'), loading: profileStore.authBusy }"
         title="Profile"
         aria-label="Profile"
       >
