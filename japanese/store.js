@@ -11,6 +11,18 @@ import {
   resetProfile,
 } from 'data/profile.js';
 
+import {
+  watchAuth,
+  signInWithGoogle,
+  signOutUser,
+} from 'data/firebase.js';
+
+import {
+  startSync,
+  stopSync,
+  flushSync,
+} from 'data/sync.js';
+
 const zoomLevel = localStorage.getItem('zoom-level');
 
 export const zoomStore = reactive({
@@ -75,13 +87,53 @@ export const voiceStore = reactive({
 });
 
 
-// User profile.
-// Firebase seam:
-//  - on login/logout call `profileStore.setUser(firebaseUser | null)` (e.g. from onAuthStateChanged)
-//  - persist remotely inside `save()` (and load the remote profile after `setUser`)
+const SILENT_AUTH_ERRORS = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request'];
+const AUTH_ERRORS = {
+  'auth/popup-blocked': 'Your browser blocked the sign-in window. Allow pop-ups for this site and try again.',
+  'auth/unauthorized-domain': 'This domain is not authorized in the Firebase console yet.',
+  'auth/network-request-failed': 'Could not reach Google. Check your connection and try again.',
+};
+const authMessage = error => AUTH_ERRORS[error?.code] || 'Could not sign in right now. Are you offline?';
+
+// User profile + login.
+//  - localStorage stays the source of truth (works offline).
+//  - Signing in with Google syncs progress, activity, profile, favorites and roadmap
+//    to Firestore (see data/sync.js).
+//  - Firebase is loaded lazily; if it can't be reached the app simply stays signed out.
 export const profileStore = reactive({
   "user": null, // { uid, email, displayName, photoURL } once signed in
   "profile": loadProfile(),
+  "authReady": false, // true once Firebase answered (or failed to load)
+  "authBusy": false, // a sign in / out is in progress
+  "authError": '',
+  "authStarted": false,
+
+  // Starts listening to the auth state. Called once, at the bottom of this file.
+  async init() {
+    if (this.authStarted) return;
+    this.authStarted = true;
+
+    try {
+      await watchAuth(async user => {
+        try {
+          if (user) {
+            // sync BEFORE setUser, so a profile saved on another device wins over the Google name
+            await startSync(user);
+            this.profile = loadProfile();
+          } else {
+            stopSync();
+          }
+        } catch (error) {
+          console.error('[sync] failed', error);
+        }
+        this.setUser(user);
+        this.authReady = true;
+      });
+    } catch (error) {
+      console.warn('[auth] Firebase unavailable (offline?)', error);
+      this.authReady = true;
+    }
+  },
 
   setUser(user) {
     this.user = user
@@ -98,12 +150,36 @@ export const profileStore = reactive({
       this.save({ displayName: this.user.displayName });
     }
   },
+  async signIn() {
+    this.authError = '';
+    this.authBusy = true;
+    try {
+      await signInWithGoogle(); // watchAuth's callback does the rest
+    } catch (error) {
+      if (!SILENT_AUTH_ERRORS.includes(error?.code)) this.authError = authMessage(error);
+    } finally {
+      this.authBusy = false;
+    }
+  },
+  async signOut() {
+    this.authError = '';
+    this.authBusy = true;
+    try {
+      await flushSync(); // push what is still waiting, then leave
+      await signOutUser();
+    } catch (error) {
+      this.authError = 'Could not sign out right now.';
+    } finally {
+      this.authBusy = false;
+    }
+  },
   async save(changes) {
     this.profile = saveProfile({ ...this.profile, ...changes });
-    // Firebase: await setDoc(doc(db, 'users', this.user.uid), this.profile, { merge: true })
     return this.profile;
   },
   async reset() {
     this.profile = resetProfile();
   },
 });
+
+profileStore.init();

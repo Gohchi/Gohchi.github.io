@@ -53,7 +53,7 @@ export default /*html*/`
               autocapitalize="off"
               spellcheck="false"
               lang="ja"
-              class="verb-input"
+              class="type-input"
               placeholder="ひらがなで入力..."
             />
           </template>

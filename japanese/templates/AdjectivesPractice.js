@@ -55,7 +55,7 @@ export default /*html*/`
               v-model="typeInputValue"
               @keyup.enter="checkTypeAnswer"
               autocomplete="off"
-              class="verb-input"
+              class="type-input"
               placeholder="Type the reading in hiragana..."
             />
           </template>

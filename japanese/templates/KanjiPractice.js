@@ -57,7 +57,7 @@ export default /*html*/`
               autocapitalize="off"
               spellcheck="false"
               lang="ja"
-              class="verb-input"
+              class="type-input"
               placeholder="ひらがな or 漢字で入力..."
             />
           </template>
