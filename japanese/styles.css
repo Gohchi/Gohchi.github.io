@@ -2597,6 +2597,18 @@ body header > .title {
     background: transparent;
     color: var(--color-salmon);
   }
+  
+  .profile-error {
+    color: #c33;
+    font-weight: 600;
+    margin-top: .75rem;
+  }
+  
+  .profile-loading {
+    color: light-dark(#58635e, #b5bfba);
+    font-weight: 600;
+    animation: grayPulse 2s ease-in-out infinite;
+  }
 }
 
 /* Header filter menus (JLPT level, type, group...) */
@@ -2713,11 +2725,6 @@ body header > .title {
   }
 }
 
-.profile-error {
-  color: #c33;
-  font-weight: 600;
-  margin-top: .75rem;
-}
 
 @media (max-width: 700px) {
   .print-button {

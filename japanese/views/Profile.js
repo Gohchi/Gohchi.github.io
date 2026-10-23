@@ -51,6 +51,14 @@ export default {
       const goal = Number(profileStore.profile.dailyGoal) || 1;
       return Math.min(100, Math.round((this.todayAnswers / goal) * 100));
     },
+    authStatusText() {
+      return {
+        'checking': 'Checking your session…',
+        'signing-in': 'Signing in…',
+        'syncing': 'Syncing your data…',
+        'signing-out': 'Signing out…',
+      }[profileStore.authStatus] || '';
+    },
     avatarUrl() {
       return profileStore.user?.photoURL || '';
     },
