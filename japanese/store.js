@@ -103,10 +103,14 @@ const authMessage = error => AUTH_ERRORS[error?.code] || 'Could not sign in righ
 export const profileStore = reactive({
   "user": null, // { uid, email, displayName, photoURL } once signed in
   "profile": loadProfile(),
-  "authReady": false, // true once Firebase answered (or failed to load)
-  "authBusy": false, // a sign in / out is in progress
+  // '' = idle | 'checking' (restoring the session on load) | 'signing-in' | 'syncing' | 'signing-out'
+  "authStatus": 'checking',
   "authError": '',
   "authStarted": false,
+
+  get authBusy() {
+    return this.authStatus !== '';
+  },
 
   // Starts listening to the auth state. Called once, at the bottom of this file.
   async init() {
@@ -117,6 +121,7 @@ export const profileStore = reactive({
       await watchAuth(async user => {
         try {
           if (user) {
+            this.authStatus = 'syncing';
             // sync BEFORE setUser, so a profile saved on another device wins over the Google name
             await startSync(user);
             this.profile = loadProfile();
@@ -127,11 +132,11 @@ export const profileStore = reactive({
           console.error('[sync] failed', error);
         }
         this.setUser(user);
-        this.authReady = true;
+        this.authStatus = ''; // only now the UI shows "signed in" / "not signed in"
       });
     } catch (error) {
       console.warn('[auth] Firebase unavailable (offline?)', error);
-      this.authReady = true;
+      this.authStatus = '';
     }
   },
 
@@ -152,25 +157,25 @@ export const profileStore = reactive({
   },
   async signIn() {
     this.authError = '';
-    this.authBusy = true;
+    this.authStatus = 'signing-in';
     try {
-      await signInWithGoogle(); // watchAuth's callback does the rest
+      // On success the status is NOT cleared here: the watchAuth callback keeps it
+      // ('syncing') until the data is merged, then clears it.
+      await signInWithGoogle();
     } catch (error) {
+      this.authStatus = '';
       if (!SILENT_AUTH_ERRORS.includes(error?.code)) this.authError = authMessage(error);
-    } finally {
-      this.authBusy = false;
     }
   },
   async signOut() {
     this.authError = '';
-    this.authBusy = true;
+    this.authStatus = 'signing-out';
     try {
       await flushSync(); // push what is still waiting, then leave
-      await signOutUser();
+      await signOutUser(); // the watchAuth callback clears the status
     } catch (error) {
+      this.authStatus = '';
       this.authError = 'Could not sign out right now.';
-    } finally {
-      this.authBusy = false;
     }
   },
   async save(changes) {
