@@ -66,7 +66,8 @@ export default {
       verbStatusClass: 'status',
       verbScore: 0,
       verbStreak: 0,
-      
+      progressVersion: 0, // bumped after each save so the memory bar/stats refresh (progress lives in localStorage)
+
       furiganaStore,
     }
   },
@@ -83,9 +84,11 @@ export default {
       return this.targetVerb ? `${this.targetVerb.dictionary}:${this.targetForm}` : null;
     },
     verbMemory() {
+      this.progressVersion; // reactive dependency
       return this.verbMemoryKey ? getEntry('verbs', this.verbMemoryKey).memory : 0;
     },
     verbStats() {
+      this.progressVersion; // reactive dependency
       const keys = [];
       this.filteredVerbs.forEach(v => this.verbForms.forEach(f => keys.push(`${v.dictionary}:${f}`)));
       return getStats('verbs', keys);
@@ -166,6 +169,7 @@ export default {
       const { dictionary, reading } = this.targetVerb;
       const correct = value === this.verbAnswer || value === this.verbAnswerKana;
       recordAnswer('verbs', this.verbMemoryKey, correct);
+      this.progressVersion++;
 
       this.pushHistory({
         type: 'verb',
@@ -202,6 +206,7 @@ export default {
       this.verbScore = 0;
       this.verbStreak = 0;
       resetProgress('verbs');
+      this.progressVersion++;
       this.$nextTick(() => this.focusVerbInput());
     },
     focusVerbInput() {

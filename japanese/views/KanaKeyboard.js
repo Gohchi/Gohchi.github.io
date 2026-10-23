@@ -49,6 +49,7 @@ export default {
       status: "Click anywhere and start typing.",
       statusClass: "status",
       inputValue: "",
+      progressVersion: 0, // bumped after each save so the memory bar/stats refresh (progress lives in localStorage)
     }
   },
   computed: {
@@ -58,9 +59,11 @@ export default {
       return this.kanaMode === 'hiragana' ? 'kana-hiragana' : 'kana-katakana';
     },
     kanaMemory() {
+      this.progressVersion; // reactive dependency
       return this.target ? getEntry(this.category, this.target).memory : 0;
     },
     kanaStats() {
+      this.progressVersion; // reactive dependency
       return getStats(this.category, this.KANA);
     },
     kanaRomaji() {
@@ -105,6 +108,7 @@ export default {
       this.score = 0;
       this.streak = 0;
       resetProgress(this.category);
+      this.progressVersion++;
       this.status = "Score and memory reset.";
       this.statusClass = "status";
       this.$nextTick(() => this.focusInput());
@@ -113,6 +117,7 @@ export default {
       this.last = candidate;
       const correct = candidate === this.target;
       recordAnswer(this.category, this.target, correct);
+      this.progressVersion++;
 
       this.pushHistory({
         type: 'kana',

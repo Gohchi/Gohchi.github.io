@@ -2372,6 +2372,27 @@ body {
   }
 }
 
+/* spinner over the profile picture while Firebase is working */
+.icon-profile.loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .35);
+  border: 3px solid transparent;
+  border-top-color: var(--color-salmon);
+  animation: profile-spin .8s linear infinite;
+}
+
+@keyframes profile-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* inert content lets clicks fall through to <html>, so the cursor shows the wait */
+html.auth-busy {
+  cursor: progress;
+}
+
 /* two icons on the right now: leave room for both */
 body header > .title {
   padding-right: 8rem;
@@ -2597,7 +2618,7 @@ body header > .title {
     background: transparent;
     color: var(--color-salmon);
   }
-  
+
   .profile-error {
     color: #c33;
     font-weight: 600;

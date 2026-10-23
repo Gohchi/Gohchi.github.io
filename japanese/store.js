@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
 
 import {
   speak,
@@ -117,6 +117,11 @@ export const profileStore = reactive({
     if (this.authStarted) return;
     this.authStarted = true;
 
+    // safety net: a hung SDK download must not lock the app forever
+    setTimeout(() => {
+      if (this.authStatus === 'checking') this.authStatus = '';
+    }, 10000);
+
     try {
       await watchAuth(async user => {
         try {
@@ -186,5 +191,16 @@ export const profileStore = reactive({
     this.profile = resetProfile();
   },
 });
+
+// While Firebase is checking the session / signing in / syncing, the whole page is locked
+// (any view). `inert` blocks mouse, touch, keyboard and focus inside .main, the header included.
+watch(
+  () => profileStore.authBusy,
+  busy => {
+    document.querySelector('.main')?.toggleAttribute('inert', busy);
+    document.documentElement.classList.toggle('auth-busy', busy);
+  },
+  { immediate: true },
+);
 
 profileStore.init();
