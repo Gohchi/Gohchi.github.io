@@ -58,6 +58,7 @@ export default {
       statusClass: 'status',
       score: 0,
       streak: 0,
+      progressVersion: 0, // bumped after each save so the memory bar/stats refresh (progress lives in localStorage)
 
       furiganaStore,
     };
@@ -72,9 +73,11 @@ export default {
       return this.targetAdj ? this.targetAdj.dictionary : null;
     },
     adjMemory() {
+      this.progressVersion; // reactive dependency
       return this.adjMemoryKey ? getEntry('adjectives', this.adjMemoryKey).memory : 0;
     },
     adjStats() {
+      this.progressVersion; // reactive dependency
       const keys = this.filteredAdjectives.map(a => a.dictionary);
       return getStats('adjectives', keys);
     },
@@ -152,6 +155,7 @@ export default {
     gradeAnswer(correct, chosenDisplay) {
       const adj = this.targetAdj;
       recordAnswer('adjectives', adj.dictionary, correct);
+      this.progressVersion++;
 
       this.pushHistory({
         type: 'adjective',
@@ -185,6 +189,7 @@ export default {
       this.score = 0;
       this.streak = 0;
       resetProgress('adjectives');
+      this.progressVersion++;
       this.newTarget();
     },
     focusInput() {
