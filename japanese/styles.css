@@ -2713,6 +2713,12 @@ body header > .title {
   }
 }
 
+.profile-error {
+  color: #c33;
+  font-weight: 600;
+  margin-top: .75rem;
+}
+
 @media (max-width: 700px) {
   .print-button {
     width: 100%;

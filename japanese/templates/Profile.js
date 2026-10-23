@@ -106,10 +106,15 @@ export default /*html*/`
         <h2>Account</h2>
         <template v-if="profileStore.user">
           <p>Signed in as <strong>{{ profileStore.user.email }}</strong></p>
+          <p class="profile-meta">Your progress, favorites, roadmap and profile are saved to your account and synced across devices.</p>
+          <button type="button" class="profile-discard" :disabled="profileStore.authBusy" @click="profileStore.signOut()">Sign out</button>
         </template>
         <template v-else>
           <p>You're not signed in. Your profile and progress are stored only in this browser.</p>
-          <button type="button" class="profile-discard" disabled>Sign in (coming soon)</button>
+          <button type="button" class="profile-save" :disabled="profileStore.authBusy" @click="profileStore.signIn()">
+            {{ profileStore.authBusy ? 'Signing in…' : 'Sign in with Google' }}
+          </button>
+          <p v-if="profileStore.authError" class="profile-error" role="alert">{{ profileStore.authError }}</p>
         </template>
         <p class="profile-meta" v-if="memberSince">Profile created {{ memberSince }}</p>
         <button type="button" class="profile-reset" @click="resetProfile">Reset profile</button>

@@ -12,6 +12,8 @@ import {
 } from 'data/profile.js';
 import { dateKey, getActivity, getStreak } from 'data/progress.js';
 
+const EDITABLE = ['displayName', 'avatar', 'targetLevel', 'dailyGoal', 'translationLang'];
+
 export default {
   components: {
     MainHeader,
@@ -40,8 +42,7 @@ export default {
   computed: {
     dirty() {
       const saved = profileStore.profile;
-      return ['displayName', 'avatar', 'targetLevel', 'dailyGoal', 'translationLang']
-        .some(key => this.form[key] !== saved[key]);
+      return EDITABLE.some(key => this.form[key] !== saved[key]);
     },
     shownName() {
       return this.form.displayName.trim() || 'Learner';
@@ -56,6 +57,13 @@ export default {
     memberSince() {
       const created = profileStore.profile.createdAt;
       return created ? created.slice(0, 10) : null;
+    },
+  },
+  watch: {
+    // the profile can change under the form (sign in -> synced from another device)
+    'profileStore.profile'(next, previous) {
+      const untouched = EDITABLE.every(key => this.form[key] === previous[key]);
+      if (untouched) this.form = { ...next };
     },
   },
   methods: {
@@ -74,9 +82,20 @@ export default {
       await profileStore.reset();
       this.form = { ...profileStore.profile };
     },
+    // progress may have been merged from the cloud after this view mounted
+    refreshStats() {
+      const activity = getActivity();
+      this.startedAt = activity.startedAt;
+      this.todayAnswers = activity.days[dateKey()]?.answers || 0;
+      this.streak = getStreak();
+    },
+  },
+  mounted() {
+    window.addEventListener('jp-sync-applied', this.refreshStats);
   },
   beforeUnmount() {
     clearTimeout(this.saveTimer);
+    window.removeEventListener('jp-sync-applied', this.refreshStats);
   },
   template,
 };

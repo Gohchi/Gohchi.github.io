@@ -1,8 +1,8 @@
 {
   "id": "/japanese/",
   "name": "マンドー メモ",
-  "short_name": "Mando notes",
-  "description": "Mando notes",
+  "short_name": "Mando memo",
+  "description": "Mando memo",
   "lang": "en",
   "start_url": "/japanese/index.html",
   "scope": "/japanese/",
