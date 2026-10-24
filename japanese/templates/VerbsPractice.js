@@ -20,6 +20,13 @@ export default /*html*/`
             :modelValue="selectedGroups"
             @update:modelValue="setGroups"
           />
+          <FilterMenu
+            label="Form"
+            title="Verb forms"
+            :options="formOptions"
+            :modelValue="selectedForms"
+            @update:modelValue="setForms"
+          />
           <div class="icon-button keyboard-icon" title="Type mode" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
           <div class="icon-button check-icon" title="Options mode" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
         </div>
@@ -38,16 +45,18 @@ export default /*html*/`
           />
 
           <div class="verb-meaning">{{ targetVerb.meaning }}</div>
-          <template v-if="furiganaStore.showFurigana">
-            <div class="prompt verb-prompt">
-              <ruby>{{ targetVerb.dictionary }}<rp>(</rp><rt>{{ targetVerb.reading }}</rt><rp>)</rp></ruby>
-            </div>
-          </template>
-          <template v-else>
-            <div class="prompt verb-prompt">
-              {{ targetVerb.dictionary }}
-            </div>
-          </template>
+
+          <!-- CHANGED: the reading goes only over the kanji (okurigana stays plain) -->
+          <div class="prompt verb-prompt">
+            <template v-if="furiganaStore.showFurigana">
+              <template v-for="(part, index) in promptParts" :key="index">
+                <ruby v-if="part.rt">{{ part.text }}<rp>(</rp><rt>{{ part.rt }}</rt><rp>)</rp></ruby>
+                <template v-else>{{ part.text }}</template>
+              </template>
+            </template>
+            <template v-else>{{ targetVerb.dictionary }}</template>
+          </div>
+
           <div class="verb-target-label">{{ formLabel }} · Group {{ targetVerb.group }} · {{ targetVerb.level }}</div>
 
           <div class="memory-bar" :title="'Memory: ' + verbMemory + '/' + MAX_MEMORY">
