@@ -9,6 +9,7 @@
 // from its save function.
 
 import { readDoc, writeDoc } from './firebase.js';
+import { encodeProgress, decodeProgress } from './codec.js';
 
 const LINK_KEY = 'jp-sync-linked'; // uid this browser was last synced with
 const PENDING_KEY = 'jp-sync-pending'; // doc names with local changes not pushed yet
@@ -63,7 +64,14 @@ const union = (local = [], remote = []) => [...new Set([...local, ...remote])];
 // after the first link, the remote copy wins unless this browser has pending edits.
 // `merge` is used for the first link, and always for progress / activity.
 const DOCS = {
-  progress: { key: 'jp-practice-progress', merge: mergeProgress },
+  progress: {
+    key: 'jp-practice-progress',
+    name: 'progress3', // each format lives in its own doc, so devices still running old code can't misread it
+    legacyNames: ['progress2', 'progress'], // older formats: only read, in this order, until progress3 exists
+    merge: mergeProgress,
+    encode: encodeProgress,
+    decode: decodeProgress,
+  },
   activity: { key: 'jp-practice-activity', merge: mergeActivity },
   profile: {
     key: 'jp-profile',
@@ -100,6 +108,7 @@ const writeLocal = (key, value) => {
 const getPending = () => new Set(readLocal(PENDING_KEY) || []);
 const setPending = set => writeLocal(PENDING_KEY, [...set]);
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const remoteName = name => DOCS[name].name || name; // name of the doc in Firestore
 
 // ---------------------------------------------------------------------------
 // Sync
@@ -117,7 +126,12 @@ export async function startSync(user) {
 
   for (const [name, doc] of Object.entries(DOCS)) {
     const local = readLocal(doc.key);
-    const remote = await readDoc(uid, name);
+    let stored = await readDoc(uid, remoteName(name));
+    for (const legacy of doc.legacyNames || []) {
+      if (stored != null) break;
+      stored = await readDoc(uid, legacy);
+    }
+    const remote = doc.decode ? await doc.decode(stored) : stored;
 
     let result;
     if (remote == null) result = local;
@@ -134,7 +148,8 @@ export async function startSync(user) {
       doc.after?.(result);
       changedLocal = true;
     }
-    if (!same(result, remote)) await writeDoc(uid, name, result);
+    const outgoing = doc.encode ? doc.encode(result) : result;
+    if (!same(outgoing, stored)) await writeDoc(uid, remoteName(name), outgoing);
     pending.delete(name);
   }
 
@@ -168,7 +183,9 @@ function schedulePush(name) {
 async function push(name) {
   if (!uid) return;
   try {
-    await writeDoc(uid, name, readLocal(DOCS[name].key));
+    const doc = DOCS[name];
+    const value = readLocal(doc.key);
+    await writeDoc(uid, remoteName(name), doc.encode ? doc.encode(value) : value);
     const pending = getPending();
     pending.delete(name);
     setPending(pending);
