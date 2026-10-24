@@ -595,34 +595,6 @@ h1, h2, p { margin: 0; }
 }
 .toast.error { border-color: var(--danger); color: var(--danger); }
 
-/* ---------- language switch ---------- */
-
-.lang-switch {
-  display: inline-flex;
-  gap: 3px;
-  padding: 3px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface-2);
-}
-
-.lang-btn {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  min-height: 34px;
-  padding: 0;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  opacity: .55;
-  cursor: pointer;
-  transition: opacity .15s;
-}
-.lang-btn:hover { opacity: .85; }
-.lang-btn.on { opacity: 1; background: var(--surface); box-shadow: inset 0 0 0 2px var(--accent); }
-.lang-btn svg { display: block; width: 24px; height: auto; border-radius: 2px; }
-
 /* ---------- touch ---------- */
 
 @media (pointer: coarse) {
@@ -631,7 +603,6 @@ h1, h2, p { margin: 0; }
   .btn.small { min-height: 38px; }
   .step { width: 46px; }
   .icon-btn { width: 44px; height: 44px; }
-  .lang-btn { width: 44px; min-height: 44px; }
 }
 
 /* ---------- mobile: preview on top, options in a bottom sheet ---------- */
@@ -683,4 +654,105 @@ h1, h2, p { margin: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* ---------- language switch ---------- */
+
+.lang-switch {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.lang-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  min-height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  opacity: .55;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.lang-btn:hover { opacity: .85; }
+.lang-btn.on { opacity: 1; background: var(--surface); box-shadow: inset 0 0 0 2px var(--accent); }
+.lang-btn svg { display: block; width: 24px; height: auto; border-radius: 2px; }
+
+@media (pointer: coarse) {
+  .lang-btn { width: 44px; min-height: 44px; }
+}
+
+/* ---------- narrow phones (< 410px) ---------- */
+/* Keep this block last: it overrides the rules above on equal specificity. */
+
+@media (max-width: 409px) {
+  /* top bar: brand title out, tighter buttons so everything fits on one row */
+  .topbar {
+    gap: 8px;
+    padding-left: calc(8px + env(safe-area-inset-left));
+    padding-right: calc(8px + env(safe-area-inset-right));
+  }
+  .brand { gap: 0; }
+  .brand h1 { display: none; }
+  .topbar-actions { gap: 6px; min-width: 0; }
+  .topbar .btn.primary { padding: 0 10px; gap: 6px; }
+  .topbar .btn:not(.primary) { padding: 0 8px; }
+  .lang-btn { width: 36px; min-height: 36px; }
+
+  /* options sheet: more room for the preview, tighter content */
+  .tab { min-height: 46px; font-size: 11px; }
+  .panel-body {
+    padding: 12px;
+    max-height: 38vh;
+    max-height: 38dvh;
+  }
+  .group { gap: 10px; margin-bottom: 18px; }
+  .hint { font-size: 12.5px; }
+  .field-row, .field-grid { gap: 12px 8px; }
+
+  /* selectors: allow the segments to shrink instead of clipping ("Personalizado") */
+  .segmented { grid-auto-columns: minmax(0, 1fr); }
+  .seg { min-width: 0; padding: 0 4px; gap: 4px; font-size: 13px; white-space: nowrap; overflow: hidden; }
+
+  /* number fields: label on top, stepper on its own full-width row */
+  .field:not(.compact) .field-head { display: grid; gap: 6px; }
+  .field:not(.compact) .stepper { width: 100%; }
+  .field:not(.compact) .stepper input { flex: 1; width: 100%; }
+
+  /* images tab */
+  .group-actions { width: 100%; }
+  .group-actions .btn { flex: 1; }
+  .image-row { gap: 10px; padding: 8px; }
+  .thumb { width: 52px; height: 52px; }
+
+  /* preview overlays */
+  .paper-info { top: 8px; left: 8px; right: 8px; gap: 4px; }
+  .paper-info span,
+  .paper-info .chip-btn { padding: 2px 7px; font-size: 11px; }
+  .zoom-bar { bottom: 6px; }
+  .zoom-label { min-width: 56px; }
+  .empty { padding: 10px; }
+  .empty-card { padding: 16px 14px; gap: 8px; }
+  .empty-card h2 { font-size: 16px; }
+
+  /* export menu and toast can never be wider than the screen */
+  .menu { min-width: 0; width: min(250px, calc(100vw - 16px)); }
+  .toast {
+    top: calc(56px + env(safe-area-inset-top));
+    max-width: calc(100vw - 16px);
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+/* very small phones: the brand mark goes too, the actions get the whole row */
+@media (max-width: 350px) {
+  .brand { display: none; }
+  .topbar { justify-content: flex-end; }
 }
