@@ -18,7 +18,7 @@ import {
 
 import { furiganaStore } from 'store';
 
-import { shuffle } from 'tools';
+import { shuffle, alignFurigana } from 'tools'; // CHANGED: alignFurigana added
 
 const HISTORY_LIMIT = 50;
 
@@ -28,8 +28,11 @@ const GROUPS = [
   { key: 2, label: 'Group 2 · ichidan (る)' },
   { key: 3, label: 'Group 3 · irregular' },
 ];
+const FORMS = VERB_FORMS.map(key => ({ key, label: FORM_LABELS[key] }));
+
 const LEVELS_KEY = 'verbs-practice-levels';
 const GROUPS_KEY = 'verbs-practice-groups';
+const FORMS_KEY = 'verbs-practice-forms';
 
 export default {
   components: {
@@ -54,8 +57,10 @@ export default {
       verbForms: VERB_FORMS,
       levelOptions: LEVELS.map(level => ({ key: level, label: level })),
       groupOptions: GROUPS,
+      formOptions: FORMS,
       selectedLevels: loadSelection(LEVELS_KEY, ['N5', 'N4']).filter(l => LEVELS.includes(l)),
       selectedGroups: loadSelection(GROUPS_KEY, [1, 2, 3]).filter(g => GROUPS.some(o => o.key === g)),
+      selectedForms: loadSelection(FORMS_KEY, VERB_FORMS).filter(f => VERB_FORMS.includes(f)),
       targetVerb: null,
       targetForm: '',
       verbAnswer: '',
@@ -66,7 +71,6 @@ export default {
       verbStatusClass: 'status',
       verbScore: 0,
       verbStreak: 0,
-      progressVersion: 0, // bumped after each save so the memory bar/stats refresh (progress lives in localStorage)
 
       furiganaStore,
     }
@@ -77,6 +81,20 @@ export default {
         v => this.selectedLevels.includes(v.level) && this.selectedGroups.includes(v.group)
       );
     },
+    // every (verb, form) combination allowed by the filters
+    candidates() {
+      const list = [];
+      this.filteredVerbs.forEach(verb => {
+        this.selectedForms.forEach(form => list.push({ verb, form }));
+      });
+      return list;
+    },
+    // NEW: [{ text, rt? }] the reading only goes over the kanji (教える -> 教(おし) + える)
+    promptParts() {
+      if (!this.targetVerb) return [];
+      const { dictionary, reading } = this.targetVerb;
+      return alignFurigana(dictionary, reading);
+    },
     formLabel() {
       return FORM_LABELS[this.targetForm] || '';
     },
@@ -84,13 +102,10 @@ export default {
       return this.targetVerb ? `${this.targetVerb.dictionary}:${this.targetForm}` : null;
     },
     verbMemory() {
-      this.progressVersion; // reactive dependency
       return this.verbMemoryKey ? getEntry('verbs', this.verbMemoryKey).memory : 0;
     },
     verbStats() {
-      this.progressVersion; // reactive dependency
-      const keys = [];
-      this.filteredVerbs.forEach(v => this.verbForms.forEach(f => keys.push(`${v.dictionary}:${f}`)));
+      const keys = this.candidates.map(({ verb, form }) => `${verb.dictionary}:${form}`);
       return getStats('verbs', keys);
     },
   },
@@ -116,8 +131,17 @@ export default {
       saveSelection(GROUPS_KEY, groups);
       this.refreshVerbTargetIfNeeded();
     },
+    setForms(forms) {
+      this.selectedForms = forms;
+      saveSelection(FORMS_KEY, forms);
+      this.refreshVerbTargetIfNeeded();
+    },
     refreshVerbTargetIfNeeded() {
-      if (!this.targetVerb || !this.filteredVerbs.includes(this.targetVerb)) {
+      if (
+        !this.targetVerb
+        || !this.filteredVerbs.includes(this.targetVerb)
+        || !this.selectedForms.includes(this.targetForm)
+      ) {
         this.newVerbTarget();
       }
     },
@@ -125,26 +149,26 @@ export default {
       const distractors = shuffle(buildVerbDistractors(verb, form)).slice(0, 3);
       return shuffle([correctAnswer, ...distractors]);
     },
-    randomForm() {
-      return this.verbForms[Math.floor(Math.random() * this.verbForms.length)];
-    },
     newVerbTarget() {
-      const verb = weightedPick('verbs', this.filteredVerbs, v => `${v.dictionary}:${this.randomForm()}`)
-        || this.filteredVerbs[Math.floor(Math.random() * this.filteredVerbs.length)];
+      const pick = weightedPick('verbs', this.candidates, c => `${c.verb.dictionary}:${c.form}`);
 
-      if (!verb) {
+      if (!pick) {
         this.targetVerb = null;
-        this.verbStatus = 'No verbs match the selected filters.';
+        this.targetForm = '';
+        this.verbStatus = this.filteredVerbs.length
+          ? 'Select at least one form.'
+          : 'No verbs match the selected filters.';
         this.verbStatusClass = 'status bad';
         return;
       }
 
+      const { verb, form } = pick;
       this.targetVerb = verb;
-      this.targetForm = this.randomForm();
-      this.verbAnswer = conjugateVerb(verb.dictionary, verb.group, this.targetForm);
-      this.verbAnswerKana = conjugateVerb(verb.reading, verb.group, this.targetForm);
+      this.targetForm = form;
+      this.verbAnswer = conjugateVerb(verb.dictionary, verb.group, form);
+      this.verbAnswerKana = conjugateVerb(verb.reading, verb.group, form);
       this.verbOptions = this.inputMode === 'choice'
-        ? this.buildVerbOptions(verb, this.targetForm, this.verbAnswer)
+        ? this.buildVerbOptions(verb, form, this.verbAnswer)
         : [];
       this.verbInputValue = '';
       this.verbStatus = this.inputMode === 'type'
@@ -169,7 +193,6 @@ export default {
       const { dictionary, reading } = this.targetVerb;
       const correct = value === this.verbAnswer || value === this.verbAnswerKana;
       recordAnswer('verbs', this.verbMemoryKey, correct);
-      this.progressVersion++;
 
       this.pushHistory({
         type: 'verb',
@@ -206,7 +229,6 @@ export default {
       this.verbScore = 0;
       this.verbStreak = 0;
       resetProgress('verbs');
-      this.progressVersion++;
       this.$nextTick(() => this.focusVerbInput());
     },
     focusVerbInput() {
