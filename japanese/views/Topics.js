@@ -4,6 +4,7 @@ import PhraseToRuby from 'components/PhraseToRuby.js';
 import MainHeader from 'components/MainHeader.js';
 import ListOfItems from 'components/ListOfItems.js';
 import Sources from 'components/Sources.js';
+import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import template from 'templates/Topics.js';
 
 import { topics } from 'data/topics.js';
@@ -12,12 +13,42 @@ import {
   zoomStore,
 } from 'store';
 
+const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
+const SCOPES = [
+  { key: 'title', label: 'Title' },
+  { key: 'content', label: 'Content' },
+];
+const SCOPE_KEYS = SCOPES.map(({ key }) => key);
+
+const LEVELS_KEY = 'topics-levels';
+const SCOPE_KEY = 'topics-search-scope';
+
+const normalize = text => String(text ?? '').toLowerCase();
+
+// Everything readable inside a topic besides its title
+function contentText(topic) {
+  const parts = [topic.subtitle];
+
+  if (typeof topic.content === 'string') {
+    parts.push(topic.content);
+  } else if (Array.isArray(topic.content)) {
+    topic.content.forEach(({ heading, text, example }) => parts.push(heading, text, example));
+  }
+
+  if (Array.isArray(topic.items)) {
+    topic.items.forEach(({ kanji, kana, meaning, notes }) => parts.push(kanji, kana, meaning, notes));
+  }
+
+  return normalize(parts.filter(Boolean).join(' '));
+}
+
 export default {
   components: {
     PhraseToRuby,
     MainHeader,
     ListOfItems,
     Sources,
+    FilterMenu,
   },
   props: {
     topic: String, // route param slug; undefined = show the preview list
@@ -28,58 +59,97 @@ export default {
   },
   methods: {
     selectTopic(id) {
+      this.searchOpen = false;
       this.router.push({ name: 'topics', params: { topic: id } });
     },
     backToList() {
       this.router.push({ name: 'topics' });
+    },
+
+    // --- filters ---
+    setLevels(levels) {
+      this.selectedLevels = levels;
+      saveSelection(LEVELS_KEY, levels);
+    },
+    setScope(scope) {
+      this.searchScope = scope;
+      saveSelection(SCOPE_KEY, scope);
+    },
+    clearFilters() {
+      this.query = '';
+      this.setLevels([...LEVELS]);
+      this.setScope([...SCOPE_KEYS]);
+    },
+    toggleSearch() {
+      this.searchOpen = !this.searchOpen;
+      if (this.searchOpen) {
+        this.$nextTick(() => this.$refs.searchInput && this.$refs.searchInput.focus());
+      }
+    },
+    onSearchEnter() {
+      // on mobile this closes the panel (and the keyboard); the filter stays applied
+      this.$refs.searchInput && this.$refs.searchInput.blur();
+      this.searchOpen = false;
+    },
+    onSearchEscape() {
+      if (this.query) {
+        this.query = '';
+      } else {
+        this.searchOpen = false;
+      }
     },
   },
   data() {
     return {
       topics,
       hideDisclaimer: true,
-      titleFilters: '',
-      subtitleFilters: '',
+
+      query: '',
+      searchOpen: false, // mobile only: panel under the header
+      levelOptions: LEVELS.map(level => ({ key: level, label: level })),
+      scopeOptions: SCOPES,
+      selectedLevels: loadSelection(LEVELS_KEY, LEVELS).filter(l => LEVELS.includes(l)),
+      searchScope: loadSelection(SCOPE_KEY, SCOPE_KEYS).filter(s => SCOPE_KEYS.includes(s)),
     };
   },
   computed: {
     zoomLevel() {
       return zoomStore.getZoomLevel();
     },
+    // lowercase title / content text per topic, built once
+    searchIndex() {
+      return this.topics.map(topic => ({
+        topic,
+        title: normalize(topic.title),
+        content: contentText(topic),
+      }));
+    },
+    levelsFiltered() {
+      return this.selectedLevels.length !== LEVELS.length;
+    },
+    activeFilterCount() {
+      return (this.query.trim() ? 1 : 0) + (this.levelsFiltered ? 1 : 0);
+    },
     filteredTopics() {
-      return this.topics.filter(item => {
-        if (this.titleFilters === '' && this.subtitleFilters === '') {
-          return true;
-        }
+      const terms = normalize(this.query).split(/\s+/).filter(Boolean);
+      // nothing selected in "Search in" behaves like everything selected
+      const scope = this.searchScope.length ? this.searchScope : SCOPE_KEYS;
 
-        let titleFilter = false;
-        let subtitleFilter = false;
-
-        if (this.titleFilters) {
-          const titleFilters = this.titleFilters.split(' ').map(f => f.toLowerCase());
-          titleFilter = item.title.split(' ').some(word => titleFilters.some(filter => word.toLowerCase().includes(filter)));
-        }
-
-        if (this.subtitleFilters) {
-          const subtitleFilters = this.subtitleFilters.split(' ').map(f => f.toLowerCase());
-          subtitleFilter = item.subtitle
-            ?.split(' ').some(word => subtitleFilters.some(filter => word.toLowerCase().includes(filter)))
-            ?? false;
-
-          if (!subtitleFilter) {
-            if (typeof item?.content === 'string') {
-              subtitleFilter = item?.content.includes(subtitleFilters);
-            } else {
-              subtitleFilter = item?.content?.some(({ heading, text, example }) => {
-                const contentText = [heading, text, example].filter(Boolean).join(' ');
-                return subtitleFilters.some(filter => contentText.toLowerCase().includes(filter));
-              })
-            }
+      return this.searchIndex
+        .filter(({ topic, title, content }) => {
+          if (this.levelsFiltered && !(topic.tags || []).some(tag => this.selectedLevels.includes(tag))) {
+            return false;
           }
-        }
+          if (!terms.length) return true;
 
-        return titleFilter || subtitleFilter;
-      });
+          const haystack = [
+            scope.includes('title') ? title : '',
+            scope.includes('content') ? content : '',
+          ].join(' ');
+
+          return terms.every(term => haystack.includes(term));
+        })
+        .map(({ topic }) => topic);
     },
     currentTopic() {
       if (!this.topic) return null;
