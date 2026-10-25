@@ -17,7 +17,7 @@ import {
 
 import { furiganaStore } from 'store';
 
-import { shuffle } from 'tools';
+import { shuffle, alignFurigana } from 'tools'; // CHANGED: alignFurigana added
 
 const HISTORY_LIMIT = 50;
 
@@ -68,6 +68,12 @@ export default {
       return this.adjectives.filter(
         a => this.selectedLevels.includes(a.level) && this.selectedTypes.includes(a.type)
       );
+    },
+    // NEW: [{ text, rt? }] the reading only goes over the kanji (美味しい -> 美味(おい) + しい)
+    promptParts() {
+      if (!this.targetAdj) return [];
+      const { dictionary, reading } = this.targetAdj;
+      return alignFurigana(dictionary, reading);
     },
     adjMemoryKey() {
       return this.targetAdj ? this.targetAdj.dictionary : null;

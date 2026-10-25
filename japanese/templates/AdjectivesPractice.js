@@ -34,9 +34,14 @@ export default /*html*/`
             :mastered="adjStats"
           />
 
+          <!-- CHANGED: the reading goes only over the kanji (okurigana stays plain).
+               It stays hidden in type mode, where the reading is the answer. -->
           <div class="prompt verb-prompt">
             <template v-if="furiganaStore.showFurigana && inputMode === 'choice'">
-              <ruby>{{ targetAdj.dictionary }}<rp>(</rp><rt>{{ targetAdj.reading }}</rt><rp>)</rp></ruby>
+              <template v-for="(part, index) in promptParts" :key="index">
+                <ruby v-if="part.rt">{{ part.text }}<rp>(</rp><rt>{{ part.rt }}</rt><rp>)</rp></ruby>
+                <template v-else>{{ part.text }}</template>
+              </template>
             </template>
             <template v-else>{{ targetAdj.dictionary }}</template>
           </div>
