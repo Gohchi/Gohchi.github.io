@@ -4,30 +4,73 @@ export default /*html*/`
       title="TOPICS"
     >
       <PhraseToRuby zoom :text="'話題'"></PhraseToRuby>
+
+      <div v-if="!topic" class="keyboard-toolbar-buttons topics-toolbar">
+        <button
+          type="button"
+          class="topics-search-toggle"
+          :class="{ open: searchOpen }"
+          title="Search topics"
+          aria-label="Search topics"
+          :aria-expanded="searchOpen"
+          @click.stop="toggleSearch"
+        >
+          🔍
+          <span v-if="activeFilterCount" class="topics-badge">{{ activeFilterCount }}</span>
+        </button>
+
+        <div class="topics-search" :class="{ open: searchOpen }">
+          <input
+            ref="searchInput"
+            v-model="query"
+            type="search"
+            class="topics-search-input"
+            placeholder="Search topics..."
+            aria-label="Search topics"
+            autocomplete="off"
+            enterkeyhint="search"
+            @keydown.enter="onSearchEnter"
+            @keydown.esc="onSearchEscape"
+          />
+          <FilterMenu
+            label="Search in"
+            title="Where to search"
+            :options="scopeOptions"
+            :modelValue="searchScope"
+            @update:modelValue="setScope"
+          />
+          <FilterMenu
+            label="JLPT"
+            title="JLPT levels"
+            :options="levelOptions"
+            :modelValue="selectedLevels"
+            @update:modelValue="setLevels"
+          />
+          <button
+            v-if="activeFilterCount"
+            type="button"
+            class="topics-clear"
+            title="Clear filters"
+            aria-label="Clear filters"
+            @click="clearFilters()"
+          >✕</button>
+        </div>
+      </div>
     </MainHeader>
 
     <main>
       <template v-if="!topic">
-        <div class="filters">
-          <input
-            type="search"
-            v-model="titleFilters"
-            placeholder="Filter by titles..."
-          />
-          <input
-            type="search"
-            v-model="subtitleFilters"
-            placeholder="Filter by content..."
-          />
-        </div>
-
         <template v-if="filteredTopics.length === 0">
           <article class="unknown">
             <h1 class="title">Empty list</h1>
             <h2 class="subtitle">Clear filters to see more items</h2>
-            <button class="go-back" @click.prevent="titleFilters = ''; subtitleFilters = ''">Clear filters</button>
+            <button class="go-back" @click.prevent="clearFilters()">Clear filters</button>
           </article>
         </template>
+
+        <p v-if="activeFilterCount && filteredTopics.length" class="topic-count">
+          {{ filteredTopics.length }} / {{ topics.length }} topics
+        </p>
 
         <ul class="topic-list">
           <li
