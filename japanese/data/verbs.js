@@ -40,6 +40,7 @@ export default [
   { dictionary: '出る', reading: 'でる', meaning: 'to exit', group: 2, level: 'N5' },
   { dictionary: '借りる', reading: 'かりる', meaning: 'to borrow', group: 2, level: 'N5' },
   { dictionary: '開ける', reading: 'あける', meaning: 'to open', group: 2, level: 'N5' },
+  { dictionary: '勤める', reading: 'つとめる', meaning: 'to work', group: 2, level: 'N5' },
 
   // Group 2 — N4
   { dictionary: '続ける', reading: 'つづける', meaning: 'to continue', group: 2, level: 'N4' },
@@ -51,5 +52,6 @@ export default [
   { dictionary: 'する', reading: 'する', meaning: 'to do', group: 3, level: 'N5' },
   { dictionary: '来る', reading: 'くる', meaning: 'to come', group: 3, level: 'N5' },
   { dictionary: '勉強する', reading: 'べんきょうする', meaning: 'to study', group: 3, level: 'N5' },
+  { dictionary: '仕事する', reading: 'しごとする', meaning: 'to work', group: 3, level: 'N5' },
   { dictionary: '練習する', reading: 'れんしゅうする', meaning: 'to practice', group: 3, level: 'N4' },
 ];

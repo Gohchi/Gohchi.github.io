@@ -2640,7 +2640,7 @@ body header > .title {
   .filter-popover {
     position: absolute;
     top: calc(100% + .4rem);
-    left: 0;
+    right: 0;
     min-width: 12rem;
     z-index: 1001;
     padding: .5rem;
@@ -2746,6 +2746,91 @@ body header > .title {
   }
 }
 
+/* Kanji pool matrix (components/KanjiPoolMenu.js) — reuses the .filter-menu look */
+.filter-menu .pool-popover {
+  width: min(30rem, calc(100vw - 2rem));
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.pool-popover .pool-actions {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  align-items: center;
+  padding-bottom: .4rem;
+  background: light-dark(#ffffff, #1c1c1c);
+}
+
+.pool-popover .pool-summary {
+  margin-right: auto;
+  font-size: .75rem;
+  opacity: .7;
+}
+
+.pool-popover .pool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(2.6rem, 1fr));
+  gap: 4px;
+}
+
+.pool-popover .pool-empty {
+  padding: .75rem;
+  font-size: .85rem;
+  opacity: .7;
+  text-align: center;
+}
+
+/* higher specificity to beat the generic ".keyboard-toolbar-buttons button" look */
+.keyboard-toolbar-buttons .filter-menu .pool-cell {
+  position: relative;
+  overflow: hidden;
+  height: 2.6rem;
+  padding: 0;
+  border: 1px solid light-dark(#d0d0d0, #303030);
+  border-radius: 6px;
+  background: light-dark(#ffffff, #1c1c1c);
+  color: inherit;
+  box-shadow: none;
+  transform: none;
+  font-family: "Zen Antique Soft", serif;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: .35; /* off = out of the pool */
+  transition: opacity .12s ease, background-color .12s ease;
+
+  &.on {
+    opacity: 1;
+    border-color: var(--color-salmon);
+    background: color-mix(in srgb, var(--color-salmon) 18%, transparent);
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.long {
+    grid-column: span 2;
+    font-size: 1rem;
+  }
+
+  &.xl {
+    grid-column: span 3;
+    font-size: .85rem;
+  }
+
+  /* memory level (0-5) as a thin bar at the bottom of the cell */
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: calc(var(--m, 0) * 20%);
+    background: #f5a623;
+  }
+}
 
 @media (max-width: 700px) {
   .print-button {

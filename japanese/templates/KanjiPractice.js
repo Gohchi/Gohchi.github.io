@@ -13,6 +13,13 @@ export default /*html*/`
             :modelValue="selectedLevels"
             @update:modelValue="setLevels"
           />
+          <KanjiPoolMenu
+            label="Pool"
+            title="Choose which kanji to practice"
+            :items="poolItems"
+            :excluded="excludedWords"
+            @update:excluded="setExcluded"
+          />
           <div class="icon-button check-icon" title="Options mode (meaning)" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
           <div class="icon-button keyboard-icon" title="Type mode (reading)" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
         </div>

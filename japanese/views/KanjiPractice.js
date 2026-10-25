@@ -3,6 +3,7 @@ import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import PhraseToRuby from 'components/PhraseToRuby.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
+import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import InfoIcons from 'components/InfoIcons.js';
 
 import template from 'templates/KanjiPractice.js';
@@ -12,6 +13,7 @@ import { shuffle, normalizeReading } from 'tools';
 import {
   MAX_MEMORY,
   getEntry,
+  getCategoryEntries,
   recordAnswer,
   getStats,
   resetProgress,
@@ -23,6 +25,8 @@ const WORD_CORRECT_DELAY = 700; // ms before moving to the next word
 
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const LEVELS_KEY = 'kanji-practice-levels';
+// Words the user turned off in the pool. Stored as "excluded" so new words are in the pool by default.
+const EXCLUDED_KEY = 'kanji-practice-excluded';
 
 // Progress is stored per mode, so "meaning" progress never mixes with reading progress
 const CATEGORY_READING = 'words-kanji';
@@ -35,6 +39,7 @@ export default {
     WordCorner,
     PhraseToRuby,
     FilterMenu,
+    KanjiPoolMenu,
     InfoIcons,
   },
   data() {
@@ -60,6 +65,7 @@ export default {
       wordProgressVersion: 0, // bumped after each save so the memory bar/stats refresh
       levelOptions: LEVELS.map(level => ({ key: level, label: level })),
       selectedLevels: loadSelection(LEVELS_KEY, LEVELS).filter(l => LEVELS.includes(l)),
+      excludedWords: loadSelection(EXCLUDED_KEY, []),
     }
   },
   computed: {
@@ -80,10 +86,34 @@ export default {
       const size = length > 7 ? 32 : length > 5 ? 40 : length > 3 ? 52 : 64;
       return { fontSize: size + 'px' };
     },
-    // with every level selected nothing is filtered, so words without a level still show up
-    filteredWords() {
+    // Words that pass the JLPT filter. With every level selected nothing is filtered,
+    // so words without a level still show up.
+    levelWords() {
       if (this.selectedLevels.length === LEVELS.length) return this.words;
       return this.words.filter(({ level }) => this.selectedLevels.includes(level));
+    },
+    excludedSet() {
+      return new Set(this.excludedWords);
+    },
+    // The practice pool: JLPT filter AND not turned off in the pool matrix
+    filteredWords() {
+      return this.levelWords.filter(({ word }) => !this.excludedSet.has(word));
+    },
+    // word -> memory for the current mode. One read of localStorage, not one per cell.
+    memoryMap() {
+      this.wordProgressVersion; // reactive dependency
+      return Object.fromEntries(
+        getCategoryEntries(this.category).map(([word, entry]) => [word, entry.memory])
+      );
+    },
+    // What the pool matrix shows: every word of the selected JLPT levels
+    poolItems() {
+      return this.levelWords.map(({ word, reading, meaning }) => ({
+        word,
+        reading,
+        meaning,
+        memory: this.memoryMap[word] ?? 0,
+      }));
     },
   },
   methods: {
@@ -103,7 +133,8 @@ export default {
       this.wordTimer = null;
     },
     buildMeaningOptions(target) {
-      // Distractors come from the other kanji words' meanings
+      // Distractors come from the other kanji words' meanings. They use the whole list
+      // (not the JLPT filter or the pool) so there are always enough of them.
       const pool = [...new Set(
         this.words
           .filter(({ word, meaning }) => word !== target.word && meaning !== target.meaning)
@@ -270,12 +301,22 @@ export default {
     onDocumentClick() {
       this.focusInput();
     },
-    setLevels(levels) {
-      this.selectedLevels = levels;
-      saveSelection(LEVELS_KEY, levels);
+    // After a filter change, pick a new word only if the current one left the pool
+    // (or if there was none because the pool was empty).
+    refreshTargetIfNeeded() {
       if (!this.targetWord || !this.filteredWords.includes(this.targetWord)) {
         this.newWordTarget();
       }
+    },
+    setLevels(levels) {
+      this.selectedLevels = levels;
+      saveSelection(LEVELS_KEY, levels);
+      this.refreshTargetIfNeeded();
+    },
+    setExcluded(words) {
+      this.excludedWords = words;
+      saveSelection(EXCLUDED_KEY, words);
+      this.refreshTargetIfNeeded();
     },
   },
   mounted() {
