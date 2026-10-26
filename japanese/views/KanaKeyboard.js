@@ -7,6 +7,7 @@ import InfoIcons from 'components/InfoIcons.js';
 import template from 'templates/KanaKeyboard.js';
 
 import { hiragana, katakana, kanaMap } from 'data/kana-romaji.js';
+import { feedbackMixin } from 'data/feedback.js';
 import { shuffle } from 'tools';
 import {
   MAX_MEMORY,
@@ -20,6 +21,7 @@ import {
 const HISTORY_LIMIT = 50;
 
 export default {
+  mixins: [feedbackMixin],
   components: {
     MainHeader,
     SessionHistory,
@@ -117,6 +119,7 @@ export default {
       this.last = candidate;
       const correct = candidate === this.target;
       recordAnswer(this.category, this.target, correct);
+      this.flash(correct, correct ? this.streak + 1 : 0);
       this.progressVersion++;
 
       this.pushHistory({

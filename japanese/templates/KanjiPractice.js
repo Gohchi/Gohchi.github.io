@@ -27,7 +27,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card choice-card">
+      <div class="card choice-card" :class="feedbackClass">
         <template v-if="targetWord">
           <WordCorner :word="targetWord.word" :level="targetWord.level" />
 
@@ -73,6 +73,7 @@ export default /*html*/`
               <button
                 v-for="option in wordOptions" :key="option"
                 class="choice-button"
+                :class="{ correct: wordLocked && option === targetWord.meaning, wrong: wrongOptions.includes(option) }"
                 :disabled="wordLocked || wordRevealed || wrongOptions.includes(option)"
                 @click.stop="chooseMeaning(option)"
               >{{ option }}</button>
