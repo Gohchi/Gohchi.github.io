@@ -7,6 +7,7 @@ import InfoIcons from 'components/InfoIcons.js';
 
 import verbsData from 'data/verbs.js';
 import { conjugateVerb, buildVerbDistractors, VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
+import { feedbackMixin } from 'data/feedback.js';
 import {
   MAX_MEMORY,
   getEntry,
@@ -35,6 +36,7 @@ const GROUPS_KEY = 'verbs-practice-groups';
 const FORMS_KEY = 'verbs-practice-forms';
 
 export default {
+  mixins: [feedbackMixin],
   components: {
     MainHeader,
     SessionHistory,
@@ -193,6 +195,7 @@ export default {
       const { dictionary, reading } = this.targetVerb;
       const correct = value === this.verbAnswer || value === this.verbAnswerKana;
       recordAnswer('verbs', this.verbMemoryKey, correct);
+      this.flash(correct, correct ? this.verbStreak + 1 : 0);
 
       this.pushHistory({
         type: 'verb',

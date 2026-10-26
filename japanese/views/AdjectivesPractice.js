@@ -6,6 +6,7 @@ import InfoIcons from 'components/InfoIcons.js';
 import template from 'templates/AdjectivesPractice.js';
 
 import adjectivesData from 'data/adjectives.js';
+import { feedbackMixin } from 'data/feedback.js';
 import {
   MAX_MEMORY,
   getEntry,
@@ -30,6 +31,7 @@ const LEVELS_KEY = 'adjectives-practice-levels';
 const TYPES_KEY = 'adjectives-practice-types';
 
 export default {
+  mixins: [feedbackMixin],
   components: {
     MainHeader,
     SessionHistory,
@@ -162,6 +164,7 @@ export default {
       const adj = this.targetAdj;
       recordAnswer('adjectives', adj.dictionary, correct);
       this.progressVersion++;
+      this.flash(correct, correct ? this.streak + 1 : 0);
 
       this.pushHistory({
         type: 'adjective',

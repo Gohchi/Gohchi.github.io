@@ -1,0 +1,338 @@
+/* Practice sections: layout polish + right/wrong feedback.
+   Loaded AFTER styles.css. Applies to kana-keyboard, hiragana/katakana/kanji,
+   verbs and adjectives practice (everything inside .practice-sections). */
+
+.practice-sections {
+  --fb-ok: #1fb57a;
+  --fb-bad: #e5484d;
+  --fb-gold: #f5a623;
+  --card-bg: light-dark(#ffffff, #151515);
+  --card-border: light-dark(#e2e2e2, #2a2a2a);
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .1);
+  --field-border: light-dark(#d4d4d4, #3a3a3a);
+}
+
+/* ---------- layout ---------- */
+
+.practice-sections main {
+  align-items: center;
+  padding: 0 1rem 2rem;
+}
+
+.practice-sections .choice-card {
+  --card-shadow-now: var(--card-shadow);
+  width: 100%;
+  max-width: 36rem;
+  box-sizing: border-box;
+  padding: 3.25rem 1.25rem 1.25rem;
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  overflow: hidden; /* clips the ring animation */
+  transition: border-color .2s ease;
+}
+
+.practice-sections .session-history {
+  width: 100%;
+  max-width: 36rem;
+}
+
+.practice-sections .choice-card .prompt {
+  line-height: 1.15;
+  margin: .25rem 0 .5rem;
+  transition: color .2s ease;
+}
+
+/* ---------- status pill ---------- */
+
+.practice-sections .choice-card .status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 2rem;
+  margin: .75rem 0;
+  padding: .25rem .9rem;
+  border-radius: 999px;
+  text-align: center;
+}
+
+.practice-sections .choice-card .status.ok {
+  background: color-mix(in srgb, var(--fb-ok) 16%, transparent);
+  animation: fb-pop .35s ease-out;
+}
+.practice-sections .choice-card .status.bad {
+  background: color-mix(in srgb, var(--fb-bad) 14%, transparent);
+  animation: fb-pop .35s ease-out;
+}
+.practice-sections .choice-card .status.ok::before { content: "✓"; }
+.practice-sections .choice-card .status.bad::before { content: "✗"; }
+
+/* ---------- choice buttons ---------- */
+
+.practice-sections .choice-grid {
+  counter-reset: choice;
+  width: 100%;
+}
+
+.practice-sections .choice-card .choice-button {
+  counter-increment: choice;
+  position: relative;
+  min-height: 3.25rem;
+  padding: .75rem 2rem;
+  border: 2px solid var(--field-border);
+  border-radius: 12px;
+  background: light-dark(#fafafa, #1f1f1f);
+  color: light-dark(#1d1b20, #f2f2f2);
+  box-shadow: 0 3px light-dark(#d0d0d0, #0a0a0a);
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .08s ease, background-color .15s ease, border-color .15s ease;
+}
+
+/* 1-4 keyboard hints (hidden on touch screens) */
+.practice-sections .choice-card .choice-button::before {
+  content: counter(choice);
+  position: absolute;
+  left: .65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: .7rem;
+  font-weight: 700;
+  opacity: .45;
+}
+@media (pointer: coarse) {
+  .practice-sections .choice-card .choice-button::before { display: none; }
+  .practice-sections .choice-card .choice-button { padding: .75rem 1rem; min-height: 3.5rem; }
+}
+
+.practice-sections .choice-card .choice-button:hover:not(:disabled) {
+  border-color: var(--color-salmon);
+  background: light-dark(#fff3f3, #2a1c1c);
+}
+.practice-sections .choice-card .choice-button:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 0 transparent;
+}
+.practice-sections .choice-card .choice-button:disabled { cursor: default; }
+
+.practice-sections .choice-card .choice-button.correct {
+  border-color: var(--fb-ok);
+  background: color-mix(in srgb, var(--fb-ok) 22%, transparent);
+  animation: fb-pop .5s ease-out;
+}
+.practice-sections .choice-card .choice-button.wrong {
+  border-color: var(--fb-bad);
+  background: color-mix(in srgb, var(--fb-bad) 14%, transparent);
+  text-decoration: line-through;
+  opacity: .7;
+  animation: fb-shake .4s ease-out;
+}
+
+/* ---------- text input ---------- */
+
+.practice-sections .choice-card .type-input {
+  border: 2px solid var(--field-border);
+  border-radius: 12px;
+  background: light-dark(#ffffff, #1c1c1c);
+  color: inherit;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.practice-sections .choice-card .type-input:focus {
+  outline: none;
+  border-color: var(--color-salmon);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-salmon) 25%, transparent);
+}
+.practice-sections .choice-card.feedback-ok .type-input {
+  border-color: var(--fb-ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fb-ok) 25%, transparent);
+}
+.practice-sections .choice-card.feedback-bad .type-input {
+  border-color: var(--fb-bad);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fb-bad) 25%, transparent);
+  animation: fb-shake .4s ease-out;
+}
+
+/* ---------- action buttons ---------- */
+
+.practice-sections .row button {
+  min-width: 5.5rem;
+  min-height: 2.6rem;
+  font-weight: 600;
+}
+.practice-sections .row button:hover { filter: brightness(1.06); }
+.practice-sections .row button:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 transparent;
+}
+.practice-sections .row button:focus-visible,
+.practice-sections .choice-button:focus-visible {
+  outline: 2px solid var(--color-salmon);
+  outline-offset: 2px;
+}
+
+/* ---------- memory dots ---------- */
+
+.practice-sections .memory-dot {
+  width: 12px;
+  height: 12px;
+  transition: background-color .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+/* ---------- feedback: the ring (shared) ---------- */
+
+.practice-sections .choice-card::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 8rem;
+  height: 8rem;
+  margin: -4rem 0 0 -4rem;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- feedback: correct ---------- */
+
+.practice-sections .choice-card.feedback-ok {
+  border-color: var(--fb-ok);
+  animation: fb-card-ok .7s ease-out;
+}
+.practice-sections .choice-card.feedback-ok::after {
+  border-color: var(--fb-ok);
+  animation: fb-ring .65s ease-out;
+}
+.practice-sections .choice-card.feedback-ok .prompt {
+  color: var(--fb-ok);
+  animation: fb-pop .5s ease-out;
+}
+.practice-sections .choice-card.feedback-ok .info-icons .score .icon,
+.practice-sections .choice-card.feedback-ok .info-icons .streak .icon,
+.practice-sections .choice-card.feedback-ok .info-icons .mastered .icon {
+  animation: fb-bump .5s ease-out;
+}
+.practice-sections .choice-card.feedback-ok .memory-dot.filled {
+  animation: fb-dot .5s ease-out;
+}
+.practice-sections .choice-card.feedback-ok .memory-dot.filled:nth-child(2) { animation-delay: .05s; }
+.practice-sections .choice-card.feedback-ok .memory-dot.filled:nth-child(3) { animation-delay: .1s; }
+.practice-sections .choice-card.feedback-ok .memory-dot.filled:nth-child(4) { animation-delay: .15s; }
+.practice-sections .choice-card.feedback-ok .memory-dot.filled:nth-child(5) { animation-delay: .2s; }
+
+/* every 5th correct answer in a row */
+.practice-sections .choice-card.feedback-ok.feedback-streak {
+  border-color: var(--fb-gold);
+  animation: fb-card-streak 1s ease-out;
+}
+.practice-sections .choice-card.feedback-ok.feedback-streak::after {
+  border-color: var(--fb-gold);
+  border-width: 6px;
+  animation: fb-ring-big .9s ease-out;
+}
+.practice-sections .choice-card.feedback-ok.feedback-streak .info-icons .streak .icon {
+  animation: fb-spin .8s ease-out;
+}
+
+/* ---------- feedback: wrong ---------- */
+
+.practice-sections .choice-card.feedback-bad {
+  border-color: var(--fb-bad);
+  animation: fb-shake .45s ease-out, fb-card-bad .7s ease-out;
+}
+.practice-sections .choice-card.feedback-bad::after {
+  border-color: var(--fb-bad);
+  animation: fb-ring .5s ease-out;
+}
+.practice-sections .choice-card.feedback-bad .prompt {
+  animation: fb-flash-bad .6s ease-out;
+}
+.practice-sections .choice-card.feedback-bad .info-icons .streak .icon {
+  animation: fb-shake .45s ease-out;
+}
+
+/* ---------- keyframes ---------- */
+
+@keyframes fb-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fb-bump {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.5) rotate(-8deg); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fb-dot {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.6); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fb-spin {
+  0% { transform: scale(1) rotate(0); }
+  50% { transform: scale(1.8) rotate(180deg); }
+  100% { transform: scale(1) rotate(360deg); }
+}
+
+@keyframes fb-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-9px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(3px); }
+}
+
+@keyframes fb-ring {
+  0% { transform: scale(.3); opacity: .9; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes fb-ring-big {
+  0% { transform: scale(.3); opacity: 1; }
+  100% { transform: scale(4.5); opacity: 0; }
+}
+
+@keyframes fb-card-ok {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--fb-ok) 55%, transparent), var(--card-shadow); }
+  100% { box-shadow: 0 0 0 20px transparent, var(--card-shadow); }
+}
+
+@keyframes fb-card-streak {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--fb-gold) 70%, transparent), var(--card-shadow); }
+  100% { box-shadow: 0 0 0 36px transparent, var(--card-shadow); }
+}
+
+@keyframes fb-card-bad {
+  0% { background-color: color-mix(in srgb, var(--fb-bad) 20%, var(--card-bg)); }
+  100% { background-color: var(--card-bg); }
+}
+
+@keyframes fb-flash-bad {
+  0%, 100% { color: inherit; }
+  30% { color: var(--fb-bad); }
+}
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 480px) {
+  .practice-sections main { padding: 0 .6rem 2rem; }
+  .practice-sections .choice-card { padding: 3.25rem .9rem 1rem; border-radius: 14px; }
+  .practice-sections .row { gap: 8px; }
+  .practice-sections .row button { flex: 1 1 40%; }
+}
+
+/* ---------- reduced motion: no animation, the colours still tell right from wrong ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .practice-sections .choice-card,
+  .practice-sections .choice-card *,
+  .practice-sections .choice-card::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

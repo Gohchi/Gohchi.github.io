@@ -9,6 +9,7 @@ import template from 'templates/KatakanaPractice.js';
 
 import { katakana, kanaMap } from 'data/kana-romaji.js';
 import wordsData from 'data/words.js';
+import { feedbackMixin } from 'data/feedback.js';
 import { shuffle, normalizeReading } from 'tools';
 import {
   MAX_MEMORY,
@@ -31,6 +32,7 @@ const CATEGORY_TYPE = 'words-katakana';
 const CATEGORY_MEANING = 'words-katakana-meaning';
 
 export default {
+  mixins: [feedbackMixin],
   components: {
     MainHeader,
     SessionHistory,
@@ -258,6 +260,7 @@ export default {
       const correct = normalizeReading(value) === normalizeReading(reading);
 
       recordAnswer(CATEGORY_TYPE, word, correct);
+      this.flash(correct, correct ? this.wordStreak + 1 : 0);
       this.wordProgressVersion++;
 
       this.pushHistory({
@@ -291,6 +294,7 @@ export default {
       const correct = option === meaning;
 
       recordAnswer(CATEGORY_MEANING, word, correct);
+      this.flash(correct, correct ? this.wordStreak + 1 : 0);
       this.wordProgressVersion++;
 
       this.pushHistory({
@@ -326,6 +330,7 @@ export default {
         recordAnswer(this.category, word, false);
         this.wordProgressVersion++;
         this.wordStreak = 0;
+        this.flash(false);
         this.pushHistory({
           type: 'word',
           prompt: word,

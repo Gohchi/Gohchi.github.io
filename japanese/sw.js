@@ -1,14 +1,15 @@
-const CACHE_NAME = 'japanese-store-v1.3';
+const CACHE_NAME = 'japanese-store-v1.4';
 const CACHE_ASSETS = [
   '/common.js',
   '/japanese/',
   '/japanese/favicon.ico',
   '/japanese/index.html',
   '/japanese/manifest.webmanifest',
+  '/japanese/practice.css',
+  '/japanese/register.js',
   '/japanese/scripts.js',
   '/japanese/store.js',
   '/japanese/styles.css',
-  '/japanese/register.js',
   '/japanese/tools.js',
   '/japanese/images/books.svg',
   '/japanese/images/hiragana.svg',
@@ -29,6 +30,7 @@ const CACHE_ASSETS = [
   '/japanese/images/sushi.png',
   '/japanese/images/sushi.svg',
   '/japanese/components/FilterMenu.js',
+  '/japanese/components/InfoIcons.js',
   '/japanese/components/KanjiPoolMenu.js',
   '/japanese/components/KanjiWithRuby.js',
   '/japanese/components/ListOfItems.js',
@@ -46,6 +48,7 @@ const CACHE_ASSETS = [
   '/japanese/data/conjugate.js',
   '/japanese/data/donate.js',
   '/japanese/data/favorites.js',
+  '/japanese/data/feedback.js',
   '/japanese/data/firebase.js',
   '/japanese/data/kana-romaji.js',
   '/japanese/data/kana.js',

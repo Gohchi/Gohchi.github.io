@@ -15,7 +15,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card choice-card">
+      <div class="card choice-card" :class="feedbackClass">
         <WordCorner :word="target" />
 
         <InfoIcons

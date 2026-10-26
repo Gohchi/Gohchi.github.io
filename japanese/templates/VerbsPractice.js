@@ -34,7 +34,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card choice-card">
+      <div class="card choice-card" :class="feedbackClass">
         <template v-if="targetVerb">
           <WordCorner :word="targetVerb.dictionary" :level="targetVerb.level" />
 
