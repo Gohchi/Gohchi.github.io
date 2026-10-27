@@ -17,6 +17,14 @@ export default /*html*/`
             :modelValue="selectedTypes"
             @update:modelValue="setTypes"
           />
+          <KanjiPoolMenu
+            label="Pool"
+            title="Choose which adjectives to practice"
+            emptyText="No adjectives for the selected JLPT levels and types."
+            :items="poolItems"
+            :excluded="excludedAdjectives"
+            @update:excluded="setExcluded"
+          />
           <div class="icon-button keyboard-icon" title="Type mode" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
           <div class="icon-button check-icon" title="Options mode" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
         </div>
@@ -34,7 +42,7 @@ export default /*html*/`
             :mastered="adjStats"
           />
 
-          <!-- CHANGED: the reading goes only over the kanji (okurigana stays plain).
+          <!-- the reading goes only over the kanji (okurigana stays plain).
                It stays hidden in type mode, where the reading is the answer. -->
           <div class="prompt verb-prompt">
             <template v-if="furiganaStore.showFurigana && inputMode === 'choice'">
@@ -85,7 +93,7 @@ export default /*html*/`
         </template>
 
         <template v-else>
-          <div :class="statusClass">{{ status || 'No adjectives match the selected filters.' }}</div>
+          <div :class="statusClass">{{ status || 'No adjectives match the selected filters or pool.' }}</div>
         </template>
       </div>
 
