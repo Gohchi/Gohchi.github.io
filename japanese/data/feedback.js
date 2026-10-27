@@ -34,6 +34,10 @@ export const feedbackMixin = {
       clearTimeout(state.timer);
       cancelAnimationFrame(state.raf);
 
+      // a tapped option keeps :focus / :active on touch screens; drop them so the next word starts clean
+      const active = document.activeElement;
+      if (active?.classList?.contains('choice-button')) active.blur();
+
       // remove the class first, then add it two frames later: that restarts the animation
       this.feedback = '';
       this.feedbackBig = false;

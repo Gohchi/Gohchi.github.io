@@ -39,7 +39,7 @@ export default /*html*/`
         <template v-if="inputMode === 'choice'">
           <div class="choice-grid">
             <button
-              v-for="option in kanaOptions" :key="option.kana"
+              v-for="option in kanaOptions" :key="target + option.kana"
               class="choice-button"
               @click="chooseKanaOption(option)"
             >{{ option.romaji }}</button>

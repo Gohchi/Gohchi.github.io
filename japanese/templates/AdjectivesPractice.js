@@ -67,7 +67,7 @@ export default /*html*/`
           <template v-else>
             <div class="choice-grid verb-choice-grid">
               <button
-                v-for="option in choiceOptions" :key="option"
+                v-for="option in choiceOptions" :key="targetAdj.dictionary + option"
                 class="choice-button"
                 @click="chooseOption(option)"
               >{{ option }}</button>
