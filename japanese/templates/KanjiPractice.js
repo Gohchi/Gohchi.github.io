@@ -71,7 +71,7 @@ export default /*html*/`
           <template v-else>
             <div class="choice-grid verb-choice-grid">
               <button
-                v-for="option in wordOptions" :key="option"
+                v-for="option in wordOptions" :key="targetWord.word + option"
                 class="choice-button"
                 :class="{ correct: wordLocked && option === targetWord.meaning, wrong: wrongOptions.includes(option) }"
                 :disabled="wordLocked || wordRevealed || wrongOptions.includes(option)"

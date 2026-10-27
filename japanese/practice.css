@@ -106,10 +106,6 @@
   .practice-sections .choice-card .choice-button { padding: .75rem 1rem; min-height: 3.5rem; }
 }
 
-.practice-sections .choice-card .choice-button:hover:not(:disabled) {
-  border-color: var(--color-salmon);
-  background: light-dark(#fff3f3, #2a1c1c);
-}
 .practice-sections .choice-card .choice-button:active:not(:disabled) {
   transform: translateY(3px);
   box-shadow: 0 0 transparent;
@@ -160,7 +156,6 @@
   min-height: 2.6rem;
   font-weight: 600;
 }
-.practice-sections .row button:hover { filter: brightness(1.06); }
 .practice-sections .row button:active {
   transform: translateY(4px);
   box-shadow: 0 0 transparent;
@@ -326,6 +321,31 @@
   .practice-sections .row button { flex: 1 1 40%; }
 }
 
+/* ---------- info icons: left column, "mastered" on the right ---------- */
+
+/* the icons become an overlay of the whole card, so each one can sit in its own corner */
+.practice-sections .choice-card .info-icons {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 2.25rem 0 0 .5rem; /* below the Listen / JLPT / Jisho row */
+  pointer-events: none;       /* never blocks the buttons underneath */
+}
+
+.practice-sections .choice-card .info-icons > div {
+  pointer-events: auto;       /* keeps the title tooltips */
+}
+
+/* streak, score and last answer stay on the left; mastered goes to the right */
+.practice-sections .choice-card .info-icons .mastered {
+  position: absolute;
+  top: 2.25rem;
+  right: .5rem;
+  align-items: center;
+  gap: .15rem;
+  font-size: .8rem;
+}
+
 /* ---------- reduced motion: no animation, the colours still tell right from wrong ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -335,4 +355,12 @@
     animation: none !important;
     transition: none !important;
   }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .practice-sections .choice-card .choice-button:hover:not(:disabled) {
+    border-color: var(--color-salmon);
+    background: light-dark(#fff3f3, #2a1c1c);
+  }
+  .practice-sections .row button:hover { filter: brightness(1.06); }
 }

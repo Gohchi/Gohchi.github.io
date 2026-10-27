@@ -76,7 +76,7 @@ export default /*html*/`
           <template v-else>
             <div class="choice-grid verb-choice-grid">
               <button
-                v-for="option in verbOptions" :key="option"
+                v-for="option in verbOptions" :key="verbMemoryKey + option"
                 class="choice-button"
                 @click="chooseVerbOption(option)"
               >{{ option }}</button>
