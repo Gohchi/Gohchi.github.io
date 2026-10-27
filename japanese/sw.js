@@ -1,4 +1,4 @@
-const CACHE_NAME = 'japanese-store-v1.4';
+const CACHE_NAME = 'japanese-store-v1.5';
 const CACHE_ASSETS = [
   '/common.js',
   '/japanese/',

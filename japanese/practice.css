@@ -346,6 +346,43 @@
   font-size: .8rem;
 }
 
+/* ---------- header toolbar on mobile: stays between the title and the icons ---------- */
+
+@media (max-width: 700px) {
+  .practice-sections header > .title {
+    gap: .5rem;
+  }
+
+  /* the title may shrink and wrap, so the filters get the space */
+  .practice-sections header > .title:has(.keyboard-toolbar-buttons) > div:first-child {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 7rem;
+    font-size: .8rem;
+    line-height: 1.15;
+  }
+
+  /* the toolbar takes what is left (the 8rem on the right is reserved for the profile and menu icons) */
+  .practice-sections header > .title > .keyboard-toolbar-buttons {
+    flex: 1 1 0;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    padding: 2px 0 6px; /* room for the hover drop-shadow, which overflow would clip */
+  }
+  .practice-sections header > .title > .keyboard-toolbar-buttons::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* auto margins center the group when it fits and let it scroll from the start when it doesn't */
+  .practice-sections header .keyboard-toolbar-buttons .toolbar-group {
+    flex: none;
+    margin-inline: auto;
+  }
+}
+
 /* ---------- reduced motion: no animation, the colours still tell right from wrong ---------- */
 
 @media (prefers-reduced-motion: reduce) {
