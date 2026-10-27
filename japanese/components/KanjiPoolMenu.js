@@ -19,6 +19,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    emptyText: {
+      type: String,
+      default: 'No words for the selected JLPT levels.',
+    },
   },
   emits: ['update:excluded'],
   data() {
@@ -117,7 +121,7 @@ export default {
             @click="toggle(item.word)"
           >{{ item.word }}</button>
         </div>
-        <div v-else class="pool-empty">No words for the selected JLPT levels.</div>
+        <div v-else class="pool-empty">{{ emptyText }}</div>
       </div>
     </div>
   `,

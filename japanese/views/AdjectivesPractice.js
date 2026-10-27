@@ -2,6 +2,7 @@ import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
+import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import InfoIcons from 'components/InfoIcons.js';
 import template from 'templates/AdjectivesPractice.js';
 
@@ -10,6 +11,7 @@ import { feedbackMixin } from 'data/feedback.js';
 import {
   MAX_MEMORY,
   getEntry,
+  getCategoryEntries,
   recordAnswer,
   getStats,
   resetProgress,
@@ -18,7 +20,7 @@ import {
 
 import { furiganaStore } from 'store';
 
-import { shuffle, alignFurigana } from 'tools'; // CHANGED: alignFurigana added
+import { shuffle, alignFurigana } from 'tools';
 
 const HISTORY_LIMIT = 50;
 
@@ -29,6 +31,8 @@ const TYPES = [
 ];
 const LEVELS_KEY = 'adjectives-practice-levels';
 const TYPES_KEY = 'adjectives-practice-types';
+// Adjectives the user turned off in the pool. Stored as "excluded" so new adjectives are in the pool by default.
+const EXCLUDED_KEY = 'adjectives-practice-excluded';
 
 export default {
   mixins: [feedbackMixin],
@@ -37,6 +41,7 @@ export default {
     SessionHistory,
     WordCorner,
     FilterMenu,
+    KanjiPoolMenu,
     InfoIcons,
   },
   data() {
@@ -52,6 +57,7 @@ export default {
       adjTypes: TYPES,
       selectedLevels: loadSelection(LEVELS_KEY, ['N5', 'N4']).filter(l => LEVELS.includes(l)),
       selectedTypes: loadSelection(TYPES_KEY, ['i', 'na']).filter(t => TYPES.some(o => o.key === t)),
+      excludedAdjectives: loadSelection(EXCLUDED_KEY, []),
 
       targetAdj: null,
       choiceOptions: [],
@@ -60,18 +66,26 @@ export default {
       statusClass: 'status',
       score: 0,
       streak: 0,
-      progressVersion: 0, // bumped after each save so the memory bar/stats refresh (progress lives in localStorage)
+      progressVersion: 0, // bumped after each save so the memory bar/stats/pool refresh (progress lives in localStorage)
 
       furiganaStore,
     };
   },
   computed: {
-    filteredAdjectives() {
+    // Adjectives that pass the JLPT + type filters (what the pool matrix shows)
+    levelTypeAdjectives() {
       return this.adjectives.filter(
         a => this.selectedLevels.includes(a.level) && this.selectedTypes.includes(a.type)
       );
     },
-    // NEW: [{ text, rt? }] the reading only goes over the kanji (美味しい -> 美味(おい) + しい)
+    excludedSet() {
+      return new Set(this.excludedAdjectives);
+    },
+    // The practice pool: JLPT + type filters AND not turned off in the pool matrix
+    filteredAdjectives() {
+      return this.levelTypeAdjectives.filter(({ dictionary }) => !this.excludedSet.has(dictionary));
+    },
+    // [{ text, rt? }] the reading only goes over the kanji (美味しい -> 美味(おい) + しい)
     promptParts() {
       if (!this.targetAdj) return [];
       const { dictionary, reading } = this.targetAdj;
@@ -92,6 +106,18 @@ export default {
     typeLabel() {
       if (!this.targetAdj) return '';
       return this.targetAdj.type === 'na' ? 'な-adjective' : 'い-adjective';
+    },
+    // What the pool matrix shows: every adjective of the selected levels / types
+    poolItems() {
+      this.progressVersion; // reactive dependency
+      const entries = Object.fromEntries(getCategoryEntries('adjectives'));
+
+      return this.levelTypeAdjectives.map(({ dictionary, reading, meaning }) => ({
+        word: dictionary,
+        reading,
+        meaning,
+        memory: entries[dictionary]?.memory ?? 0,
+      }));
     },
   },
   methods: {
@@ -116,13 +142,18 @@ export default {
       saveSelection(TYPES_KEY, types);
       this.refreshTargetIfNeeded();
     },
+    setExcluded(words) {
+      this.excludedAdjectives = words;
+      saveSelection(EXCLUDED_KEY, words);
+      this.refreshTargetIfNeeded();
+    },
     refreshTargetIfNeeded() {
       if (!this.targetAdj || !this.filteredAdjectives.includes(this.targetAdj)) {
         this.newTarget();
       }
     },
     buildChoiceOptions(adj) {
-      // Distractors are pulled from the full dataset (not just the current filter)
+      // Distractors are pulled from the full dataset (not just the current filter / pool)
       // so there are always at least 3 wrong-but-plausible options to pick from.
       const pool = this.adjectives.filter(a => a.meaning !== adj.meaning);
       const distractors = shuffle(pool).slice(0, 3).map(a => a.meaning);
@@ -134,7 +165,7 @@ export default {
 
       if (!adj) {
         this.targetAdj = null;
-        this.status = 'No adjectives match the selected filters.';
+        this.status = 'No adjectives match the selected filters or pool.';
         this.statusClass = 'status bad';
         return;
       }

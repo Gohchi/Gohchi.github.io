@@ -2,6 +2,7 @@ import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
+import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import template from 'templates/VerbsPractice.js';
 import InfoIcons from 'components/InfoIcons.js';
 
@@ -11,6 +12,7 @@ import { feedbackMixin } from 'data/feedback.js';
 import {
   MAX_MEMORY,
   getEntry,
+  getCategoryEntries,
   recordAnswer,
   getStats,
   resetProgress,
@@ -19,7 +21,7 @@ import {
 
 import { furiganaStore } from 'store';
 
-import { shuffle, alignFurigana } from 'tools'; // CHANGED: alignFurigana added
+import { shuffle, alignFurigana } from 'tools';
 
 const HISTORY_LIMIT = 50;
 
@@ -34,6 +36,8 @@ const FORMS = VERB_FORMS.map(key => ({ key, label: FORM_LABELS[key] }));
 const LEVELS_KEY = 'verbs-practice-levels';
 const GROUPS_KEY = 'verbs-practice-groups';
 const FORMS_KEY = 'verbs-practice-forms';
+// Verbs the user turned off in the pool. Stored as "excluded" so new verbs are in the pool by default.
+const EXCLUDED_KEY = 'verbs-practice-excluded';
 
 export default {
   mixins: [feedbackMixin],
@@ -41,6 +45,7 @@ export default {
     MainHeader,
     SessionHistory,
     FilterMenu,
+    KanjiPoolMenu,
     WordCorner,
     InfoIcons,
   },
@@ -63,6 +68,7 @@ export default {
       selectedLevels: loadSelection(LEVELS_KEY, ['N5', 'N4']).filter(l => LEVELS.includes(l)),
       selectedGroups: loadSelection(GROUPS_KEY, [1, 2, 3]).filter(g => GROUPS.some(o => o.key === g)),
       selectedForms: loadSelection(FORMS_KEY, VERB_FORMS).filter(f => VERB_FORMS.includes(f)),
+      excludedVerbs: loadSelection(EXCLUDED_KEY, []),
       targetVerb: null,
       targetForm: '',
       verbAnswer: '',
@@ -73,15 +79,24 @@ export default {
       verbStatusClass: 'status',
       verbScore: 0,
       verbStreak: 0,
+      progressVersion: 0, // bumped after each save so memory bar / stats / pool refresh (progress lives in localStorage)
 
       furiganaStore,
     }
   },
   computed: {
-    filteredVerbs() {
+    // Verbs that pass the JLPT + group filters (what the pool matrix shows)
+    levelGroupVerbs() {
       return this.verbs.filter(
         v => this.selectedLevels.includes(v.level) && this.selectedGroups.includes(v.group)
       );
+    },
+    excludedSet() {
+      return new Set(this.excludedVerbs);
+    },
+    // The practice pool: JLPT + group filters AND not turned off in the pool matrix
+    filteredVerbs() {
+      return this.levelGroupVerbs.filter(({ dictionary }) => !this.excludedSet.has(dictionary));
     },
     // every (verb, form) combination allowed by the filters
     candidates() {
@@ -91,7 +106,7 @@ export default {
       });
       return list;
     },
-    // NEW: [{ text, rt? }] the reading only goes over the kanji (教える -> 教(おし) + える)
+    // [{ text, rt? }] the reading only goes over the kanji (教える -> 教(おし) + える)
     promptParts() {
       if (!this.targetVerb) return [];
       const { dictionary, reading } = this.targetVerb;
@@ -104,11 +119,30 @@ export default {
       return this.targetVerb ? `${this.targetVerb.dictionary}:${this.targetForm}` : null;
     },
     verbMemory() {
+      this.progressVersion; // reactive dependency
       return this.verbMemoryKey ? getEntry('verbs', this.verbMemoryKey).memory : 0;
     },
     verbStats() {
+      this.progressVersion; // reactive dependency
       const keys = this.candidates.map(({ verb, form }) => `${verb.dictionary}:${form}`);
       return getStats('verbs', keys);
+    },
+    // What the pool matrix shows. Memory of a verb = average over the selected forms (0-5),
+    // so the bar in each cell reflects the forms that are actually being practiced.
+    poolItems() {
+      this.progressVersion; // reactive dependency
+      const entries = Object.fromEntries(getCategoryEntries('verbs'));
+      const forms = this.selectedForms.length ? this.selectedForms : VERB_FORMS;
+
+      return this.levelGroupVerbs.map(({ dictionary, reading, meaning }) => {
+        const total = forms.reduce((sum, form) => sum + (entries[`${dictionary}:${form}`]?.memory ?? 0), 0);
+        return {
+          word: dictionary,
+          reading,
+          meaning,
+          memory: Math.round(total / forms.length),
+        };
+      });
     },
   },
   methods: {
@@ -138,6 +172,11 @@ export default {
       saveSelection(FORMS_KEY, forms);
       this.refreshVerbTargetIfNeeded();
     },
+    setExcluded(words) {
+      this.excludedVerbs = words;
+      saveSelection(EXCLUDED_KEY, words);
+      this.refreshVerbTargetIfNeeded();
+    },
     refreshVerbTargetIfNeeded() {
       if (
         !this.targetVerb
@@ -159,7 +198,7 @@ export default {
         this.targetForm = '';
         this.verbStatus = this.filteredVerbs.length
           ? 'Select at least one form.'
-          : 'No verbs match the selected filters.';
+          : 'No verbs match the selected filters or pool.';
         this.verbStatusClass = 'status bad';
         return;
       }
@@ -195,6 +234,7 @@ export default {
       const { dictionary, reading } = this.targetVerb;
       const correct = value === this.verbAnswer || value === this.verbAnswerKana;
       recordAnswer('verbs', this.verbMemoryKey, correct);
+      this.progressVersion++;
       this.flash(correct, correct ? this.verbStreak + 1 : 0);
 
       this.pushHistory({
@@ -232,6 +272,7 @@ export default {
       this.verbScore = 0;
       this.verbStreak = 0;
       resetProgress('verbs');
+      this.progressVersion++;
       this.$nextTick(() => this.focusVerbInput());
     },
     focusVerbInput() {

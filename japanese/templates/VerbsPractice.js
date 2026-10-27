@@ -27,6 +27,14 @@ export default /*html*/`
             :modelValue="selectedForms"
             @update:modelValue="setForms"
           />
+          <KanjiPoolMenu
+            label="Pool"
+            title="Choose which verbs to practice"
+            emptyText="No verbs for the selected JLPT levels and groups."
+            :items="poolItems"
+            :excluded="excludedVerbs"
+            @update:excluded="setExcluded"
+          />
           <div class="icon-button keyboard-icon" title="Type mode" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
           <div class="icon-button check-icon" title="Options mode" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
         </div>
@@ -46,7 +54,6 @@ export default /*html*/`
 
           <div class="verb-meaning">{{ targetVerb.meaning }}</div>
 
-          <!-- CHANGED: the reading goes only over the kanji (okurigana stays plain) -->
           <div class="prompt verb-prompt">
             <template v-if="furiganaStore.showFurigana">
               <template v-for="(part, index) in promptParts" :key="index">
@@ -94,7 +101,7 @@ export default /*html*/`
         </template>
 
         <template v-else>
-          <div :class="verbStatusClass">{{ verbStatus || 'No verbs match the selected filters.' }}</div>
+          <div :class="verbStatusClass">{{ verbStatus || 'No verbs match the selected filters or pool.' }}</div>
         </template>
       </div>
 
