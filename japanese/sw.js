@@ -1,4 +1,4 @@
-const CACHE_NAME = 'japanese-store-v1.6';
+const CACHE_NAME = 'japanese-store-v1.7';
 const CACHE_ASSETS = [
   '/common.js',
   '/japanese/',
@@ -54,6 +54,7 @@ const CACHE_ASSETS = [
   '/japanese/data/kana.js',
   '/japanese/data/kanji.js',
   '/japanese/data/phrases.js',
+  '/japanese/data/pools.js',
   '/japanese/data/profile.js',
   '/japanese/data/progress.js',
   '/japanese/data/roadmap-progress.js',
@@ -75,6 +76,7 @@ const CACHE_ASSETS = [
   '/japanese/templates/Profile.js',
   '/japanese/templates/Progress.js',
   '/japanese/templates/Roadmap.js',
+  '/japanese/templates/Settings.js',
   '/japanese/templates/Topics.js',
   '/japanese/templates/Translations.js',
   '/japanese/templates/VerbsPractice.js',
@@ -90,6 +92,7 @@ const CACHE_ASSETS = [
   '/japanese/views/Profile.js',
   '/japanese/views/Progress.js',
   '/japanese/views/Roadmap.js',
+  '/japanese/views/Settings.js',
   '/japanese/views/Topics.js',
   '/japanese/views/Translations.js',
   '/japanese/views/VerbsPractice.js',

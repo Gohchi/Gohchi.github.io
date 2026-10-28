@@ -15,6 +15,7 @@ import PrintPractice from 'views/PrintPractice.js';
 import Roadmap from 'views/Roadmap.js';
 import Progress from 'views/Progress.js';
 import Profile from 'views/Profile.js';
+import Settings from 'views/Settings.js';
 import Donate from 'views/Donate.js';
 
 const app = createApp({});
@@ -39,6 +40,7 @@ const routes = [
   { path: '/adjectives-practice', component: AdjectivesPractice, name: 'adjectives-practice' },
   { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },
   { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
+  { path: '/settings', component: Settings, name: 'settings' },
   { path: '/donate', component: Donate, name: 'donate' },
   { path: '/:pathMatch(.*)*', name: '404', component: NotFound }
 ];

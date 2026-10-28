@@ -47,6 +47,7 @@ const NAV_ITEMS = [
   { to: '/topics', label: 'TOPICS' },
   { to: '/translations', label: 'TRANSLATIONS' },
   { to: '/print-practice', label: 'PRINT PRACTICE' },
+  { to: '/settings', label: 'SETTINGS' },
   { to: '/donate', label: 'DONATE ♥' },
 ];
 
