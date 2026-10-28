@@ -20,7 +20,7 @@ import {
 
 import { furiganaStore } from 'store';
 
-import { shuffle, alignFurigana } from 'tools';
+import { shuffle, alignFurigana, pickDistractors } from 'tools';
 
 const HISTORY_LIMIT = 50;
 
@@ -153,10 +153,13 @@ export default {
       }
     },
     buildChoiceOptions(adj) {
-      // Distractors are pulled from the full dataset (not just the current filter / pool)
-      // so there are always at least 3 wrong-but-plausible options to pick from.
-      const pool = this.adjectives.filter(a => a.meaning !== adj.meaning);
-      const distractors = shuffle(pool).slice(0, 3).map(a => a.meaning);
+      // wrong answers: the practice pool first, then the JLPT + type filters, then every adjective
+      const meanings = list => list.map(({ meaning }) => meaning);
+      const distractors = pickDistractors(adj.meaning, [
+        meanings(this.filteredAdjectives),
+        meanings(this.levelTypeAdjectives),
+        meanings(this.adjectives),
+      ]);
       return shuffle([adj.meaning, ...distractors]);
     },
     newTarget() {
