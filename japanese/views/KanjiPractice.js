@@ -10,7 +10,7 @@ import template from 'templates/KanjiPractice.js';
 
 import wordsData from 'data/words.js';
 import { feedbackMixin } from 'data/feedback.js';
-import { shuffle, normalizeReading } from 'tools';
+import { shuffle, normalizeReading, pickDistractors } from 'tools';
 import {
   MAX_MEMORY,
   getEntry,
@@ -135,14 +135,14 @@ export default {
       this.wordTimer = null;
     },
     buildMeaningOptions(target) {
-      // Distractors come from the other kanji words' meanings. They use the whole list
-      // (not the JLPT filter or the pool) so there are always enough of them.
-      const pool = [...new Set(
-        this.words
-          .filter(({ word, meaning }) => word !== target.word && meaning !== target.meaning)
-          .map(({ meaning }) => meaning)
-      )];
-      return shuffle([target.meaning, ...shuffle(pool).slice(0, 3)]);
+      // wrong answers: the practice pool first, then the selected JLPT levels, then every kanji word
+      const meanings = list => list.map(({ meaning }) => meaning);
+      const distractors = pickDistractors(target.meaning, [
+        meanings(this.filteredWords),
+        meanings(this.levelWords),
+        meanings(this.words),
+      ]);
+      return shuffle([target.meaning, ...distractors]);
     },
     newWordTarget() {
       this.clearWordTimer();

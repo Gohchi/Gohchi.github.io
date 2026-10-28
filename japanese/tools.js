@@ -122,6 +122,20 @@ export function shuffle(list) {
   return arr;
 }
 
+// Picks `count` wrong answers for a multiple-choice question.
+// `tiers` are candidate lists, most relevant first (e.g. [pool, same JLPT levels, everything]).
+// Later tiers are only used when the earlier ones don't have enough distinct values.
+export const pickDistractors = (correct, tiers, count = 3) => {
+  const picked = [];
+  for (const tier of tiers) {
+    for (const value of shuffle([...new Set(tier)])) {
+      if (value && value !== correct && !picked.includes(value)) picked.push(value);
+    }
+    if (picked.length >= count) break;
+  }
+  return picked.slice(0, count);
+};
+
 // Vowel (a/i/u/e/o) that each hiragana ends with, used to expand the long
 // vowel mark: こーひー -> こおひい (the same thing an IME types for "koohii").
 const VOWEL_ROWS = {
