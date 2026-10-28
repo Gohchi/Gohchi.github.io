@@ -2379,6 +2379,332 @@ body {
   }
 }
 
+.settings {
+  --muted: light-dark(#58635e, #b5bfba);
+  --border: light-dark(#d0d0d0, #303030);
+  --surface: light-dark(#ffffff, #1c1c1c);
+  --surface-hover: light-dark(#f0f0f0, #262626);
+
+  main {
+    max-width: 56rem;
+    margin: 5rem auto 3rem;
+    padding: 0 1rem;
+  }
+
+  .settings-intro {
+    text-align: center;
+    margin-bottom: 1rem;
+
+    .eyebrow {
+      margin: 0 0 .5rem;
+      color: var(--color-salmon);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 .75rem;
+      font-family: "Zen Antique Soft", serif;
+      font-weight: 400;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+    }
+
+    .lead {
+      margin: 0 auto;
+      max-width: 38rem;
+      color: var(--muted);
+    }
+  }
+
+  .settings-pools {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+
+  .s-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .3rem .85rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: inherit;
+    font-size: .85rem;
+    cursor: pointer;
+
+    .count {
+      font-size: .7rem;
+      opacity: .65;
+    }
+
+    &.small {
+      padding: .2rem .7rem;
+      font-size: .8rem;
+    }
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+
+    &.on {
+      background: var(--color-salmon);
+      border-color: var(--color-salmon);
+      color: white;
+
+      .count {
+        opacity: .9;
+      }
+    }
+  }
+
+  .settings-search {
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+    padding: 0 1rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: inherit;
+    font: inherit;
+    font-size: 1rem; /* 16px avoids the iOS zoom-on-focus */
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-salmon);
+    }
+  }
+
+  .filter-line {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-name {
+    width: 4.2rem;
+    flex: none;
+    color: var(--muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  /* stays under the fixed header so the bulk actions are always reachable */
+  .settings-bar {
+    position: sticky;
+    top: 4rem;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem 1rem;
+    flex-wrap: wrap;
+    padding: .5rem 0;
+    background: light-dark(#dfdfdf, #000000);
+  }
+
+  .settings-summary {
+    color: var(--muted);
+    font-size: .8rem;
+  }
+
+  .bulk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+
+    button {
+      padding: .3rem .8rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: inherit;
+      font-size: .8rem;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        background: var(--surface-hover);
+      }
+
+      &:disabled {
+        opacity: .4;
+        cursor: default;
+      }
+
+      &.clear {
+        border-color: var(--color-salmon);
+        color: var(--color-salmon);
+      }
+    }
+  }
+
+  .practice-link {
+    align-self: flex-start;
+    color: var(--color-salmon);
+    font-size: .85rem;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .pool-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+
+    th,
+    td {
+      padding: .45rem .6rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: light-dark(#e0e0e0, #1a1a1a);
+      font-size: .75rem;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      cursor: pointer;
+
+      &:nth-child(even) {
+        background: light-dark(#f4f4f4, #121212);
+      }
+
+      &:hover {
+        background: light-dark(#e8e8e8, #1f1f1f);
+      }
+
+      &.off {
+        opacity: .5;
+      }
+
+      &:last-child td {
+        border-bottom: none;
+      }
+    }
+
+    .col-check {
+      width: 2rem;
+      text-align: center;
+
+      input {
+        width: 1.05rem;
+        height: 1.05rem;
+        cursor: pointer;
+        accent-color: var(--color-salmon);
+      }
+    }
+
+    .col-word {
+      font-family: "Zen Antique Soft", serif;
+      font-size: 1.2rem;
+      white-space: nowrap;
+    }
+
+    .col-reading,
+    .col-level,
+    .col-pool,
+    .col-memory {
+      white-space: nowrap;
+    }
+
+    .col-meaning {
+      color: var(--muted);
+      min-width: 8rem;
+    }
+
+    small {
+      color: var(--muted);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .memory-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 2px;
+      border-radius: 50%;
+      background: light-dark(#ddd, #333);
+      border: 1px solid light-dark(#ccc, #444);
+
+      &.filled {
+        background: #f5a623;
+        border-color: #d38a12;
+      }
+    }
+  }
+
+  .level-pill {
+    padding: .05rem .5rem;
+    border-radius: 999px;
+    font-size: .7rem;
+    font-weight: 700;
+    color: black;
+
+    &.lv-N5 { background: var(--color-level-N5); }
+    &.lv-N4 { background: var(--color-level-N4); }
+    &.lv-N3 { background: var(--color-level-N3); }
+    &.lv-N2 { background: var(--color-level-N2); }
+    &.lv-N1 { background: var(--color-level-N1); }
+  }
+
+  .show-more {
+    align-self: center;
+    padding: .45rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+
+  .empty-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    color: var(--muted);
+
+    h2 {
+      margin: 0 0 .25rem;
+      color: inherit;
+      font-size: 1.1rem;
+    }
+  }
+}
+
 @media (max-width: 420px) {
   .tategaki-button {
     writing-mode: vertical-rl;
@@ -3419,6 +3745,14 @@ body header > .title {
     top: 3.4rem;
     left: .5rem;
     right: .5rem;
+  }
+  
+  .settings main {
+    margin-top: 4.5rem;
+  }
+
+  .settings .filter-name {
+    width: 100%;
   }
 }
 
