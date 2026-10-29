@@ -33,20 +33,21 @@ const HANDAKUTEN_MAP = {
 };
 
 // Navigation chips, in menu order. To add a section, add one line here.
+// `practice: true` gives the chip the chopsticks style (see .chip.practice-chip in styles.css).
 const NAV_ITEMS = [
   { to: '/', label: 'HOME' },
   { to: '/roadmap', label: 'ROADMAP' },
   { to: '/progress', label: 'PROGRESS' },
-  { to: '/common-phrases', label: 'COMMON PHRASES' },
-  { to: '/kana-keyboard', label: 'KANA KEYBOARD' },
-  { to: '/hiragana-practice', label: 'HIRAGANA PRACTICE' },
-  { to: '/katakana-practice', label: 'KATAKANA PRACTICE' },
-  { to: '/kanji-practice', label: 'KANJI PRACTICE' },
-  { to: '/verbs-practice', label: 'VERB PRACTICE' },
-  { to: '/adjectives-practice', label: 'ADJECTIVE PRACTICE' },
-  { to: '/topics', label: 'TOPICS' },
+  { to: '/common-phrases', label: 'COMMON PHRASES', practice: true },
+  { to: '/kana-keyboard', label: 'KANA KEYBOARD', practice: true },
+  { to: '/hiragana-practice', label: 'HIRAGANA', practice: true },
+  { to: '/katakana-practice', label: 'KATAKANA', practice: true },
+  { to: '/kanji-practice', label: 'KANJI', practice: true },
+  { to: '/verbs-practice', label: 'VERB', practice: true },
+  { to: '/adjectives-practice', label: 'ADJECTIVE', practice: true },
+  { to: '/topics', label: 'TOPICS', practice: true },
+  { to: '/print-practice', label: 'PRINT', practice: true },
   { to: '/translations', label: 'TRANSLATIONS' },
-  { to: '/print-practice', label: 'PRINT PRACTICE' },
   { to: '/settings', label: 'SETTINGS' },
   { to: '/donate', label: 'DONATE ♥' },
 ];
@@ -160,7 +161,7 @@ export default {
           <router-link
             :to="item.to"
             class="chip filter-chip"
-            :class="{ selected: isActive(item.to) }"
+            :class="{ selected: isActive(item.to), 'practice-chip': item.practice }"
             :aria-current="isActive(item.to) ? 'page' : undefined"
           >
             <span v-if="isActive(item.to)" class="chip-check" aria-hidden="true">✓</span>

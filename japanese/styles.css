@@ -546,7 +546,21 @@ body {
   &.assist-chip {
     border-style: dashed;
   }
+
+  &.practice-chip {
+    --chip-outline: var(--color-chopsticks);
+    --chip-selected-bg: var(--color-chopsticks);
+    --chip-selected-fg: #000000;
+
+    background: color-mix(in srgb, var(--color-chopsticks) 22%, transparent);
+
+    /* the current page is a solid chopsticks chip with dark text */
+    &.selected {
+      border-color: var(--color-chopsticks);
+    }
+  }
 }
+
 
 #dialog-kana {
   .close-btn {
