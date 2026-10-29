@@ -349,7 +349,7 @@ export const ruby = {
     "cold"
   ]},
   "明日": { furigana: "あした", JLPT_level: "N5", eng: [
-    "yesterday",
+    "tomorrow",
   ]},
   "独学": { furigana: "どくがく", JLPT_level: "N2", eng: [
     "self-study"
