@@ -47,6 +47,7 @@ const NAV_ITEMS = [
   { to: '/adjectives-practice', label: 'ADJECTIVE', practice: true },
   { to: '/topics', label: 'TOPICS', practice: true },
   { to: '/print-practice', label: 'PRINT', practice: true },
+  { to: '/speech-practice', label: 'SPEECH', practice: true },
   { to: '/translations', label: 'TRANSLATIONS' },
   { to: '/settings', label: 'SETTINGS' },
   { to: '/donate', label: 'DONATE ♥' },

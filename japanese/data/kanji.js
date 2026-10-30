@@ -283,6 +283,9 @@ export const ruby = {
   "駅": { furigana: "えき", JLPT_level: "N5", eng: [
     "(train) station"
   ]},
+  "魚": { furigana: "さかな", JLPT_level: "N5", eng: [
+    "fish"
+  ]},
   "行": { furigana: "い", JLPT_level: "N5", eng: [
     "go"
   ]},
