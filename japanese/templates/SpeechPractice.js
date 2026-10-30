@@ -4,7 +4,34 @@ export default /*html*/`
       title="SPEECH PRACTICE"
       hideFurigana="true"
       hideZoom="true"
-    />
+    >
+      <div class="keyboard-toolbar-buttons">
+        <div class="toolbar-group">
+          <FilterMenu
+            label="JLPT"
+            title="JLPT levels"
+            :options="levelOptions"
+            :modelValue="selectedLevels"
+            @update:modelValue="setLevels"
+          />
+          <FilterMenu
+            label="Type"
+            title="Word types"
+            :options="typeOptions"
+            :modelValue="selectedTypes"
+            @update:modelValue="setTypes"
+          />
+          <KanjiPoolMenu
+            label="Pool"
+            title="Choose which words to practice"
+            emptyText="No words for the selected JLPT levels and types."
+            :items="poolItems"
+            :excluded="excludedWords"
+            @update:excluded="setExcluded"
+          />
+        </div>
+      </div>
+    </MainHeader>
 
     <main>
       <div class="card choice-card" :class="feedbackClass">
@@ -68,7 +95,7 @@ export default /*html*/`
         </template>
 
         <template v-else>
-          <div :class="statusClass">No words available.</div>
+          <div :class="statusClass">{{ status || 'No words match the selected filters or pool.' }}</div>
         </template>
       </div>
 
