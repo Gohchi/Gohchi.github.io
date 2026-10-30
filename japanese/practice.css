@@ -248,6 +248,70 @@
   animation: fb-shake .45s ease-out;
 }
 
+/* ---------- speech practice ---------- */
+
+.speech-practice .mic-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  min-width: 11rem;
+  min-height: 3.25rem;
+  margin: .5rem 0;
+  padding: .6rem 1.4rem;
+  border-radius: 999px;
+  background: var(--color-salmon);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 4px hsl(from var(--color-salmon) h s 20%);
+}
+
+.speech-practice .mic-button .mic-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.speech-practice .mic-button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.speech-practice .mic-button.listening {
+  animation: mic-pulse 1.2s ease-in-out infinite;
+}
+
+.speech-practice .heard {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: .6rem;
+  min-height: 1.8rem;
+  margin: .25rem 0;
+}
+
+.speech-practice .heard-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  opacity: .6;
+}
+
+.speech-practice .heard-text {
+  font-size: 1.25rem;
+  font-family: "Zen Antique Soft", serif;
+}
+
+.speech-practice .heard.empty .heard-text {
+  opacity: .4;
+}
+
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 4px hsl(from var(--color-salmon) h s 20%), 0 0 0 0 color-mix(in srgb, var(--color-salmon) 55%, transparent); }
+  50% { box-shadow: 0 4px hsl(from var(--color-salmon) h s 20%), 0 0 0 14px transparent; }
+}
+
 /* ---------- keyframes ---------- */
 
 @keyframes fb-pop {
