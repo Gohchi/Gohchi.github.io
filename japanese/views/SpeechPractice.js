@@ -6,6 +6,7 @@ import InfoIcons from 'components/InfoIcons.js';
 import template from 'templates/SpeechPractice.js';
 
 import speechWords from 'data/speech-words.js';
+import { ruby } from 'data/kanji.js';
 import { feedbackMixin } from 'data/feedback.js';
 import { normalizeReading } from 'tools';
 
@@ -27,6 +28,14 @@ const ERROR_MESSAGES = {
 // Punctuation and spaces are ignored; katakana, hiragana and long vowels are
 // compared the same way as the other practice views (normalizeReading).
 const normalize = text => normalizeReading(String(text ?? '').replace(/[。、．，.,!?！？「」『』\s]/g, ''));
+
+// Every written form with the same reading as `reading` (ねこ -> 猫), taken from data/kanji.js.
+const homophones = reading => {
+  const target = normalize(reading);
+  return Object.entries(ruby)
+    .filter(([, entry]) => normalize(entry.furigana) === target)
+    .map(([form]) => form);
+};
 
 export default {
   mixins: [feedbackMixin],
@@ -59,6 +68,16 @@ export default {
   created() {
     // non-reactive state
     this.internals = { recognition: null, timer: 0, gotResult: false, hadError: false };
+  },
+  computed: {
+    // Everything that counts as a correct answer for the current word, already normalized
+    acceptedForms() {
+      if (!this.target) return new Set();
+      const { word, reading, accept = [] } = this.target;
+      return new Set(
+        [word, reading, ...accept, ...homophones(reading)].map(normalize)
+      );
+    },
   },
   methods: {
     pushHistory(entry) {
@@ -93,19 +112,20 @@ export default {
     // --- grading ---
     isMatch(candidate) {
       const value = normalize(candidate);
-      if (!value) return false;
-      const { word, reading } = this.target;
-      return value === normalize(word) || value === normalize(reading);
+      return !!value && this.acceptedForms.has(value);
     },
     // `candidates` = every alternative the recognizer gave (best first)
     grade(candidates) {
       if (!this.target || this.locked) return;
 
       const list = candidates.filter(Boolean);
-      const correct = list.some(this.isMatch);
-      const chosen = list[0] || '';
+      const matched = list.find(this.isMatch);
+      const correct = !!matched;
+      // show what actually matched; otherwise the recognizer's best guess
+      const chosen = matched || list[0] || '';
       const { word, reading, meaning } = this.target;
 
+      this.heard = chosen;
       this.flash(correct, correct ? this.streak + 1 : 0);
       this.pushHistory({
         type: 'speech',
