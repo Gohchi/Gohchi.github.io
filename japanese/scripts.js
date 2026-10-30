@@ -12,6 +12,7 @@ import VerbsPractice from 'views/VerbsPractice.js';
 import AdjectivesPractice from 'views/AdjectivesPractice.js';
 import Topics from 'views/Topics.js';
 import PrintPractice from 'views/PrintPractice.js';
+import SpeechPractice from 'views/SpeechPractice.js';
 import Roadmap from 'views/Roadmap.js';
 import Progress from 'views/Progress.js';
 import Profile from 'views/Profile.js';
@@ -40,6 +41,7 @@ const routes = [
   { path: '/adjectives-practice', component: AdjectivesPractice, name: 'adjectives-practice' },
   { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },
   { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
+  { path: '/speech-practice', component: SpeechPractice, name: 'speech-practice' },
   { path: '/settings', component: Settings, name: 'settings' },
   { path: '/donate', component: Donate, name: 'donate' },
   { path: '/:pathMatch(.*)*', name: '404', component: NotFound }
