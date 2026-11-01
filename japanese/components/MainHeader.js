@@ -50,6 +50,7 @@ const NAV_ITEMS = [
   { to: '/speech-practice', label: 'SPEECH', practice: true },
   { to: '/translations', label: 'TRANSLATIONS' },
   { to: '/settings', label: 'SETTINGS' },
+  { to: '/admin', label: 'ADMIN', admin: true },
   { to: '/donate', label: 'DONATE ♥' },
 ];
 
@@ -92,6 +93,12 @@ export default {
       profileStore,
       navItems: NAV_ITEMS,
     };
+  },
+  computed: {
+    // the admin chip only exists for the admin
+    visibleNavItems() {
+      return this.navItems.filter(item => !item.admin || profileStore.isAdmin);
+    },
   },
   methods: {
     showDialog,
@@ -158,7 +165,7 @@ export default {
       </div>
       
       <ul class="menu-index" v-if="showMenu">
-        <li v-for="item in navItems" :key="item.to">
+        <li v-for="item in visibleNavItems" :key="item.to">
           <router-link
             :to="item.to"
             class="chip filter-chip"

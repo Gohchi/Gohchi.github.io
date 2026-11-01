@@ -1,4 +1,4 @@
-const CACHE_NAME = 'japanese-store-v1.12';
+const CACHE_NAME = 'japanese-store-v1.13';
 const CACHE_ASSETS = [
   '/common.js',
   '/japanese/',
@@ -40,6 +40,7 @@ const CACHE_ASSETS = [
   '/japanese/components/Sources.js',
   '/japanese/components/WordCorner.js',
   '/japanese/data/adjectives.js',
+  '/japanese/data/admin.js',
   '/japanese/data/books/berserk.js',
   '/japanese/data/books/eoe.js',
   '/japanese/data/books/index.js',
@@ -66,6 +67,7 @@ const CACHE_ASSETS = [
   '/japanese/data/verbs.js',
   '/japanese/data/words.js',
   '/japanese/templates/AdjectivesPractice.js',
+  '/japanese/templates/Admin.js',
   '/japanese/templates/CommonPhrases.js',
   '/japanese/templates/Donate.js',
   '/japanese/templates/HiraganaPractice.js',
@@ -83,6 +85,7 @@ const CACHE_ASSETS = [
   '/japanese/templates/Translations.js',
   '/japanese/templates/VerbsPractice.js',
   '/japanese/views/AdjectivesPractice.js',
+  '/japanese/views/Admin.js',
   '/japanese/views/CommonPhrases.js',
   '/japanese/views/Donate.js',
   '/japanese/views/HiraganaPractice.js',

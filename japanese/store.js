@@ -5,6 +5,8 @@ import {
   getVoices,
 } from 'tools';
 
+import { isAdminUser } from 'data/admin.js';
+
 import {
   loadProfile,
   saveProfile,
@@ -111,7 +113,10 @@ export const profileStore = reactive({
   get authBusy() {
     return this.authStatus !== '';
   },
-
+  
+  get isAdmin() {
+    return isAdminUser(this.user);
+  },
   // Starts listening to the auth state. Called once, at the bottom of this file.
   async init() {
     if (this.authStarted) return;
