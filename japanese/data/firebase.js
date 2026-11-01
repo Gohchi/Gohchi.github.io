@@ -91,3 +91,25 @@ export async function writeDoc(uid, name, value) {
     updatedAt: firebase.fs.serverTimestamp(),
   });
 }
+
+export async function readAllData() {
+  const firebase = await loadFirebase();
+  const { fs, db } = firebase;
+  const snapshot = await fs.getDocs(fs.collectionGroup(db, 'data'));
+
+  return snapshot.docs.map(doc => {
+    const raw = doc.data();
+    let value = null;
+    try {
+      value = JSON.parse(raw.json);
+    } catch {
+      // keep null: unreadable doc
+    }
+    return {
+      userId: doc.ref.parent.parent.id,
+      name: doc.id,
+      value,
+      updatedAt: raw.updatedAt?.toDate?.() ?? null,
+    };
+  });
+}

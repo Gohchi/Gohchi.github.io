@@ -18,6 +18,7 @@ import Progress from 'views/Progress.js';
 import Profile from 'views/Profile.js';
 import Settings from 'views/Settings.js';
 import Donate from 'views/Donate.js';
+import Admin from 'views/Admin.js';
 
 const app = createApp({});
 
@@ -43,6 +44,7 @@ const routes = [
   { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
   { path: '/speech-practice', component: SpeechPractice, name: 'speech-practice' },
   { path: '/settings', component: Settings, name: 'settings' },
+  { path: '/admin', component: Admin, name: 'admin' },
   { path: '/donate', component: Donate, name: 'donate' },
   { path: '/:pathMatch(.*)*', name: '404', component: NotFound }
 ];
