@@ -14,11 +14,12 @@ import {
 
 import { DAKUTEN_MAP, HANDAKUTEN_MAP } from 'data/kana-romaji.js';
 import NavMenu from 'components/NavMenu.js';
-import LevelToast from 'components/LevelToast.js';
+import LevelNotifier from 'components/LevelNotifier.js';
+import { notificationStore, timeAgo } from 'data/notifications.js';
 
 
 export default {
-  components: { NavMenu, LevelToast },
+  components: { NavMenu, LevelNotifier },
   props: {
     title: String,
     subtitle: String,
@@ -55,9 +56,24 @@ export default {
       "wordBuilder": '', // word being assembled by clicking kana in the dialog
       zoomStore,
       profileStore,
+      notificationStore,
+      showNotifications: false,
+      newIds: [], // ids that were unread when the list was opened (shown highlighted)
     };
   },
   methods: {
+    timeAgo,
+    toggleNotifications() {
+      if (this.showNotifications) return this.closeNotifications();
+      this.showMenu = false;
+      this.newIds = notificationStore.items.filter(item => !item.read).map(item => item.id);
+      notificationStore.markAllRead();
+      this.showNotifications = true;
+    },
+    closeNotifications() {
+      this.showNotifications = false;
+      this.newIds = [];
+    },
     showDialog,
     closeDialog,
     // "/" only matches exactly; the rest also match their sub-routes (/topics/time)
@@ -112,6 +128,7 @@ export default {
   },
   template: /*html*/`
     <div class="backdrop" v-if="showMenu" @click="showMenu=false"></div>
+    <div class="backdrop" v-if="showNotifications" @click="closeNotifications"></div>
     <header>
       <div class="title">
         <div>
@@ -148,22 +165,53 @@ export default {
         </li>
       </ul>
       
-      <router-link
-        to="/profile"
-        class="icon-profile"
-        :class="{ selected: isActive('/profile'), loading: profileStore.authBusy }"
-        title="Profile"
-        aria-label="Profile"
-      >
-        <img v-if="profileStore.user && profileStore.user.photoURL" :src="profileStore.user.photoURL" alt="" />
-        <span v-else>{{ profileStore.profile.avatar || '👤' }}</span>
-      </router-link>
+      <div class="profile-wrap">
+        <button
+          type="button"
+          class="icon-profile"
+          :class="{ selected: isActive('/profile') || showNotifications, loading: profileStore.authBusy }"
+          :title="notificationStore.unread ? notificationStore.unread + ' new notifications' : 'Notifications and profile'"
+          aria-label="Notifications and profile"
+          aria-haspopup="true"
+          :aria-expanded="showNotifications"
+          @click="toggleNotifications"
+        >
+          <img v-if="profileStore.user && profileStore.user.photoURL" :src="profileStore.user.photoURL" alt="" />
+          <span v-else>{{ profileStore.profile.avatar || '👤' }}</span>
+        </button>
+        <span v-if="notificationStore.unread" class="notif-badge" aria-hidden="true">{{ notificationStore.unread > 9 ? '9+' : notificationStore.unread }}</span>
+
+        <div v-if="showNotifications" class="notif-panel" role="menu">
+          <router-link to="/profile" class="notif-profile" role="menuitem" @click="closeNotifications">Go to profile →</router-link>
+
+          <div class="notif-head">
+            <span>Notifications</span>
+            <button type="button" class="filter-link" v-if="notificationStore.items.length" @click="notificationStore.clear()">Clear</button>
+          </div>
+
+          <ul class="notif-list" v-if="notificationStore.items.length">
+            <li v-for="item in notificationStore.items" :key="item.id" :class="{ 'is-new': newIds.includes(item.id) }">
+              <router-link v-if="item.to" :to="item.to" class="notif-item" @click="closeNotifications">
+                <span aria-hidden="true">{{ item.icon }}</span>
+                <span class="notif-text">{{ item.text }}</span>
+                <small>{{ timeAgo(item.ts) }}</small>
+              </router-link>
+              <div v-else class="notif-item">
+                <span aria-hidden="true">{{ item.icon }}</span>
+                <span class="notif-text">{{ item.text }}</span>
+                <small>{{ timeAgo(item.ts) }}</small>
+              </div>
+            </li>
+          </ul>
+          <p class="notif-empty" v-else>Nothing yet. Level-ups and unlocks will show up here.</p>
+        </div>
+      </div>
       
       <div class="icon-menu" @click="showMenu=!showMenu">
       </div>
     </header>
 
-    <LevelToast />
+    <LevelNotifier />
 
     
     <div v-if="zoomStore.showZoomMenu" class="zoom-menu">
