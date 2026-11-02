@@ -94,8 +94,9 @@ export default /*html*/`
         </button>
         <ul v-if="showLocked" class="locked-words-list">
           <li v-for="item in lockedWords" :key="item.word">
-            <span class="locked-word">{{ item.word }}</span>
-            <small>{{ item.needs }}</small>
+            <span class="locked-word" :title="item.needs">
+              <span v-for="(part, i) in markKana(item.word, item.missing)" :key="i" :class="part.missing ? 'kana-missing' : 'kana-ok'">{{ part.ch }}</span>
+            </span>
           </li>
         </ul>
       </section>

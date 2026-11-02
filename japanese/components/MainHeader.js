@@ -203,7 +203,7 @@ export default {
               </div>
             </li>
           </ul>
-          <p class="notif-empty" v-else>Nothing yet. Level-ups and unlocks will show up here.</p>
+          <p class="notif-empty" v-else>Nothing yet.</p>
         </div>
       </div>
       
