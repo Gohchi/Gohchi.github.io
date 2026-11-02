@@ -264,16 +264,15 @@ body {
     line-height: 1;
     text-decoration: none;
     border-radius: 50%;
-    border: 2px solid transparent;
-    background-color: light-dark(#ffffffaa, #ffffff22);
+    background-color: light-dark(hsl(from var(--color-chopsticks) h s 95%), #ffffff22);
     background-repeat: no-repeat;
-    background-size: 28px;
+    background-size: 22px;
     background-position: center;
     overflow: hidden;
     cursor: pointer;
       
     &:hover {
-      filter: drop-shadow(1px 3px 2px black);
+      background-color: white;
     }
   }
   .kanji-icon {
@@ -444,7 +443,7 @@ body {
   background-image: url(./images/sushi.svg);
 
   &:hover {
-    filter: drop-shadow(1px 3px 2px black);
+    filter: drop-shadow(1px 3px 2px rgba(0, 0, 0, 0.3));
   }
 
   .open {
@@ -3270,12 +3269,13 @@ body {
 .profile-wrap {
   position: fixed;
   right: 3.6rem;
-  top: .85rem;
+  top: 1rem;
   z-index: 11;
 }
 
 .icon-profile {
   position: relative;
+  box-sizing: border-box;
   padding: 0;
   height: 32px;
   width: 32px;
@@ -3287,7 +3287,7 @@ body {
   text-decoration: none;
   border-radius: 50%;
   border: 2px solid transparent;
-  background: light-dark(#ffffffaa, #ffffff22);
+  background-color: light-dark(hsl(from var(--color-chopsticks) h s 95%), #ffffff22);
   overflow: hidden;
   cursor: pointer;
 
@@ -3298,7 +3298,7 @@ body {
   }
 
   &:hover {
-    filter: drop-shadow(1px 3px 2px black);
+    background-color: white;
   }
 
   &.selected {
@@ -3327,10 +3327,19 @@ html.auth-busy {
   cursor: progress;
 }
 
-/* two icons on the right now: leave room for both */
+
 body header > .title {
-  padding-right: 8rem;
-  width: calc(100% - 8.2rem);
+  left: 1rem;
+  right: 7.2rem;
+  width: auto;
+  padding-right: 0;
+}
+
+body header > .title > .keyboard-toolbar-buttons {
+  margin-left: auto;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .profile {
