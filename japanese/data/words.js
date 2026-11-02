@@ -144,11 +144,12 @@ const kanjiWords = /*[
   ['新聞', 'しんぶん', 'newspaper'],
 ]*/
 Object.entries(ruby)
-.map(([word, { reading, JLPT_level }]) => {
+.map(([word, { reading, JLPT_level, tags = [] }]) => {
 
   return ({
     word,
     reading,
+    tags,
     meaning: meaningOf(word).join(', '),
     level: JLPT_level,
     type: 'kanji'

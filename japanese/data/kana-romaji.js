@@ -53,3 +53,29 @@ export const kanaMap = {
   'ラ':'ら','リ':'り','ル':'る','レ':'れ','ロ':'ろ',
   'ワ':'わ','ヲ':'を','ン':'ん',
 };
+
+// Dakuten (゛) and handakuten (゜) pairs, hiragana + katakana combined,
+// used to modify the last character typed into the word builder.
+export const DAKUTEN_MAP = {
+  'か': 'が', 'き': 'ぎ', 'く': 'ぐ', 'け': 'げ', 'こ': 'ご',
+  'さ': 'ざ', 'し': 'じ', 'す': 'ず', 'せ': 'ぜ', 'そ': 'ぞ',
+  'た': 'だ', 'ち': 'ぢ', 'つ': 'づ', 'て': 'で', 'と': 'ど',
+  'は': 'ば', 'ひ': 'び', 'ふ': 'ぶ', 'へ': 'べ', 'ほ': 'ぼ',
+  'う': 'ゔ',
+  'カ': 'ガ', 'キ': 'ギ', 'ク': 'グ', 'ケ': 'ゲ', 'コ': 'ゴ',
+  'サ': 'ザ', 'シ': 'ジ', 'ス': 'ズ', 'セ': 'ゼ', 'ソ': 'ゾ',
+  'タ': 'ダ', 'チ': 'ヂ', 'ツ': 'ヅ', 'テ': 'デ', 'ト': 'ド',
+  'ハ': 'バ', 'ヒ': 'ビ', 'フ': 'ブ', 'ヘ': 'ベ', 'ホ': 'ボ',
+  'ウ': 'ヴ',
+};
+
+export const HANDAKUTEN_MAP = {
+  'は': 'ぱ', 'ひ': 'ぴ', 'ふ': 'ぷ', 'へ': 'ぺ', 'ほ': 'ぽ',
+  'ハ': 'パ', 'ヒ': 'ピ', 'フ': 'プ', 'ヘ': 'ペ', 'ホ': 'ポ',
+};
+
+// Voiced kana -> the base kana that has to be learned first (が needs か, ぱ needs は)
+const BASE_KANA = {};
+for (const [base, voiced] of Object.entries({ ...DAKUTEN_MAP, ...HANDAKUTEN_MAP })) BASE_KANA[voiced] = base;
+for (const [base, voiced] of Object.entries(HANDAKUTEN_MAP)) BASE_KANA[voiced] = base;
+export const baseKana = ch => BASE_KANA[ch] || ch;

@@ -9,6 +9,7 @@ import InfoIcons from 'components/InfoIcons.js';
 import template from 'templates/KanjiPractice.js';
 
 import wordsData from 'data/words.js';
+import { unlockContext, wordStatus } from 'data/progression.js';
 import { feedbackMixin } from 'data/feedback.js';
 import { shuffle, normalizeReading, pickDistractors } from 'tools';
 import {
@@ -33,8 +34,11 @@ const EXCLUDED_KEY = 'kanji-practice-excluded';
 const CATEGORY_READING = 'words-kanji';
 const CATEGORY_MEANING = 'words-kanji-meaning';
 
+// /kanji-reading (type the reading or the kanji) and /kanji-meaning (pick the meaning):
+// the route passes `mode` = 'type' | 'choice'. Kanji open by #group and by the kana already answered.
 export default {
   mixins: [feedbackMixin],
+  props: { mode: { type: String, default: 'choice' } },
   components: {
     MainHeader,
     SessionHistory,
@@ -45,14 +49,17 @@ export default {
     InfoIcons,
   },
   data() {
-    const inputMode = localStorage.getItem('kanji-practice-input-mode') || 'type';
+    const ctx = unlockContext();
+    const all = wordsData.filter(({ type }) => type === 'kanji');
+    const status = Object.fromEntries(all.map(item => [item.word, wordStatus(item, ctx)]));
 
     return {
-      inputMode, // 'type' (reading / kanji) | 'choice' (pick the meaning)
+      inputMode: this.mode, // 'type' (reading / kanji) | 'choice' (pick the meaning)
+      status, // word -> { locked, needs }
       MAX_MEMORY,
       sessionHistory: [],
 
-      words: wordsData.filter(({ type }) => type === 'kanji'),
+      words: all, // every kanji word; `status` says which ones are open
       targetWord: null,
       wordOptions: [], // meanings shown in choice mode
       wrongOptions: [], // meanings already tried wrong for the current word
@@ -94,12 +101,18 @@ export default {
       if (this.selectedLevels.length === LEVELS.length) return this.words;
       return this.words.filter(({ level }) => this.selectedLevels.includes(level));
     },
+    openWords() {
+      return this.words.filter(({ word }) => !this.status[word].locked);
+    },
+    lockedCount() {
+      return this.words.length - this.openWords.length;
+    },
     excludedSet() {
       return new Set(this.excludedWords);
     },
     // The practice pool: JLPT filter AND not turned off in the pool matrix
     filteredWords() {
-      return this.levelWords.filter(({ word }) => !this.excludedSet.has(word));
+      return this.levelWords.filter(({ word }) => !this.status[word].locked && !this.excludedSet.has(word));
     },
     // word -> memory for the current mode. One read of localStorage, not one per cell.
     memoryMap() {
@@ -114,6 +127,8 @@ export default {
         word,
         reading,
         meaning,
+        locked: this.status[word].locked,
+        needs: this.status[word].needs,
         memory: this.memoryMap[word] ?? 0,
       }));
     },
@@ -127,7 +142,6 @@ export default {
     },
     setInputMode(value) {
       this.inputMode = value;
-      localStorage.setItem('kanji-practice-input-mode', value);
       this.newWordTarget();
     },
     clearWordTimer() {
@@ -139,7 +153,7 @@ export default {
       const meanings = list => list.map(({ meaning }) => meaning);
       const distractors = pickDistractors(target.meaning, [
         meanings(this.filteredWords),
-        meanings(this.levelWords),
+        meanings(this.openWords),
         meanings(this.words),
       ]);
       return shuffle([target.meaning, ...distractors]);
@@ -163,7 +177,9 @@ export default {
 
       if (!word) {
         this.targetWord = null;
-        this.wordStatus = 'No kanji words available.';
+        this.wordStatus = this.openWords.length
+          ? 'No kanji words in the selected pool.'
+          : 'No kanji open yet. Answer more hiragana and the first kanji group opens here.';
         this.wordStatusClass = 'status bad';
         return;
       }
@@ -322,6 +338,12 @@ export default {
       this.excludedWords = words;
       saveSelection(EXCLUDED_KEY, words);
       this.refreshTargetIfNeeded();
+    },
+  },
+  watch: {
+    // /kanji-reading and /kanji-meaning use this same component
+    mode(value) {
+      this.setInputMode(value);
     },
   },
   mounted() {
