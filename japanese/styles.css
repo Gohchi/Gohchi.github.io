@@ -66,12 +66,13 @@ body {
   will-change: transform, filter;
 }
 
-  /* keyframes to pulse grayscale (gray scale emphasis) */
-  @keyframes grayPulse {
-    0%   { filter: grayscale(1) brightness(0.2); }
-    50%  { filter: grayscale(0.1) brightness(1.08); }
-    100% { filter: grayscale(1) brightness(0.2); }
-  }
+/* keyframes to pulse grayscale (gray scale emphasis) */
+@keyframes grayPulse {
+  0%   { filter: grayscale(1) brightness(0.2); }
+  50%  { filter: grayscale(0.1) brightness(1.08); }
+  100% { filter: grayscale(1) brightness(0.2); }
+}
+
 body {
   // font-family: "M PLUS 1p", sans-serif;
   font-family: Meiryo;
@@ -3191,13 +3192,22 @@ body {
 
     /* level 4 burns a bit faster */
     &.level-4::before { animation-duration: .8s; }
-  }
 
-  @keyframes heatmap-flicker {
-    0%, 100% { transform: rotate(45deg) scale(1, 1); }
-    20%      { transform: rotate(41deg) scale(.94, 1.08); }
-    45%      { transform: rotate(48deg) scale(1.05, .93); }
-    70%      { transform: rotate(43deg) scale(.96, 1.06); }
+    &.level-1::after {
+      background: linear-gradient(0deg, #ff642c, #e78d17);
+    }
+    &.level-2::after {
+      background: linear-gradient(0deg, #d99815, #f4ba0a);
+    }
+    &.level-3::after {
+      background: linear-gradient(0deg, #dea62e, #fcd16d);
+    }
+    &.level-4::after {
+      background: linear-gradient(0deg, #ffd23f, #fff3b0);
+    }
+    &.level-4::before {
+      background: linear-gradient(0deg, var(--color-chopsticks) 10%, var(--color-salmon) 85%);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -4347,3 +4357,18 @@ body header > .title > .keyboard-toolbar-buttons {
 /* kana of a locked word: answered already (green) / still missing (red) */
 .kana-ok { color: light-dark(#2e7d32, #81c784); }
 .kana-missing { color: light-dark(#c62828, #ef5350); }
+
+
+@keyframes heatmap-flicker {
+  0%, 100% { transform: rotate(45deg) scale(1, 1); }
+  20%      { transform: rotate(41deg) scale(.94, 1.08); }
+  45%      { transform: rotate(48deg) scale(1.05, .93); }
+  70%      { transform: rotate(43deg) scale(.96, 1.06); }
+}
+
+/* "reduce motion" (e.g. Windows > Show animations off): no wobble, only a slow soft glow,
+    so the flames never look frozen */
+@keyframes heatmap-glow {
+  0%, 100% { transform: rotate(45deg); opacity: 1; }
+  50%      { transform: rotate(45deg); opacity: .7; }
+}
