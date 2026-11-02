@@ -12,6 +12,9 @@ import {
   closeDialog,
 } from 'tools';
 
+import NavMenu from 'components/NavMenu.js';
+import LevelToast from 'components/LevelToast.js';
+
 // Dakuten (゛) and handakuten (゜) pairs, hiragana + katakana combined,
 // used to modify the last character typed into the word builder.
 const DAKUTEN_MAP = {
@@ -32,29 +35,8 @@ const HANDAKUTEN_MAP = {
   'ハ': 'パ', 'ヒ': 'ピ', 'フ': 'プ', 'ヘ': 'ペ', 'ホ': 'ポ',
 };
 
-// Navigation chips, in menu order. To add a section, add one line here.
-// `practice: true` gives the chip the chopsticks style (see .chip.practice-chip in styles.css).
-const NAV_ITEMS = [
-  { to: '/', label: 'HOME' },
-  { to: '/roadmap', label: 'ROADMAP' },
-  { to: '/progress', label: 'PROGRESS' },
-  { to: '/common-phrases', label: 'COMMON PHRASES', practice: true },
-  { to: '/kana-keyboard', label: 'KANA KEYBOARD', practice: true },
-  { to: '/hiragana-practice', label: 'HIRAGANA', practice: true },
-  { to: '/katakana-practice', label: 'KATAKANA', practice: true },
-  { to: '/kanji-practice', label: 'KANJI', practice: true },
-  { to: '/verbs-practice', label: 'VERB', practice: true },
-  { to: '/adjectives-practice', label: 'ADJECTIVE', practice: true },
-  { to: '/topics', label: 'TOPICS', practice: true },
-  { to: '/print-practice', label: 'PRINT', practice: true },
-  { to: '/speech-practice', label: 'SPEECH', practice: true },
-  { to: '/translations', label: 'TRANSLATIONS' },
-  { to: '/settings', label: 'SETTINGS' },
-  { to: '/admin', label: 'ADMIN', admin: true },
-  { to: '/donate', label: 'DONATE ♥' },
-];
-
 export default {
+  components: { NavMenu, LevelToast },
   props: {
     title: String,
     subtitle: String,
@@ -91,14 +73,7 @@ export default {
       "wordBuilder": '', // word being assembled by clicking kana in the dialog
       zoomStore,
       profileStore,
-      navItems: NAV_ITEMS,
     };
-  },
-  computed: {
-    // the admin chip only exists for the admin
-    visibleNavItems() {
-      return this.navItems.filter(item => !item.admin || profileStore.isAdmin);
-    },
   },
   methods: {
     showDialog,
@@ -165,17 +140,7 @@ export default {
       </div>
       
       <ul class="menu-index" v-if="showMenu">
-        <li v-for="item in visibleNavItems" :key="item.to">
-          <router-link
-            :to="item.to"
-            class="chip filter-chip"
-            :class="{ selected: isActive(item.to), 'practice-chip': item.practice }"
-            :aria-current="isActive(item.to) ? 'page' : undefined"
-          >
-            <span v-if="isActive(item.to)" class="chip-check" aria-hidden="true">✓</span>
-            {{ item.label }}
-          </router-link>
-        </li>
+        <NavMenu />
 
         <li class="menu-divider" aria-hidden="true"><hr></li>
 
@@ -215,6 +180,8 @@ export default {
       <div class="icon-menu" @click="showMenu=!showMenu">
       </div>
     </header>
+
+    <LevelToast />
 
     
     <div v-if="zoomStore.showZoomMenu" class="zoom-menu">

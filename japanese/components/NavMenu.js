@@ -6,6 +6,7 @@
 // uses v-if), so the snapshot is always fresh.
 
 import { buildMenu, getSnapshot } from 'data/progression.js';
+import { profileStore } from 'store';
 
 export default {
   data() {
@@ -16,7 +17,7 @@ export default {
   },
   computed: {
     menu() {
-      return buildMenu({ snapshot: this.snapshot, path: this.$route?.path || '/' });
+      return buildMenu({ snapshot: this.snapshot, path: this.$route?.path || '/', isAdmin: profileStore.isAdmin });
     },
   },
   methods: {

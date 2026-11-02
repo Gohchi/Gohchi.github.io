@@ -63,10 +63,10 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'user' && Number(to.params.id) < 0) {
     return next({ name: 'select-user' });
   }
+  // Sections that are still locked send you to Progress (see MENU in data/progression.js)
+  if (!isRouteUnlocked(to.path)) return next({ path: '/progress' });
   next();
 });
-
-router.beforeEach(to => isRouteUnlocked(to.path) || { path: '/progress' });
 
 app.use(router);
 

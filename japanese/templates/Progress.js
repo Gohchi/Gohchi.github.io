@@ -19,6 +19,39 @@ export default /*html*/`
         </p>
       </section>
 
+      <section class="progress-group">
+        <h2>Levels</h2>
+
+        <article v-for="c in levels" :key="c.id" class="progress-card">
+          <div class="progress-card-header">
+            <h3>{{ c.label }}</h3>
+            <span class="xp-level">Lv {{ c.level }}<template v-if="c.maxed"> MAX</template></span>
+          </div>
+          <div class="progress-bar" :title="formatXp(c.xp) + ' / ' + formatXp(c.cap) + ' XP'">
+            <span class="progress-bar-fill" :style="{ width: (c.progress * 100) + '%' }"></span>
+          </div>
+          <p class="xp-caption" v-if="!c.maxed">{{ formatXp(c.xp) }} / {{ formatXp(c.next) }} XP to Lv {{ c.level + 1 }}</p>
+          <p class="xp-caption" v-else>{{ formatXp(c.xp) }} XP · everything mastered</p>
+        </article>
+
+        <article class="progress-card">
+          <div class="progress-card-header">
+            <h3>Total</h3>
+            <span class="xp-caption">{{ formatXp(xpTotal.xp) }} / {{ formatXp(xpTotal.cap) }} XP</span>
+          </div>
+          <div class="progress-bar">
+            <span class="progress-bar-fill" :style="{ width: (xpTotal.cap ? xpTotal.xp / xpTotal.cap * 100 : 0) + '%' }"></span>
+          </div>
+        </article>
+
+        <article class="progress-card" v-if="teasers.length">
+          <div class="progress-card-header"><h3>Locked</h3></div>
+          <ul class="xp-locked">
+            <li v-for="t in teasers" :key="t.id">🔒 {{ t.label }} unlocks at {{ t.needs }}</li>
+          </ul>
+        </article>
+      </section>
+
       <section class="progress-summary">
         <div class="summary-tile">
           <span class="summary-value">🔥 {{ streak.current }}</span>

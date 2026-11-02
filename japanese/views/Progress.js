@@ -9,6 +9,7 @@ import phrases from 'data/phrases.js';
 import roadmap from 'data/roadmap.js';
 import { VERB_FORMS } from 'data/conjugate.js';
 import { getFavorites } from 'data/favorites.js';
+import { getSnapshot, lockedUnits, totalXp } from 'data/progression.js';
 import { getCompleted } from 'data/roadmap-progress.js';
 import {
   MAX_MEMORY,
@@ -75,10 +76,14 @@ function build() {
   const totalCorrect = summaries.reduce((sum, c) => sum + c.correct, 0);
   const totalWrong = summaries.reduce((sum, c) => sum + c.wrong, 0);
 
+  const snapshot = getSnapshot();
   const roadmapSteps = roadmap.flatMap(stage => stage.steps);
   const completed = getCompleted();
 
   return {
+    levels: Object.values(snapshot.categories),
+    xpTotal: totalXp(snapshot),
+    teasers: lockedUnits(snapshot),
     startedAt: activity.startedAt,
     daysPracticed: Object.keys(activity.days).length,
     streak: getStreak(),
@@ -120,6 +125,9 @@ export default {
     },
   },
   methods: {
+    formatXp(n) {
+      return Math.round(n).toLocaleString('en-US');
+    },
     formatDate(key) {
       if (!key) return '—';
       const today = dateKey();

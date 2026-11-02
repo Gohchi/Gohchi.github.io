@@ -10,6 +10,9 @@
 
 import { getAllProgress } from 'data/progress.js';
 import { hiragana, katakana } from 'data/kana-romaji.js';
+import verbsData from 'data/verbs.js';
+import adjectivesData from 'data/adjectives.js';
+import { VERB_FORMS } from 'data/conjugate.js';
 
 // ---------------------------------------------------------------------------
 // 1. XP tuning
@@ -30,6 +33,12 @@ export const LEVEL_CURVE = [0, 0.03, 0.08, 0.14, 0.24, 0.37, 0.51, 0.67, 0.85, 1
 export const CATEGORIES = {
   hiragana: { label: 'Hiragana', store: 'kana-hiragana', xpPerItem: 100, items: () => Object.keys(hiragana) },
   katakana: { label: 'Katakana', store: 'kana-katakana', xpPerItem: 100, items: () => Object.keys(katakana) },
+  // A verb is worth 60 XP, split between its forms (keys `dictionary:form`).
+  verbs: {
+    label: 'Verbs', store: 'verbs', xpPerItem: 60 / VERB_FORMS.length,
+    items: () => verbsData.flatMap(verb => VERB_FORMS.map(form => `${verb.dictionary}:${form}`)),
+  },
+  adjectives: { label: 'Adjectives', store: 'adjectives', xpPerItem: 40, items: () => adjectivesData.map(a => a.dictionary) },
 };
 
 // ---------------------------------------------------------------------------
@@ -156,6 +165,7 @@ export const MENU = [
   },
 
   { id: 'settings', to: '/settings', label: 'SETTINGS' },
+  { id: 'admin', to: '/admin', label: 'ADMIN', admin: true },
   { id: 'donate', to: '/donate', label: 'DONATE ♥' },
 ];
 
@@ -195,7 +205,7 @@ const matchesPath = (to, path) => (to === '/' ? path === '/' : path === to || pa
 //   [{ type: 'link', id, to, label, practice, selected }
 //    { type: 'group', id, label, practice, selected, children: [link, ...] }]
 // Locked sections are not in the list at all.
-export function buildMenu({ snapshot = getSnapshot(), path = '/' } = {}) {
+export function buildMenu({ snapshot = getSnapshot(), path = '/', isAdmin = false } = {}) {
   const toLink = leaf => ({
     type: 'link',
     id: leaf.id,
@@ -208,6 +218,8 @@ export function buildMenu({ snapshot = getSnapshot(), path = '/' } = {}) {
   const menu = [];
 
   for (const node of MENU) {
+    if (node.admin && !isAdmin) continue;
+
     if (node.to) {
       if (meets(describe(node).requires, snapshot)) menu.push(toLink(describe(node)));
       continue;
@@ -260,4 +272,26 @@ export function lockedUnits(snapshot = getSnapshot()) {
       label: groupLabel && groupLabel !== label ? `${groupLabel} · ${label}` : label,
       needs: describeRequirement(requires),
     }));
+}
+
+// ---------------------------------------------------------------------------
+// 4. Level-up / unlock detection (used by components/LevelToast.js)
+// ---------------------------------------------------------------------------
+
+// What changed between two snapshots: categories that gained a level and sections that opened.
+export function diffSnapshots(before, after) {
+  const levelUps = Object.values(after.categories)
+    .filter(c => c.level > (before.categories[c.id]?.level ?? 1))
+    .map(c => ({ category: c.id, label: c.label, level: c.level }));
+
+  const stillLocked = new Set(lockedUnits(after).map(u => u.id));
+  const newlyOpen = lockedUnits(before).filter(u => !stillLocked.has(u.id));
+
+  return { levelUps, newlyOpen };
+}
+
+// Sum of all categories, for the "total" bar on the Progress page.
+export function totalXp(snapshot) {
+  const cats = Object.values(snapshot.categories);
+  return { xp: cats.reduce((s, c) => s + c.xp, 0), cap: cats.reduce((s, c) => s + c.cap, 0) };
 }
