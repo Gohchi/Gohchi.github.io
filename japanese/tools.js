@@ -2,6 +2,8 @@ import {
   voiceStore
 } from 'store';
 
+import { matchCounter } from 'data/counters.js';
+
 // ---------------------------------------------------------------------------
 // Existing helpers (unchanged)
 // ---------------------------------------------------------------------------
@@ -259,7 +261,13 @@ export const tokenize = (text, { ruby = {}, words = {} } = {}) => {
       }
     }
 
-    if (isKanji(text[index])) {
+    // number + counter (4人 -> よにん, 二十分 -> にじゅっぷん); the dictionaries win on a tie
+    const counter = matchCounter(text, index);
+    if (counter && (!match || counter.surface.length > match.surface.length)) {
+      match = counter;
+    }
+
+    if (isKanji(text[index]) && !(match && counter && match === counter)) {
       let end = index;
       while (end < text.length && isKanji(text[end])) end++;
       const run = text.slice(index, end);
