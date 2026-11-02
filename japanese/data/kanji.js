@@ -89,7 +89,7 @@ export const ruby = {
   },
   "先生": { reading: "せんせい", JLPT_level: "N5"},
   "彼": { reading: "かれ", JLPT_level: "N4"},
-  "彼女": { reading: "かのしょ", JLPT_level: "N5"},
+  "彼女": { reading: "かのじょ", JLPT_level: "N5"},
   "可愛": { reading: "かわい", JLPT_level: "N3" },
   "好": { tags: ["description"], reading: "す", JLPT_level: "N5"},
   "元気": { reading: "げんき", JLPT_level: "N5"},
