@@ -3188,7 +3188,7 @@ body {
   .progress-bar {
     height: 8px;
     border-radius: 999px;
-    background: light-dark(#e0e0e0, #262626);
+    background: light-dark(#e0e0e0, #414141);
     overflow: hidden;
     margin: .75rem 0;
   }
@@ -3196,9 +3196,10 @@ body {
   .progress-bar-fill {
     display: block;
     height: 100%;
-    background: var(--color-salmon);
+    background: linear-gradient(90deg, var(--color-salmon), var(--color-chopsticks), var(--color-nori));
     border-radius: 999px;
     transition: width .3s ease;
+    outline: 1px dashed white;
   }
 
   .progress-facts {
@@ -3424,7 +3425,7 @@ body header > .title > .keyboard-toolbar-buttons {
   .profile-bar-fill {
     display: block;
     height: 100%;
-    background: var(--color-salmon);
+    background: linear-gradient(90deg, var(--color-salmon), var(--color-chopsticks), var(--color-nori));
     border-radius: 999px;
     transition: width .3s ease;
   }
