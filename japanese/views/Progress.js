@@ -29,12 +29,12 @@ const HEATMAP_DAYS = 35;
 const CATEGORIES = [
   { id: 'kana-hiragana', group: 'Kana', label: 'Hiragana characters', route: '/hiragana-practice', total: Object.keys(hiragana).length },
   { id: 'kana-katakana', group: 'Kana', label: 'Katakana characters', route: '/katakana-practice', total: Object.keys(katakana).length },
-  { id: 'words-hiragana', group: 'Words', label: 'Hiragana words', route: '/hiragana-practice', total: wordsData.filter(w => w.type === 'hiragana').length },
-  { id: 'words-hiragana-meaning', group: 'Words', label: 'Hiragana words: meaning', route: '/hiragana-practice', total: wordsData.filter(w => w.type === 'hiragana').length },
-  { id: 'words-katakana', group: 'Words', label: 'Katakana words', route: '/katakana-practice', total: wordsData.filter(w => w.type === 'katakana').length },
-  { id: 'words-katakana-meaning', group: 'Words', label: 'Katakana words: meaning', route: '/katakana-practice', total: wordsData.filter(w => w.type === 'katakana').length },
-  { id: 'words-kanji', group: 'Kanji', label: 'Kanji: reading', route: '/kanji-practice', total: wordsData.filter(w => w.type === 'kanji').length },
-  { id: 'words-kanji-meaning', group: 'Kanji', label: 'Kanji: meaning', route: '/kanji-practice', total: wordsData.filter(w => w.type === 'kanji').length },
+  { id: 'words-hiragana', group: 'Words', label: 'Hiragana words', route: '/hiragana-words', total: wordsData.filter(w => w.type === 'hiragana').length },
+  { id: 'words-hiragana-meaning', group: 'Words', label: 'Hiragana words: meaning', route: '/hiragana-words', total: wordsData.filter(w => w.type === 'hiragana').length },
+  { id: 'words-katakana', group: 'Words', label: 'Katakana words', route: '/katakana-words', total: wordsData.filter(w => w.type === 'katakana').length },
+  { id: 'words-katakana-meaning', group: 'Words', label: 'Katakana words: meaning', route: '/katakana-words', total: wordsData.filter(w => w.type === 'katakana').length },
+  { id: 'words-kanji', group: 'Kanji', label: 'Kanji: reading', route: '/kanji-reading', total: wordsData.filter(w => w.type === 'kanji').length },
+  { id: 'words-kanji-meaning', group: 'Kanji', label: 'Kanji: meaning', route: '/kanji-meaning', total: wordsData.filter(w => w.type === 'kanji').length },
   { id: 'verbs', group: 'Grammar', label: 'Verb conjugation', route: '/verbs-practice', total: verbsData.length * VERB_FORMS.length },
   { id: 'adjectives', group: 'Grammar', label: 'Adjectives', route: '/adjectives-practice', total: adjectivesData.length },
 ];

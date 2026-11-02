@@ -4,9 +4,12 @@ import { createRouter, createWebHashHistory, useRouter } from 'vue-router';
 import Home from 'views/Home.js';
 import CommonPhrases from 'views/CommonPhrases.js';
 import Translations from 'views/Translations.js';
-import KanaKeyboard from 'views/KanaKeyboard.js';
 import HiraganaPractice from 'views/HiraganaPractice.js';
+import HiraganaKeyboard from 'views/HiraganaKeyboard.js';
+import HiraganaWords from 'views/HiraganaWords.js';
 import KatakanaPractice from 'views/KatakanaPractice.js';
+import KatakanaKeyboard from 'views/KatakanaKeyboard.js';
+import KatakanaWords from 'views/KatakanaWords.js';
 import KanjiPractice from 'views/KanjiPractice.js';
 import VerbsPractice from 'views/VerbsPractice.js';
 import AdjectivesPractice from 'views/AdjectivesPractice.js';
@@ -35,10 +38,18 @@ const routes = [
   { path: '/profile', component: Profile, name: 'profile' },
   { path: '/common-phrases/:phrase?', component: CommonPhrases, name: 'common-phrases', props: true },
   { path: '/translations/:type?/:id?', component: Translations, name: 'translations', props: true },
-  { path: '/kana-keyboard', component: KanaKeyboard, name: 'kana-keyboard' },
+  // one route per unit, so each can be unlocked on its own (see MENU in data/progression.js)
   { path: '/hiragana-practice', component: HiraganaPractice, name: 'hiragana-practice' },
+  { path: '/hiragana-keyboard', component: HiraganaKeyboard, name: 'hiragana-keyboard' },
+  { path: '/hiragana-words', component: HiraganaWords, name: 'hiragana-words' },
   { path: '/katakana-practice', component: KatakanaPractice, name: 'katakana-practice' },
-  { path: '/kanji-practice', component: KanjiPractice, name: 'kanji-practice' },
+  { path: '/katakana-keyboard', component: KatakanaKeyboard, name: 'katakana-keyboard' },
+  { path: '/katakana-words', component: KatakanaWords, name: 'katakana-words' },
+  { path: '/kanji-meaning', component: KanjiPractice, name: 'kanji-meaning', props: { mode: 'choice' } },
+  { path: '/kanji-reading', component: KanjiPractice, name: 'kanji-reading', props: { mode: 'type' } },
+  // old links keep working
+  { path: '/kana-keyboard', redirect: '/hiragana-keyboard' },
+  { path: '/kanji-practice', redirect: '/kanji-meaning' },
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
   { path: '/adjectives-practice', component: AdjectivesPractice, name: 'adjectives-practice' },
   { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },

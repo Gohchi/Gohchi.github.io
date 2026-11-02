@@ -33,7 +33,10 @@ export default {
       return new Set(this.excluded);
     },
     includedCount() {
-      return this.items.filter(({ word }) => !this.excludedSet.has(word)).length;
+      return this.items.filter(({ word, locked }) => !locked && !this.excludedSet.has(word)).length;
+    },
+    openItems() {
+      return this.items.filter(({ locked }) => !locked);
     },
   },
   methods: {
@@ -44,6 +47,7 @@ export default {
       this.$emit('update:excluded', list);
     },
     toggle(word) {
+      if (this.items.find(item => item.word === word)?.locked) return;
       this.emitExcluded(this.isOn(word)
         ? [...this.excluded, word]
         : this.excluded.filter(w => w !== word));
@@ -51,24 +55,24 @@ export default {
     // The three actions only touch the visible words; excluded words from
     // other JLPT levels are kept as they are.
     selectAll() {
-      const visible = new Set(this.items.map(({ word }) => word));
+      const visible = new Set(this.openItems.map(({ word }) => word));
       this.emitExcluded(this.excluded.filter(w => !visible.has(w)));
     },
     selectNone() {
-      this.emitExcluded([...new Set([...this.excluded, ...this.items.map(({ word }) => word)])]);
+      this.emitExcluded([...new Set([...this.excluded, ...this.openItems.map(({ word }) => word)])]);
     },
     invert() {
-      const visible = new Set(this.items.map(({ word }) => word));
+      const visible = new Set(this.openItems.map(({ word }) => word));
       const hidden = this.excluded.filter(w => !visible.has(w));
-      const newlyExcluded = this.items.filter(({ word }) => this.isOn(word)).map(({ word }) => word);
+      const newlyExcluded = this.openItems.filter(({ word }) => this.isOn(word)).map(({ word }) => word);
       this.emitExcluded([...hidden, ...newlyExcluded]);
     },
     cellSize(word) {
       const length = [...word].length;
       return length > 4 ? 'xl' : length > 2 ? 'long' : '';
     },
-    cellTitle({ word, reading, meaning }) {
-      return [word, reading, meaning].filter(Boolean).join(' · ');
+    cellTitle({ word, reading, meaning, locked, needs }) {
+      return [word, reading, meaning, locked ? '🔒 ' + needs : ''].filter(Boolean).join(' · ');
     },
     // capture phase: still runs when the menu itself stops propagation
     onOutsideClick(e) {
@@ -114,10 +118,11 @@ export default {
             v-for="item in items" :key="item.word"
             type="button"
             class="pool-cell"
-            :class="[cellSize(item.word), { on: isOn(item.word) }]"
+            :class="[cellSize(item.word), { on: isOn(item.word) && !item.locked, locked: item.locked }]"
             :style="{ '--m': item.memory }"
             :title="cellTitle(item)"
-            :aria-pressed="isOn(item.word)"
+            :aria-pressed="isOn(item.word) && !item.locked"
+            :aria-disabled="item.locked ? 'true' : undefined"
             @click="toggle(item.word)"
           >{{ item.word }}</button>
         </div>

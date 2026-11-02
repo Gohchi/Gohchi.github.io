@@ -84,7 +84,7 @@ export default /*html*/`
             <h3>Translations</h3>
             <p>Fan translations of books and stories I'm reading, alongside the original text.</p>
           </router-link>
-          <router-link to="/kana-keyboard" class="section-card">
+          <router-link to="/hiragana-keyboard" class="section-card">
             <h3>Kana Keyboard</h3>
             <p>Quick drills to practice recognizing and typing hiragana and katakana.</p>
           </router-link>
@@ -96,7 +96,7 @@ export default /*html*/`
             <h3>Katakana Practice</h3>
             <p>Same drills as hiragana, for katakana characters and loanwords.</p>
           </router-link>
-          <router-link to="/kanji-practice" class="section-card">
+          <router-link to="/kanji-meaning" class="section-card">
             <h3>Kanji Practice</h3>
             <p>Write the reading in hiragana or the word itself in kanji, by JLPT-adjacent vocabulary.</p>
           </router-link>

@@ -4,6 +4,7 @@ export default {
   props: {
     word: String,
     level: String, // optional: the badge is hidden when there is no level
+    tags: { type: Array, default: () => [] }, // optional: kanji groups, shown as #hashtags
     speech: String, // optional: text to read aloud, defaults to `word`
   },
   computed: {
@@ -30,6 +31,7 @@ export default {
       >Listen</button>
 
       <div class="kanji-corner-info">
+        <div v-if="tags.length" class="word-tags"><span v-for="tag in tags" :key="tag" class="word-tag">#{{ tag }}</span></div>
         <div v-if="level" class="JLPT-level" :class="{ ['level-'+level]: true }">JLPT {{ level }}</div>
         <a
           v-if="jishoUrl"

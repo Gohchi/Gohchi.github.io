@@ -107,7 +107,7 @@ export const roadmap = [
         title: 'Practice reading kanji words',
         description: 'Write the reading in hiragana — or the kanji word itself — for common kanji words, drilled with the same memory system as the other practice modes.',
         links: [
-          { label: 'Kanji Practice', route: { name: 'kanji-practice' } },
+          { label: 'Kanji Practice', route: { name: 'kanji-meaning' } },
         ],
       },
       {
@@ -156,7 +156,7 @@ export const roadmap = [
         links: [
           { label: 'Hiragana Practice', route: { name: 'hiragana-practice' } },
           { label: 'Katakana Practice', route: { name: 'katakana-practice' } },
-          { label: 'Kanji Practice', route: { name: 'kanji-practice' } },
+          { label: 'Kanji Practice', route: { name: 'kanji-meaning' } },
           { label: 'Verb Practice', route: { name: 'verbs-practice' } },
         ],
       },

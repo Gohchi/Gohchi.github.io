@@ -20,8 +20,8 @@ export default /*html*/`
             :excluded="excludedWords"
             @update:excluded="setExcluded"
           />
-          <div class="icon-button check-icon" title="Options mode (meaning)" v-if="inputMode === 'type'" @click="setInputMode('choice')"></div>
-          <div class="icon-button keyboard-icon" title="Type mode (reading)" v-if="inputMode === 'choice'" @click="setInputMode('type')"></div>
+          <router-link v-if="inputMode === 'type'" to="/kanji-meaning" class="icon-button check-icon" title="Options mode (meaning)"></router-link>
+          <router-link v-else to="/kanji-reading" class="icon-button keyboard-icon" title="Type mode (reading)"></router-link>
         </div>
       </div>
     </MainHeader>
@@ -29,7 +29,7 @@ export default /*html*/`
     <main>
       <div class="card choice-card" :class="feedbackClass">
         <template v-if="targetWord">
-          <WordCorner :word="targetWord.word" :level="targetWord.level" />
+          <WordCorner :word="targetWord.word" :level="targetWord.level" :tags="targetWord.tags" />
 
           <InfoIcons
             :streak="wordStreak"
@@ -94,6 +94,8 @@ export default /*html*/`
           <div :class="wordStatusClass">{{ wordStatus }}</div>
         </template>
       </div>
+
+      <p class="xp-caption" v-if="lockedCount">🔒 {{ lockedCount }} kanji words are still locked (open the Pool to see what they need).</p>
 
       <SessionHistory :entries="sessionHistory" />
     </main>
