@@ -3647,7 +3647,7 @@ body header > .title > .keyboard-toolbar-buttons {
   padding: 0 .75rem;
   border: 2px solid transparent;
   border-radius: 999px;
-  background: light-dark(#ffffffaa, #ffffff22);
+  background: light-dark(hsl(from var(--color-chopsticks) h s 95%), #ffffff22);
   color: inherit;
   box-shadow: none;
   transform: none;
@@ -3656,7 +3656,8 @@ body header > .title > .keyboard-toolbar-buttons {
   cursor: pointer;
 
   &:hover {
-    filter: drop-shadow(1px 3px 2px black);
+    background: white;
+    color: black;
   }
 
   &.open {
@@ -4045,20 +4046,29 @@ body header > .title > .keyboard-toolbar-buttons {
 
 .locked-words {
   margin-top: 1rem;
+  text-align: center;
 
   .locked-words-list {
     list-style: none;
     margin: .5rem 0 0;
     padding: 0;
-    display: grid;
-    gap: .25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: .25rem 0;
     opacity: .8;
-    justify-items: center;
+
+    /* words in a row, separated by a pipe */
+    li + li::before {
+      content: "|";
+      margin: 0 .6rem;
+      opacity: .5;
+    }
   }
 
   .locked-word {
     font-size: 1.1rem;
-    margin-right: .5rem;
   }
 }
 
