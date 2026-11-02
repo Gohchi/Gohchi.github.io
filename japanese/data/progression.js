@@ -239,8 +239,12 @@ export function buildMenu({ snapshot = getSnapshot(), path = '/' } = {}) {
   return menu;
 }
 
+// false = locked sections are only hidden from the menu, typing the URL still works (no redirect).
+export const HARD_LOCKS = true;
+
 // Router guard: hard-locked sections redirect, soft ones and unknown routes always pass.
 export function isRouteUnlocked(path, snapshot = getSnapshot()) {
+  if (!HARD_LOCKS) return true;
   const leaf = allLeaves().find(({ to }) => to !== '/' && matchesPath(to, path));
   if (!leaf || leaf.soft) return true;
   return meets(leaf.requires, snapshot);

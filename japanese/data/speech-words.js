@@ -30,7 +30,7 @@ const fromWordsList = wordsData.map(({ word, reading, meaning, level, type }) =>
 // data/words.js `words` export (full forms with okurigana / prefixes)
 const fromWordForms = Object.entries(wordForms).map(([word, entry]) => ({
   word,
-  reading: entry.reading,
+  reading: entry.reading ?? entry.furigana,
   meaning: (entry.eng || []).join(', '),
   level: entry.JLPT_level,
   type: typeOf(word),
