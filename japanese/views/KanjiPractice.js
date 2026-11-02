@@ -123,10 +123,12 @@ export default {
     },
     // What the pool matrix shows: every word of the selected JLPT levels
     poolItems() {
-      return this.levelWords.map(({ word, reading, meaning }) => ({
+      return this.levelWords.map(({ word, reading, meaning, level, tags }) => ({
         word,
         reading,
         meaning,
+        level,
+        tags,
         locked: this.status[word].locked,
         needs: this.status[word].needs,
         memory: this.memoryMap[word] ?? 0,

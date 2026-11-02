@@ -119,10 +119,12 @@ export default {
       return this.levelTypeWords.filter(({ word }) => !this.excludedSet.has(word));
     },
     poolItems() {
-      return this.levelTypeWords.map(({ word, reading, meaning }) => ({
+      return this.levelTypeWords.map(({ word, reading, meaning, level, type }) => ({
         word,
         reading,
         meaning,
+        level,
+        tags: [type],
         memory: 0, // no progress is saved for speech practice yet
       }));
     },

@@ -1,5 +1,6 @@
 // Header button that opens a matrix of words (kanji) to include in / exclude from the practice pool.
-//   items:    [{ word, reading, meaning, memory }]  words visible with the current JLPT filter
+//   items:    [{ word, reading, meaning, memory, level?, tags?, locked?, needs? }]  words visible with the current JLPT filter
+//             `level` (N5..N1) groups the matrix under "— N5 ———" separators, `tags` become chips that select by tag
 //   excluded: [word, ...]                           words the user turned OFF (v-model:excluded)
 //
 // The list stores EXCLUDED words, so new words added to the data are in the pool by default.
@@ -38,6 +39,38 @@ export default {
     openItems() {
       return this.items.filter(({ locked }) => !locked);
     },
+    // JLPT sections in N5 -> N1 order; words without a level go last. No separators when no word has a level.
+    groups() {
+      if (!this.items.some(({ level }) => level)) return [{ level: '', items: this.items }];
+      const order = ['N5', 'N4', 'N3', 'N2', 'N1'];
+      const byLevel = new Map();
+      this.items.forEach(item => {
+        const level = item.level || '';
+        if (!byLevel.has(level)) byLevel.set(level, []);
+        byLevel.get(level).push(item);
+      });
+      const rank = level => (order.includes(level) ? order.indexOf(level) : order.length);
+      return [...byLevel.entries()]
+        .sort(([a], [b]) => rank(a) - rank(b))
+        .map(([level, items]) => ({ level, items }));
+    },
+    // one chip per tag, counting only the words that can be picked (not locked)
+    tagList() {
+      const map = new Map();
+      this.openItems.forEach(({ word, tags }) => {
+        (tags || []).forEach(tag => {
+          if (!map.has(tag)) map.set(tag, []);
+          map.get(tag).push(word);
+        });
+      });
+      return [...map.entries()]
+        .map(([tag, words]) => ({
+          tag,
+          words,
+          on: words.filter(w => this.isOn(w)).length,
+        }))
+        .sort((a, b) => b.words.length - a.words.length || a.tag.localeCompare(b.tag));
+    },
   },
   methods: {
     isOn(word) {
@@ -66,6 +99,13 @@ export default {
       const hidden = this.excluded.filter(w => !visible.has(w));
       const newlyExcluded = this.openItems.filter(({ word }) => this.isOn(word)).map(({ word }) => word);
       this.emitExcluded([...hidden, ...newlyExcluded]);
+    },
+    // all words of the tag are in the pool -> turn them off; otherwise turn them all on
+    toggleTag({ words, on }) {
+      const set = new Set(words);
+      this.emitExcluded(on === words.length
+        ? [...new Set([...this.excluded, ...words])]
+        : this.excluded.filter(w => !set.has(w)));
     },
     cellSize(word) {
       const length = [...word].length;
@@ -113,18 +153,34 @@ export default {
           <button type="button" class="filter-link" @click="invert">Invert</button>
         </div>
 
-        <div v-if="items.length" class="pool-grid">
+        <div v-if="tagList.length" class="pool-tags" role="group" aria-label="Select by tag">
           <button
-            v-for="item in items" :key="item.word"
+            v-for="t in tagList" :key="t.tag"
             type="button"
-            class="pool-cell"
-            :class="[cellSize(item.word), { on: isOn(item.word) && !item.locked, locked: item.locked }]"
-            :style="{ '--m': item.memory }"
-            :title="cellTitle(item)"
-            :aria-pressed="isOn(item.word) && !item.locked"
-            :aria-disabled="item.locked ? 'true' : undefined"
-            @click="toggle(item.word)"
-          >{{ item.word }}</button>
+            class="pool-tag"
+            :class="{ on: t.on === t.words.length, some: t.on > 0 && t.on < t.words.length }"
+            :title="'Select / deselect every word tagged ' + t.tag"
+            @click="toggleTag(t)"
+          >{{ t.tag }} <small>{{ t.on }}/{{ t.words.length }}</small></button>
+        </div>
+
+        <div v-if="items.length" class="pool-groups">
+          <section v-for="group in groups" :key="group.level" class="pool-group">
+            <div v-if="group.level" class="pool-level">{{ group.level }}</div>
+            <div class="pool-grid">
+              <button
+                v-for="item in group.items" :key="item.word"
+                type="button"
+                class="pool-cell"
+                :class="[cellSize(item.word), { on: isOn(item.word) && !item.locked, locked: item.locked }]"
+                :style="{ '--m': item.memory }"
+                :title="cellTitle(item)"
+                :aria-pressed="isOn(item.word) && !item.locked"
+                :aria-disabled="item.locked ? 'true' : undefined"
+                @click="toggle(item.word)"
+              >{{ item.word }}</button>
+            </div>
+          </section>
         </div>
         <div v-else class="pool-empty">{{ emptyText }}</div>
       </div>

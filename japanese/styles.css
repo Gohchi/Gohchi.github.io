@@ -3719,6 +3719,76 @@ body header > .title > .keyboard-toolbar-buttons {
   gap: 4px;
 }
 
+/* tag chips: select every word with that tag */
+.pool-popover .pool-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: .5rem;
+}
+
+.keyboard-toolbar-buttons .filter-menu .pool-tag {
+  height: auto;
+  padding: .15rem .6rem;
+  border: 1px solid light-dark(#d0d0d0, #303030);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  box-shadow: none;
+  transform: none;
+  font-size: .75rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  small {
+    opacity: .6;
+    font-size: .65rem;
+  }
+
+  &:hover {
+    filter: none;
+    border-color: var(--color-salmon);
+  }
+
+  &.some {
+    border-color: var(--color-salmon);
+  }
+
+  &.on {
+    border-color: var(--color-salmon);
+    background: color-mix(in srgb, var(--color-salmon) 18%, transparent);
+  }
+}
+
+/* JLPT separator: "N5 ————————" */
+.pool-popover .pool-level {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: .6rem 0 .35rem;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  opacity: .7;
+
+  &::before {
+    content: "";
+    width: 1rem;
+    border-top: 1px solid currentColor;
+  }
+
+  &::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid currentColor;
+    opacity: .5;
+  }
+}
+
+.pool-popover .pool-group:first-child .pool-level {
+  margin-top: .1rem;
+}
+
 .pool-popover .pool-empty {
   padding: .75rem;
   font-size: .85rem;
@@ -3753,6 +3823,18 @@ body header > .title > .keyboard-toolbar-buttons {
 
   &:hover {
     opacity: 1;
+  }
+
+  /* locked: clearly grayer than just "off" (gray fill, dashed border, no color, not clickable) */
+  &.locked,
+  &.locked:hover {
+    opacity: .5;
+    filter: grayscale(1);
+    border-style: dashed;
+    border-color: light-dark(#b0b0b0, #555555);
+    background: light-dark(#e4e4e4, #2a2a2a);
+    color: light-dark(#8a8a8a, #777777);
+    cursor: not-allowed;
   }
 
   &.long {
