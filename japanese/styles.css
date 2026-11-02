@@ -690,7 +690,7 @@ body {
 
 .kana-keyboard {
   main {
-    height: calc(100dvh - 4rem);
+    height: calc(100dvh - 6rem);
   }
 }
 
@@ -3147,7 +3147,7 @@ body {
   .heatmap-cell {
     aspect-ratio: 1;
     border-radius: 3px;
-    background: light-dark(#e0e0e0, #262626);
+    background: light-dark(#bdbdbd, #262626);
 
     &.level-1 { background: color-mix(in srgb, var(--color-salmon) 30%, transparent); }
     &.level-2 { background: color-mix(in srgb, var(--color-salmon) 55%, transparent); }
@@ -3188,7 +3188,7 @@ body {
   .progress-bar {
     height: 8px;
     border-radius: 999px;
-    background: light-dark(#e0e0e0, #414141);
+    background: light-dark(#d1d1d1, #414141);
     overflow: hidden;
     margin: .75rem 0;
   }
