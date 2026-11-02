@@ -61,6 +61,7 @@ export function recordAnswer(category, key, isCorrect) {
   if (!entry.first) entry.first = today;
   entry.last = today;
 
+  entry.best = Math.max(entry.best || 0, entry.memory);
   all[category][key] = entry;
   saveAll(all);
   logActivity(isCorrect);
@@ -178,4 +179,8 @@ export function getStreak() {
 
 export function resetActivity() {
   saveActivity({ startedAt: null, days: {} });
+}
+
+export function getAllProgress() {
+  return loadAll();
 }

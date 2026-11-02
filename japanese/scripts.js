@@ -19,6 +19,7 @@ import Profile from 'views/Profile.js';
 import Settings from 'views/Settings.js';
 import Donate from 'views/Donate.js';
 import Admin from 'views/Admin.js';
+import { isRouteUnlocked } from 'data/progression.js';
 
 const app = createApp({});
 
@@ -64,6 +65,8 @@ router.beforeEach((to, from, next) => {
   }
   next();
 });
+
+router.beforeEach(to => isRouteUnlocked(to.path) || { path: '/progress' });
 
 app.use(router);
 
