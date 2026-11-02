@@ -1,4 +1,4 @@
-const CACHE_NAME = 'japanese-store-v1.15';
+const CACHE_NAME = 'japanese-store-v1.16';
 const CACHE_ASSETS = [
   '/common.js',
   '/japanese/',
@@ -34,7 +34,7 @@ const CACHE_ASSETS = [
   '/japanese/components/KanjiPoolMenu.js',
   '/japanese/components/KanjiWithRuby.js',
   '/japanese/components/ListOfItems.js',
-  '/japanese/components/LevelToast.js',
+  '/japanese/components/LevelNotifier.js',
   '/japanese/components/MainHeader.js',
   '/japanese/components/NavMenu.js',
   '/japanese/components/PhraseToRuby.js',
@@ -60,6 +60,7 @@ const CACHE_ASSETS = [
   '/japanese/data/phrases.js',
   '/japanese/data/pools.js',
   '/japanese/data/profile.js',
+  '/japanese/data/notifications.js',
   '/japanese/data/progress.js',
   '/japanese/data/progression.js',
   '/japanese/data/roadmap-progress.js',
