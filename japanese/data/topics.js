@@ -567,7 +567,7 @@ export const topics = [
   {
     type: 'resource',
     title: 'Onomatopoeia',
-    content: 'Onomatopoeia is a significant part of the Japanese language, used to describe sounds, actions, and states. It can be categorized into two main types: giseigo (擬声語) for sounds made by living things and giongo (擬音語) for sounds made by inanimate objects or nature. Additionally, there are gitaigo (擬態語) which describe states or conditions, and giyougo (擬容語) which describe movements or actions. These expressions are often used in everyday conversation, literature, and media to convey vivid imagery and emotions.',
+    content: 'Onomatopoeia is a significant part of the Japanese language, used to describe sounds, actions, and states. It can be categorized into two main types: 擬声語 for sounds made by living things and 擬音語 for sounds made by inanimate objects or nature. Additionally, there are 擬態語 which describe states or conditions, and 擬容語 which describe movements or actions. These expressions are often used in everyday conversation, literature, and media to convey vivid imagery and emotions.',
     sources: [
       { site: 'Tofugu', title: 'Japanese Onomatopoeia: The Definitive Guide', url: 'https://www.tofugu.com/japanese/japanese-onomatopoeia/' }
     ]
