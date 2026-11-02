@@ -4044,6 +4044,7 @@ body header > .title {
     display: grid;
     gap: .25rem;
     opacity: .8;
+    justify-items: center;
   }
 
   .locked-word {
