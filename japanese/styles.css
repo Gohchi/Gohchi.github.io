@@ -3145,14 +3145,64 @@ body {
   }
 
   .heatmap-cell {
+    position: relative;
+    overflow: hidden;
     aspect-ratio: 1;
     border-radius: 3px;
     background: light-dark(#bdbdbd, #262626);
 
-    &.level-1 { background: color-mix(in srgb, var(--color-salmon) 30%, transparent); }
-    &.level-2 { background: color-mix(in srgb, var(--color-salmon) 55%, transparent); }
-    &.level-3 { background: color-mix(in srgb, var(--color-salmon) 80%, transparent); }
-    &.level-4 { background: var(--color-salmon); }
+    /* days with practice: a flame that grows with the level (level 0 stays an empty cell).
+       ::before = outer flame, ::after = hot core. Both are a rotated square with one sharp corner. */
+    &.level-1, &.level-2, &.level-3, &.level-4 {
+      --w: 30%;
+      --core: .5;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        aspect-ratio: 1;
+        border-radius: 0 50% 50% 50%;
+        transform-origin: 50% 50%;
+        animation: heatmap-flicker 1.1s ease-in-out infinite;
+      }
+
+      &::before {
+        width: var(--w);
+        left: calc(50% - var(--w) / 2);
+        bottom: calc(var(--w) * .3);
+        background: linear-gradient(0deg, var(--color-salmon) 10%, #ff9a1f 85%);
+        box-shadow: 0 0 calc(var(--w) * .25) color-mix(in srgb, var(--color-salmon) 60%, transparent);
+      }
+
+      &::after {
+        width: calc(var(--w) * var(--core));
+        left: calc(50% - var(--w) * var(--core) / 2);
+        bottom: calc(var(--w) * .3 + var(--w) * .1);
+        background: linear-gradient(0deg, #ffd23f, #fff3b0);
+        animation-duration: .8s;
+        animation-delay: -.3s;
+      }
+    }
+
+    &.level-2 { --w: 40%; }
+    &.level-3 { --w: 50%; --core: .55; }
+    &.level-4 { --w: 60%; --core: .6; }
+
+    /* level 4 burns a bit faster */
+    &.level-4::before { animation-duration: .8s; }
+  }
+
+  @keyframes heatmap-flicker {
+    0%, 100% { transform: rotate(45deg) scale(1, 1); }
+    20%      { transform: rotate(41deg) scale(.94, 1.08); }
+    45%      { transform: rotate(48deg) scale(1.05, .93); }
+    70%      { transform: rotate(43deg) scale(.96, 1.06); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .heatmap-cell::before,
+    .heatmap-cell::after { animation: none; }
   }
 
   .progress-group {
