@@ -582,7 +582,7 @@ body {
   }
 
   &.practice-chip {
-    --chip-outline: var(--color-chopsticks);
+    --chip-outline: light-dark(var(--color-nori-seaweed), var(--color-chopsticks));
     --chip-selected-bg: var(--color-chopsticks);
     --chip-selected-fg: #000000;
 
@@ -590,7 +590,7 @@ body {
 
     /* the current page is a solid chopsticks chip with dark text */
     &.selected {
-      border-color: var(--color-chopsticks);
+      border-color: light-dark(var(--color-nori-seaweed), var(--color-chopsticks));
     }
   }
 }
@@ -1072,8 +1072,8 @@ body {
       padding: 10px 16px;
       border-radius: 12px;
       border: none;
-      background: light-dark(var(--color-nori-seaweed), var(--color-chopsticks));
-      
+      background: var(--color-chopsticks);
+
       cursor: pointer;
       font-size: 14px;
       color: black;
@@ -1501,6 +1501,7 @@ body {
     border-radius: 10px;
     padding: .85rem 1rem;
     transition: background-color .15s ease, transform .15s ease, box-shadow .15s ease;
+    background: light-dark(hsl(from var(--color-chopsticks) h s 95%), #00000000);
 
     &:hover,
     &:focus-visible {
@@ -1647,8 +1648,10 @@ body {
 
   .topic-head {
     margin-bottom: 1.25rem;
-    padding-left: .9rem;
+    padding: .5rem .9rem;
     border-left: 4px solid var(--accent, var(--cat-other));
+    border-radius: 0 8px 8px 0;
+    background: light-dark(#f0f0f0, #141414);
   }
 
   .topic-title {
@@ -4156,3 +4159,38 @@ body header > .title {
     opacity: .7;
   }
 }
+
+/* level-up / unlock toast, bottom-right (components/LevelNotifier.js) */
+.level-toast {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  align-items: flex-end;
+  animation: level-toast-in .25s ease;
+
+  .level-toast-item {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    padding: .5rem 1rem;
+    border-radius: 999px;
+    background: light-dark(#fff, #262626);
+    color: light-dark(#1d1b20, #e6e0e9);
+    border: 1px solid var(--color-salmon);
+    box-shadow: 0 4px 14px rgb(0 0 0 / .25);
+    font-weight: 600;
+  }
+}
+
+@keyframes level-toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* kana of a locked word: answered already (green) / still missing (red) */
+.kana-ok { color: light-dark(#2e7d32, #81c784); }
+.kana-missing { color: light-dark(#c62828, #ef5350); }

@@ -425,13 +425,19 @@ export function wordStatus({ word, reading, type }, ctx = unlockContext()) {
   return { locked: Boolean(missing.length || groups.length), missing, groups, needs };
 }
 
+// Splits a word into characters flagged as missing (red) or not (green) for the locked-words list.
+// A voiced kana (が) is missing when its base kana (か) is.
+export function markKana(text, missing) {
+  return [...text].map(ch => ({ ch, missing: missing.includes(baseKana(ch)) }));
+}
+
 // words.filter(...) helper: [{ unlocked: [...], locked: [{ ...word, needs }] }]
 export function splitWords(words, ctx = unlockContext()) {
   const unlocked = [];
   const locked = [];
   for (const entry of words) {
     const status = wordStatus(entry, ctx);
-    (status.locked ? locked : unlocked).push(status.locked ? { ...entry, needs: status.needs } : entry);
+    (status.locked ? locked : unlocked).push(status.locked ? { ...entry, needs: status.needs, missing: status.missing } : entry);
   }
   return { unlocked, locked };
 }

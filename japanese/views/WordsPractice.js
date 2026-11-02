@@ -14,7 +14,7 @@ import template from 'templates/WordsPractice.js';
 
 import wordsData from 'data/words.js';
 import { feedbackMixin } from 'data/feedback.js';
-import { splitWords } from 'data/progression.js';
+import { splitWords, markKana } from 'data/progression.js';
 import { shuffle, normalizeReading } from 'tools';
 import {
   MAX_MEMORY,
@@ -99,6 +99,7 @@ export function makeWordsPractice({ script }) {
       },
     },
     methods: {
+      markKana,
       pushHistory(entry) {
         this.sessionHistory.unshift({ ...entry, id: Date.now() + '-' + Math.random() });
         if (this.sessionHistory.length > HISTORY_LIMIT) this.sessionHistory.length = HISTORY_LIMIT;
