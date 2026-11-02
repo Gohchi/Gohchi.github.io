@@ -112,10 +112,12 @@ export default {
       this.progressVersion; // reactive dependency
       const entries = Object.fromEntries(getCategoryEntries('adjectives'));
 
-      return this.levelTypeAdjectives.map(({ dictionary, reading, meaning }) => ({
+      return this.levelTypeAdjectives.map(({ dictionary, reading, meaning, level, tags, type }) => ({
         word: dictionary,
         reading,
         meaning,
+        level,
+        tags: [...(tags || []), type === 'na' ? 'na-adjective' : 'i-adjective'],
         memory: entries[dictionary]?.memory ?? 0,
       }));
     },

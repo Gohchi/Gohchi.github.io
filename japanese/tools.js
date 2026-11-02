@@ -2,6 +2,8 @@ import {
   voiceStore
 } from 'store';
 
+import { matchCounter } from 'data/counters.js';
+
 // ---------------------------------------------------------------------------
 // Existing helpers (unchanged)
 // ---------------------------------------------------------------------------
@@ -227,7 +229,8 @@ const getMaxLength = dictionary => {
  *
  * At each position:
  *  1. Longest match in `words` (full surface, okurigana included): お父さん beats 父.
- *  2. Legacy lookup of the whole kanji run in `ruby` (e.g. 一日間), as before.
+ *  2. Lookup of the kanji run in `ruby` (e.g. 一日間); when the whole run is unknown its longest
+ *     known prefix is used, so 二時間前 becomes 二時間 (にじかん) + 前 (まえ).
  *  The longer candidate wins; on a tie `words` wins because it is context-aware.
  *  Otherwise the character is emitted as plain text and merged with its neighbours.
  */
@@ -258,13 +261,25 @@ export const tokenize = (text, { ruby = {}, words = {} } = {}) => {
       }
     }
 
-    if (isKanji(text[index])) {
+    // number + counter (4人 -> よにん, 二十分 -> にじゅっぷん); the dictionaries win on a tie
+    const counter = matchCounter(text, index);
+    if (counter && (!match || counter.surface.length > match.surface.length)) {
+      match = counter;
+    }
+
+    if (isKanji(text[index]) && !(match && counter && match === counter)) {
       let end = index;
       while (end < text.length && isKanji(text[end])) end++;
       const run = text.slice(index, end);
 
-      if (Object.hasOwn(ruby, run) && (!match || run.length > match.surface.length)) {
-        match = { surface: run, entry: ruby[run] };
+      // whole run first (一日間), then its longest prefix: 二時間前 -> 二時間 + 前
+      for (let length = run.length; length > 0; length--) {
+        const surface = run.slice(0, length);
+        if (!Object.hasOwn(ruby, surface)) continue;
+        if (!match || surface.length > match.surface.length) {
+          match = { surface, entry: ruby[surface] };
+        }
+        break;
       }
     }
 

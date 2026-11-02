@@ -24,6 +24,8 @@ import { furiganaStore } from 'store';
 import { shuffle, alignFurigana } from 'tools';
 
 const HISTORY_LIMIT = 50;
+// verbs have no free-form tags: the conjugation group acts as the tag in the pool menu
+const VERB_GROUP_TAGS = { 1: 'godan', 2: 'ichidan', 3: 'irregular' };
 
 const LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const GROUPS = [
@@ -134,12 +136,14 @@ export default {
       const entries = Object.fromEntries(getCategoryEntries('verbs'));
       const forms = this.selectedForms.length ? this.selectedForms : VERB_FORMS;
 
-      return this.levelGroupVerbs.map(({ dictionary, reading, meaning }) => {
+      return this.levelGroupVerbs.map(({ dictionary, reading, meaning, level, group }) => {
         const total = forms.reduce((sum, form) => sum + (entries[`${dictionary}:${form}`]?.memory ?? 0), 0);
         return {
           word: dictionary,
           reading,
           meaning,
+          level,
+          tags: [VERB_GROUP_TAGS[group] || `group ${group}`],
           memory: Math.round(total / forms.length),
         };
       });

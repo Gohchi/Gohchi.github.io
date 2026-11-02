@@ -428,7 +428,6 @@
 
   /* the toolbar takes what is left (the 8rem on the right is reserved for the profile and menu icons) */
   .practice-sections header > .title > .keyboard-toolbar-buttons {
-    flex: 1 1 0;
     min-width: 0;
     flex-wrap: nowrap;
     overflow-x: auto;
