@@ -223,7 +223,7 @@ const getMaxLength = dictionary => {
 
 /**
  * Tokenizes a phrase into [{ surface, entry? }].
- * `entry` is present when the token has furigana ({ furigana, JLPT_level, eng, parts? }).
+ * `entry` is present when the token has furigana ({ reading, JLPT_level, eng?, parts? }).
  *
  * At each position:
  *  1. Longest match in `words` (full surface, okurigana included): お父さん beats 父.

@@ -19,6 +19,7 @@ import Profile from 'views/Profile.js';
 import Settings from 'views/Settings.js';
 import Donate from 'views/Donate.js';
 import Admin from 'views/Admin.js';
+import { isRouteUnlocked } from 'data/progression.js';
 
 const app = createApp({});
 
@@ -62,6 +63,8 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'user' && Number(to.params.id) < 0) {
     return next({ name: 'select-user' });
   }
+  // Sections that are still locked send you to Progress (see MENU in data/progression.js)
+  if (!isRouteUnlocked(to.path)) return next({ path: '/progress' });
   next();
 });
 

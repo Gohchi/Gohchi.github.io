@@ -7,6 +7,7 @@
 // (こーひー = こおひい), see normalizeReading() in views/KanaKeyboard.js.
 
 import { ruby } from 'data/kanji.js';
+import { meaningOf } from 'data/kanji-translations.js';
 
 // JLPT level for hiragana / katakana words (approximate, JLPT has no official vocabulary lists)
 const KANA_WORD_LEVELS = {
@@ -143,12 +144,12 @@ const kanjiWords = /*[
   ['新聞', 'しんぶん', 'newspaper'],
 ]*/
 Object.entries(ruby)
-.map(([word, { furigana, JLPT_level, eng }]) => {
+.map(([word, { reading, JLPT_level }]) => {
 
   return ({
     word,
-    reading: furigana,
-    meaning: eng?.join(', '),
+    reading,
+    meaning: meaningOf(word).join(', '),
     level: JLPT_level,
     type: 'kanji'
   });
@@ -164,7 +165,7 @@ export default [
 //
 // Unlike `ruby` in kanji.js (keyed by a run of kanji only), keys here are the
 // FULL surface form as written in text, okurigana / prefixes / suffixes included.
-// `furigana` is the reading of the WHOLE word. The kanji-only part (e.g. 父 = とう
+// `reading` is the reading of the WHOLE word. The kanji-only part (e.g. 父 = とう
 // inside お父さん) is computed automatically by alignFurigana() in tools.js.
 //
 // Longest match wins, so お父さん is picked before 父 when both could apply.
@@ -173,19 +174,19 @@ export default [
 //   parts: [['一', 'いっ'], ['日', 'ぴ']]   // [text, rt?]
 export const words = {
   // family
-  '父': { furigana: 'ちち', JLPT_level: 'N5', eng: ['(my) father'] },
-  'お父さん': { furigana: 'おとうさん', JLPT_level: 'N5', eng: ['father', 'dad'] },
-  '母': { furigana: 'はは', JLPT_level: 'N5', eng: ['(my) mother'] },
-  'お母さん': { furigana: 'おかあさん', JLPT_level: 'N5', eng: ['mother', 'mom'] },
-  '兄': { furigana: 'あに', JLPT_level: 'N5', eng: ['(my) older brother'] },
-  'お兄さん': { furigana: 'おにいさん', JLPT_level: 'N5', eng: ['older brother'] },
-  '姉': { furigana: 'あね', JLPT_level: 'N5', eng: ['(my) older sister'] },
-  'お姉さん': { furigana: 'おねえさん', JLPT_level: 'N5', eng: ['older sister'] },
+  '父': { reading: 'ちち', JLPT_level: 'N5', eng: ['(my) father'] },
+  'お父さん': { reading: 'おとうさん', JLPT_level: 'N5', eng: ['father', 'dad'] },
+  '母': { reading: 'はは', JLPT_level: 'N5', eng: ['(my) mother'] },
+  'お母さん': { reading: 'おかあさん', JLPT_level: 'N5', eng: ['mother', 'mom'] },
+  '兄': { reading: 'あに', JLPT_level: 'N5', eng: ['(my) older brother'] },
+  'お兄さん': { reading: 'おにいさん', JLPT_level: 'N5', eng: ['older brother'] },
+  '姉': { reading: 'あね', JLPT_level: 'N5', eng: ['(my) older sister'] },
+  'お姉さん': { reading: 'おねえさん', JLPT_level: 'N5', eng: ['older sister'] },
 
   // okurigana examples: the reading of 食 here is た (not the whole たべる)
-  '食べる': { furigana: 'たべる', JLPT_level: 'N5', eng: ['to eat'] },
-  '飲む': { furigana: 'のむ', JLPT_level: 'N5', eng: ['to drink'] },
-  '食べ物': { furigana: 'たべもの', JLPT_level: 'N5', eng: ['food'] },
-  '買い物': { furigana: 'かいもの', JLPT_level: 'N5', eng: ['shopping'] },
-  '飲み物': { furigana: 'のみもの', JLPT_level: 'N5', eng: ['drink', 'beverage'] },
+  '食べる': { reading: 'たべる', JLPT_level: 'N5', eng: ['to eat'] },
+  '飲む': { reading: 'のむ', JLPT_level: 'N5', eng: ['to drink'] },
+  '食べ物': { reading: 'たべもの', JLPT_level: 'N5', eng: ['food'] },
+  '買い物': { reading: 'かいもの', JLPT_level: 'N5', eng: ['shopping'] },
+  '飲み物': { reading: 'のみもの', JLPT_level: 'N5', eng: ['drink', 'beverage'] },
 };

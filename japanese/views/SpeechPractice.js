@@ -54,7 +54,7 @@ const getReadingIndex = () => {
     readingIndex = new Map();
     [ruby, wordForms].forEach(dictionary => {
       Object.entries(dictionary).forEach(([form, entry]) => {
-        const key = normalize(entry.furigana);
+        const key = normalize(entry.reading);
         if (!readingIndex.has(key)) readingIndex.set(key, new Set());
         readingIndex.get(key).add(form);
       });

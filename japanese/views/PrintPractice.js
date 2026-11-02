@@ -27,7 +27,7 @@ export default {
       if (this.script === 'kanji') {
         return Object.entries(this.ruby)
           .filter(([word, entry]) => [...word].length === 1 && entry.JLPT_level === this.level)
-          .map(([character, entry]) => ({ character, reading: entry.furigana }));
+          .map(([character, entry]) => ({ character, reading: entry.reading }));
       }
 
       return Object.entries(this.kana[this.script])

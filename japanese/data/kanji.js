@@ -1,784 +1,315 @@
 
 export const ruby = {
-  "一": { furigana: "いち", JLPT_level: "N5", eng: [
-    "one"
-  ]},
-  "二": { furigana: "に", JLPT_level: "N5", eng: [
-    "two"
-  ]},
-  "三": { furigana: "さん", JLPT_level: "N5", eng: [
-    "three"
-  ]},
-  "四": { furigana: "よん", JLPT_level: "N5", eng: [
-    "four"
-  ]},
-  "五": { furigana: "ご", JLPT_level: "N5", eng: [
-    "five"
-  ]},
-  "六": { furigana: "ろく", JLPT_level: "N5", eng: [
-    "six"
-  ]},
-  "七": { furigana: "なな", JLPT_level: "N5", eng: [
-    "seven"
-  ]},
-  "八": { furigana: "はち", JLPT_level: "N5", eng: [
-    "eight"
-  ]},
-  "九": { furigana: "きゅう", JLPT_level: "N5", eng: [
-    "nine"
-  ]},
-  "十": { furigana: "じゅう", JLPT_level: "N5", eng: [
-    "ten"
-  ]},
-  "百": { furigana: "ひゃく", JLPT_level: "N5", eng: [
-    "hundred"
-  ]},
-  "千": { furigana: "せん", JLPT_level: "N5", eng: [
-    "thousand"
-  ]},
-  "万": { furigana: "まん", JLPT_level: "N5", eng: [
-    "ten thousand"
-  ]},
-  "日": { furigana: "ひ", JLPT_level: "N5", eng: [
-    "day", "sun"
-  ]},
-  "月": { furigana: "つき", JLPT_level: "N5", eng: [
-    "moon", "month"
-  ]},
-  "火": { furigana: "ひ", JLPT_level: "N5", eng: [
-    "fire"
-  ]},
-  "水": { furigana: "みず", JLPT_level: "N5", eng: [
-    "water"
-  ]},
-  "木": { furigana: "き", JLPT_level: "N5", eng: [
-    "tree", "wood"
-  ]},
-  "金": { furigana: "かね", JLPT_level: "N5", eng: [
-    "money", "gold"
-  ]},
-  "土": { furigana: "つち", JLPT_level: "N5", eng: [
-    "earth", "soil"
-  ]},
-  "本": { furigana: "ほん", JLPT_level: "N5", eng: [
-    "book"
-  ]},
-  "話": { furigana: "はなし", JLPT_level: "N5", eng: [
-    "talk", "speak"
-  ]},
-  "人": { furigana: "ひと", JLPT_level: "N5", eng: [
-    "person"
-  ]},
-  "女": { furigana: "おんな",
-    JLPT_level: "N5",
-    eng: [
-    "woman",
-  ]},
-  "男": { furigana: "おとこ", JLPT_level: "N5", eng: [
-    "man", "male"
-  ]},
-  "子": { furigana: "こ", JLPT_level: "N5", eng: [
-    "child"
-  ]},
-  "友": { furigana: "とも", JLPT_level: "N5", eng: ["friend"]},
-  "国": { furigana: "くに", JLPT_level: "N5", eng: [
-    "country", "region"
-  ]},
-  "学": { furigana: "まな", JLPT_level: "N5", eng: [
-    "study", "learning"
-  ]},
-  "校": { furigana: "こう", JLPT_level: "N5", eng: [
-    "school"
-  ]},
-  "小": { furigana: "ちい", JLPT_level: "N5", eng: [
-    "small", "little", "tiny"
-  ]},
-  "大": { furigana: "おお", JLPT_level: "N5", eng: [
-    "big", "large"
-  ]},
-  "少": { furigana: "すく", JLPT_level: "N5", eng: [
-    "few", "little"
-  ]},
-  "多": { furigana: "おお", JLPT_level: "N5", eng: [
-    "many"
-  ]},
-  "時": { furigana: "とき", JLPT_level: "N5", eng: [
-    "hour"
-  ]},
-  "右": { furigana: "みぎ", JLPT_level: "N5", eng: [
-    "right"
-  ]},
-  "花": { furigana: "はな", JLPT_level: "N5", eng: [
-    "flower"
-  ]},
-  "貝": { furigana: "かい", JLPT_level: "N5", eng: [
-    "shellfish"
-  ]},
-  "円": { furigana: "えん", JLPT_level: "N5", eng: [
-    "yen", "circle"
-  ]},
-  "王": { furigana: "おう", JLPT_level: "N5", eng: [
-    "king"
-  ]},
-  "音": { furigana: "おと", JLPT_level: "N5", eng: [
-    "sound"
-  ]},
-  "下": { furigana: "した", JLPT_level: "N5", eng: [
-    "below", "down"
-  ]},
-  "気": { furigana: "き", JLPT_level: "N5", eng: [
-    "spirit", "feeling"
-  ]},
-  "休": { furigana: "やす", JLPT_level: "N5", eng: [
-    "rest", "holiday"
-  ]},
-  "玉": { furigana: "たま", JLPT_level: "N5", eng: [
-    "ball", "jewel"
-  ]},
-  "空": { furigana: "そら", JLPT_level: "N5", eng: [
-    "sky", "empty"
-  ]},
-  "犬": { furigana: "いぬ", JLPT_level: "N5", eng: [
-    "dog"
-  ]},
-  "口": { furigana: "くち", JLPT_level: "N5", eng: [
-    "mouth"
-  ]},
-  "左": { furigana: "ひだり", JLPT_level: "N5", eng: [
-    "left"
-  ]},
-  "山": { furigana: "やま", JLPT_level: "N5", eng: [
-    "mountain"
-  ]},
-  "糸": { furigana: "いと", JLPT_level: "N5", eng: [
-    "thread"
-  ]},
-  "字": { furigana: "じ", JLPT_level: "N5", eng: [
-    "character", "letter"
-  ]},
-  "耳": { furigana: "みみ", JLPT_level: "N5", eng: [
-    "ear"
-  ]},
-  "車": { furigana: "くるま", JLPT_level: "N5", eng: [
-    "car", "vehicle"
-  ]},
-  "手": { furigana: "て", JLPT_level: "N5", eng: [
-    "hand"
-  ]},
-  "出": { furigana: "で", JLPT_level: "N5", eng: [
-    "exit", "leave"
-  ]},
-  "上": { furigana: "うえ", JLPT_level: "N5", eng: [
-    "above", "up"
-  ]},
-  "森": { furigana: "もり", JLPT_level: "N5", eng: [
-    "forest"
-  ]},
-  "正": { furigana: "ただ", JLPT_level: "N5", eng: [
-    "correct", "right"
-  ]},
-  "生": { furigana: "い", JLPT_level: "N5", eng: [
-    "life", "living"
-  ]},
-  "青": { furigana: "あお", JLPT_level: "N5", eng: [
-    "blue"
-  ]},
-  "夕": { furigana: "ゆう", JLPT_level: "N5", eng: [
-    "evening"
-  ]},
-  "石": { furigana: "いし", JLPT_level: "N5", eng: [
-    "stone"
-  ]},
-  "赤": { furigana: "あか", JLPT_level: "N5", eng: [
-    "red"
-  ]},
-  "川": { furigana: "かわ", JLPT_level: "N5", eng: [
-    "river"
-  ]},
-  "先": { furigana: "さき", JLPT_level: "N5", eng: [
-    "ahead", "previous"
-  ]},
-  "早": { furigana: "はや", JLPT_level: "N5", eng: [
-    "early", "fast"
-  ]},
-  "草": { furigana: "くさ", JLPT_level: "N5", eng: [
-    "grass"
-  ]},
-  "足": { furigana: "あし", JLPT_level: "N5", eng: [
-    "foot", "leg"
-  ]},
-  "村": { furigana: "むら", JLPT_level: "N5", eng: [
-    "village"
-  ]},
-  "竹": { furigana: "たけ", JLPT_level: "N5", eng: [
-    "bamboo"
-  ]},
-  "中": { furigana: "なか", JLPT_level: "N5", eng: [
-    "middle", "inside"
-  ]},
-  "虫": { furigana: "むし", JLPT_level: "N5", eng: [
-    "insect"
-  ]},
-  "天": { furigana: "てん", JLPT_level: "N5", eng: [
-    "heaven", "sky"
-  ]},
-  "田": { furigana: "た", JLPT_level: "N5", eng: [
-    "rice field"
-  ]},
-  "入": { furigana: "はい", JLPT_level: "N5", eng: [
-    "enter"
-  ]},
-  "年": { furigana: "とし", JLPT_level: "N5", eng: [
-    "year"
-  ]},
-  "白": { furigana: "しろ", JLPT_level: "N5", eng: [
-    "white"
-  ]},
-  "文": { furigana: "ぶん", JLPT_level: "N5", eng: [
-    "sentence", "writing"
-  ]},
-  "名": { furigana: "な", JLPT_level: "N5", eng: [
-    "name"
-  ]},
-  "立": { furigana: "た", JLPT_level: "N5", eng: [
-    "stand"
-  ]},
-  "力": { furigana: "ちから", JLPT_level: "N5", eng: [
-    "power", "strength"
-  ]},
-  "林": { furigana: "はやし", JLPT_level: "N5", eng: [
-    "woods"
-  ]},
+  "一": { tags: ["numbers"], reading: "いち", JLPT_level: "N5"},
+  "二": { tags: ["numbers"], reading: "に", JLPT_level: "N5"},
+  "三": { tags: ["numbers"], reading: "さん", JLPT_level: "N5"},
+  "四": { tags: ["numbers"], reading: "よん", JLPT_level: "N5"},
+  "五": { tags: ["numbers"], reading: "ご", JLPT_level: "N5"},
+  "六": { tags: ["numbers"], reading: "ろく", JLPT_level: "N5"},
+  "七": { tags: ["numbers"], reading: "なな", JLPT_level: "N5"},
+  "八": { tags: ["numbers"], reading: "はち", JLPT_level: "N5"},
+  "九": { tags: ["numbers"], reading: "きゅう", JLPT_level: "N5"},
+  "十": { tags: ["numbers"], reading: "じゅう", JLPT_level: "N5"},
+  "百": { tags: ["numbers"], reading: "ひゃく", JLPT_level: "N5"},
+  "千": { tags: ["numbers"], reading: "せん", JLPT_level: "N5"},
+  "万": { tags: ["numbers"], reading: "まん", JLPT_level: "N5"},
+  "日": { tags: ["week"], reading: "ひ", JLPT_level: "N5"},
+  "月": { tags: ["week"], reading: "つき", JLPT_level: "N5"},
+  "火": { tags: ["week"], reading: "ひ", JLPT_level: "N5"},
+  "水": { tags: ["week"], reading: "みず", JLPT_level: "N5"},
+  "木": { tags: ["week"], reading: "き", JLPT_level: "N5"},
+  "金": { tags: ["week"], reading: "かね", JLPT_level: "N5"},
+  "土": { tags: ["week"], reading: "つち", JLPT_level: "N5"},
+  "本": { tags: ["things"], reading: "ほん", JLPT_level: "N5"},
+  "話": { tags: ["daily"], reading: "はなし", JLPT_level: "N5"},
+  "人": { tags: ["people"], reading: "ひと", JLPT_level: "N5"},
+  "女": { tags: ["people"], reading: "おんな",
+    JLPT_level: "N5"},
+  "男": { tags: ["people"], reading: "おとこ", JLPT_level: "N5"},
+  "子": { tags: ["people"], reading: "こ", JLPT_level: "N5"},
+  "友": { tags: ["people"], reading: "とも", JLPT_level: "N5"},
+  "国": { tags: ["school"], reading: "くに", JLPT_level: "N5"},
+  "学": { tags: ["school"], reading: "まな", JLPT_level: "N5"},
+  "校": { tags: ["school"], reading: "こう", JLPT_level: "N5"},
+  "小": { tags: ["description"], reading: "ちい", JLPT_level: "N5"},
+  "大": { tags: ["description"], reading: "おお", JLPT_level: "N5"},
+  "少": { tags: ["description"], reading: "すく", JLPT_level: "N5"},
+  "多": { tags: ["description"], reading: "おお", JLPT_level: "N5"},
+  "時": { tags: ["time"], reading: "とき", JLPT_level: "N5"},
+  "右": { tags: ["direction"], reading: "みぎ", JLPT_level: "N5"},
+  "花": { reading: "はな", JLPT_level: "N5"},
+  "貝": { reading: "かい", JLPT_level: "N5"},
+  "円": { tags: ["numbers"], reading: "えん", JLPT_level: "N5"},
+  "王": { reading: "おう", JLPT_level: "N5"},
+  "音": { reading: "おと", JLPT_level: "N5"},
+  "下": { tags: ["direction"], reading: "した", JLPT_level: "N5"},
+  "気": { tags: ["nature"], reading: "き", JLPT_level: "N5"},
+  "休": { tags: ["motion"], reading: "やす", JLPT_level: "N5"},
+  "玉": { reading: "たま", JLPT_level: "N5"},
+  "空": { tags: ["nature"], reading: "そら", JLPT_level: "N5"},
+  "犬": { reading: "いぬ", JLPT_level: "N5"},
+  "口": { tags: ["body"], reading: "くち", JLPT_level: "N5"},
+  "左": { tags: ["direction"], reading: "ひだり", JLPT_level: "N5"},
+  "山": { tags: ["nature"], reading: "やま", JLPT_level: "N5"},
+  "糸": { reading: "いと", JLPT_level: "N5"},
+  "字": { reading: "じ", JLPT_level: "N5"},
+  "耳": { tags: ["body"], reading: "みみ", JLPT_level: "N5"},
+  "車": { tags: ["places"], reading: "くるま", JLPT_level: "N5"},
+  "手": { tags: ["body"], reading: "て", JLPT_level: "N5"},
+  "出": { tags: ["motion"], reading: "で", JLPT_level: "N5"},
+  "上": { tags: ["direction"], reading: "うえ", JLPT_level: "N5"},
+  "森": { reading: "もり", JLPT_level: "N5"},
+  "正": { reading: "ただ", JLPT_level: "N5"},
+  "生": { tags: ["school"], reading: "い", JLPT_level: "N5"},
+  "青": { tags: ["colors"], reading: "あお", JLPT_level: "N5"},
+  "夕": { reading: "ゆう", JLPT_level: "N5"},
+  "石": { reading: "いし", JLPT_level: "N5"},
+  "赤": { tags: ["colors"], reading: "あか", JLPT_level: "N5"},
+  "川": { tags: ["nature"], reading: "かわ", JLPT_level: "N5"},
+  "先": { tags: ["school"], reading: "さき", JLPT_level: "N5"},
+  "早": { reading: "はや", JLPT_level: "N5"},
+  "草": { reading: "くさ", JLPT_level: "N5"},
+  "足": { tags: ["body"], reading: "あし", JLPT_level: "N5"},
+  "村": { reading: "むら", JLPT_level: "N5"},
+  "竹": { reading: "たけ", JLPT_level: "N5"},
+  "中": { tags: ["direction"], reading: "なか", JLPT_level: "N5"},
+  "虫": { reading: "むし", JLPT_level: "N5"},
+  "天": { tags: ["nature"], reading: "てん", JLPT_level: "N5"},
+  "田": { tags: ["nature"], reading: "た", JLPT_level: "N5"},
+  "入": { tags: ["motion"], reading: "はい", JLPT_level: "N5"},
+  "年": { tags: ["time"], reading: "とし", JLPT_level: "N5"},
+  "白": { tags: ["colors"], reading: "しろ", JLPT_level: "N5"},
+  "文": { reading: "ぶん", JLPT_level: "N5"},
+  "名": { tags: ["school"], reading: "な", JLPT_level: "N5"},
+  "立": { reading: "た", JLPT_level: "N5"},
+  "力": { reading: "ちから", JLPT_level: "N5"},
+  "林": { reading: "はやし", JLPT_level: "N5"},
   "私": {
-    furigana: "わたし",
-    JLPT_level: "N5",
-    'eng': [
-      "I", "me"
-    ]
+    reading: "わたし",
+    JLPT_level: "N5"
   },
-  "先生": { furigana: "せんせい", JLPT_level: "N5", eng: [
-    "teacher"
-  ]},
-  "彼": { furigana: "かれ", JLPT_level: "N4", eng: [
-    "he", "him"
-  ]},
-  "彼女": { furigana: "かのしょ", JLPT_level: "N5", eng: [
-    "she", "her"
-  ]},
-  "可愛": { furigana: "かわい", JLPT_level: "N3", eng: [
-    "cute", "lovely"
-  ] },
-  "好": { furigana: "す", JLPT_level: "N5", eng: [
-    "like"
-  ]},
-  "元気": { furigana: "げんき", JLPT_level: "N5", eng: [
-    "healthy", "well"
-  ]},
-  "電車": { furigana: "でんしゃ", JLPT_level: "N5", eng: [
-    "train"
-  ]},
-  "渋谷駅": { furigana: "しぶやえき", JLPT_level: "N5", eng: [
-    "Shibuya Station"
-  ] },
-  "駅": { furigana: "えき", JLPT_level: "N5", eng: [
-    "(train) station"
-  ]},
-  "魚": { furigana: "さかな", JLPT_level: "N5", eng: [
-    "fish"
-  ]},
-  "行": { furigana: "い", JLPT_level: "N5", eng: [
-    "go"
-  ]},
-  "趣味": { furigana: "しゅみ", JLPT_level: "N4", eng: [
-    "hobby", "interest"
-  ] },
-  "読": { furigana: "よ", JLPT_level: "N5", eng: [
-    "read"
-  ] },
-  "飲": { furigana: "の", JLPT_level: "N5", eng: [
-    "drink"
-  ] },
-  "毎週": { furigana: "まいしゅう", JLPT_level: "N5", eng: [
-    "every week"
-  ] },
-  "毎週木曜日": { furigana: "まいしゅうもくようび", JLPT_level: "N5", eng: [
-    "every Thursday"
-  ] },
-  "月曜日": { furigana: "げつようび", JLPT_level: "N5", eng: ["Monday"] },
-  "火曜日": { furigana: "かようび", JLPT_level: "N5", eng: ["Tuesday"] },
-  "水曜日": { furigana: "すいようび", JLPT_level: "N5", eng: ["Wednesday"] },
-  "木曜日": { furigana: "もくようび", JLPT_level: "N5", eng: ["Thursday"] },
-  "金曜日": { furigana: "きんようび", JLPT_level: "N5", eng: ["Friday"] },
-  "土曜日": { furigana: "どようび", JLPT_level: "N5", eng: ["Saturday"] },
-  "日曜日": { furigana: "にちようび", JLPT_level: "N5", eng: ["Sunday"] },
-  "弟": { furigana: "おとうと", JLPT_level: "N5", eng: [
-    "(younger) brother"
-  ]},
-  "妹": { furigana: "いもうと", JLPT_level: "N5", eng: [
-    "(younger) sister"
-  ]},
-  "晩御飯": { furigana: "ばんごはん", JLPT_level: "N5", eng: [
-    "dinner"
-  ] },
-  "作": { furigana: "つく", JLPT_level: "N5", eng: [
-    "make", "work"
-  ]},
-  "今週何": { furigana: "こんしゅうなに", JLPT_level: "N5", eng: [
-    "what this week"
-  ] },
-  "日本": { furigana: "にほん", JLPT_level: "N5", eng: [
-    "Japan"
-  ] },
-  "日本語": { furigana: "にほんご", JLPT_level: "N5", eng: [
-    "Japanese language"
-  ] },
-  "日本料理": { furigana: "にほんりょうり", JLPT_level: "N4", eng: [
-    "Japanese cuisine", "Japanese food"
-  ] },
-  "翻訳": { furigana: "ほにゃく", JLPT_level: "N2", eng: ["translation"] },
-  "授業": { furigana: "じゅぎょう", JLPT_level: "N4", eng: [
-    "class", "lesson"
-  ] },
-  "全然": { furigana: "ぜんぜん", JLPT_level: "N4", eng: [
-    "not at all", "not really"
-  ] },
-  "困": { furigana: "こま", JLPT_level: "N4", eng: [
-    "trouble", "difficulty"
-  ] },
-  "今日": { furigana: "きょう", JLPT_level: "N5", eng: [
-    "today"
-  ]},
-  "寒": { furigana: "さむ", JLPT_level: "N5", eng: [
-    "cold"
-  ]},
-  "明日": { furigana: "あした", JLPT_level: "N5", eng: [
-    "tomorrow",
-  ]},
-  "独学": { furigana: "どくがく", JLPT_level: "N2", eng: [
-    "self-study"
-  ] },
-  "面白": { furigana: "おもしろ", JLPT_level: "N5", eng: [
-    "interesting", "fun"
-  ] },
-  "勉強": { furigana: "べんきょう", JLPT_level: "N5", eng: [
-    "study", "practice"
-  ] },
-  "予報": { furigana: "よほう", JLPT_level: "N3", eng: [
-    "forecast", "weather report"
-  ] },
-  "買": { furigana: "か", JLPT_level: "N5", eng: [
-    "buy", "purchase"
-  ]},
-  "思": { furigana: "おも", JLPT_level: "N5", eng: [
-    "think", "believe"
-  ] },
-  "雨": { furigana: "あめ", JLPT_level: "N5", eng: [
-    "rain", "rainy"
-  ]},
-  "後": { furigana: "あと", JLPT_level: "N5", eng: [
-    "after", "later"
-  ] },
-  "新": { furigana: "あたら", JLPT_level: "N5", eng: [
-    "new"
-  ] },
-  "一日間": { furigana: "いちにちかん", JLPT_level: "N5", eng: [
-    "for one day"
-  ] },
-  "二日間": { furigana: "ふつかかん", JLPT_level: "N5", eng: [
-    "for two days"
-  ] },
-  "三日間": { furigana: "みっかかん", JLPT_level: "N5", eng: [
-    "for three days"
-  ] },
-  "腹": { furigana: "なか", JLPT_level: "N4", eng: [
-    "belly", "stomach"
-  ] },
-  "公園": { furigana: "こうえん", JLPT_level: "N5", eng: [
-    "park"
-  ] },
-  "花見": { furigana: "はなみ", JLPT_level: "N3", eng: [
-    "flower viewing"
-  ] },
-  "楽": { furigana: "たの", JLPT_level: "N4", eng: [
-    "fun", "pleasant"
-  ] },
-  "難": { furigana: "むずか", JLPT_level: "N4", eng: [
-    "difficult", "hard"
-  ] },
-  "簡単": { furigana: "かんたん", JLPT_level: "N4", eng: [
-    "easy", "simple"
-  ] },
-  "焼": { furigana: "や", JLPT_level: "N4", eng: [
-    "grill", "roast"
-  ] },
-  "食": { furigana: "た", JLPT_level: "N5", eng: [
-    "eat"
-  ] },
-  "大変": { furigana: "たいへん", JLPT_level: "N4", eng: [
-    "difficult", "hard"
-  ]},
-  "炎竜": { furigana: "ほのおりゅう", JLPT_level: "N1", eng: ["flame", "blaze" ] },
-  "騎士": { furigana: "きし", JLPT_level: "N1", eng: [
-    "knight"
-  ] },
-  "小説": { furigana: "しょうせつ", JLPT_level: "N3", eng: [
-    "novel"
-  ]},
-  "原作": { furigana: "げんさく", JLPT_level: "N2", eng: [
-    "original work"
-  ] },
-  "三浦": { furigana: "ミウラ", JLPT_level: "N1", eng: [
-    "Miura"
-  ] },
-  "建太郎": { furigana: "ケンタロウ", JLPT_level: "N1", eng: [
-    "Kentaro"
-  ] },
-  "三浦建太郎": { furigana: "ミウラケンタロウ", JLPT_level: "N1", eng: [
-    "Kentaro Miura"
-  ] },
-  "深見真": { furigana: "マコトフカミ", JLPT_level: "N1", eng: [
-    "Makoto Fukami"
-  ] },
-  "美": { furigana: "うつく", JLPT_level: "N4", eng: [
-    "beauty"
-  ]},
-  "一人": { furigana: "ひとり", JLPT_level: "N5", eng: [
-    "one person", "by oneself"
-  ]},
-  "大人": { furigana: "おとな", JLPT_level: "N5", eng: [
-    "adult", "grown-up"
-  ]},
-  "勇敢": { furigana: "ゆうかん", JLPT_level: "N2", eng: [
-    "brave", "courageous"
-  ] },
-  "乙女": { furigana: "おとめ", JLPT_level: "N1", eng: [
-    "maiden", "young woman"
-  ] },
-  "身": { furigana: "み", JLPT_level: "N4", eng: [
-    "body", "self"
-  ] },
-  "捧": { furigana: "ささ", JLPT_level: "N1", eng: [
-    "offer", "present"
-  ] },
-  "残忍": { furigana: "ざんにん", JLPT_level: "N1", eng: [
-    "cruel", "brutal"
-  ] },
-  "竜": { furigana: "りゅう", JLPT_level: "N2", eng: [
-    "dragon"
-  ] },
-  "暴虐": { furigana: "ぼうぎゃく", JLPT_level: "N1", eng: [
-    "tyranny", "cruelty"
-  ] },
-  "真実": { furigana: "しんじつ", JLPT_level: "N3", eng: [
-    "truth", "reality"
-  ] },
-  "世界": { furigana: "せかい", JLPT_level: "N5", eng: [
-    "world"
-  ] },
-  "例外": { furigana: "れいがい", JLPT_level: "N2", eng: [
-    "exception"
-  ] },
-  "始": { furigana: "はじ", JLPT_level: "N5", eng: [
-    "begin", "start"
-  ] },
-  "前": { furigana: "まえ", JLPT_level: "N5", eng: [
-    "before", "front"
-  ] },
-  "生前": { furigana: "せいぜん", JLPT_level: "N1", eng: [
-    "during one's lifetime"
-  ]},
-  "戦": { furigana: "いくさ", JLPT_level: "N4", eng: [] },
-  "記録": { furigana: "きろく", JLPT_level: "N3", eng: [] },
-  "剣": { furigana: "けん", JLPT_level: "N1", eng: [] },
-  "暴力": { furigana: "ぼうりょく", JLPT_level: "N3", eng: [] },
-  "支配": { furigana: "しはい", JLPT_level: "N2", eng: [] },
-  "大陸": { furigana: "たいりく", JLPT_level: "N2", eng: [] },
-  "唯一神": { furigana: "ゆいいつしん", JLPT_level: "N1", eng: [] },
-  "信仰": { furigana: "しんこう", JLPT_level: "N1", eng: ["faith", "belief", "creed"] },
-  "絶対": { furigana: "ぜったい", JLPT_level: "N3", eng: [] },
-  "法王庁": { furigana: "ほうおうちょう", JLPT_level: "N1", eng: [] },
-  "異端審問": { furigana: "いたんしんもん", JLPT_level: "N1", eng: [
-    "inquisition"
-  ]},
-  "暴威": { furigana: "ぼうい", JLPT_level: "N1", eng: [] },
-  "大国": { furigana: "たいこく", JLPT_level: "N2", eng: [] },
-  "覇": { furigana: "は", JLPT_level: "N1", eng: [] },
-  "競": { furigana: "くら", JLPT_level: "N2", eng: [] },
-  "戦乱": { furigana: "せんらん", JLPT_level: "N1", eng: [] },
-  "時代": { furigana: "じだい", JLPT_level: "N4", eng: ["period", "era", "age"] },
-  "続": { furigana: "ぞく", JLPT_level: "N3" },
-  "惨": { furigana: "むご", JLPT_level: "N1", eng: [
-    "brutally"
-  ]},
-  "死休": { furigana: "しきょう", JLPT_level: "N1", eng: [
-    "death"
-  ]},
-  "顔": { furigana: "かお", JLPT_level: "N4", eng: [
-    "face", "look"
-  ]},
-  "熟練": { furigana: "じゅくれん", JLPT_level: "N1", eng: [
-    "skill", "expertise"
-  ]},
-  "医師": { furigana: "いし", JLPT_level: "N3", eng: [
-    "doctor", "physician"
-  ]},
-  "見慣": { furigana: "みな", JLPT_level: "N1", eng: ["familiar with", "used to seeing"]},
-  "兵士": { furigana: "へいし", JLPT_level: "N3", eng: [
-    "soldier"
-  ]},
-  "性別": { furigana: "せいべつ", JLPT_level: "N3", eng: [
-    "sex", "gender"
-  ]},
-  "判別": { furigana: "はんべつ", JLPT_level: "N1", eng: [
-    "discrimination"
-  ]},
-  "縄": { furigana: "なわ", JLPT_level: "N1", eng: [
-    "rope"
-  ]},
-  "目": { furigana: "め", JLPT_level: "N5", eng: [
-    "eye/s", "look"
-  ]},
-  "以来": { furigana: "いらい", JLPT_level: "N2", eng: [
-    "since"
-  ]},
-  "鳥": { furigana: "とり", JLPT_level: "N5", eng: [
-    "bird"
-  ]},
-  "伝説": { furigana: "でんせつ", JLPT_level: "N3", eng: [
-    "legend"
-  ]},
-  "失礼": { furigana: "しつれい", JLPT_level: "N4", eng: [
-    "rude", "impoliteness"
-  ]},
-  "見": { furigana: "み", JLPT_level: "N5", eng: [
-    "looking", "viewing"
-  ]},
-  "街": { furigana: "まち", JLPT_level: "N3", eng: [
-    "town (big)", "city"
-  ]},
-  "町": { furigana: "まち", JLPT_level: "N5", eng: [
-    "town (small)"
-  ]},
-  "治安": { furigana: "ちあん", JLPT_level: "N2", eng: [
-    "public order", "public security"
-  ]},
-  "守": { furigana: "まも", JLPT_level: "N3", eng: [
-    "protection", "defense"
-  ]},
-  "衛兵": { furigana: "えいへい", JLPT_level: "N1", eng: [
-    "guard", "sentinel"
-  ]},
-  "話所": { furigana: "はなししょ", JLPT_level: "N1", eng: [
-    "topic", "subject"
-  ]},
-  "話題": { furigana: "わだい", JLPT_level: "N3", eng: [
-    "topic", "subject"
-  ]},
-  "死休置": { furigana: "したいおけ", JLPT_level: "N1", eng: [
-    "put the dead body"
-  ]},
-  "場": { furigana: "ば", JLPT_level: "N4", eng: [
-    "place", "spot"
-  ]},
-  "台": { furigana: "だい", JLPT_level: "N4", eng: [
-    "place", "spot"
-  ]},
-  "乗": { furigana: "の", JLPT_level: "N4", eng: [
-    "to get on"
-  ]},
-  "両手両足": { furigana: "りょうてりょうあし", JLPT_level: "N4", eng: [
-    "both hands and feet"
-  ]},
-  "首": { furigana: "くび", JLPT_level: "N3", eng: [
-    "neck"
-  ]},
-  "切": { furigana: "き", JLPT_level: "N4", eng: [
-    "cut"
-  ]},
-  "落": { furigana: "お", JLPT_level: "N4", eng: [
-    "slip", "omission"
-  ]},
-  "胴体": { furigana: "どうたい", JLPT_level: "N2", eng: [
-    "torso"
-  ]},
-  "六個": { furigana: "ろくこ", JLPT_level: "N5", eng: [
-    "six (small) pieces"
-  ]},
-  "部品": { furigana: "ぶひん", JLPT_level: "N2", eng: [
-    "parts"
-  ]},
-  "分": { furigana: "ふん", JLPT_level: "N5", eng: [
-    "part", "minute"
-  ]},
-  "回": { furigana: "ま", JLPT_level: "N4", eng: [
-    "times", "repetition"
-  ]},
-  "回目": { furigana: "かいめ", JLPT_level: "N4", eng: [
-    "th time"
-  ]},
-  "同": { furigana: "おな", JLPT_level: "N5", eng: [
-    "the same"
-  ]},
-  "同様": { furigana: "おなじよう", JLPT_level: "N2", eng: [
-    "similar", "the same"
-  ]},
-  "等": { furigana: "ひと", JLPT_level: "N3", eng: [
-    "etc.", "and so on"
-  ]},
-  "鮭": { furigana: "さけ", JLPT_level: "N1", eng: [
-    "salmon"
-  ]},
-  "猫": { furigana: "ねこ", JLPT_level: "N3", eng: [
-    "cat"
-  ]},
-  "誕生日": { furigana: "たんじょうび", JLPT_level: "N5", eng: [
-    "birthday"
-  ]},
-  "擬声語": { furigana: "ぎせいご", JLPT_level: "N1", eng: [
-    "onomatopoeia"
-  ]},
-  "擬音語": { furigana: "ぎおんご", JLPT_level: "N1", eng: [
-    "onomatopoeia"
-  ]},
-  "擬態語": { furigana: "ぎたいご", JLPT_level: "N1", eng: [
-    "mimetic words"
-  ]},
-  "擬容語": { furigana: "ぎようご", JLPT_level: "N1", eng: [
-    "mimetic words"
-  ]},
-  "今": { furigana: "いま", JLPT_level: "N5", eng: [
-    "now"
-  ]}, 
-  "敬語": { furigana: "けいご", JLPT_level: "N3", eng: [
-    "honorific language"
-  ]},
-  "尊敬語": { furigana: "そんけいご", JLPT_level: "N2", eng: [
-    "respectful language"
-  ]},
-  "一般的": { furigana: "いっぱんてき", JLPT_level: "", eng: [
-    "general", "popular", "common", "typical"
-  ]},
-  "長音符": { furigana: "ちょうおんぷ", JLPT_level: "N5", eng: [
-    "(long sound mark)"
-  ]},
-  "波": { furigana: "なみ", JLPT_level: "N3", eng: [
-    "wave"
-  ]},
-  "自尊心": { furigana: "じそんしん", JLPT_level: "N2", eng: [
-    "self-respect"
-  ]},
-  "縫": { furigana: "ぬう", JLPT_level: "N2", eng: [
-    "to sew", "to mend"
-  ]},
-  "結": { furigana: "ゆ", JLPT_level: "N3", eng: [
-    "result", "consequence", "effect"
-  ]},
-  "誇": { furigana: "ほこ", JLPT_level: "N2", eng: [
-    "to boast", "to be proud of"
-  ]},
-  "言": { furigana: "い", JLPT_level: "N5", eng: [
-    "word", "speech"
-  ]},
-  "時計": { furigana: "とけい", JLPT_level: "N5", eng: [
-    "clock", "watch"
-  ]},
-  "公": { furigana: "こう", JLPT_level: "N2", eng: [
-    "public", "official"
-  ]},
-  "風雨": { furigana: "ふうう", JLPT_level: "N2", eng: [
-    "wind and rain"
-  ]},
-  "素晴": { furigana: "すば", JLPT_level: "N5", eng: [
-    "wonderful", "splendid"
-  ]},
-  "温度計": { furigana: "おんどけい", JLPT_level: "N5", eng: [
-    "thermometer"
-  ]},
-  "音": { furigana: "おと", JLPT_level: "N5", eng: [
-    "sound", "noise"
-  ]},
-  "選": { furigana: "えら", JLPT_level: "N4", eng: [
-    "to choose", "to select"
-  ]},
-  "配列": { furigana: "はいれつ", JLPT_level: "N2", eng: [
-    "arrangement", "array"
-  ]},
-  "言葉": { furigana: "ことば", JLPT_level: "N5", eng: [
-    "word", "language", "phrase"
-  ]},
-  "踊": { furigana: "おど", JLPT_level: "N5", eng: [
-    "to dance"
-  ]},
-  "意味無": { furigana: "いみない", JLPT_level: "N4", eng: [
-    "meaningless"
-  ]},
-  "確": { furigana: "たし", JLPT_level: "N4", eng: [
-    "certain", "sure"
-  ]},
-  "写真": { furigana: "しゃしん", JLPT_level: "N5", eng: [
-    "photograph", "photo"
-  ]},
-  "昨日": { furigana: "きのう", JLPT_level: "N5", eng: [
-    "yesterday"
-  ]},
-  "旅行": { furigana: "りょこう", JLPT_level: "N5", eng: [
-    "travel", "trip"
-  ]},
-  "午後": { furigana: "ごご", JLPT_level: "N5", eng: [
-    "afternoon", "p.m."
-  ]},
-  "電話": { furigana: "でんわ", JLPT_level: "N5", eng: [
-    "phone call"
-  ]},
-  "音楽": { furigana: "おんがく", JLPT_level: "N5", eng: [
-    "music"
-  ]},
-  "学校": { furigana: "がっこう", JLPT_level: "N5", eng: [
-    "school"
-  ]},
-  "果物": { furigana: "くだもの", JLPT_level: "N5", eng: [
-    "fruit"
-  ]},
-  "家族": { furigana: "かぞく", JLPT_level: "N5", eng: [
-    "family"
-  ]},
-  "動画": { furigana: "どうが", JLPT_level: "N5", eng: [
-    "video"
-  ]},
-  "映画": { furigana: "えいが", JLPT_level: "N5", eng: [
-    "movie", "film"
-  ]},
-  "料理": { furigana: "りょうり", JLPT_level: "N5", eng: [
-    "cooking", "cuisine"
-  ]},
-  "病院": { furigana: "びょういん", JLPT_level: "N5", eng: [
-    "hospital", "clinic"
-  ]},
-  "学生": { furigana: "がくせい", JLPT_level: "N5", eng: [
-    "student"
-  ]},
-  "新聞": { furigana: "しんぶん", JLPT_level: "N5", eng: [
-    "newspaper"
-  ]},
-  "時間": { furigana: "じかん", JLPT_level: "N5", eng: [
-    "time"
-  ]},
-  "友達": { furigana: "ともだち", JLPT_level: "N5", eng: [
-    "friend", "companion"
-  ]},
-  "会社": { furigana: "かいしゃ", JLPT_level: "N5", eng: [
-    "company", "corporation", "firm"
-  ]},
-  "教室": { furigana: "きょうしつ", JLPT_level: "N5", eng: [
-    "classroom"
-  ]},
-  "空港": { furigana: "くうこう", JLPT_level: "N4", eng: [
-    "airport"
-  ]},
-  "天気": { furigana: "てんき", JLPT_level: "N5", eng: [
-    "weather"
-  ]},
-  "図書館": { furigana: "としょかん", JLPT_level: "N5", eng: [
-    "library"
-  ]},
+  "先生": { reading: "せんせい", JLPT_level: "N5"},
+  "彼": { reading: "かれ", JLPT_level: "N4"},
+  "彼女": { reading: "かのしょ", JLPT_level: "N5"},
+  "可愛": { reading: "かわい", JLPT_level: "N3" },
+  "好": { reading: "す", JLPT_level: "N5"},
+  "元気": { reading: "げんき", JLPT_level: "N5"},
+  "電車": { reading: "でんしゃ", JLPT_level: "N5"},
+  "渋谷駅": { reading: "しぶやえき", JLPT_level: "N5" },
+  "駅": { tags: ["places"], reading: "えき", JLPT_level: "N5"},
+  "魚": { reading: "さかな", JLPT_level: "N5"},
+  "行": { tags: ["motion"], reading: "い", JLPT_level: "N5"},
+  "趣味": { reading: "しゅみ", JLPT_level: "N4" },
+  "読": { tags: ["daily"], reading: "よ", JLPT_level: "N5" },
+  "飲": { tags: ["daily"], reading: "の", JLPT_level: "N5" },
+  "毎週": { reading: "まいしゅう", JLPT_level: "N5" },
+  "毎週木曜日": { reading: "まいしゅうもくようび", JLPT_level: "N5" },
+  "月曜日": { reading: "げつようび", JLPT_level: "N5" },
+  "火曜日": { reading: "かようび", JLPT_level: "N5" },
+  "水曜日": { reading: "すいようび", JLPT_level: "N5" },
+  "木曜日": { reading: "もくようび", JLPT_level: "N5" },
+  "金曜日": { reading: "きんようび", JLPT_level: "N5" },
+  "土曜日": { reading: "どようび", JLPT_level: "N5" },
+  "日曜日": { reading: "にちようび", JLPT_level: "N5" },
+  "弟": { reading: "おとうと", JLPT_level: "N5"},
+  "妹": { reading: "いもうと", JLPT_level: "N5"},
+  "晩御飯": { reading: "ばんごはん", JLPT_level: "N5" },
+  "作": { tags: ["things"], reading: "つく", JLPT_level: "N5"},
+  "今週何": { reading: "こんしゅうなに", JLPT_level: "N5" },
+  "日本": { reading: "にほん", JLPT_level: "N5" },
+  "日本語": { reading: "にほんご", JLPT_level: "N5" },
+  "日本料理": { reading: "にほんりょうり", JLPT_level: "N4" },
+  "翻訳": { reading: "ほにゃく", JLPT_level: "N2" },
+  "授業": { reading: "じゅぎょう", JLPT_level: "N4" },
+  "全然": { reading: "ぜんぜん", JLPT_level: "N4" },
+  "困": { reading: "こま", JLPT_level: "N4" },
+  "今日": { reading: "きょう", JLPT_level: "N5"},
+  "寒": { reading: "さむ", JLPT_level: "N5"},
+  "明日": { reading: "あした", JLPT_level: "N5"},
+  "独学": { reading: "どくがく", JLPT_level: "N2" },
+  "面白": { reading: "おもしろ", JLPT_level: "N5" },
+  "勉強": { reading: "べんきょう", JLPT_level: "N5" },
+  "予報": { reading: "よほう", JLPT_level: "N3" },
+  "買": { tags: ["daily"], reading: "か", JLPT_level: "N5"},
+  "思": { reading: "おも", JLPT_level: "N5" },
+  "雨": { tags: ["nature"], reading: "あめ", JLPT_level: "N5"},
+  "後": { tags: ["time"], reading: "あと", JLPT_level: "N5" },
+  "新": { tags: ["description"], reading: "あたら", JLPT_level: "N5" },
+  "一日間": { reading: "いちにちかん", JLPT_level: "N5" },
+  "二日間": { reading: "ふつかかん", JLPT_level: "N5" },
+  "三日間": { reading: "みっかかん", JLPT_level: "N5" },
+  "腹": { reading: "なか", JLPT_level: "N4" },
+  "公園": { reading: "こうえん", JLPT_level: "N5" },
+  "花見": { reading: "はなみ", JLPT_level: "N3" },
+  "楽": { reading: "たの", JLPT_level: "N4" },
+  "難": { reading: "むずか", JLPT_level: "N4" },
+  "簡単": { reading: "かんたん", JLPT_level: "N4" },
+  "焼": { reading: "や", JLPT_level: "N4" },
+  "食": { tags: ["daily"], reading: "た", JLPT_level: "N5" },
+  "大変": { reading: "たいへん", JLPT_level: "N4"},
+  "炎竜": { reading: "ほのおりゅう", JLPT_level: "N1" },
+  "騎士": { reading: "きし", JLPT_level: "N1" },
+  "小説": { reading: "しょうせつ", JLPT_level: "N3"},
+  "原作": { reading: "げんさく", JLPT_level: "N2" },
+  "三浦": { reading: "ミウラ", JLPT_level: "N1" },
+  "建太郎": { reading: "ケンタロウ", JLPT_level: "N1" },
+  "三浦建太郎": { reading: "ミウラケンタロウ", JLPT_level: "N1" },
+  "深見真": { reading: "マコトフカミ", JLPT_level: "N1" },
+  "美": { reading: "うつく", JLPT_level: "N4"},
+  "一人": { reading: "ひとり", JLPT_level: "N5"},
+  "大人": { reading: "おとな", JLPT_level: "N5"},
+  "勇敢": { reading: "ゆうかん", JLPT_level: "N2" },
+  "乙女": { reading: "おとめ", JLPT_level: "N1" },
+  "身": { reading: "み", JLPT_level: "N4" },
+  "捧": { reading: "ささ", JLPT_level: "N1" },
+  "残忍": { reading: "ざんにん", JLPT_level: "N1" },
+  "竜": { reading: "りゅう", JLPT_level: "N2" },
+  "暴虐": { reading: "ぼうぎゃく", JLPT_level: "N1" },
+  "真実": { reading: "しんじつ", JLPT_level: "N3" },
+  "世界": { reading: "せかい", JLPT_level: "N5" },
+  "例外": { reading: "れいがい", JLPT_level: "N2" },
+  "始": { reading: "はじ", JLPT_level: "N5" },
+  "前": { tags: ["time"], reading: "まえ", JLPT_level: "N5" },
+  "生前": { reading: "せいぜん", JLPT_level: "N1"},
+  "戦": { reading: "いくさ", JLPT_level: "N4" },
+  "記録": { reading: "きろく", JLPT_level: "N3" },
+  "剣": { reading: "けん", JLPT_level: "N1" },
+  "暴力": { reading: "ぼうりょく", JLPT_level: "N3" },
+  "支配": { reading: "しはい", JLPT_level: "N2" },
+  "大陸": { reading: "たいりく", JLPT_level: "N2" },
+  "唯一神": { reading: "ゆいいつしん", JLPT_level: "N1" },
+  "信仰": { reading: "しんこう", JLPT_level: "N1" },
+  "絶対": { reading: "ぜったい", JLPT_level: "N3" },
+  "法王庁": { reading: "ほうおうちょう", JLPT_level: "N1" },
+  "異端審問": { reading: "いたんしんもん", JLPT_level: "N1"},
+  "暴威": { reading: "ぼうい", JLPT_level: "N1" },
+  "大国": { reading: "たいこく", JLPT_level: "N2" },
+  "覇": { reading: "は", JLPT_level: "N1" },
+  "競": { reading: "くら", JLPT_level: "N2" },
+  "戦乱": { reading: "せんらん", JLPT_level: "N1" },
+  "時代": { reading: "じだい", JLPT_level: "N4" },
+  "続": { reading: "ぞく", JLPT_level: "N3" },
+  "惨": { reading: "むご", JLPT_level: "N1"},
+  "死休": { reading: "しきょう", JLPT_level: "N1"},
+  "顔": { reading: "かお", JLPT_level: "N4"},
+  "熟練": { reading: "じゅくれん", JLPT_level: "N1"},
+  "医師": { reading: "いし", JLPT_level: "N3"},
+  "見慣": { reading: "みな", JLPT_level: "N1"},
+  "兵士": { reading: "へいし", JLPT_level: "N3"},
+  "性別": { reading: "せいべつ", JLPT_level: "N3"},
+  "判別": { reading: "はんべつ", JLPT_level: "N1"},
+  "縄": { reading: "なわ", JLPT_level: "N1"},
+  "目": { tags: ["body"], reading: "め", JLPT_level: "N5"},
+  "以来": { reading: "いらい", JLPT_level: "N2"},
+  "鳥": { reading: "とり", JLPT_level: "N5"},
+  "伝説": { reading: "でんせつ", JLPT_level: "N3"},
+  "失礼": { reading: "しつれい", JLPT_level: "N4"},
+  "見": { tags: ["daily"], reading: "み", JLPT_level: "N5"},
+  "街": { reading: "まち", JLPT_level: "N3"},
+  "町": { reading: "まち", JLPT_level: "N5"},
+  "治安": { reading: "ちあん", JLPT_level: "N2"},
+  "守": { reading: "まも", JLPT_level: "N3"},
+  "衛兵": { reading: "えいへい", JLPT_level: "N1"},
+  "話所": { reading: "はなししょ", JLPT_level: "N1"},
+  "話題": { reading: "わだい", JLPT_level: "N3"},
+  "死休置": { reading: "したいおけ", JLPT_level: "N1"},
+  "場": { reading: "ば", JLPT_level: "N4"},
+  "台": { reading: "だい", JLPT_level: "N4"},
+  "乗": { reading: "の", JLPT_level: "N4"},
+  "両手両足": { reading: "りょうてりょうあし", JLPT_level: "N4"},
+  "首": { reading: "くび", JLPT_level: "N3"},
+  "切": { reading: "き", JLPT_level: "N4"},
+  "落": { reading: "お", JLPT_level: "N4"},
+  "胴体": { reading: "どうたい", JLPT_level: "N2"},
+  "六個": { reading: "ろくこ", JLPT_level: "N5"},
+  "部品": { reading: "ぶひん", JLPT_level: "N2"},
+  "分": { tags: ["time"], reading: "ふん", JLPT_level: "N5"},
+  "回": { reading: "ま", JLPT_level: "N4"},
+  "回目": { reading: "かいめ", JLPT_level: "N4"},
+  "同": { reading: "おな", JLPT_level: "N5"},
+  "同様": { reading: "おなじよう", JLPT_level: "N2"},
+  "等": { reading: "ひと", JLPT_level: "N3"},
+  "鮭": { reading: "さけ", JLPT_level: "N1"},
+  "猫": { reading: "ねこ", JLPT_level: "N3"},
+  "誕生日": { reading: "たんじょうび", JLPT_level: "N5"},
+  "擬声語": { reading: "ぎせいご", JLPT_level: "N1"},
+  "擬音語": { reading: "ぎおんご", JLPT_level: "N1"},
+  "擬態語": { reading: "ぎたいご", JLPT_level: "N1"},
+  "擬容語": { reading: "ぎようご", JLPT_level: "N1"},
+  "今": { tags: ["time"], reading: "いま", JLPT_level: "N5"}, 
+  "敬語": { reading: "けいご", JLPT_level: "N3"},
+  "尊敬語": { reading: "そんけいご", JLPT_level: "N2"},
+  "一般的": { reading: "いっぱんてき", JLPT_level: ""},
+  "長音符": { reading: "ちょうおんぷ", JLPT_level: "N5"},
+  "波": { reading: "なみ", JLPT_level: "N3"},
+  "自尊心": { reading: "じそんしん", JLPT_level: "N2"},
+  "縫": { reading: "ぬう", JLPT_level: "N2"},
+  "結": { reading: "ゆ", JLPT_level: "N3"},
+  "誇": { reading: "ほこ", JLPT_level: "N2"},
+  "言": { reading: "い", JLPT_level: "N5"},
+  "時計": { reading: "とけい", JLPT_level: "N5"},
+  "公": { reading: "こう", JLPT_level: "N2"},
+  "風雨": { reading: "ふうう", JLPT_level: "N2"},
+  "素晴": { reading: "すば", JLPT_level: "N5"},
+  "温度計": { reading: "おんどけい", JLPT_level: "N5"},
+  "音": { reading: "おと", JLPT_level: "N5"},
+  "選": { reading: "えら", JLPT_level: "N4"},
+  "配列": { reading: "はいれつ", JLPT_level: "N2"},
+  "言葉": { reading: "ことば", JLPT_level: "N5"},
+  "踊": { reading: "おど", JLPT_level: "N5"},
+  "意味無": { reading: "いみない", JLPT_level: "N4"},
+  "確": { reading: "たし", JLPT_level: "N4"},
+  "写真": { reading: "しゃしん", JLPT_level: "N5"},
+  "昨日": { reading: "きのう", JLPT_level: "N5"},
+  "旅行": { reading: "りょこう", JLPT_level: "N5"},
+  "午後": { reading: "ごご", JLPT_level: "N5"},
+  "電話": { reading: "でんわ", JLPT_level: "N5"},
+  "音楽": { reading: "おんがく", JLPT_level: "N5"},
+  "学校": { reading: "がっこう", JLPT_level: "N5"},
+  "果物": { reading: "くだもの", JLPT_level: "N5"},
+  "家族": { reading: "かぞく", JLPT_level: "N5"},
+  "動画": { reading: "どうが", JLPT_level: "N5"},
+  "映画": { reading: "えいが", JLPT_level: "N5"},
+  "料理": { reading: "りょうり", JLPT_level: "N5"},
+  "病院": { reading: "びょういん", JLPT_level: "N5"},
+  "学生": { reading: "がくせい", JLPT_level: "N5"},
+  "新聞": { reading: "しんぶん", JLPT_level: "N5"},
+  "時間": { reading: "じかん", JLPT_level: "N5"},
+  "友達": { reading: "ともだち", JLPT_level: "N5"},
+  "会社": { reading: "かいしゃ", JLPT_level: "N5"},
+  "教室": { reading: "きょうしつ", JLPT_level: "N5"},
+  "空港": { reading: "くうこう", JLPT_level: "N4"},
+  "天気": { reading: "てんき", JLPT_level: "N5"},
+  "図書館": { reading: "としょかん", JLPT_level: "N5"},
+  // ── added by migrate-kanji: missing N5 core kanji ──
+  "半": { tags: ["time"], reading: "はん", JLPT_level: "N5" },
+  "毎": { tags: ["time"], reading: "まい", JLPT_level: "N5" },
+  "間": { tags: ["time"], reading: "あいだ", JLPT_level: "N5" },
+  "午": { tags: ["time"], reading: "ご", JLPT_level: "N5" },
+  "父": { tags: ["people"], reading: "ちち", JLPT_level: "N5" },
+  "母": { tags: ["people"], reading: "はは", JLPT_level: "N5" },
+  "体": { tags: ["body"], reading: "からだ", JLPT_level: "N5" },
+  "外": { tags: ["direction"], reading: "そと", JLPT_level: "N5" },
+  "東": { tags: ["direction"], reading: "ひがし", JLPT_level: "N5" },
+  "西": { tags: ["direction"], reading: "にし", JLPT_level: "N5" },
+  "南": { tags: ["direction"], reading: "みなみ", JLPT_level: "N5" },
+  "北": { tags: ["direction"], reading: "きた", JLPT_level: "N5" },
+  "来": { tags: ["motion"], reading: "く", JLPT_level: "N5" },
+  "聞": { tags: ["daily"], reading: "き", JLPT_level: "N5" },
+  "書": { tags: ["daily"], reading: "か", JLPT_level: "N5" },
+  "高": { tags: ["description"], reading: "たか", JLPT_level: "N5" },
+  "安": { tags: ["description"], reading: "やす", JLPT_level: "N5" },
+  "長": { tags: ["description"], reading: "なが", JLPT_level: "N5" },
+  "古": { tags: ["description"], reading: "ふる", JLPT_level: "N5" },
+  "明": { tags: ["description"], reading: "あか", JLPT_level: "N5" },
+  "黒": { tags: ["colors"], reading: "くろ", JLPT_level: "N5" },
+  "語": { tags: ["school"], reading: "ご", JLPT_level: "N5" },
+  "会": { tags: ["places"], reading: "あ", JLPT_level: "N5" },
+  "社": { tags: ["places"], reading: "しゃ", JLPT_level: "N5" },
+  "電": { tags: ["places"], reading: "でん", JLPT_level: "N5" },
+  "道": { tags: ["places"], reading: "みち", JLPT_level: "N5" },
+  "店": { tags: ["places"], reading: "みせ", JLPT_level: "N5" },
+  "何": { tags: ["things"], reading: "なに", JLPT_level: "N5" },
+  "物": { tags: ["things"], reading: "もの", JLPT_level: "N5" },
+  "方": { tags: ["things"], reading: "かた", JLPT_level: "N5" },
 };

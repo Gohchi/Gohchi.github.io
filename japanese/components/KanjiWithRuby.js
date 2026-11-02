@@ -3,6 +3,9 @@ import { toRefs } from 'vue';
 import { closeDialog, showDialog, alignFurigana } from 'tools';
 
 import { ruby } from 'data/kanji.js';
+import * as translations from 'data/kanji-translations.js';
+
+const meaningOf = translations.meaningOf ?? translations.meaning ?? (() => []);
 
 import {
   zoomStore,
@@ -35,15 +38,17 @@ export default {
     info() {
       return this.entry || this.ruby[this.text];
     },
-    furigana() {
-      return this.info.furigana;
+    reading() {
+      return this.info.reading ?? this.info.furigana;
     },
     // [{ text, rt? }]: the reading only goes over the kanji (お父さん -> お + 父(とう) + さん)
     parts() {
-      return alignFurigana(this.text, this.furigana, this.info.parts);
+      return alignFurigana(this.text, this.reading, this.info.parts);
     },
-    eng() {
-      return this.info.eng;
+    // Entries from words.js carry their own, context-specific meanings ((my) father).
+    // Entries from kanji.js have no meanings: they live in data/kanji-translations.js.
+    meanings() {
+      return this.info.eng?.length ? this.info.eng : meaningOf(this.text);
     },
     JLPT_level() {
       return this.info.JLPT_level;
@@ -74,10 +79,10 @@ export default {
         title="Look it up on Jisho"
         @click.stop
       >Jisho ↗</a>
-      <div class="kanji-furigana">{{ furigana }}</div>
+      <div class="kanji-furigana">{{ reading }}</div>
       <div class="kanji-details">{{ text }}</div>
       <ul class="kanji-meaning">
-        <li v-for="(item, index) in eng" :key="index">
+        <li v-for="(item, index) in meanings" :key="index">
           {{ item }}
         </li>
       </ul>

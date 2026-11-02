@@ -39,6 +39,11 @@ function saveAll(data) {
   }
 }
 
+// One read of the whole store (the menu / XP code does a single JSON.parse)
+export function getAllProgress() {
+  return loadAll();
+}
+
 export function getEntry(category, key) {
   const all = loadAll();
   return all[category]?.[key] || { correct: 0, wrong: 0, memory: 0 };
@@ -50,6 +55,8 @@ export function recordAnswer(category, key, isCorrect) {
   const entry = all[category][key] || { correct: 0, wrong: 0, memory: 0 };
   const today = dateKey();
 
+  entry.best = Math.max(entry.best || 0, entry.memory); // peak BEFORE the change (old entries have no `best`)
+
   if (isCorrect) {
     entry.correct++;
     entry.memory = Math.min(MAX_MEMORY, entry.memory + 1);
@@ -58,12 +65,16 @@ export function recordAnswer(category, key, isCorrect) {
     entry.memory = Math.max(0, entry.memory - 1);
   }
 
+  entry.best = Math.max(entry.best, entry.memory); // peak AFTER the change
+
   if (!entry.first) entry.first = today;
   entry.last = today;
 
   all[category][key] = entry;
   saveAll(all);
   logActivity(isCorrect);
+  // lets the level-up toast react without importing anything here
+  try { window.dispatchEvent(new CustomEvent('jp-answer', { detail: { category, key, isCorrect } })); } catch (e) { /* no window */ }
   return entry;
 }
 
