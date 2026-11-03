@@ -1,20 +1,5 @@
-import { reactive } from 'vue';
-
 import { speak } from 'tools';
-
-// "Auto" next to Listen: read every new word aloud as soon as it is presented.
-// One setting shared by every practice section (and remembered in this browser).
-const AUTO_KEY = 'auto-listen';
-
-const autoListen = reactive({
-  on: (() => {
-    try {
-      return localStorage.getItem(AUTO_KEY) === 'true';
-    } catch {
-      return false;
-    }
-  })(),
-});
+import { autoListen } from 'data/auto-listen.js';
 
 const sayNow = text => {
   if (!text) return;
@@ -54,13 +39,7 @@ export default {
       if (this.speechText) speak(this.speechText);
     },
     toggleAuto() {
-      autoListen.on = !autoListen.on;
-      try {
-        localStorage.setItem(AUTO_KEY, String(autoListen.on));
-      } catch {
-        // ignore privacy-mode errors
-      }
-      if (autoListen.on) sayNow(this.speechText); // immediate feedback
+      if (autoListen.toggle()) sayNow(this.speechText); // immediate feedback
     },
   },
   template: /*html*/`

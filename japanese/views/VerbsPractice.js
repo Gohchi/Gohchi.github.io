@@ -20,8 +20,9 @@ import {
 } from 'data/progress.js';
 
 import { furiganaStore } from 'store';
+import { autoListen } from 'data/auto-listen.js';
 
-import { shuffle, alignFurigana } from 'tools';
+import { shuffle, alignFurigana, speak } from 'tools';
 
 const HISTORY_LIMIT = 50;
 // verbs have no free-form tags: the conjugation group acts as the tag in the pool menu
@@ -255,7 +256,14 @@ export default {
         this.verbStreak++;
         this.verbStatus = 'Correct! ' + this.formattedAnswer();
         this.verbStatusClass = 'status ok';
-        setTimeout(() => this.newVerbTarget(), 700);
+
+        // Auto listen: say the right answer (the hiragana reading is the safest for the voice),
+        // and leave it time to finish before the next verb is presented (and read) itself
+        if (autoListen.on) {
+          window.speechSynthesis?.cancel();
+          speak(this.verbAnswerKana);
+        }
+        setTimeout(() => this.newVerbTarget(), autoListen.on ? 1600 : 700);
       } else {
         this.verbStreak = 0;
         this.verbStatus = 'Not quite, try another one.';
