@@ -1385,9 +1385,16 @@ body {
       margin-left: auto; /* stays on the right even when Listen is hidden */
     }
 
+    .listen-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .JLPT-level,
     .jisho-link,
-    .listen-link {
+    .listen-link,
+    .auto-listen {
       box-sizing: border-box;
       display: inline-flex;
       align-items: center;
@@ -1444,6 +1451,20 @@ body {
       background: var(--color-chopsticks);
       box-shadow: 0 2px hsl(from var(--color-chopsticks) h s 20%);
       cursor: pointer;
+    }
+
+    /* toggle: outlined when off, salmon when on */
+    .auto-listen {
+      color: inherit;
+      background: light-dark(#ffffffaa, #ffffff22);
+      outline: 1px solid light-dark(#9a9a9a, #5a5a5a);
+      cursor: pointer;
+
+      &.on {
+        background: var(--color-salmon);
+        color: white;
+        outline-color: var(--color-salmon);
+      }
     }
   }
 
