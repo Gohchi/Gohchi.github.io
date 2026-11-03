@@ -371,6 +371,24 @@ export const topics = [
   },
   {
     type: 'list',
+    title: 'Slang',
+    subtitle: 'A list of common slang words in Japanese.',
+    items: [
+      {
+        kanji: 'やばい',
+        kana: 'やばい',
+        meaning: 'dangerous, risky, or awesome',
+      },
+      {
+        kanji: '教えて君',
+        kana: 'おしえてくん',
+        meaning: 'a person who constantly asks for help or information',
+        notes: 'This term is often used in online communities to describe someone who frequently asks questions without trying to find answers on their own.'
+      }
+    ],
+  },
+  {
+    type: 'list',
     title: 'Days of week',
     subtitle: 'A list of the days of the week.',
     items: [
