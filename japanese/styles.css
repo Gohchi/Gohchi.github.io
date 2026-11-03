@@ -1416,7 +1416,7 @@ body {
       width: 3.5rem;
       padding: 0;
       outline: 1px solid;
-      box-shadow: 0 2px color(srgb 0.33 0.33 0.33);
+      box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);
 
       &.level-N5 {
         background-color: var(--color-level-N5);
@@ -1438,7 +1438,7 @@ body {
     .listen-link {
       background: var(--color-salmon);
       color: white;
-      box-shadow: 0 2px hsl(from var(--color-salmon) h s 20%);
+      box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);
       cursor: pointer;
 
       &:active {
@@ -1449,7 +1449,7 @@ body {
 
     .jisho-link {
       background: var(--color-chopsticks);
-      box-shadow: 0 2px hsl(from var(--color-chopsticks) h s 20%);
+      box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);
       cursor: pointer;
     }
 
