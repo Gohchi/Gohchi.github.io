@@ -185,6 +185,8 @@ export const words = {
   'お姉さん': { reading: 'おねえさん', JLPT_level: 'N5', eng: ['older sister'] },
   '分': { reading: 'ふん', JLPT_level: 'N5', eng: ['minute', 'part'] },
   '分かり': { reading: 'わかり', JLPT_level: 'N5', eng: ['to understand'] },
+  '話せ': { reading: 'はなせ', JLPT_level: 'N5', eng: ['to speak'] },
+  '来て': { reading: 'きて', JLPT_level: 'N5', eng: ['to come'] },
 
   // okurigana examples: the reading of 食 here is た (not the whole たべる)
   '食べる': { reading: 'たべる', JLPT_level: 'N5', eng: ['to eat'] },
