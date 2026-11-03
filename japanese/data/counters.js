@@ -118,6 +118,8 @@ export const COUNTERS = {
   '日間': { gloss: 'days', fn: n => (n === 1 ? 'いちにちかん' : dayReading(n) + 'かん') },
   '週間': { gloss: 'weeks', ...hatsuCounter('しゅうかん') },
   '時間': { gloss: 'hours', fn: n => numberReading(n, { yo: true, shichi: true, ku: true }) + 'じかん' },
+  '年間': { gloss: 'years', fn: n => numberReading(n, { yo: true, shichi: true, ku: true }) + 'ねんかん' },
+  '分間': { gloss: 'minutes', fn: n => COUNTERS['分'].fn(n) + 'かん' },
   '年': { gloss: 'years', fn: n => numberReading(n, { yo: true, shichi: true, ku: true }) + 'ねん' },
   '月': { gloss: 'months', fn: n => numberReading(n, { shi: true, shichi: true, ku: true }) + 'がつ' },
   '時': { gloss: "o'clock", fn: n => numberReading(n, { yo: true, shichi: true, ku: true }) + 'じ' },
