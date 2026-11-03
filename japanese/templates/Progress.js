@@ -152,15 +152,35 @@ export default /*html*/`
         </div>
       </section>
 
-      <section class="progress-heatmap">
-        <h2>Last {{ heatmap.length }} days</h2>
-        <div class="heatmap-grid">
-          <span
-            v-for="day in heatmap" :key="day.date"
-            class="heatmap-cell"
-            :class="'level-' + day.level"
-            :title="day.date + ': ' + day.answers + ' answers'"
-          ></span>
+      <section class="progress-heatmap progress-calendar">
+        <h2>Last 3 months</h2>
+
+        <div class="calendar-months">
+          <article v-for="month in calendar" :key="month.key" class="calendar-month">
+            <div class="calendar-month-head">
+              <h3>{{ month.jp }} <small>{{ month.title }}</small></h3>
+              <span class="xp-caption">{{ month.activeDays }} {{ month.activeDays === 1 ? 'day' : 'days' }} · {{ month.answers }} answers</span>
+            </div>
+
+            <div class="calendar-grid">
+              <span
+                v-for="(name, i) in WEEKDAYS" :key="name"
+                class="calendar-weekday"
+                :class="{ weekend: i === 0 || i === 6 }"
+                :title="WEEKDAY_NAMES[i]"
+              >{{ name }}</span>
+
+              <template v-for="(cell, i) in month.cells" :key="i">
+                <span v-if="!cell" class="calendar-blank"></span>
+                <span
+                  v-else
+                  class="heatmap-cell calendar-day"
+                  :class="['level-' + cell.level, { today: cell.today, future: cell.future }]"
+                  :title="cell.date + ': ' + cell.answers + ' answers'"
+                ><span class="day-number">{{ cell.day }}</span></span>
+              </template>
+            </div>
+          </article>
         </div>
       </section>
 
