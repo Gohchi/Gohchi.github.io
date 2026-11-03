@@ -1,4 +1,5 @@
 import MainHeader from 'components/MainHeader.js';
+import KanjiWithRuby from 'components/KanjiWithRuby.js';
 import template from 'templates/Profile.js';
 
 import { profileStore } from 'store';
@@ -11,18 +12,25 @@ import {
   DAILY_GOAL_MAX,
 } from 'data/profile.js';
 import { dateKey, getActivity, getStreak } from 'data/progress.js';
+import { kanjiFavorites } from 'data/kanji-favorites.js';
+import { ruby } from 'data/kanji.js';
+import { words } from 'data/words.js';
+import { meaningOf } from 'data/kanji-translations.js';
+import { tokenize } from 'tools';
 
 const EDITABLE = ['displayName', 'avatar', 'targetLevel', 'dailyGoal', 'translationLang'];
 
 export default {
   components: {
     MainHeader,
+    KanjiWithRuby,
   },
   data() {
     const activity = getActivity();
 
     return {
       profileStore,
+      kanjiFavorites,
       AVATARS,
       TARGET_LEVELS,
       TRANSLATION_LANGS,
@@ -40,6 +48,20 @@ export default {
     };
   },
   computed: {
+    // favorite words with their dictionary entry (the tokenizer also resolves 4人 style words)
+    favoriteKanji() {
+      return kanjiFavorites.list.map(word => {
+        const token = tokenize(word, { ruby, words }).find(item => item.entry && item.surface === word);
+        const entry = token?.entry;
+        const meaning = entry?.eng?.length ? entry.eng : meaningOf(word) || [];
+        return {
+          word,
+          entry,
+          reading: entry?.reading ?? entry?.furigana ?? '',
+          meaning: meaning.slice(0, 2).join(', '),
+        };
+      });
+    },
     dirty() {
       const saved = profileStore.profile;
       return EDITABLE.some(key => this.form[key] !== saved[key]);

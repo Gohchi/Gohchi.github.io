@@ -82,6 +82,7 @@ const DOCS = {
     },
   },
   favorites: { key: 'jp-common-phrases-favorites', replace: true, merge: union },
+  kanjiFavorites: { key: 'jp-kanji-favorites', replace: true, merge: union },
   roadmap: { key: 'jp-roadmap-progress', replace: true, merge: union },
 };
 
