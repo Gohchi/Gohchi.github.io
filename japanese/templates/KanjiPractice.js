@@ -95,7 +95,7 @@ export default /*html*/`
         </template>
       </div>
 
-      <p class="xp-caption" v-if="lockedCount">🔒 {{ lockedCount }} kanji words are still locked (open the Pool to see what they need).</p>
+      <p class="xp-caption" v-if="lockedCount && lockedPref.on">🔒 {{ lockedCount }} kanji words are still locked (open the Pool to see what they need).</p>
 
       <SessionHistory :entries="sessionHistory" />
     </main>

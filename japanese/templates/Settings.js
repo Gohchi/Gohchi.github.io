@@ -43,6 +43,27 @@ export default /*html*/`
         <p v-else class="voice-empty">Loading voices…</p>
       </section>
 
+      <section class="settings-display">
+        <p class="eyebrow">表示 · Display</p>
+        <h2>Locked words</h2>
+
+        <label class="settings-check">
+          <input
+            type="checkbox"
+            :checked="showLocked.on"
+            @change="showLocked.set($event.target.checked)"
+          />
+          <span>
+            <strong>Show locked kanji and words</strong>
+            <small>
+              Words that still need kana you haven't learned appear grayed out in the Pool menus
+              and in the "locked" notes of the kanji and word practices. Turn it off to see only
+              what you can practice now. Locked words are never part of the practice either way.
+            </small>
+          </span>
+        </label>
+      </section>
+
       <section class="settings-intro">
         <p class="eyebrow">設定 · Settings</p>
         <h1>Practice pools</h1>

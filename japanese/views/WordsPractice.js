@@ -15,6 +15,7 @@ import template from 'templates/WordsPractice.js';
 import wordsData from 'data/words.js';
 import { feedbackMixin } from 'data/feedback.js';
 import { splitWords, markKana } from 'data/progression.js';
+import { showLocked } from 'data/show-locked.js';
 import { shuffle, normalizeReading } from 'tools';
 import {
   MAX_MEMORY,
@@ -44,6 +45,7 @@ export function makeWordsPractice({ script }) {
 
       return {
         script,
+        lockedPref: showLocked, // Settings > Display
         title: `${script.toUpperCase()} WORDS`,
         kanaRoute: `/${script}-practice`,
         inputMode: localStorage.getItem(INPUT_MODE_KEY) || 'type', // 'type' | 'choice'

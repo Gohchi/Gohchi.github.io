@@ -1,5 +1,6 @@
 import MainHeader from 'components/MainHeader.js';
 import { voiceStore } from 'store';
+import { showLocked } from 'data/show-locked.js';
 import { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import template from 'templates/Settings.js';
 
@@ -45,6 +46,7 @@ export default {
   data() {
     return {
       voiceStore,
+      showLocked,
       voicesLoaded: false,
       MAX_MEMORY,
       PAGE_SIZE,

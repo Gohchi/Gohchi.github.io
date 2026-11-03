@@ -11,6 +11,7 @@ import template from 'templates/KanjiPractice.js';
 import wordsData from 'data/words.js';
 import { unlockContext, wordStatus } from 'data/progression.js';
 import { feedbackMixin } from 'data/feedback.js';
+import { showLocked } from 'data/show-locked.js';
 import { shuffle, normalizeReading, pickDistractors } from 'tools';
 import {
   MAX_MEMORY,
@@ -56,6 +57,7 @@ export default {
     return {
       inputMode: this.mode, // 'type' (reading / kanji) | 'choice' (pick the meaning)
       status, // word -> { locked, needs }
+      lockedPref: showLocked, // Settings > Display
       MAX_MEMORY,
       sessionHistory: [],
 

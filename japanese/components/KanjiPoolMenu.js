@@ -5,6 +5,8 @@
 //
 // The list stores EXCLUDED words, so new words added to the data are in the pool by default.
 
+import { showLocked } from 'data/show-locked.js';
+
 export default {
   props: {
     label: {
@@ -30,6 +32,10 @@ export default {
     return { open: false };
   },
   computed: {
+    // locked words are listed (grayed out) unless Settings > Display hides them
+    shownItems() {
+      return showLocked.on ? this.items : this.items.filter(({ locked }) => !locked);
+    },
     excludedSet() {
       return new Set(this.excluded);
     },
@@ -41,10 +47,10 @@ export default {
     },
     // JLPT sections in N5 -> N1 order; words without a level go last. No separators when no word has a level.
     groups() {
-      if (!this.items.some(({ level }) => level)) return [{ level: '', items: this.items }];
+      if (!this.shownItems.some(({ level }) => level)) return [{ level: '', items: this.shownItems }];
       const order = ['N5', 'N4', 'N3', 'N2', 'N1'];
       const byLevel = new Map();
-      this.items.forEach(item => {
+      this.shownItems.forEach(item => {
         const level = item.level || '';
         if (!byLevel.has(level)) byLevel.set(level, []);
         byLevel.get(level).push(item);
@@ -142,12 +148,12 @@ export default {
         @click="open = !open"
       >
         <span>{{ label }}</span>
-        <span class="filter-count">{{ includedCount }}/{{ items.length }}</span>
+        <span class="filter-count">{{ includedCount }}/{{ shownItems.length }}</span>
       </button>
 
       <div v-if="open" class="filter-popover pool-popover" role="group" :aria-label="title || label">
         <div class="filter-popover-actions pool-actions">
-          <span class="pool-summary">{{ includedCount }} of {{ items.length }} selected</span>
+          <span class="pool-summary">{{ includedCount }} of {{ shownItems.length }} selected</span>
           <button type="button" class="filter-link" @click="selectAll">All</button>
           <button type="button" class="filter-link" @click="selectNone">None</button>
           <button type="button" class="filter-link" @click="invert">Invert</button>
@@ -164,7 +170,7 @@ export default {
           >{{ t.tag }} <small>{{ t.on }}/{{ t.words.length }}</small></button>
         </div>
 
-        <div v-if="items.length" class="pool-groups">
+        <div v-if="shownItems.length" class="pool-groups">
           <section v-for="group in groups" :key="group.level" class="pool-group">
             <div v-if="group.level" class="pool-level">{{ group.level }}</div>
             <div class="pool-grid">

@@ -87,7 +87,7 @@ export default /*html*/`
         </template>
       </div>
 
-      <section class="locked-words" v-if="lockedWords.length">
+      <section class="locked-words" v-if="lockedWords.length && lockedPref.on">
         <button type="button" class="progress-toggle" @click="showLocked = !showLocked">
           🔒 {{ lockedWords.length }} locked {{ lockedWords.length === 1 ? 'word' : 'words' }}
           · {{ showLocked ? 'hide' : 'show what they need' }}
