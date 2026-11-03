@@ -333,9 +333,8 @@ const groupOfKanji = ch => ruby[ch]?.tags?.[0] ?? EXTRA;
 const kanjiBest = (all, key) => Math.max(...KANJI_STORES.map(store => bestStage(all[store]?.[key])));
 
 // Group ids that are open: the 70% chain, limited by the hiragana level (kana cap).
-export function availableKanjiGroups(snapshot = getSnapshot(), all = getAllProgress()) {
-  if (snapshot.unlockAll) return [...KANJI_GROUPS];
-
+// How many groups the 70% chain has opened so far (1 = only the first), ignoring the kana cap.
+function kanjiChain(all) {
   let chain = 1;
   while (chain < KANJI_GROUPS.length) {
     const members = TAGGED_KANJI.filter(key => groupOfKanji(key) === KANJI_GROUPS[chain - 1]);
@@ -343,6 +342,13 @@ export function availableKanjiGroups(snapshot = getSnapshot(), all = getAllProgr
     if (!members.length || passed / members.length < GROUP_PASS_SHARE) break;
     chain++;
   }
+  return chain;
+}
+
+export function availableKanjiGroups(snapshot = getSnapshot(), all = getAllProgress()) {
+  if (snapshot.unlockAll) return [...KANJI_GROUPS];
+
+  const chain = kanjiChain(all);
 
   const level = snapshot.categories.hiragana?.level ?? 1;
   const allowed = KANJI_GROUP_CAP.reduce((n, [min, groups]) => (level >= min ? groups : n), 0);
@@ -448,4 +454,157 @@ export function splitWords(words, ctx = unlockContext()) {
     (status.locked ? locked : unlocked).push(status.locked ? { ...entry, needs: status.needs, missing: status.missing } : entry);
   }
   return { unlocked, locked };
+}
+
+
+// ---------------------------------------------------------------------------
+// 7. What is still pending to unlock (summary on the Progress page)
+// ---------------------------------------------------------------------------
+
+// Where to practice each XP category.
+const CATEGORY_ROUTE = {
+  hiragana: '/hiragana-practice',
+  katakana: '/katakana-practice',
+  kanji: '/kanji-meaning',
+  verbs: '/verbs-practice',
+  adjectives: '/adjectives-practice',
+};
+// The section a category is practiced in (if it is closed itself, level it up later)
+const CATEGORY_ENTRY = {
+  hiragana: 'hiragana-practice',
+  katakana: 'katakana-practice',
+  kanji: 'kanji-meaning',
+  verbs: 'verbs-practice',
+  adjectives: 'adjectives-practice',
+};
+
+const TOP_KANA = 8;
+
+// words: entries of data/words.js. Everything comes from ONE read of the progress store.
+//   sections  [{ category, label, have, need, toNext, route, opens: [section label], also: [text] }]
+//             the closest level-ups first: "reach Hiragana Lv 5 and KATAKANA opens"
+//   kanji     { open, total, next: null | { group, kind: 'level' | 'chain', level?, prev?, passed?, members?, needPassed? } }
+//   words     { locked, total, byType: {hiragana, katakana, kanji}, kana: [{ kana, script, opens, blocks }],
+//               groups: [{ group, count }] }
+export function pendingSummary(words = [], ctx = unlockContext()) {
+  const { snapshot, all } = ctx;
+  const levelOf = id => snapshot.categories[id]?.level ?? 1;
+  const leaves = allLeaves();
+  const isOpen = leaf => meets(leaf.requires, snapshot);
+
+  // --- sections still locked ---
+  const practicable = id => {
+    const entry = leaves.find(leaf => leaf.id === CATEGORY_ENTRY[id]);
+    return !entry || isOpen(entry);
+  };
+
+  const milestones = new Map();
+  for (const leaf of leaves.filter(item => !isOpen(item))) {
+    const gaps = Object.entries(leaf.requires)
+      .filter(([id, need]) => levelOf(id) < need)
+      .map(([id, need]) => ({ id, need, distance: need - levelOf(id) }));
+    if (!gaps.length) continue;
+
+    // practice first the category that can be practiced today, then the closest level
+    const ordered = [...gaps].sort((a, b) => (
+      Number(!practicable(a.id)) - Number(!practicable(b.id)) || a.distance - b.distance
+    ));
+    const [primary, ...rest] = ordered;
+    const key = `${primary.id}:${primary.need}`;
+
+    if (!milestones.has(key)) {
+      const category = snapshot.categories[primary.id];
+      milestones.set(key, {
+        category: primary.id,
+        label: category?.label ?? primary.id,
+        have: category?.level ?? 1,
+        need: primary.need,
+        toNext: category?.toNext ?? 0,
+        route: CATEGORY_ROUTE[primary.id] || '/progress',
+        distance: primary.distance,
+        practicable: practicable(primary.id),
+        opens: [],
+        also: [],
+      });
+    }
+    const milestone = milestones.get(key);
+    const name = leaf.groupLabel && leaf.groupLabel !== leaf.label ? `${leaf.groupLabel} · ${leaf.label}` : leaf.label;
+    milestone.opens.push(name);
+    rest.forEach(gap => {
+      const text = `${CATEGORIES[gap.id]?.label ?? gap.id} Lv ${gap.need}`;
+      if (!milestone.also.includes(text)) milestone.also.push(text);
+    });
+  }
+  const sections = [...milestones.values()].sort((a, b) => (
+    Number(!a.practicable) - Number(!b.practicable) || a.distance - b.distance || a.need - b.need
+  ));
+
+  // --- kanji groups ---
+  const open = availableKanjiGroups(snapshot, all);
+  const kanji = { open: open.length, total: KANJI_GROUPS.length, next: null };
+  if (open.length < KANJI_GROUPS.length) {
+    const group = KANJI_GROUPS[open.length];
+    const hiragana = levelOf('hiragana');
+    const allowed = KANJI_GROUP_CAP.reduce((n, [min, groups]) => (hiragana >= min ? groups : n), 0);
+    const chain = kanjiChain(all);
+
+    if (allowed <= open.length) {
+      const cap = KANJI_GROUP_CAP.find(([, groups]) => groups > open.length);
+      kanji.next = { group, kind: 'level', level: cap ? cap[0] : null };
+    } else {
+      const prev = KANJI_GROUPS[chain - 1];
+      const members = TAGGED_KANJI.filter(key => groupOfKanji(key) === prev);
+      const passed = members.filter(key => kanjiBest(all, key) >= GROUP_PASS_STAGE).length;
+      kanji.next = {
+        group,
+        kind: 'chain',
+        prev,
+        passed,
+        members: members.length,
+        needPassed: Math.ceil(members.length * GROUP_PASS_SHARE),
+      };
+    }
+  }
+
+  // --- words ---
+  const byType = { hiragana: 0, katakana: 0, kanji: 0 };
+  const kanaTally = new Map();
+  const groupTally = new Map();
+  let locked = 0;
+
+  for (const item of words) {
+    const status = wordStatus(item, ctx);
+    if (!status.locked) continue;
+    locked++;
+    byType[item.type] = (byType[item.type] || 0) + 1;
+
+    const script = item.type === 'katakana' ? 'katakana' : 'hiragana';
+    for (const kana of status.missing) {
+      const key = `${script}:${kana}`;
+      const entry = kanaTally.get(key) || { kana, script, opens: 0, blocks: 0 };
+      entry.blocks++;
+      if (status.missing.length === 1 && !status.groups.length) entry.opens++;
+      kanaTally.set(key, entry);
+    }
+    for (const group of status.groups) {
+      groupTally.set(group, (groupTally.get(group) || 0) + 1);
+    }
+  }
+
+  return {
+    sections,
+    kanji,
+    words: {
+      locked,
+      total: words.length,
+      byType,
+      // the kana that open the most words by themselves first
+      kana: [...kanaTally.values()]
+        .sort((a, b) => b.opens - a.opens || b.blocks - a.blocks)
+        .slice(0, TOP_KANA),
+      groups: [...groupTally.entries()]
+        .map(([group, count]) => ({ group: group === EXTRA ? 'the rest' : group, count }))
+        .sort((a, b) => b.count - a.count),
+    },
+  };
 }

@@ -9,7 +9,7 @@ import phrases from 'data/phrases.js';
 import roadmap from 'data/roadmap.js';
 import { VERB_FORMS } from 'data/conjugate.js';
 import { getFavorites } from 'data/favorites.js';
-import { getSnapshot, lockedUnits, totalXp } from 'data/progression.js';
+import { getSnapshot, pendingSummary, totalXp } from 'data/progression.js';
 import { getCompleted } from 'data/roadmap-progress.js';
 import {
   MAX_MEMORY,
@@ -83,7 +83,7 @@ function build() {
   return {
     levels: Object.values(snapshot.categories),
     xpTotal: totalXp(snapshot),
-    teasers: lockedUnits(snapshot),
+    pending: pendingSummary(wordsData),
     startedAt: activity.startedAt,
     daysPracticed: Object.keys(activity.days).length,
     streak: getStreak(),
@@ -111,6 +111,11 @@ export default {
     };
   },
   computed: {
+    // something is still closed (sections, kanji groups or words)
+    hasPending() {
+      const { sections, kanji, words } = this.pending;
+      return Boolean(sections.length || kanji.next || words.locked);
+    },
     groups() {
       const groups = [];
       for (const summary of this.summaries) {

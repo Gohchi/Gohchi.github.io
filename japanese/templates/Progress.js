@@ -43,12 +43,85 @@ export default /*html*/`
             <span class="progress-bar-fill" :style="{ width: (xpTotal.cap ? xpTotal.xp / xpTotal.cap * 100 : 0) + '%' }"></span>
           </div>
         </article>
+      </section>
 
-        <article class="progress-card" v-if="teasers.length">
-          <div class="progress-card-header"><h3>Locked</h3></div>
-          <ul class="xp-locked">
-            <li v-for="t in teasers" :key="t.id">🔒 {{ t.label }} unlocks at {{ t.needs }}</li>
+      <section class="progress-group progress-pending" v-if="hasPending">
+        <h2>Pending to unlock</h2>
+        <p class="xp-caption">What is still closed, and what to practice to open it.</p>
+
+        <article class="progress-card" v-if="pending.sections.length">
+          <div class="progress-card-header"><h3>Sections</h3></div>
+          <ul class="pending-list">
+            <li v-for="m in pending.sections" :key="m.category + m.need">
+              <div class="pending-main">
+                <div>
+                  <strong>{{ m.label }} Lv {{ m.need }}</strong>
+                  <span class="xp-caption"> · you are Lv {{ m.have }}<template v-if="m.toNext"> · {{ formatXp(m.toNext) }} XP to Lv {{ m.have + 1 }}</template></span>
+                </div>
+                <div class="pending-chips">
+                  <span class="pending-label">Opens</span>
+                  <span v-for="name in m.opens" :key="name" class="pending-chip">🔒 {{ name }}</span>
+                </div>
+                <div v-if="m.also.length" class="xp-caption">Also needs {{ m.also.join(' + ') }}</div>
+              </div>
+              <router-link :to="m.route" class="step-link">Practice →</router-link>
+            </li>
           </ul>
+        </article>
+
+        <article class="progress-card" v-if="pending.kanji.next || pending.kanji.open">
+          <div class="progress-card-header">
+            <h3>Kanji groups</h3>
+            <span class="xp-caption">{{ pending.kanji.open }} / {{ pending.kanji.total }} open</span>
+          </div>
+          <div class="progress-bar">
+            <span class="progress-bar-fill" :style="{ width: (pending.kanji.open / pending.kanji.total * 100) + '%' }"></span>
+          </div>
+          <template v-if="pending.kanji.next">
+            <p class="pending-text" v-if="pending.kanji.next.kind === 'level'">
+              Next group <strong>#{{ pending.kanji.next.group }}</strong> opens at
+              <strong>Hiragana Lv {{ pending.kanji.next.level }}</strong>.
+            </p>
+            <p class="pending-text" v-else>
+              Next group <strong>#{{ pending.kanji.next.group }}</strong> opens when
+              <strong>{{ pending.kanji.next.needPassed }}</strong> of the
+              {{ pending.kanji.next.members }} kanji in <strong>#{{ pending.kanji.next.prev }}</strong>
+              reach memory stage 3
+              ({{ pending.kanji.next.passed }} so far).
+            </p>
+            <router-link to="/kanji-meaning" class="step-link">Practice kanji →</router-link>
+          </template>
+          <p class="pending-text" v-else>Every kanji group is open.</p>
+        </article>
+
+        <article class="progress-card" v-if="pending.words.locked">
+          <div class="progress-card-header">
+            <h3>Words</h3>
+            <span class="xp-caption">{{ pending.words.locked }} of {{ pending.words.total }} locked</span>
+          </div>
+          <p class="pending-text">
+            <template v-if="pending.words.byType.hiragana">{{ pending.words.byType.hiragana }} hiragana · </template>
+            <template v-if="pending.words.byType.katakana">{{ pending.words.byType.katakana }} katakana · </template>
+            <template v-if="pending.words.byType.kanji">{{ pending.words.byType.kanji }} kanji</template>
+            words are waiting for kana you have not answered yet or for a kanji group.
+          </p>
+
+          <template v-if="pending.words.kana.length">
+            <p class="pending-label">Kana that open the most words</p>
+            <div class="pending-chips">
+              <span v-for="item in pending.words.kana" :key="item.script + item.kana" class="pending-chip kana-chip" :title="item.blocks + ' locked words use it, ' + item.opens + ' only need this one'">
+                <span class="pending-kana">{{ item.kana }}</span>
+                <small>{{ item.opens ? '+' + item.opens + ' now' : item.blocks + ' words' }}</small>
+              </span>
+            </div>
+          </template>
+
+          <template v-if="pending.words.groups.length">
+            <p class="pending-label">Waiting for a kanji group</p>
+            <div class="pending-chips">
+              <span v-for="item in pending.words.groups" :key="item.group" class="pending-chip">#{{ item.group }} <small>{{ item.count }}</small></span>
+            </div>
+          </template>
         </article>
       </section>
 

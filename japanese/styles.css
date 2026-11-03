@@ -641,6 +641,67 @@ body {
   opacity: .8;
 }
 
+.progress-pending {
+  .pending-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .9rem;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+
+  .pending-main {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+
+  .pending-text {
+    margin: .5rem 0 .6rem;
+    font-size: .9rem;
+  }
+
+  .pending-label {
+    margin: .6rem 0 .3rem;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: light-dark(#58635e, #b5bfba);
+  }
+
+  .pending-main .pending-label { margin: 0; }
+
+  .pending-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .35rem;
+  }
+
+  .pending-chip {
+    display: inline-flex;
+    align-items: baseline;
+    gap: .35rem;
+    padding: .15rem .65rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    background: light-dark(#f0f0f0, #2a2a2a);
+
+    small { opacity: .65; font-size: .7rem; }
+
+    &.kana-chip { align-items: center; }
+    .pending-kana { font-family: "Zen Antique Soft", serif; font-size: 1.1rem; }
+  }
+}
+
 .xp-locked {
   list-style: none;
   margin: 0;
