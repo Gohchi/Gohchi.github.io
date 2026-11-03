@@ -9,9 +9,10 @@ const KEY = 'show-locked';
 export const showLocked = reactive({
   on: (() => {
     try {
-      return localStorage.getItem(KEY) !== 'false';
+      const value = localStorage.getItem(KEY);
+      return value === null ? false : value === 'true';
     } catch {
-      return true;
+      return false;
     }
   })(),
 
