@@ -5,6 +5,7 @@ import { closeDialog, showDialog, alignFurigana, speak } from 'tools';
 import { ruby } from 'data/kanji.js';
 import * as translations from 'data/kanji-translations.js';
 import { kanjiFavorites } from 'data/kanji-favorites.js';
+import { claimPopover, releasePopover } from 'data/popovers.js';
 
 const meaningOf = translations.meaningOf ?? translations.meaning ?? (() => []);
 
@@ -87,10 +88,15 @@ export default {
   methods: {
     open() {
       this.opened = true;
+      claimPopover(this.dialogId, () => this.close()); // closes any open menu / filter first
       this.$nextTick(() => showDialog(this.dialogId));
     },
     close() {
       closeDialog(this.dialogId);
+    },
+    // Esc, the × and the backdrop all end up here
+    onClosed() {
+      releasePopover(this.dialogId);
     },
     // only the dark backdrop closes it: the card itself is interactive
     onDialogClick(event) {
@@ -102,6 +108,9 @@ export default {
     listen() {
       speak(this.reading);
     },
+  },
+  beforeUnmount() {
+    releasePopover(this.dialogId);
   },
   template: /*html*/`
     <span class="open-dialog" role="button" tabindex="0" @click="open" @keydown.enter="open" @keydown.space.prevent="open">
@@ -116,6 +125,7 @@ export default {
       :id="dialogId"
       :aria-label="text + ' · ' + reading"
       @click="onDialogClick"
+      @close="onClosed"
     >
       <div v-if="opened" class="kd-card">
         <div class="kd-toolbar">

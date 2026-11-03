@@ -16,6 +16,7 @@ import { DAKUTEN_MAP, HANDAKUTEN_MAP } from 'data/kana-romaji.js';
 import NavMenu from 'components/NavMenu.js';
 import LevelNotifier from 'components/LevelNotifier.js';
 import { notificationStore, timeAgo } from 'data/notifications.js';
+import { claimPopover, releasePopover } from 'data/popovers.js';
 
 
 export default {
@@ -61,10 +62,30 @@ export default {
       newIds: [], // ids that were unread when the list was opened (shown highlighted)
     };
   },
+  watch: {
+    // opening one popover closes the others (filters, kanji dialog...)
+    showMenu(isOpen) {
+      if (isOpen) claimPopover('main-menu', () => { this.showMenu = false; });
+      else releasePopover('main-menu');
+    },
+    showNotifications(isOpen) {
+      if (isOpen) claimPopover('notifications', () => this.closeNotifications());
+      else releasePopover('notifications');
+    },
+  },
+  beforeUnmount() {
+    releasePopover('main-menu');
+    releasePopover('notifications');
+  },
   methods: {
     timeAgo,
     toggleNotifications() {
       if (this.showNotifications) return this.closeNotifications();
+      // nothing to read: the icon is just a shortcut to the profile
+      if (!notificationStore.items.length) {
+        this.showMenu = false;
+        return this.$router.push('/profile');
+      }
       this.showMenu = false;
       this.newIds = notificationStore.items.filter(item => !item.read).map(item => item.id);
       notificationStore.markAllRead();
@@ -170,10 +191,10 @@ export default {
           type="button"
           class="icon-profile"
           :class="{ selected: isActive('/profile') || showNotifications, loading: profileStore.authBusy }"
-          :title="notificationStore.unread ? notificationStore.unread + ' new notifications' : 'Notifications and profile'"
-          aria-label="Notifications and profile"
-          aria-haspopup="true"
-          :aria-expanded="showNotifications"
+          :title="notificationStore.unread ? notificationStore.unread + ' new notifications' : (notificationStore.items.length ? 'Notifications and profile' : 'Profile')"
+          :aria-label="notificationStore.items.length ? 'Notifications and profile' : 'Profile'"
+          :aria-haspopup="notificationStore.items.length ? 'true' : undefined"
+          :aria-expanded="notificationStore.items.length ? showNotifications : undefined"
           @click="toggleNotifications"
         >
           <img v-if="profileStore.user && profileStore.user.photoURL" :src="profileStore.user.photoURL" alt="" />

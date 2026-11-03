@@ -187,13 +187,25 @@ body {
     }
 
     .kd-level {
-      padding: .15rem .6rem;
+      outline: 1px solid;
+      box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      min-width: 2.25rem;
+      height: 2.25rem;
+      padding: 0 .6rem;
+      border: 1px solid var(--kd-border);
       border-radius: 999px;
-      font-size: .7rem;
+      background: var(--kd-chip);
+      line-height: 1;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .1s ease, background-color .1s ease;
+      font-size: .75rem;
       font-weight: 700;
       color: black;
-      outline: 1px solid;
-      box-shadow: 0 2px color(srgb 0.33 0.33 0.33);
 
       &.level-N5 { background-color: var(--color-level-N5); }
       &.level-N4 { background-color: var(--color-level-N4); }
@@ -251,6 +263,7 @@ body {
       color: black;
       border-color: transparent;
       background: var(--color-chopsticks);
+      box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);
     }
 
     .kd-close {

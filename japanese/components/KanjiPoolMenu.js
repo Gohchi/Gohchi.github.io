@@ -6,6 +6,7 @@
 // The list stores EXCLUDED words, so new words added to the data are in the pool by default.
 
 import { showLocked } from 'data/show-locked.js';
+import { claimPopover, releasePopover, newPopoverId } from 'data/popovers.js';
 
 export default {
   props: {
@@ -29,7 +30,14 @@ export default {
   },
   emits: ['update:excluded'],
   data() {
-    return { open: false };
+    return { open: false, popoverId: newPopoverId('pool') };
+  },
+  watch: {
+    // opening one popover closes the others
+    open(isOpen) {
+      if (isOpen) claimPopover(this.popoverId, () => { this.open = false; });
+      else releasePopover(this.popoverId);
+    },
   },
   computed: {
     // locked words are listed (grayed out) unless Settings > Display hides them
@@ -133,6 +141,7 @@ export default {
     document.addEventListener('keydown', this.onKeydown);
   },
   beforeUnmount() {
+    releasePopover(this.popoverId);
     document.removeEventListener('click', this.onOutsideClick, true);
     document.removeEventListener('keydown', this.onKeydown);
   },
