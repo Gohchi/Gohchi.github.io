@@ -29,6 +29,8 @@ const HEATMAP_DAYS = 35;
 const CATEGORIES = [
   { id: 'kana-hiragana', group: 'Kana', label: 'Hiragana characters', route: '/hiragana-practice', total: Object.keys(hiragana).length },
   { id: 'kana-katakana', group: 'Kana', label: 'Katakana characters', route: '/katakana-practice', total: Object.keys(katakana).length },
+  { id: 'kana-hiragana-listen', group: 'Kana', label: 'Hiragana listening', route: '/hiragana-listen', total: Object.keys(hiragana).length },
+  { id: 'kana-katakana-listen', group: 'Kana', label: 'Katakana listening', route: '/katakana-listen', total: Object.keys(katakana).length },
   { id: 'words-hiragana', group: 'Words', label: 'Hiragana words', route: '/hiragana-words', total: wordsData.filter(w => w.type === 'hiragana').length },
   { id: 'words-hiragana-meaning', group: 'Words', label: 'Hiragana words: meaning', route: '/hiragana-words', total: wordsData.filter(w => w.type === 'hiragana').length },
   { id: 'words-katakana', group: 'Words', label: 'Katakana words', route: '/katakana-words', total: wordsData.filter(w => w.type === 'katakana').length },

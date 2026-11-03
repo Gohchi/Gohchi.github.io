@@ -1262,6 +1262,30 @@ body {
     text-align: center;
   }
 
+  /* listening: a big speaker instead of the kana */
+  .listen-prompt {
+    display: block;
+    width: 6.5rem;
+    height: 6.5rem;
+    margin: .75rem auto;
+    padding: 0;
+    border: 3px solid var(--color-salmon);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-salmon) 14%, transparent);
+    font-size: 3rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px hsl(from var(--color-salmon) h s 30%);
+    transition: transform .05s ease, box-shadow .05s ease;
+
+    &:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 hsl(from var(--color-salmon) h s 30%);
+    }
+
+    &:focus-visible { outline: 3px solid var(--color-chopsticks); outline-offset: 3px; }
+  }
+
   .status {
     text-align: center;
     margin: 10px 0;
@@ -1346,6 +1370,10 @@ body {
     margin: 16px 0;
     max-width: 30rem;
     width: 100%;
+
+    &.listen-mode .choice-button {
+      font-size: 2rem;
+    }
   }
 
   .verb-choice-grid {
@@ -1354,7 +1382,7 @@ body {
 
   .choice-button {
     padding: 14px;
-    font-size: 18px;
+    font-size: 1rem;
     border-radius: 10px;
     border: 1px solid #ccc;
     background: #fafafa;

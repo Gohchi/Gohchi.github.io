@@ -1,5 +1,5 @@
-// Shared by /hiragana-practice, /hiragana-keyboard, /katakana-practice and /katakana-keyboard
-// (see views/KanaPractice.js). The route decides the script and whether you pick or type.
+// Shared by /hiragana-practice, /hiragana-keyboard, /hiragana-listen and the katakana ones
+// (see views/KanaPractice.js). The route decides the script and whether you pick, type or listen.
 export default /*html*/`
   <div class="kana-keyboard practice-sections">
     <MainHeader
@@ -10,13 +10,14 @@ export default /*html*/`
       <div class="keyboard-toolbar-buttons">
         <div class="toolbar-group">
           <router-link v-if="siblingTo" :to="siblingTo" class="icon-button" :class="siblingIcon" :title="siblingTitle"></router-link>
+          <div v-if="listen" class="icon-button" :class="{ 'check-icon': mode === 'type', 'keyboard-icon': mode === 'choice' }" :title="mode === 'type' ? 'Options mode (meaning)' : 'Type mode (reading)'" @click="toggleMode()"></div>
         </div>
       </div>
     </MainHeader>
 
     <main>
       <div class="card choice-card" :class="feedbackClass">
-        <WordCorner :word="target" />
+        <WordCorner v-if="!listen" :word="target" />
 
         <InfoIcons
           :streak="streak"
@@ -26,9 +27,11 @@ export default /*html*/`
         />
 
         <div style="text-align:center">
-          {{ mode === 'type' ? 'Type this kana:' : 'Which reading matches?' }}
+          <template v-if="listen">{{ mode === 'type' ? 'Listen and type the kana:' : 'Listen and pick the kana:' }}</template>
+          <template v-else>{{ mode === 'type' ? 'Type this kana:' : 'Which reading matches?' }}</template>
         </div>
-        <div id="prompt" class="prompt">{{ target }}</div>
+        <button v-if="listen" type="button" id="prompt" class="listen-prompt" title="Play the sound again" aria-label="Play the sound again" @click="playTarget">🔊</button>
+        <div v-else id="prompt" class="prompt">{{ target }}</div>
 
         <div class="memory-bar" :title="'Memory: ' + kanaMemory + '/' + MAX_MEMORY">
           <span v-for="n in MAX_MEMORY" :key="n" class="memory-dot" :class="{ filled: n <= kanaMemory }"></span>
@@ -37,12 +40,12 @@ export default /*html*/`
         <div id="status" :class="statusClass">{{ status }}</div>
 
         <template v-if="mode === 'choice'">
-          <div class="choice-grid">
+          <div class="choice-grid" :class="{ 'listen-mode': listen }">
             <button
               v-for="option in kanaOptions" :key="target + option.kana"
               class="choice-button"
               @click="chooseKanaOption(option)"
-            >{{ option.romaji }}</button>
+            >{{ listen ? option.kana : option.romaji }}</button>
           </div>
         </template>
 

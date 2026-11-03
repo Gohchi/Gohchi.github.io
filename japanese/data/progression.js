@@ -133,6 +133,7 @@ export const MENU = [
     children: [
       { id: 'hiragana-practice', to: '/hiragana-practice', label: 'CHARACTERS', primary: true },
       { id: 'hiragana-keyboard', to: '/hiragana-keyboard', label: 'KEYBOARD', requires: { hiragana: 2 } },
+      { id: 'hiragana-listen', to: '/hiragana-listen', label: 'LISTEN', requires: { hiragana: 2 } },
       { id: 'hiragana-words', to: '/hiragana-words', label: 'WORDS', requires: { hiragana: 3 } },
     ],
   },
@@ -141,6 +142,7 @@ export const MENU = [
     children: [
       { id: 'katakana-practice', to: '/katakana-practice', label: 'CHARACTERS', primary: true },
       { id: 'katakana-keyboard', to: '/katakana-keyboard', label: 'KEYBOARD', requires: { katakana: 2 } },
+      { id: 'katakana-listen', to: '/katakana-listen', label: 'LISTEN', requires: { katakana: 2 } },
       { id: 'katakana-words', to: '/katakana-words', label: 'WORDS', requires: { katakana: 3 } },
     ],
   },
