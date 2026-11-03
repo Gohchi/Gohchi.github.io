@@ -1487,7 +1487,7 @@ body {
     }
 
     .JLPT-level {
-      width: 3.5rem;
+      width: 1.7rem;
       padding: 0;
       outline: 1px solid;
       box-shadow: 0 4px hsl(from var(--color-chopsticks) h s 20%);

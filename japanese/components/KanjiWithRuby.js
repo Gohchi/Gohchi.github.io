@@ -129,7 +129,7 @@ export default {
     >
       <div v-if="opened" class="kd-card">
         <div class="kd-toolbar">
-          <span v-if="JLPT_level" class="kd-level" :class="'level-' + JLPT_level">JLPT {{ JLPT_level }}</span>
+          <span v-if="JLPT_level" class="kd-level" :class="'level-' + JLPT_level">{{ JLPT_level }}</span>
 
           <div class="kd-actions">
             <button

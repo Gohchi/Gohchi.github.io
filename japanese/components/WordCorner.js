@@ -63,7 +63,7 @@ export default {
 
       <div class="kanji-corner-info">
         <div v-if="tags.length" class="word-tags"><span v-for="tag in tags" :key="tag" class="word-tag">#{{ tag }}</span></div>
-        <div v-if="level" class="JLPT-level" :class="{ ['level-'+level]: true }">JLPT {{ level }}</div>
+        <div v-if="level" class="JLPT-level" :class="{ ['level-'+level]: true }">{{ level }}</div>
         <a
           v-if="jishoUrl"
           class="jisho-link"
