@@ -391,6 +391,14 @@ export function unlockContext() {
   return { all, snapshot, openGroups: new Set(availableKanjiGroups(snapshot, all)) };
 }
 
+// Readable version of what a locked word needs (Settings table): "Learn kana: し, か · Kanji group #3"
+export function requirementText({ missing = [], groups = [] }) {
+  return [
+    missing.length ? `Learn kana: ${missing.join(', ')}` : '',
+    ...groups.map(group => (group === EXTRA ? 'Open every kanji group first' : `Kanji group #${group}`)),
+  ].filter(Boolean).join(' · ');
+}
+
 // word: an entry of data/words.js ({ word, reading, type: 'hiragana' | 'katakana' | 'kanji' })
 // -> { locked, missing: [kana], groups: [closed #groups], needs: 'text for the dimmed cell' }
 export function wordStatus({ word, reading, type }, ctx = unlockContext()) {

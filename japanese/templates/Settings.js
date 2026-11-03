@@ -7,6 +7,16 @@ export default /*html*/`
     />
 
     <main>
+      <section class="settings-intro">
+        <p class="eyebrow">設定 · Settings</p>
+        <h1>Practice pools</h1>
+        <p class="lead">
+          Choose which words show up in each practice. Changes are saved right away and apply
+          the next time you open that practice. The Pool button inside each practice edits
+          the same lists.
+        </p>
+      </section>
+
       <section class="settings-voice">
         <p class="eyebrow">声 · Voice</p>
         <h2>Reading voice</h2>
@@ -62,16 +72,6 @@ export default /*html*/`
             </small>
           </span>
         </label>
-      </section>
-
-      <section class="settings-intro">
-        <p class="eyebrow">設定 · Settings</p>
-        <h1>Practice pools</h1>
-        <p class="lead">
-          Choose which words show up in each practice. Changes are saved right away and apply
-          the next time you open that practice. The Pool button inside each practice edits
-          the same lists.
-        </p>
       </section>
 
       <section class="settings-pools">
@@ -185,12 +185,14 @@ export default /*html*/`
                 <th>JLPT</th>
                 <th v-if="pool === 'all' || facetOptions.length">{{ pool === 'all' ? 'Pool' : currentPool.facetLabel }}</th>
                 <th>Memory</th>
+                <th>Access</th>
+                <th class="col-requirement">To unlock</th>
               </tr>
             </thead>
             <tbody>
               <tr
                 v-for="row in visibleRows" :key="row.rowKey"
-                :class="{ off: !isOn(row) }"
+                :class="{ off: !isOn(row), locked: row.locked }"
                 :title="row.detail"
                 @click="toggle(row)"
               >
@@ -222,6 +224,13 @@ export default /*html*/`
                     class="memory-dot"
                     :class="{ filled: n <= row.memory }"
                   ></span>
+                </td>
+                <td class="col-access">
+                  <span class="access-pill" :class="row.locked ? 'is-locked' : 'is-open'">{{ row.locked ? '🔒 Locked' : '✓ Open' }}</span>
+                </td>
+                <td class="col-requirement">
+                  <template v-if="row.requirement">{{ row.requirement }}</template>
+                  <span v-else class="muted">—</span>
                 </td>
               </tr>
             </tbody>

@@ -2943,8 +2943,38 @@ body {
     .col-reading,
     .col-level,
     .col-pool,
-    .col-memory {
+    .col-memory,
+    .col-access {
       white-space: nowrap;
+    }
+
+    .col-requirement {
+      min-width: 9rem;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    tbody tr.locked .col-word,
+    tbody tr.locked .col-reading {
+      color: light-dark(#8a8a8a, #777777);
+    }
+
+    .access-pill {
+      display: inline-block;
+      padding: .1rem .55rem;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 700;
+
+      &.is-open {
+        color: light-dark(#1e6b35, #7fd49a);
+        background: color-mix(in srgb, #2e9e4f 16%, transparent);
+      }
+
+      &.is-locked {
+        color: light-dark(#6a6a6a, #a0a0a0);
+        background: light-dark(#e2e2e2, #2a2a2a);
+      }
     }
 
     .col-meaning {

@@ -5,13 +5,15 @@
 // so words added to the data later are in the pool by default.
 //
 // getItems() returns plain rows: { key, word, reading, meaning, level, facet, facetShort,
-//   search, memory (0-5), state ('new' | 'learning' | 'mastered'), detail }
+//   search, memory (0-5), state ('new' | 'learning' | 'mastered'), detail,
+//   locked (bool), requirement (what a locked word needs; '' when open) }
 
 import wordsData from 'data/words.js';
 import verbsData from 'data/verbs.js';
 import adjectivesData from 'data/adjectives.js';
 import { VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
 import { MAX_MEMORY, getCategoryEntries } from 'data/progress.js';
+import { unlockContext, wordStatus, requirementText } from 'data/progression.js';
 import { loadSelection, saveSelection } from 'components/FilterMenu.js';
 
 const entriesOf = category => Object.fromEntries(getCategoryEntries(category));
@@ -29,8 +31,10 @@ function memoryOf(parts) {
   return { memory, state, detail };
 }
 
-function makeItem({ key, word, reading, meaning, level, facet = '', facets = [], parts }) {
+function makeItem({ key, word, reading, meaning, level, facet = '', facets = [], parts, locked = false, requirement = '' }) {
   return {
+    locked,
+    requirement,
     key,
     word,
     reading,
@@ -66,16 +70,24 @@ export const POOLS = [
       const byReading = entriesOf('words-kanji');
       const byMeaning = entriesOf('words-kanji-meaning');
 
+      const ctx = unlockContext();
+
       return wordsData
         .filter(({ type }) => type === 'kanji')
-        .map(({ word, reading, meaning, level }) => makeItem({
-          key: word,
-          word,
-          reading,
-          meaning,
-          level,
-          parts: [['reading', byReading[word]], ['meaning', byMeaning[word]]],
-        }));
+        .map(item => {
+          const { word, reading, meaning, level } = item;
+          const status = wordStatus(item, ctx);
+          return makeItem({
+            key: word,
+            word,
+            reading,
+            meaning,
+            level,
+            locked: status.locked,
+            requirement: requirementText(status),
+            parts: [['reading', byReading[word]], ['meaning', byMeaning[word]]],
+          });
+        });
     },
   },
   {

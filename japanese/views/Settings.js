@@ -111,6 +111,7 @@ export default {
 
       return this.rows.filter(row => {
         if (this.pool !== 'all' && row.poolId !== this.pool) return false;
+        if (row.locked && !showLocked.on) return false; // Settings > Display
         if (levels && !levels.includes(row.level)) return false;
         if (this.facet !== 'all' && row.facet !== this.facet) return false;
         if (this.memory !== 'all' && row.state !== this.memory) return false;
