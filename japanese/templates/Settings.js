@@ -17,6 +17,63 @@ export default /*html*/`
         </p>
       </section>
 
+      <section class="settings-voice">
+        <p class="eyebrow">声 · Voice</p>
+        <h2>Reading voice</h2>
+        <p class="lead">
+          The voice behind every Listen button, Auto listen and the kanji dialog.
+          It is saved in this browser. Tap a voice to choose it, ▶ to hear it first.
+        </p>
+
+        <ul v-if="voiceStore.voices.length" class="voice-options">
+          <li v-for="voice in voiceStore.voices" :key="voice.voiceURI" :class="{ on: isSelectedVoice(voice) }">
+            <button
+              type="button"
+              class="voice-option"
+              :aria-pressed="isSelectedVoice(voice)"
+              @click="pickVoice(voice)"
+            >
+              <span class="voice-check" aria-hidden="true">{{ isSelectedVoice(voice) ? '●' : '○' }}</span>
+              <span class="voice-name">{{ voice.name }}</span>
+              <span class="voice-lang">{{ voice.lang }}<template v-if="voice.localService === false"> · online</template></span>
+            </button>
+            <button
+              type="button"
+              class="voice-preview"
+              :title="'Hear ' + voice.name"
+              :aria-label="'Hear ' + voice.name"
+              @click="previewVoice(voice)"
+            >▶</button>
+          </li>
+        </ul>
+        <p v-else-if="voicesLoaded" class="voice-empty">
+          No Japanese voices were found on this device. Install one in your system's language
+          settings (or try another browser) and reload.
+        </p>
+        <p v-else class="voice-empty">Loading voices…</p>
+      </section>
+
+      <section class="settings-display">
+        <p class="eyebrow">表示 · Display</p>
+        <h2>Locked words</h2>
+
+        <label class="settings-check">
+          <input
+            type="checkbox"
+            :checked="showLocked.on"
+            @change="showLocked.set($event.target.checked)"
+          />
+          <span>
+            <strong>Show locked kanji and words</strong>
+            <small>
+              Words that still need kana you haven't learned appear grayed out in the Pool menus
+              and in the "locked" notes of the kanji and word practices. Turn it off to see only
+              what you can practice now. Locked words are never part of the practice either way.
+            </small>
+          </span>
+        </label>
+      </section>
+
       <section class="settings-pools">
         <div class="chip-row" role="tablist" aria-label="Pool">
           <button
@@ -128,12 +185,14 @@ export default /*html*/`
                 <th>JLPT</th>
                 <th v-if="pool === 'all' || facetOptions.length">{{ pool === 'all' ? 'Pool' : currentPool.facetLabel }}</th>
                 <th>Memory</th>
+                <th>Access</th>
+                <th class="col-requirement">To unlock</th>
               </tr>
             </thead>
             <tbody>
               <tr
                 v-for="row in visibleRows" :key="row.rowKey"
-                :class="{ off: !isOn(row) }"
+                :class="{ off: !isOn(row), locked: row.locked }"
                 :title="row.detail"
                 @click="toggle(row)"
               >
@@ -165,6 +224,13 @@ export default /*html*/`
                     class="memory-dot"
                     :class="{ filled: n <= row.memory }"
                   ></span>
+                </td>
+                <td class="col-access">
+                  <span class="access-pill" :class="row.locked ? 'is-locked' : 'is-open'">{{ row.locked ? '🔒 Locked' : '✓ Open' }}</span>
+                </td>
+                <td class="col-requirement">
+                  <template v-if="row.requirement">{{ row.requirement }}</template>
+                  <span v-else class="muted">—</span>
                 </td>
               </tr>
             </tbody>

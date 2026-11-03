@@ -19,6 +19,8 @@ export const saveSelection = (key, value) => {
   }
 };
 
+import { claimPopover, releasePopover, newPopoverId } from 'data/popovers.js';
+
 export default {
   props: {
     label: String,
@@ -34,7 +36,14 @@ export default {
   },
   emits: ['update:modelValue'],
   data() {
-    return { open: false };
+    return { open: false, popoverId: newPopoverId('filter') };
+  },
+  watch: {
+    // opening one popover closes the others
+    open(isOpen) {
+      if (isOpen) claimPopover(this.popoverId, () => { this.open = false; });
+      else releasePopover(this.popoverId);
+    },
   },
   methods: {
     isOn(key) {
@@ -65,6 +74,7 @@ export default {
     document.addEventListener('keydown', this.onKeydown);
   },
   beforeUnmount() {
+    releasePopover(this.popoverId);
     document.removeEventListener('click', this.onOutsideClick, true);
     document.removeEventListener('keydown', this.onKeydown);
   },

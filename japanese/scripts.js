@@ -7,9 +7,11 @@ import Translations from 'views/Translations.js';
 import HiraganaPractice from 'views/HiraganaPractice.js';
 import HiraganaKeyboard from 'views/HiraganaKeyboard.js';
 import HiraganaWords from 'views/HiraganaWords.js';
+import HiraganaListen from 'views/HiraganaListen.js';
 import KatakanaPractice from 'views/KatakanaPractice.js';
 import KatakanaKeyboard from 'views/KatakanaKeyboard.js';
 import KatakanaWords from 'views/KatakanaWords.js';
+import KatakanaListen from 'views/KatakanaListen.js';
 import KanjiPractice from 'views/KanjiPractice.js';
 import VerbsPractice from 'views/VerbsPractice.js';
 import AdjectivesPractice from 'views/AdjectivesPractice.js';
@@ -41,9 +43,11 @@ const routes = [
   // one route per unit, so each can be unlocked on its own (see MENU in data/progression.js)
   { path: '/hiragana-practice', component: HiraganaPractice, name: 'hiragana-practice' },
   { path: '/hiragana-keyboard', component: HiraganaKeyboard, name: 'hiragana-keyboard' },
+  { path: '/hiragana-listen', component: HiraganaListen, name: 'hiragana-listen' },
   { path: '/hiragana-words', component: HiraganaWords, name: 'hiragana-words' },
   { path: '/katakana-practice', component: KatakanaPractice, name: 'katakana-practice' },
   { path: '/katakana-keyboard', component: KatakanaKeyboard, name: 'katakana-keyboard' },
+  { path: '/katakana-listen', component: KatakanaListen, name: 'katakana-listen' },
   { path: '/katakana-words', component: KatakanaWords, name: 'katakana-words' },
   { path: '/kanji-meaning', component: KanjiPractice, name: 'kanji-meaning', props: { mode: 'choice' } },
   { path: '/kanji-reading', component: KanjiPractice, name: 'kanji-reading', props: { mode: 'type' } },

@@ -1,8 +1,12 @@
-// One implementation for the four kana character routes:
+// One implementation for the kana character routes:
 //   /hiragana-practice  makeKanaPractice({ script: 'hiragana', mode: 'choice' })   pick the reading
 //   /hiragana-keyboard  makeKanaPractice({ script: 'hiragana', mode: 'type' })     type the kana
-//   /katakana-practice  and /katakana-keyboard: same with script 'katakana'
+//   /hiragana-listen    makeKanaPractice({ script: 'hiragana', listen: true })     hear the kana, pick it (4 options)
+//                                                                                  or type it; the mode is switched in the page
+//   /katakana-practice, /katakana-keyboard and /katakana-listen: same with script 'katakana'
 // Hiragana (or katakana) choice and typing share the progress category, so XP is never counted twice.
+// Listening has its own category (`kana-<script>-listen`): what you can hear is not what you can read.
+// It keeps its own memory for picking the next kana, and it counts for the daily streak, but not for XP.
 
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
@@ -14,7 +18,7 @@ import template from 'templates/KanaPractice.js';
 import { hiragana, katakana, kanaMap } from 'data/kana-romaji.js';
 import { feedbackMixin } from 'data/feedback.js';
 import { isRouteUnlocked } from 'data/progression.js';
-import { shuffle } from 'tools';
+import { shuffle, speak } from 'tools';
 import {
   MAX_MEMORY,
   getEntry,
@@ -26,9 +30,11 @@ import {
 
 const HISTORY_LIMIT = 50;
 
-export function makeKanaPractice({ script, mode }) {
+const LISTEN_MODE_KEY = 'kana-listen-input-mode';
+
+export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
   const table = script === 'hiragana' ? hiragana : katakana;
-  const category = `kana-${script}`;
+  const category = listen ? `kana-${script}-listen` : `kana-${script}`;
   const Script = script === 'hiragana' ? 'HIRAGANA' : 'KATAKANA';
 
   // the other way to practice the same kana: shown only when that route is unlocked
@@ -39,7 +45,9 @@ export function makeKanaPractice({ script, mode }) {
     components: { MainHeader, SessionHistory, WordCorner, InfoIcons },
     data() {
       return {
-        mode,
+        // listen: 'choice' (pick among 4) or 'type', remembered; the other routes are fixed
+        mode: listen ? (localStorage.getItem(LISTEN_MODE_KEY) === 'type' ? 'type' : 'choice') : mode,
+        listen,
         MAX_MEMORY,
         sessionHistory: [],
 
@@ -49,7 +57,7 @@ export function makeKanaPractice({ script, mode }) {
         score: 0,
         streak: 0,
         last: '-',
-        status: 'Click anywhere and start typing.',
+        status: listen ? 'Press 🔊 to hear the kana.' : 'Click anywhere and start typing.',
         statusClass: 'status',
         inputValue: '',
         progressVersion: 0, // bumped after each save so the memory bar/stats refresh
@@ -57,16 +65,18 @@ export function makeKanaPractice({ script, mode }) {
     },
     computed: {
       title() {
-        return `${Script} ${mode === 'type' ? 'KEYBOARD' : 'CHARACTERS'}`;
+        if (listen) return `${Script} LISTEN`;
+        return `${Script} ${this.mode === 'type' ? 'KEYBOARD' : 'CHARACTERS'}`;
       },
+      // the other way to practice the same kana (listening switches mode in the page instead)
       siblingTo() {
-        return isRouteUnlocked(siblingRoute) ? siblingRoute : '';
+        return !listen && isRouteUnlocked(siblingRoute) ? siblingRoute : '';
       },
       siblingIcon() {
-        return mode === 'type' ? 'check-icon' : 'keyboard-icon';
+        return this.mode === 'type' ? 'check-icon' : 'keyboard-icon';
       },
       siblingTitle() {
-        return mode === 'type' ? 'Options mode' : 'Type mode';
+        return this.mode === 'type' ? 'Options mode' : 'Type mode';
       },
       kanaMemory() {
         this.progressVersion; // reactive dependency
@@ -89,10 +99,31 @@ export function makeKanaPractice({ script, mode }) {
       newTarget() {
         this.target = weightedPick(category, this.KANA, k => k);
         this.kanaOptions = this.buildKanaOptions(this.target);
-        this.status = mode === 'type' ? 'Type the kana shown above.' : 'Pick the reading that matches.';
+        if (listen) {
+          this.status = this.mode === 'type' ? 'Listen and type the kana.' : 'Listen and pick the kana.';
+        } else {
+          this.status = this.mode === 'type' ? 'Type the kana shown above.' : 'Pick the reading that matches.';
+        }
         this.statusClass = 'status';
         this.inputValue = '';
-        if (mode === 'type') this.$nextTick(() => this.focusInput());
+        if (this.mode === 'type') this.$nextTick(() => this.focusInput());
+        if (listen) this.$nextTick(() => this.playTarget());
+      },
+      // listening: say the kana (again)
+      playTarget() {
+        if (!this.target) return;
+        window.speechSynthesis?.cancel();
+        speak(this.target);
+      },
+      // listening: switch between "pick among 4" and "type it"
+      toggleMode() {
+        this.mode = this.mode === 'type' ? 'choice' : 'type';
+        try {
+          localStorage.setItem(LISTEN_MODE_KEY, this.mode);
+        } catch {
+          // ignore privacy-mode errors
+        }
+        this.newTarget();
       },
       resetScore() {
         this.score = 0;
@@ -106,6 +137,7 @@ export function makeKanaPractice({ script, mode }) {
       handleKana(candidate) {
         this.last = candidate;
         const correct = candidate === this.target;
+        const heard = this.target;
         recordAnswer(category, this.target, correct);
         this.flash(correct, correct ? this.streak + 1 : 0);
         this.progressVersion++;
@@ -125,10 +157,15 @@ export function makeKanaPractice({ script, mode }) {
           this.status = 'Correct!';
           this.statusClass = 'status ok';
           this.newTarget();
+          if (listen) { // show what it was while the next one plays
+            this.status = `Correct! ${heard} = ${table[heard]}`;
+            this.statusClass = 'status ok';
+          }
         } else {
           this.streak = 0;
           this.status = `Wrong: "${candidate}"`;
           this.statusClass = 'status bad';
+          if (listen) this.playTarget(); // hear it once more
         }
       },
       onInput(e) {
@@ -144,10 +181,10 @@ export function makeKanaPractice({ script, mode }) {
         this.handleKana(option.kana);
       },
       focusInput() {
-        if (mode === 'type') this.$refs.capture && this.$refs.capture.focus();
+        if (this.mode === 'type') this.$refs.capture && this.$refs.capture.focus();
       },
       onDocumentClick() {
-        if (mode === 'type') this.focusInput();
+        if (this.mode === 'type') this.focusInput();
       },
     },
     mounted() {

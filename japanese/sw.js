@@ -1,4 +1,4 @@
-const CACHE_NAME = 'japanese-store-v1.18';
+const CACHE_NAME = 'japanese-store-v1.19';
 const CACHE_ASSETS = [
   '/common.js',
   '/japanese/',
@@ -72,6 +72,10 @@ const CACHE_ASSETS = [
   '/japanese/data/verbs.js',
   '/japanese/data/words.js',
   '/japanese/data/counters.js',
+  '/japanese/data/kanji-favorites.js',
+  '/japanese/data/auto-listen.js',
+  '/japanese/data/popovers.js',
+  '/japanese/data/show-locked.js',
   '/japanese/templates/AdjectivesPractice.js',
   '/japanese/templates/Admin.js',
   '/japanese/templates/CommonPhrases.js',
@@ -95,12 +99,14 @@ const CACHE_ASSETS = [
   '/japanese/views/Donate.js',
   '/japanese/views/HiraganaPractice.js',
   '/japanese/views/HiraganaKeyboard.js',
+  '/japanese/views/HiraganaListen.js',
   '/japanese/views/HiraganaWords.js',
   '/japanese/views/KanaPractice.js',
   '/japanese/views/Home.js',
   '/japanese/views/KanjiPractice.js',
   '/japanese/views/KatakanaPractice.js',
   '/japanese/views/KatakanaKeyboard.js',
+  '/japanese/views/KatakanaListen.js',
   '/japanese/views/KatakanaWords.js',
   '/japanese/views/WordsPractice.js',
   '/japanese/views/PrintPractice.js',

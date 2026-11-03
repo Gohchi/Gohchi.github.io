@@ -30,6 +30,34 @@ export default /*html*/`
         <router-link to="/progress" class="profile-link">See all progress →</router-link>
       </section>
 
+      <section class="profile-favorites">
+        <div class="profile-favorites-header">
+          <h2>Favorite kanji</h2>
+          <span v-if="favoriteKanji.length">★ {{ favoriteKanji.length }}</span>
+        </div>
+
+        <ul v-if="favoriteKanji.length" class="favorite-kanji-list">
+          <li v-for="item in favoriteKanji" :key="item.word" class="favorite-kanji">
+            <div class="favorite-kanji-word">
+              <KanjiWithRuby v-if="item.entry" :text="item.word" :entry="item.entry" />
+              <span v-else>{{ item.word }}</span>
+            </div>
+            <div class="favorite-kanji-info">
+              <span class="favorite-kanji-reading">{{ item.reading }}</span>
+              <span class="favorite-kanji-meaning">{{ item.meaning }}</span>
+            </div>
+            <button
+              type="button"
+              class="favorite-kanji-remove"
+              :title="'Remove ' + item.word + ' from favorites'"
+              :aria-label="'Remove ' + item.word + ' from favorites'"
+              @click="kanjiFavorites.remove(item.word)"
+            >&times;</button>
+          </li>
+        </ul>
+        <p v-else class="profile-meta">Tap any kanji, then the ☆ in its dialog, to keep it here.</p>
+      </section>
+
       <section class="profile-form">
         <h2>Edit profile</h2>
 

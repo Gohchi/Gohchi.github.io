@@ -9,7 +9,7 @@ import phrases from 'data/phrases.js';
 import roadmap from 'data/roadmap.js';
 import { VERB_FORMS } from 'data/conjugate.js';
 import { getFavorites } from 'data/favorites.js';
-import { getSnapshot, lockedUnits, totalXp } from 'data/progression.js';
+import { getSnapshot, pendingSummary, totalXp } from 'data/progression.js';
 import { getCompleted } from 'data/roadmap-progress.js';
 import {
   MAX_MEMORY,
@@ -29,6 +29,8 @@ const HEATMAP_DAYS = 35;
 const CATEGORIES = [
   { id: 'kana-hiragana', group: 'Kana', label: 'Hiragana characters', route: '/hiragana-practice', total: Object.keys(hiragana).length },
   { id: 'kana-katakana', group: 'Kana', label: 'Katakana characters', route: '/katakana-practice', total: Object.keys(katakana).length },
+  { id: 'kana-hiragana-listen', group: 'Kana', label: 'Hiragana listening', route: '/hiragana-listen', total: Object.keys(hiragana).length },
+  { id: 'kana-katakana-listen', group: 'Kana', label: 'Katakana listening', route: '/katakana-listen', total: Object.keys(katakana).length },
   { id: 'words-hiragana', group: 'Words', label: 'Hiragana words', route: '/hiragana-words', total: wordsData.filter(w => w.type === 'hiragana').length },
   { id: 'words-hiragana-meaning', group: 'Words', label: 'Hiragana words: meaning', route: '/hiragana-words', total: wordsData.filter(w => w.type === 'hiragana').length },
   { id: 'words-katakana', group: 'Words', label: 'Katakana words', route: '/katakana-words', total: wordsData.filter(w => w.type === 'katakana').length },
@@ -58,14 +60,50 @@ function summarize(category) {
   };
 }
 
-function buildHeatmap(days) {
-  const today = dateKey();
-  const level = answers => (answers >= 60 ? 4 : answers >= 30 ? 3 : answers >= 10 ? 2 : answers >= 1 ? 1 : 0);
+// Sunday first, like Japanese calendars
+const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
+const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const CALENDAR_MONTHS = 3;
 
-  return Array.from({ length: HEATMAP_DAYS }, (_, i) => {
-    const date = addDays(today, i - (HEATMAP_DAYS - 1));
-    const answers = days[date]?.answers || 0;
-    return { date, answers, level: level(answers) };
+const level = answers => (answers >= 60 ? 4 : answers >= 30 ? 3 : answers >= 10 ? 2 : answers >= 1 ? 1 : 0);
+
+// The current month and the two before it, newest first.
+// cells: one per day, `null` pads the first week so every day sits under its weekday.
+function buildCalendar(days) {
+  const todayKey = dateKey();
+  const now = new Date();
+
+  return Array.from({ length: CALENDAR_MONTHS }, (_, back) => {
+    const first = new Date(now.getFullYear(), now.getMonth() - back, 1);
+    const daysInMonth = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+
+    const cells = Array(first.getDay()).fill(null);
+    let activeDays = 0;
+    let answersTotal = 0;
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = dateKey(new Date(first.getFullYear(), first.getMonth(), day));
+      const answers = days[date]?.answers || 0;
+      if (answers) activeDays++;
+      answersTotal += answers;
+      cells.push({
+        date,
+        day,
+        answers,
+        level: level(answers),
+        today: date === todayKey,
+        future: date > todayKey, // keys are YYYY-MM-DD: they sort as dates
+      });
+    }
+
+    return {
+      key: dateKey(first).slice(0, 7),
+      jp: `${first.getMonth() + 1}月`,
+      title: first.toLocaleString('en-US', { month: 'long', year: 'numeric' }),
+      cells,
+      activeDays,
+      answers: answersTotal,
+    };
   });
 }
 
@@ -83,11 +121,11 @@ function build() {
   return {
     levels: Object.values(snapshot.categories),
     xpTotal: totalXp(snapshot),
-    teasers: lockedUnits(snapshot),
+    pending: pendingSummary(wordsData),
     startedAt: activity.startedAt,
     daysPracticed: Object.keys(activity.days).length,
     streak: getStreak(),
-    heatmap: buildHeatmap(activity.days),
+    calendar: buildCalendar(activity.days),
     summaries,
     totalAnswers: totalCorrect + totalWrong,
     totalAccuracy: totalCorrect + totalWrong ? Math.round((totalCorrect / (totalCorrect + totalWrong)) * 100) : null,
@@ -106,11 +144,18 @@ export default {
   data() {
     return {
       MAX_MEMORY,
+      WEEKDAYS,
+      WEEKDAY_NAMES,
       open: {}, // category id -> item list expanded
       ...build(),
     };
   },
   computed: {
+    // something is still closed (sections, kanji groups or words)
+    hasPending() {
+      const { sections, kanji, words } = this.pending;
+      return Boolean(sections.length || kanji.next || words.locked);
+    },
     groups() {
       const groups = [];
       for (const summary of this.summaries) {
