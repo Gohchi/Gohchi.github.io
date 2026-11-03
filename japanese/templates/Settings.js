@@ -7,6 +7,42 @@ export default /*html*/`
     />
 
     <main>
+      <section class="settings-voice">
+        <p class="eyebrow">声 · Voice</p>
+        <h2>Reading voice</h2>
+        <p class="lead">
+          The voice behind every Listen button, Auto listen and the kanji dialog.
+          It is saved in this browser. Tap a voice to choose it, ▶ to hear it first.
+        </p>
+
+        <ul v-if="voiceStore.voices.length" class="voice-options">
+          <li v-for="voice in voiceStore.voices" :key="voice.voiceURI" :class="{ on: isSelectedVoice(voice) }">
+            <button
+              type="button"
+              class="voice-option"
+              :aria-pressed="isSelectedVoice(voice)"
+              @click="pickVoice(voice)"
+            >
+              <span class="voice-check" aria-hidden="true">{{ isSelectedVoice(voice) ? '●' : '○' }}</span>
+              <span class="voice-name">{{ voice.name }}</span>
+              <span class="voice-lang">{{ voice.lang }}<template v-if="voice.localService === false"> · online</template></span>
+            </button>
+            <button
+              type="button"
+              class="voice-preview"
+              :title="'Hear ' + voice.name"
+              :aria-label="'Hear ' + voice.name"
+              @click="previewVoice(voice)"
+            >▶</button>
+          </li>
+        </ul>
+        <p v-else-if="voicesLoaded" class="voice-empty">
+          No Japanese voices were found on this device. Install one in your system's language
+          settings (or try another browser) and reload.
+        </p>
+        <p v-else class="voice-empty">Loading voices…</p>
+      </section>
+
       <section class="settings-intro">
         <p class="eyebrow">設定 · Settings</p>
         <h1>Practice pools</h1>

@@ -67,8 +67,6 @@ export const furiganaStore = reactive({
 });
 
 
-const selectedVoiceURI = localStorage.getItem('voice');
-
 export const voiceStore = reactive({
   "selectedVoice": null,
   "voices": [],
@@ -83,7 +81,9 @@ export const voiceStore = reactive({
   async getVoices() {
     const voices = await getVoices();
     this.voices = voices;
-    this.selectVoice(voices.find(v => v.voiceURI === selectedVoiceURI) || voices[0]);
+    // read the saved choice every time: it can change after the page loaded (Settings, header dialog)
+    const savedURI = localStorage.getItem('voice');
+    this.selectVoice(voices.find(v => v.voiceURI === savedURI) || voices[0]);
     return voices;
   }
 });

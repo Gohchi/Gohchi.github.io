@@ -1,4 +1,5 @@
 import MainHeader from 'components/MainHeader.js';
+import { voiceStore } from 'store';
 import { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import template from 'templates/Settings.js';
 
@@ -43,6 +44,8 @@ export default {
   },
   data() {
     return {
+      voiceStore,
+      voicesLoaded: false,
       MAX_MEMORY,
       PAGE_SIZE,
       levels: LEVELS,
@@ -180,12 +183,36 @@ export default {
       this.memory = 'all';
       this.facet = 'all';
     },
+    isSelectedVoice(voice) {
+      return voiceStore.selectedVoice?.voiceURI === voice.voiceURI;
+    },
+    // plays the sample with `voice` without changing the saved choice
+    previewVoice(voice) {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance('これはテストです');
+      utterance.lang = 'ja-JP';
+      utterance.voice = voice;
+      window.speechSynthesis.speak(utterance);
+    },
+    pickVoice(voice) {
+      voiceStore.selectVoice(voice);
+      this.previewVoice(voice);
+    },
+    async loadVoices() {
+      const fallback = setTimeout(() => { this.voicesLoaded = true; }, 3000); // no voices, no event
+      await voiceStore.getVoices();
+      clearTimeout(fallback);
+      this.voicesLoaded = true;
+    },
+
     // progress may have been merged from the cloud after this view mounted
     refreshRows() {
       this.rows = buildRows();
     },
   },
   mounted() {
+    this.loadVoices();
     window.addEventListener('jp-sync-applied', this.refreshRows);
   },
   beforeUnmount() {
