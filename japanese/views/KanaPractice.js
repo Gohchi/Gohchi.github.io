@@ -192,6 +192,11 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
 
         if (this.index >= this.slots.length) {
           this.finished = true;
+          // the whole word counts once: the streak goes on only when no kana needed a second try
+          this.score++;
+          this.streak = this.mistakes ? 0 : this.streak + 1;
+          this.last = this.word.word;
+          this.flash(!this.mistakes, this.mistakes ? 0 : this.streak);
           this.pushHistory({
             type: 'kana',
             prompt: this.word.word,
@@ -287,7 +292,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         this.last = candidate;
         const heard = this.target;
         recordAnswer(category, this.target, correct);
-        this.flash(correct, correct ? this.streak + 1 : 0);
+        this.flash(correct, correct && !this.wordMode ? this.streak + 1 : 0);
         this.progressVersion++;
 
         // Words mode records the whole word once it is complete (see advanceWord), not every kana
@@ -302,10 +307,11 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
           });
         }
 
+        // Words mode: score and streak count whole words (see advanceWord)
         if (correct) {
+          if (this.wordMode) return this.advanceWord();
           this.score++;
           this.streak++;
-          if (this.wordMode) return this.advanceWord();
           this.status = 'Correct!';
           this.statusClass = 'status ok';
           this.newTarget();
@@ -314,7 +320,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
             this.statusClass = 'status ok';
           }
         } else {
-          this.streak = 0;
+          if (!this.wordMode) this.streak = 0;
           this.status = `Wrong: "${candidate}"`;
           this.statusClass = 'status bad';
           if (this.wordMode) this.markWrong(candidate);

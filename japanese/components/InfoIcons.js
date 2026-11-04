@@ -22,7 +22,7 @@ export default {
       </div>
       <div v-if="last !== undefined" class="last" title="Last answer">
         <div class="icon return-mask"></div>
-        {{ last }}
+        <span class="last-text">{{ last }}</span>
       </div>
       <div class="mastered" title="Mastered">
         <div class="icon mastered-mask"></div>

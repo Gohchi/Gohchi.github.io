@@ -425,6 +425,7 @@ body {
       
     &:hover {
       background-color: white;
+      color: black;
     }
   }
   .kanji-icon {
@@ -523,6 +524,21 @@ body {
       .icon {
         height: 22px;
         width: 22px;
+      }
+
+      /* last answer: written vertically (縦書き) under its icon */
+      &.last {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .last-text {
+          writing-mode: vertical-rl;
+          text-orientation: upright;
+          width: 22px;
+          line-height: 1.1;
+          letter-spacing: .05em;
+          text-align: start;
+        }
       }
 
     }
