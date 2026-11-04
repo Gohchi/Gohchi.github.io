@@ -50,6 +50,8 @@ export default /*html*/`
             :streak="verbStreak"
             :score="verbScore"
             :mastered="verbStats"
+            :memory="verbMemory"
+            :memory-max="MAX_MEMORY"
           />
 
           <div class="verb-meaning">{{ targetVerb.meaning }}</div>
@@ -65,10 +67,6 @@ export default /*html*/`
           </div>
 
           <div class="verb-target-label">{{ formLabel }} · Group {{ targetVerb.group }} · {{ targetVerb.level }}</div>
-
-          <div class="memory-bar" :title="'Memory: ' + verbMemory + '/' + MAX_MEMORY">
-            <span v-for="n in MAX_MEMORY" :key="n" class="memory-dot" :class="{ filled: n <= verbMemory }"></span>
-          </div>
 
           <template v-if="inputMode === 'type'">
             <input

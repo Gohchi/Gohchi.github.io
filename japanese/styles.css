@@ -487,6 +487,25 @@ body {
     left: 6px;
     margin-top: 1rem;
 
+    /* memory of the current item: a small bar under the "mastered" counter */
+    .memory-meter {
+      display: block;
+      width: 3.4rem;
+      height: 5px;
+      margin-top: 3px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: light-dark(#d6d6d6, #333333);
+
+      span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #f5a623, #ffcf5a);
+        transition: width .25s ease;
+      }
+    }
+
     > div {
       display: flex;
       
@@ -903,7 +922,8 @@ body {
 
 .kana-keyboard {
   main {
-    height: calc(100dvh - 6rem);
+    /* a minimum, not a fixed height: with the phone keyboard up the page is short and must scroll */
+    min-height: calc(100dvh - 6rem);
   }
 }
 
@@ -1262,28 +1282,45 @@ body {
     text-align: center;
   }
 
+  /* what was typed so far while a modified kana is still being built */
+  .typed-preview {
+    min-height: 2.2rem;
+    text-align: center;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    letter-spacing: .15em;
+
+    &.empty { opacity: .3; }
+  }
+
+  .typing-hint {
+    text-align: center;
+    font-size: .8rem;
+    color: light-dark(#58635e, #b5bfba);
+  }
+
   /* listening: a big speaker instead of the kana */
   .listen-prompt {
     display: block;
     width: 6.5rem;
     height: 6.5rem;
     margin: .75rem auto;
-    padding: 0;
     border: 3px solid var(--color-salmon);
     border-radius: 50%;
     background: color-mix(in srgb, var(--color-salmon) 14%, transparent);
     font-size: 3rem;
-    line-height: 1;
+    line-height: 6.5rem;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  /* listening: the whole card replays the sound (buttons keep their own action) */
+  .listen-card {
     cursor: pointer;
-    box-shadow: 0 4px hsl(from var(--color-salmon) h s 30%);
-    transition: transform .05s ease, box-shadow .05s ease;
+    -webkit-tap-highlight-color: transparent;
 
-    &:active {
-      transform: translateY(4px);
-      box-shadow: 0 0 hsl(from var(--color-salmon) h s 30%);
-    }
-
-    &:focus-visible { outline: 3px solid var(--color-chopsticks); outline-offset: 3px; }
+    & button, & input, & a { cursor: pointer; }
+    &:active .listen-prompt { transform: scale(.95); }
   }
 
   .status {
@@ -1295,13 +1332,60 @@ body {
   .ok { color: #0a7; font-weight: 600; }
   .bad { color: #c33; font-weight: 600; }
 
+  /* Next / Reset / Check / Focus ...: one slim line of small buttons */
   .row {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 6px;
     flex-wrap: wrap;
-    margin-top: 16px;
+    margin-top: 8px;
+
+    button {
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      box-shadow: 0 2px hsl(from var(--color-chopsticks) h s 20%);
+    }
   }
+
+  /* fixed action bar at the bottom: Next / Reset / Check / Focus */
+  .practice-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    background-color: var(--color-footer);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, .15);
+
+    .row {
+      margin-top: 0;
+      gap: 8px;
+      width: calc(100% - 12px);
+
+      button {
+        min-width: 4.5rem;
+        padding: 7px 14px;
+        border: none;
+        border-radius: 8px;
+        background: var(--color-chopsticks);
+        color: black;
+        font-size: 13px;
+        cursor: pointer;
+        box-shadow: 0 2px hsl(from var(--color-chopsticks) h s 20%);
+        transition: all .05s ease;
+
+        &:active {
+          transform: translateY(2px);
+          box-shadow: 0 0 hsl(from var(--color-chopsticks) h s 20%);
+        }
+      }
+    }
+  }
+
+  /* room so the fixed footer never covers the last element */
+  main { padding-bottom: 3.5rem; }
 
   main {
     button {
@@ -4888,4 +4972,46 @@ body header > .title > .keyboard-toolbar-buttons {
 @keyframes heatmap-glow {
   0%, 100% { transform: rotate(45deg); opacity: 1; }
   50%      { transform: rotate(45deg); opacity: .7; }
+}
+
+/* Phone keyboard up (data/keyboard-open.js): the page is about half as tall, so drop the extras
+   and tighten everything instead of squashing it. */
+html.keyboard-open .practice-sections {
+  main {
+    margin-top: 3.6rem;
+    min-height: 0;
+    gap: .25rem;
+  }
+
+  .card { padding: 8px 12px; }
+
+  .prompt {
+    font-size: 44px;
+    line-height: 1.1;
+  }
+
+  .listen-prompt {
+    width: 3.6rem;
+    height: 3.6rem;
+    margin: .2rem auto;
+    font-size: 1.8rem;
+    line-height: 3.6rem;
+  }
+
+  .typed-preview {
+    min-height: 1.5rem;
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+  }
+
+  .status { margin: 2px 0; min-height: 1.2em; font-size: .85rem; }
+  .row { margin-top: 4px; }
+  .choice-grid { margin: 6px 0; gap: 6px; }
+  .choice-button { padding: 8px; }
+
+  /* nice to have, not while typing */
+  .typing-hint,
+  .session-history,
+  .verb-target-label,
+  .memory-stats { display: none; }
 }

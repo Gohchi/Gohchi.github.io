@@ -29,6 +29,8 @@ export default /*html*/`
             :streak="wordStreak"
             :score="wordScore"
             :mastered="wordStats"
+            :memory="wordMemory"
+            :memory-max="MAX_MEMORY"
           />
 
           <!-- the meaning is the answer in choice mode, so it is hidden there -->
@@ -36,10 +38,6 @@ export default /*html*/`
           <div class="prompt" :style="wordPromptStyle">{{ targetWord.word }}</div>
           <div class="verb-target-label">
             {{ inputMode === 'choice' ? 'Pick the meaning' : 'Write the reading in hiragana' }}
-          </div>
-
-          <div class="memory-bar" :title="'Memory: ' + wordMemory + '/' + MAX_MEMORY">
-            <span v-for="n in MAX_MEMORY" :key="n" class="memory-dot" :class="{ filled: n <= wordMemory }"></span>
           </div>
 
           <template v-if="inputMode === 'type'">

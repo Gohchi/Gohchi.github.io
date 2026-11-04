@@ -398,6 +398,7 @@
 
 .practice-sections .choice-card .info-icons > div {
   pointer-events: auto;       /* keeps the title tooltips */
+  width: 3.4rem;
 }
 
 /* streak, score and last answer stay on the left; mastered goes to the right */
