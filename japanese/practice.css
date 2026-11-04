@@ -382,7 +382,7 @@
   .practice-sections main { padding: 0 .6rem 2rem; }
   .practice-sections .choice-card { padding: 3.25rem .9rem 1rem; border-radius: 14px; }
   .practice-sections .row { gap: 8px; }
-  .practice-sections .row button { flex: 1 1 40%; }
+  .practice-sections .row button { flex: 1 }
 }
 
 /* ---------- info icons: left column, "mastered" on the right ---------- */
