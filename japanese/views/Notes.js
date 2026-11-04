@@ -340,9 +340,8 @@ export default {
         renameFolder(this.currentFolder.id, this.folderName);
         moveFolder(this.currentFolder.id, this.folderParent);
       } else {
-        // created inside the folder being shown, and opened
-        const folder = addFolder(this.folderName, this.activeFolderId);
-        if (folder) this.folderId = folder.id;
+        // created inside the folder being shown; you stay in that folder
+        addFolder(this.folderName, this.activeFolderId);
       }
       this.closeFolderForm();
     },
