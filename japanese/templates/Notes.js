@@ -270,6 +270,19 @@ export default /*html*/`
 
         <!-- tree view -->
         <ul v-else-if="viewMode === 'tree'" class="note-tree">
+          <!-- the top level: drop a note or folder here to take it out of its folder -->
+          <li
+            class="tree-row root"
+            :class="dropClass('crumb', null)"
+            :title="dragging ? 'Drop here to move it to the top level' : 'Top level'"
+            @dragover="onDragOver($event, 'crumb', null)"
+            @dragleave="onDragLeave($event, 'crumb', null)"
+            @drop="onDrop($event, 'crumb', null)"
+          >
+            <span class="tree-toggle" aria-hidden="true"></span>
+            <span class="tree-name">Root</span>
+            <span class="tree-meta">{{ dragging ? 'drop here for the top level' : '' }}</span>
+          </li>
           <li
             v-for="row in treeRows" :key="row.kind + row.id"
             class="tree-row"

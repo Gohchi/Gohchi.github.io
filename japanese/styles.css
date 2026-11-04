@@ -5231,6 +5231,14 @@ html.keyboard-open .practice-sections {
 
     &.folder { font-weight: 600; }
 
+    &.root {
+      cursor: default;
+      color: var(--muted);
+      font-weight: 600;
+
+      &:hover { background: none; }
+    }
+
     &.drop-into {
       outline: 2px dashed var(--color-salmon);
       outline-offset: -2px;
