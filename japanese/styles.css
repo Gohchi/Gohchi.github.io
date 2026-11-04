@@ -5211,6 +5211,17 @@ html.keyboard-open .practice-sections {
   .note-excerpt { overflow-wrap: anywhere; line-height: 1.9; }
 
   /* ---------- detail ---------- */
+  /* the kanji dialog sits inside the title / body, so it would inherit their big text */
+  dialog.kanji-dialog {
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.5;
+    white-space: normal;
+    overflow-wrap: normal;
+    letter-spacing: normal;
+  }
+
   .note-dates { margin: .2rem 0 0; font-size: .8rem; color: var(--muted); }
 
   .note-body {

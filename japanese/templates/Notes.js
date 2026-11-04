@@ -317,11 +317,11 @@ export default /*html*/`
             </div>
 
             <h1 class="topic-title note-title" :class="{ untitled: currentMeta.untitled }">
-              <PhraseToRuby zoom :text="currentMeta.title"></PhraseToRuby>
+              <PhraseToRuby :text="currentMeta.title"></PhraseToRuby>
             </h1>
 
             <p class="note-dates">
-              <PhraseToRuby zoom :text="'作成'"></PhraseToRuby> {{ currentMeta.dateTime }}<template v-if="currentMeta.edited"> · <PhraseToRuby zoom :text="'編集'"></PhraseToRuby> {{ currentMeta.edited }}</template>
+              <PhraseToRuby :text="'作成'"></PhraseToRuby> {{ currentMeta.dateTime }}<template v-if="currentMeta.edited"> · <PhraseToRuby :text="'編集'"></PhraseToRuby> {{ currentMeta.edited }}</template>
             </p>
 
             <div v-if="currentMeta.tags.length" class="tag-list">
@@ -342,7 +342,7 @@ export default /*html*/`
 
           <section class="topic-section">
             <p v-if="currentNote.content" class="note-body">
-              <PhraseToRuby zoom :text="currentNote.content"></PhraseToRuby>
+              <PhraseToRuby :text="currentNote.content"></PhraseToRuby>
             </p>
             <p v-else class="note-body empty">This note has no content yet.</p>
           </section>
