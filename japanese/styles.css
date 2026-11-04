@@ -489,6 +489,9 @@ body {
 
     /* memory of the current item: a small bar under the "mastered" counter */
     .memory-meter {
+      position: absolute;
+      top: 3.75rem;
+      right: .5rem;
       display: block;
       width: 3.4rem;
       height: 5px;
