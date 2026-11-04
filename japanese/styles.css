@@ -3686,10 +3686,20 @@ body {
     margin-bottom: 2rem;
   }
 
+  /* three months fit the width; older ones are to the left (scroll sideways), the newest is the last */
   .calendar-months {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 1.25rem;
+    --calendar-gap: 1.25rem;
+    display: flex;
+    gap: var(--calendar-gap);
+    overflow-x: auto;
+    padding: .1rem;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+
+    .calendar-month {
+      flex: 0 0 max(15rem, calc((100% - 2 * var(--calendar-gap)) / 3));
+      scroll-snap-align: end;
+    }
   }
 
   .calendar-month-head {
@@ -3739,6 +3749,7 @@ body {
       .day-number { color: var(--color-salmon); }
     }
 
+    &.past,
     &.future { opacity: .35; }
   }
 
