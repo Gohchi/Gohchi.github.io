@@ -66,18 +66,22 @@ function summarize(category) {
 // Sunday first, like Japanese calendars
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
 const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const CALENDAR_MONTHS = 3;
 
 const level = answers => (answers >= 60 ? 4 : answers >= 30 ? 3 : answers >= 10 ? 2 : answers >= 1 ? 1 : 0);
 
-// The current month and the two before it, newest first.
+// Every month since the first practice (at least the current one), oldest first: the newest is the last.
 // cells: one per day, `null` pads the first week so every day sits under its weekday.
-function buildCalendar(days) {
+function buildCalendar(days, startedAt) {
   const todayKey = dateKey();
   const now = new Date();
 
-  return Array.from({ length: CALENDAR_MONTHS }, (_, back) => {
-    const first = new Date(now.getFullYear(), now.getMonth() - back, 1);
+  // the first month: where the app was first used (or the earliest day recorded, if that is older)
+  const earliest = [startedAt, ...Object.keys(days)].filter(Boolean).sort()[0] || todayKey;
+  const [startYear, startMonth] = earliest.split('-').map(Number);
+  const count = Math.max(1, (now.getFullYear() - startYear) * 12 + now.getMonth() - (startMonth - 1) + 1);
+
+  return Array.from({ length: count }, (_, index) => {
+    const first = new Date(now.getFullYear(), now.getMonth() - (count - 1 - index), 1);
     const daysInMonth = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
 
     const cells = Array(first.getDay()).fill(null);
@@ -96,6 +100,7 @@ function buildCalendar(days) {
         level: level(answers),
         today: date === todayKey,
         future: date > todayKey, // keys are YYYY-MM-DD: they sort as dates
+        past: date < earliest,
       });
     }
 
@@ -128,7 +133,7 @@ function build() {
     startedAt: activity.startedAt,
     daysPracticed: Object.keys(activity.days).length,
     streak: getStreak(),
-    calendar: buildCalendar(activity.days),
+    calendar: buildCalendar(activity.days, activity.startedAt),
     summaries,
     totalAnswers: totalCorrect + totalWrong,
     totalAccuracy: totalCorrect + totalWrong ? Math.round((totalCorrect / (totalCorrect + totalWrong)) * 100) : null,
@@ -172,7 +177,17 @@ export default {
       return groups;
     },
   },
+  mounted() {
+    this.showNewestMonth();
+  },
   methods: {
+    // the calendar scrolls sideways: start at the right end, where the current month is
+    showNewestMonth() {
+      this.$nextTick(() => {
+        const strip = this.$refs.calendarMonths;
+        if (strip) strip.scrollLeft = strip.scrollWidth;
+      });
+    },
     formatXp(n) {
       return Math.round(n).toLocaleString('en-US');
     },
@@ -198,6 +213,7 @@ export default {
       CATEGORIES.forEach(({ id }) => resetProgress(id));
       resetActivity();
       Object.assign(this, build());
+      this.showNewestMonth();
     },
   },
   template,

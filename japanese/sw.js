@@ -1,4 +1,4 @@
-const CACHE_NAME = 'japanese-store-v1.34';
+const CACHE_NAME = 'japanese-store-v1.20';
 const CACHE_ASSETS = [
   '/common.js',
   '/japanese/',
@@ -78,6 +78,7 @@ const CACHE_ASSETS = [
   '/japanese/data/keyboard-open.js',
   '/japanese/data/popovers.js',
   '/japanese/data/show-locked.js',
+  '/japanese/data/romaji-input.js',
   '/japanese/templates/AdjectivesPractice.js',
   '/japanese/templates/Admin.js',
   '/japanese/templates/CommonPhrases.js',

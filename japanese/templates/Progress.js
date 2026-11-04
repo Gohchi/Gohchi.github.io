@@ -153,9 +153,9 @@ export default /*html*/`
       </section>
 
       <section class="progress-heatmap progress-calendar">
-        <h2>Last 3 months</h2>
+        <h2>Calendar</h2>
 
-        <div class="calendar-months">
+        <div class="calendar-months" ref="calendarMonths" tabindex="0" aria-label="Months since you started, newest on the right">
           <article v-for="month in calendar" :key="month.key" class="calendar-month">
             <div class="calendar-month-head">
               <h3>{{ month.jp }} <small>{{ month.title }}</small></h3>
@@ -175,7 +175,7 @@ export default /*html*/`
                 <span
                   v-else
                   class="heatmap-cell calendar-day"
-                  :class="['level-' + cell.level, { today: cell.today, future: cell.future }]"
+                  :class="['level-' + cell.level, { today: cell.today, future: cell.future, past: cell.past }]"
                   :title="cell.date + ': ' + cell.answers + ' answers'"
                 ><span class="day-number">{{ cell.day }}</span></span>
               </template>

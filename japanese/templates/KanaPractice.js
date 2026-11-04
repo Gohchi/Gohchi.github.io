@@ -10,6 +10,7 @@ export default /*html*/`
       <div class="keyboard-toolbar-buttons">
         <div class="toolbar-group">
           <FilterMenu
+            v-if="!wordMode"
             label="Kana"
             title="Which kana to practice: basic, dakuten, handakuten, sokuon, combos"
             :options="groupOptions"
@@ -17,6 +18,7 @@ export default /*html*/`
             @update:modelValue="setGroups"
           />
           <router-link v-if="siblingTo" :to="siblingTo" class="icon-button" :class="siblingIcon" :title="siblingTitle"></router-link>
+          <div v-if="listen" class="icon-button words-toggle" :class="{ on: wordMode }" :title="wordMode ? 'Practicing words: back to single kana' : 'Practice words, kana by kana'" role="button" :aria-pressed="wordMode" @click="toggleUnit()">Words</div>
           <div v-if="listen" class="icon-button" :class="{ 'check-icon': mode === 'type', 'keyboard-icon': mode === 'choice' }" :title="mode === 'type' ? 'Options mode (meaning)' : 'Type mode (reading)'" @click="toggleMode()"></div>
         </div>
       </div>
@@ -36,11 +38,16 @@ export default /*html*/`
         />
 
         <div style="text-align:center">
-          <template v-if="listen">{{ mode === 'type' ? 'Listen and type the kana:' : 'Listen and pick the kana:' }}</template>
+          <template v-if="listen">{{ wordMode ? (mode === 'type' ? 'Listen and type the word:' : 'Listen and pick each kana:') : (mode === 'type' ? 'Listen and type the kana:' : 'Listen and pick the kana:') }}</template>
           <template v-else>{{ mode === 'type' ? 'Type this kana:' : 'Which reading matches?' }}</template>
         </div>
         <div v-if="listen" id="prompt" class="listen-prompt" role="img" aria-label="Tap the card to play the sound again">🔊</div>
         <div v-else id="prompt" class="prompt">{{ target }}</div>
+
+        <!-- Words mode: one slot per kana; each answer paints its slot green (right) or red (wrong) -->
+        <div v-if="wordMode" class="word-slots" aria-live="polite">
+          <span v-for="(slot, i) in slots" :key="i" class="word-slot" :class="[slot.state, { current: i === index && !finished }]">{{ slot.shown || '・' }}</span>
+        </div>
 
         <!-- typing: what the keyboard has typed so far (は → ば → ぱ) and how to get the kana -->
         <div v-if="mode === 'type'" class="typed-preview" :class="{ empty: !pending }" aria-live="polite">{{ pending || '・・・' }}</div>
