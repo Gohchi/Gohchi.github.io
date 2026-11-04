@@ -1,6 +1,7 @@
 /* Practice sections: layout polish + right/wrong feedback.
    Loaded AFTER styles.css. Applies to kana-keyboard, hiragana/katakana/kanji,
-   verbs and adjectives practice (everything inside .practice-sections). */
+   verbs and adjectives practice (everything inside .practice-sections).
+   One nested block: the selectors read as the markup does. */
 
 .practice-sections {
   --fb-ok: #1fb57a;
@@ -10,309 +11,408 @@
   --card-border: light-dark(#e2e2e2, #2a2a2a);
   --card-shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .1);
   --field-border: light-dark(#d4d4d4, #3a3a3a);
-}
 
-/* ---------- layout ---------- */
+  /* ---------- layout ---------- */
 
-.practice-sections main {
-  align-items: center;
-  padding: 0 1rem 2rem;
-}
+  main {
+    align-items: center;
+    padding: 0 1rem 2rem;
+  }
 
-.practice-sections .choice-card {
-  --card-shadow-now: var(--card-shadow);
-  width: 100%;
-  max-width: 36rem;
-  box-sizing: border-box;
-  padding: 3.25rem 1.25rem 1.25rem;
-  border: 2px solid var(--card-border);
-  border-radius: 18px;
-  background: var(--card-bg);
-  box-shadow: var(--card-shadow);
-  overflow: hidden; /* clips the ring animation */
-  transition: border-color .2s ease;
-}
+  .session-history {
+    width: 100%;
+    max-width: 36rem;
+  }
 
-.practice-sections .session-history {
-  width: 100%;
-  max-width: 36rem;
-}
+  .choice-card {
+    --card-shadow-now: var(--card-shadow);
+    width: 100%;
+    max-width: 36rem;
+    box-sizing: border-box;
+    padding: 3.25rem 1.25rem 1.25rem;
+    border: 2px solid var(--card-border);
+    border-radius: 18px;
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+    overflow: hidden; /* clips the ring animation */
+    transition: border-color .2s ease;
 
-.practice-sections .choice-card .prompt {
-  line-height: 1.15;
-  margin: .25rem 0 .5rem;
-  transition: color .2s ease;
-}
+    .prompt {
+      line-height: 1.15;
+      margin: .25rem 0 .5rem;
+      transition: color .2s ease;
+    }
 
-/* ---------- status pill ---------- */
+    /* ---------- status pill ---------- */
 
-.practice-sections .choice-card .status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .4rem;
-  min-height: 2rem;
-  margin: .75rem 0;
-  padding: .25rem .9rem;
-  border-radius: 999px;
-  text-align: center;
-}
+    .status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      min-height: 2rem;
+      margin: .75rem 0;
+      padding: .25rem .9rem;
+      border-radius: 999px;
+      text-align: center;
 
-.practice-sections .choice-card .status.ok {
-  background: color-mix(in srgb, var(--fb-ok) 16%, transparent);
-  animation: fb-pop .35s ease-out;
-}
-.practice-sections .choice-card .status.bad {
-  background: color-mix(in srgb, var(--fb-bad) 14%, transparent);
-  animation: fb-pop .35s ease-out;
-}
-.practice-sections .choice-card .status.ok::before { content: "✓"; }
-.practice-sections .choice-card .status.bad::before { content: "✗"; }
+      &.ok {
+        background: color-mix(in srgb, var(--fb-ok) 16%, transparent);
+        animation: fb-pop .35s ease-out;
 
-/* ---------- choice buttons ---------- */
+        &::before { content: "✓"; }
+      }
+      &.bad {
+        background: color-mix(in srgb, var(--fb-bad) 14%, transparent);
+        animation: fb-pop .35s ease-out;
 
-.practice-sections .choice-grid {
-  counter-reset: choice;
-  width: 100%;
-}
+        &::before { content: "✗"; }
+      }
+    }
 
-.practice-sections .choice-card .choice-button {
-  counter-increment: choice;
-  position: relative;
-  min-height: 3.25rem;
-  padding: .75rem 2rem;
-  border: 2px solid var(--field-border);
-  border-radius: 12px;
-  background: light-dark(#fafafa, #1f1f1f);
-  color: light-dark(#1d1b20, #f2f2f2);
-  box-shadow: 0 3px light-dark(#d0d0d0, #0a0a0a);
-  cursor: pointer;
-  transition: transform .08s ease, box-shadow .08s ease, background-color .15s ease, border-color .15s ease;
-}
+    /* ---------- choice buttons ---------- */
 
-/* 1-4 keyboard hints (hidden on touch screens) */
-.practice-sections .choice-card .choice-button::before {
-  content: counter(choice);
-  position: absolute;
-  left: .65rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: .7rem;
-  font-weight: 700;
-  opacity: .45;
-}
-@media (pointer: coarse) {
-  .practice-sections .choice-card .choice-button::before { display: none; }
-  .practice-sections .choice-card .choice-button { padding: .75rem 1rem; min-height: 3.5rem; }
-}
+    .choice-button {
+      counter-increment: choice;
+      position: relative;
+      min-height: 3.25rem;
+      padding: .75rem 2rem;
+      border: 2px solid var(--field-border);
+      border-radius: 12px;
+      background: light-dark(#fafafa, #1f1f1f);
+      color: light-dark(#1d1b20, #f2f2f2);
+      box-shadow: 0 3px light-dark(#d0d0d0, #0a0a0a);
+      cursor: pointer;
+      transition: transform .08s ease, box-shadow .08s ease, background-color .15s ease, border-color .15s ease;
 
-.practice-sections .choice-card .choice-button:active:not(:disabled) {
-  transform: translateY(3px);
-  box-shadow: 0 0 transparent;
-}
-.practice-sections .choice-card .choice-button:disabled { cursor: default; }
+      /* 1-4 keyboard hints (hidden on touch screens) */
+      &::before {
+        content: counter(choice);
+        position: absolute;
+        left: .65rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: .7rem;
+        font-weight: 700;
+        opacity: .45;
+      }
 
-.practice-sections .choice-card .choice-button.correct {
-  border-color: var(--fb-ok);
-  background: color-mix(in srgb, var(--fb-ok) 22%, transparent);
-  animation: fb-pop .5s ease-out;
-}
-.practice-sections .choice-card .choice-button.wrong {
-  border-color: var(--fb-bad);
-  background: color-mix(in srgb, var(--fb-bad) 14%, transparent);
-  text-decoration: line-through;
-  opacity: .7;
-  animation: fb-shake .4s ease-out;
-}
+      &:active:not(:disabled) {
+        transform: translateY(3px);
+        box-shadow: 0 0 transparent;
+      }
+      &:disabled { cursor: default; }
 
-/* ---------- text input ---------- */
+      &.correct {
+        border-color: var(--fb-ok);
+        background: color-mix(in srgb, var(--fb-ok) 22%, transparent);
+        animation: fb-pop .5s ease-out;
+      }
+      &.wrong {
+        border-color: var(--fb-bad);
+        background: color-mix(in srgb, var(--fb-bad) 14%, transparent);
+        text-decoration: line-through;
+        opacity: .7;
+        animation: fb-shake .4s ease-out;
+      }
 
-.practice-sections .choice-card .type-input {
-  border: 2px solid var(--field-border);
-  border-radius: 12px;
-  background: light-dark(#ffffff, #1c1c1c);
-  color: inherit;
-  transition: border-color .15s ease, box-shadow .15s ease;
-}
-.practice-sections .choice-card .type-input:focus {
-  outline: none;
-  border-color: var(--color-salmon);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-salmon) 25%, transparent);
-}
-.practice-sections .choice-card.feedback-ok .type-input {
-  border-color: var(--fb-ok);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fb-ok) 25%, transparent);
-}
-.practice-sections .choice-card.feedback-bad .type-input {
-  border-color: var(--fb-bad);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fb-bad) 25%, transparent);
-  animation: fb-shake .4s ease-out;
-}
+      @media (pointer: coarse) {
+        padding: .75rem 1rem;
+        min-height: 3.5rem;
 
-/* ---------- action buttons ---------- */
+        &::before { display: none; }
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &:hover:not(:disabled) {
+          border-color: var(--color-salmon);
+          background: light-dark(#fff3f3, #2a1c1c);
+        }
+      }
+    }
 
-.practice-sections .row button {
-  min-width: 5.5rem;
-  min-height: 2.6rem;
-  font-weight: 600;
-}
-.practice-sections .row button:active {
-  transform: translateY(4px);
-  box-shadow: 0 0 transparent;
-}
-.practice-sections .row button:focus-visible,
-.practice-sections .choice-button:focus-visible {
-  outline: 2px solid var(--color-salmon);
-  outline-offset: 2px;
-}
+    /* ---------- text input ---------- */
 
-/* ---------- memory dots ---------- */
+    .type-input {
+      border: 2px solid var(--field-border);
+      border-radius: 12px;
+      background: light-dark(#ffffff, #1c1c1c);
+      color: inherit;
+      transition: border-color .15s ease, box-shadow .15s ease;
 
-.practice-sections .memory-dot {
-  width: 12px;
-  height: 12px;
-  transition: background-color .25s ease, border-color .25s ease, transform .25s ease;
-}
+      &:focus {
+        outline: none;
+        border-color: var(--color-salmon);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-salmon) 25%, transparent);
+      }
+    }
 
-/* ---------- feedback: the ring (shared) ---------- */
+    /* ---------- feedback: the ring (shared) ---------- */
 
-.practice-sections .choice-card::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  width: 8rem;
-  height: 8rem;
-  margin: -4rem 0 0 -4rem;
-  border: 3px solid transparent;
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-}
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      width: 8rem;
+      height: 8rem;
+      margin: -4rem 0 0 -4rem;
+      border: 3px solid transparent;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+    }
 
-/* ---------- feedback: correct ---------- */
+    /* ---------- feedback: correct ---------- */
 
-.practice-sections .choice-card.feedback-ok {
-  border-color: var(--fb-ok);
-  animation: fb-card-ok .7s ease-out;
-}
-.practice-sections .choice-card.feedback-ok::after {
-  border-color: var(--fb-ok);
-  animation: fb-ring .65s ease-out;
-}
-.practice-sections .choice-card.feedback-ok .prompt {
-  color: var(--fb-ok);
-  animation: fb-pop .5s ease-out;
-}
-.practice-sections .choice-card.feedback-ok .info-icons .score .icon,
-.practice-sections .choice-card.feedback-ok .info-icons .streak .icon,
-.practice-sections .choice-card.feedback-ok .info-icons .mastered .icon {
-  animation: fb-bump .5s ease-out;
-}
-.practice-sections .choice-card.feedback-ok .memory-dot.filled {
-  animation: fb-dot .5s ease-out;
-}
-.practice-sections .choice-card.feedback-ok .memory-dot.filled:nth-child(2) { animation-delay: .05s; }
-.practice-sections .choice-card.feedback-ok .memory-dot.filled:nth-child(3) { animation-delay: .1s; }
-.practice-sections .choice-card.feedback-ok .memory-dot.filled:nth-child(4) { animation-delay: .15s; }
-.practice-sections .choice-card.feedback-ok .memory-dot.filled:nth-child(5) { animation-delay: .2s; }
+    &.feedback-ok {
+      border-color: var(--fb-ok);
+      animation: fb-card-ok .7s ease-out;
 
-/* every 5th correct answer in a row */
-.practice-sections .choice-card.feedback-ok.feedback-streak {
-  border-color: var(--fb-gold);
-  animation: fb-card-streak 1s ease-out;
-}
-.practice-sections .choice-card.feedback-ok.feedback-streak::after {
-  border-color: var(--fb-gold);
-  border-width: 6px;
-  animation: fb-ring-big .9s ease-out;
-}
-.practice-sections .choice-card.feedback-ok.feedback-streak .info-icons .streak .icon {
-  animation: fb-spin .8s ease-out;
-}
+      &::after {
+        border-color: var(--fb-ok);
+        animation: fb-ring .65s ease-out;
+      }
+      .prompt {
+        color: var(--fb-ok);
+        animation: fb-pop .5s ease-out;
+      }
+      .type-input {
+        border-color: var(--fb-ok);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--fb-ok) 25%, transparent);
+      }
+      .info-icons {
+        .score .icon,
+        .streak .icon,
+        .mastered .icon { animation: fb-bump .5s ease-out; }
+      }
+      .memory-dot.filled {
+        animation: fb-dot .5s ease-out;
 
-/* ---------- feedback: wrong ---------- */
+        &:nth-child(2) { animation-delay: .05s; }
+        &:nth-child(3) { animation-delay: .1s; }
+        &:nth-child(4) { animation-delay: .15s; }
+        &:nth-child(5) { animation-delay: .2s; }
+      }
 
-.practice-sections .choice-card.feedback-bad {
-  border-color: var(--fb-bad);
-  animation: fb-shake .45s ease-out, fb-card-bad .7s ease-out;
-}
-.practice-sections .choice-card.feedback-bad::after {
-  border-color: var(--fb-bad);
-  animation: fb-ring .5s ease-out;
-}
-.practice-sections .choice-card.feedback-bad .prompt {
-  animation: fb-flash-bad .6s ease-out;
-}
-.practice-sections .choice-card.feedback-bad .info-icons .streak .icon {
-  animation: fb-shake .45s ease-out;
+      /* every 5th correct answer in a row */
+      &.feedback-streak {
+        border-color: var(--fb-gold);
+        animation: fb-card-streak 1s ease-out;
+
+        &::after {
+          border-color: var(--fb-gold);
+          border-width: 6px;
+          animation: fb-ring-big .9s ease-out;
+        }
+        .info-icons .streak .icon { animation: fb-spin .8s ease-out; }
+      }
+    }
+
+    /* ---------- feedback: wrong ---------- */
+
+    &.feedback-bad {
+      border-color: var(--fb-bad);
+      animation: fb-shake .45s ease-out, fb-card-bad .7s ease-out;
+
+      &::after {
+        border-color: var(--fb-bad);
+        animation: fb-ring .5s ease-out;
+      }
+      .prompt { animation: fb-flash-bad .6s ease-out; }
+      .type-input {
+        border-color: var(--fb-bad);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--fb-bad) 25%, transparent);
+        animation: fb-shake .4s ease-out;
+      }
+      .info-icons .streak .icon { animation: fb-shake .45s ease-out; }
+    }
+
+    /* ---------- info icons: left column, "mastered" on the right ---------- */
+
+    /* the icons become an overlay of the whole card, so each one can sit in its own corner */
+    .info-icons {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      padding: 2.25rem 0 0 .5rem; /* below the Listen / JLPT / Jisho row */
+      pointer-events: none;       /* never blocks the buttons underneath */
+
+      > div {
+        pointer-events: auto;     /* keeps the title tooltips */
+        width: 3.4rem;
+      }
+
+      /* streak, score and last answer stay on the left; mastered goes to the right */
+      .mastered {
+        position: absolute;
+        top: 2.25rem;
+        right: .5rem;
+        align-items: center;
+        gap: .15rem;
+        font-size: .8rem;
+      }
+    }
+
+    /* reduced motion: no animation, the colours still tell right from wrong */
+    @media (prefers-reduced-motion: reduce) {
+      &,
+      *,
+      &::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  }
+
+  .choice-grid {
+    counter-reset: choice;
+    width: 100%;
+  }
+
+  /* ---------- action buttons ---------- */
+
+  .row button {
+    min-width: 5.5rem;
+    min-height: 2.6rem;
+    font-weight: 600;
+
+    &:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 transparent;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--color-salmon);
+      outline-offset: 2px;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover { filter: brightness(1.06); }
+    }
+  }
+
+  .choice-button:focus-visible {
+    outline: 2px solid var(--color-salmon);
+    outline-offset: 2px;
+  }
+
+  /* ---------- memory dots ---------- */
+
+  .memory-dot {
+    width: 12px;
+    height: 12px;
+    transition: background-color .25s ease, border-color .25s ease, transform .25s ease;
+  }
+
+  /* ---------- mobile ---------- */
+
+  @media (max-width: 480px) {
+    main { padding: 0 .6rem 2rem; }
+    .choice-card { padding: 3.25rem .9rem 1rem; border-radius: 14px; }
+    .row {
+      gap: 8px;
+
+      button { flex: 1; }
+    }
+  }
+
+  /* ---------- header toolbar on mobile: stays between the title and the icons ---------- */
+
+  @media (max-width: 700px) {
+    header {
+      > .title {
+        gap: .5rem;
+
+        /* the title may shrink and wrap, so the filters get the space */
+        &:has(.keyboard-toolbar-buttons) > div:first-child {
+          flex: 0 1 auto;
+          min-width: 0;
+          max-width: 7rem;
+          font-size: .8rem;
+          line-height: 1.15;
+        }
+
+        /* the toolbar takes what is left (the 8rem on the right is reserved for the profile and menu icons) */
+        > .keyboard-toolbar-buttons {
+          min-width: 0;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          overscroll-behavior-x: contain;
+          scrollbar-width: none;
+          padding: 2px 0 6px; /* room for the hover drop-shadow, which overflow would clip */
+
+          &::-webkit-scrollbar { display: none; }
+        }
+      }
+
+      /* auto margins center the group when it fits and let it scroll from the start when it doesn't */
+      .keyboard-toolbar-buttons .toolbar-group {
+        flex: none;
+        margin-inline: auto;
+      }
+    }
+  }
 }
 
 /* ---------- speech practice ---------- */
 
-.speech-practice .mic-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .6rem;
-  min-width: 11rem;
-  min-height: 3.25rem;
-  margin: .5rem 0;
-  padding: .6rem 1.4rem;
-  border-radius: 999px;
-  background: var(--color-salmon);
-  color: white;
-  font-size: 1rem;
-  font-weight: 700;
-  box-shadow: 0 4px hsl(from var(--color-salmon) h s 20%);
+.speech-practice {
+  .mic-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    min-width: 11rem;
+    min-height: 3.25rem;
+    margin: .5rem 0;
+    padding: .6rem 1.4rem;
+    border-radius: 999px;
+    background: var(--color-salmon);
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 4px hsl(from var(--color-salmon) h s 20%);
+
+    .mic-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+    &:disabled {
+      opacity: .5;
+      cursor: default;
+    }
+    &.listening { animation: mic-pulse 1.2s ease-in-out infinite; }
+  }
+
+  .heard {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: .6rem;
+    min-height: 1.8rem;
+    margin: .25rem 0;
+
+    &.empty .heard-text { opacity: .4; }
+  }
+
+  .heard-label {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    opacity: .6;
+  }
+
+  .heard-text {
+    font-size: 1.25rem;
+    font-family: "Zen Antique Soft", serif;
+  }
 }
 
-.speech-practice .mic-button .mic-icon {
-  font-size: 1.4rem;
-  line-height: 1;
-}
-
-.speech-practice .mic-button:disabled {
-  opacity: .5;
-  cursor: default;
-}
-
-.speech-practice .mic-button.listening {
-  animation: mic-pulse 1.2s ease-in-out infinite;
-}
-
-.speech-practice .heard {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: .6rem;
-  min-height: 1.8rem;
-  margin: .25rem 0;
-}
-
-.speech-practice .heard-label {
-  font-size: .7rem;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  opacity: .6;
-}
-
-.speech-practice .heard-text {
-  font-size: 1.25rem;
-  font-family: "Zen Antique Soft", serif;
-}
-
-.speech-practice .heard.empty .heard-text {
-  opacity: .4;
-}
+/* ---------- keyframes ---------- */
 
 @keyframes mic-pulse {
   0%, 100% { box-shadow: 0 4px hsl(from var(--color-salmon) h s 20%), 0 0 0 0 color-mix(in srgb, var(--color-salmon) 55%, transparent); }
   50% { box-shadow: 0 4px hsl(from var(--color-salmon) h s 20%), 0 0 0 14px transparent; }
 }
-
-/* ---------- keyframes ---------- */
 
 @keyframes fb-pop {
   0% { transform: scale(1); }
@@ -374,94 +474,4 @@
 @keyframes fb-flash-bad {
   0%, 100% { color: inherit; }
   30% { color: var(--fb-bad); }
-}
-
-/* ---------- mobile ---------- */
-
-@media (max-width: 480px) {
-  .practice-sections main { padding: 0 .6rem 2rem; }
-  .practice-sections .choice-card { padding: 3.25rem .9rem 1rem; border-radius: 14px; }
-  .practice-sections .row { gap: 8px; }
-  .practice-sections .row button { flex: 1 }
-}
-
-/* ---------- info icons: left column, "mastered" on the right ---------- */
-
-/* the icons become an overlay of the whole card, so each one can sit in its own corner */
-.practice-sections .choice-card .info-icons {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  padding: 2.25rem 0 0 .5rem; /* below the Listen / JLPT / Jisho row */
-  pointer-events: none;       /* never blocks the buttons underneath */
-}
-
-.practice-sections .choice-card .info-icons > div {
-  pointer-events: auto;       /* keeps the title tooltips */
-  width: 3.4rem;
-}
-
-/* streak, score and last answer stay on the left; mastered goes to the right */
-.practice-sections .choice-card .info-icons .mastered {
-  position: absolute;
-  top: 2.25rem;
-  right: .5rem;
-  align-items: center;
-  gap: .15rem;
-  font-size: .8rem;
-}
-
-/* ---------- header toolbar on mobile: stays between the title and the icons ---------- */
-
-@media (max-width: 700px) {
-  .practice-sections header > .title {
-    gap: .5rem;
-  }
-
-  /* the title may shrink and wrap, so the filters get the space */
-  .practice-sections header > .title:has(.keyboard-toolbar-buttons) > div:first-child {
-    flex: 0 1 auto;
-    min-width: 0;
-    max-width: 7rem;
-    font-size: .8rem;
-    line-height: 1.15;
-  }
-
-  /* the toolbar takes what is left (the 8rem on the right is reserved for the profile and menu icons) */
-  .practice-sections header > .title > .keyboard-toolbar-buttons {
-    min-width: 0;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    padding: 2px 0 6px; /* room for the hover drop-shadow, which overflow would clip */
-  }
-  .practice-sections header > .title > .keyboard-toolbar-buttons::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* auto margins center the group when it fits and let it scroll from the start when it doesn't */
-  .practice-sections header .keyboard-toolbar-buttons .toolbar-group {
-    flex: none;
-    margin-inline: auto;
-  }
-}
-
-/* ---------- reduced motion: no animation, the colours still tell right from wrong ---------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .practice-sections .choice-card,
-  .practice-sections .choice-card *,
-  .practice-sections .choice-card::after {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .practice-sections .choice-card .choice-button:hover:not(:disabled) {
-    border-color: var(--color-salmon);
-    background: light-dark(#fff3f3, #2a1c1c);
-  }
-  .practice-sections .row button:hover { filter: brightness(1.06); }
 }

@@ -112,7 +112,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         return listen && this.unit === 'word';
       },
       hint() {
-        return !listen && this.mode === 'type' && !romajiInput.on ? typingHint(this.target) : '';
+        return !listen && this.mode === 'type' ? typingHint(this.target) : '';
       },
       title() {
         if (listen) return `${Script} LISTEN`;
@@ -319,6 +319,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         let value = input.value;
         let done = final;
         if (romajiInput.on) {
+          const typedLetters = /[a-z]/i.test(value); // qwerty letters; kana typed on a kana keyboard are left alone
           // letters become kana as they are typed; the ones that cannot be a kana yet wait at the end
           value = romajiToKana(value, { final });
           input.value = value;
@@ -345,7 +346,8 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
           }
           if (tail === 'n') value = value.slice(0, -1) + 'ん';
           input.value = value;
-          done = true; // the letters are kana now, nothing is on its way to another one
+          // letters turned into kana are complete (ji is じ). Kana typed directly still go step by step (し -> じ)
+          done = final || typedLetters;
         }
 
         const { verdict, typed } = typedVerdict(value, this.target, {
