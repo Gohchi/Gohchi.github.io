@@ -1,7 +1,7 @@
 import MainHeader from 'components/MainHeader.js';
 import template from 'templates/Progress.js';
 
-import { hiragana, katakana } from 'data/kana-romaji.js';
+import { hiragana, katakana, KANA_GROUPS, kanaTable } from 'data/kana-romaji.js';
 import wordsData from 'data/words.js';
 import verbsData from 'data/verbs.js';
 import adjectivesData from 'data/adjectives.js';
@@ -22,15 +22,18 @@ import {
   resetActivity,
 } from 'data/progress.js';
 
+const ALL_GROUPS = KANA_GROUPS.map(({ key }) => key);
+const allKana = script => Object.keys(kanaTable(script, ALL_GROUPS)).length; // basic + dakuten + sokuon + combos
+
 const HEATMAP_DAYS = 35;
 
 // One row per progress category used by the practice views.
 // `total` = how many items exist (to show "practiced X of Y").
 const CATEGORIES = [
-  { id: 'kana-hiragana', group: 'Kana', label: 'Hiragana characters', route: '/hiragana-practice', total: Object.keys(hiragana).length },
-  { id: 'kana-katakana', group: 'Kana', label: 'Katakana characters', route: '/katakana-practice', total: Object.keys(katakana).length },
-  { id: 'kana-hiragana-listen', group: 'Kana', label: 'Hiragana listening', route: '/hiragana-listen', total: Object.keys(hiragana).length },
-  { id: 'kana-katakana-listen', group: 'Kana', label: 'Katakana listening', route: '/katakana-listen', total: Object.keys(katakana).length },
+  { id: 'kana-hiragana', group: 'Kana', label: 'Hiragana characters', route: '/hiragana-practice', total: allKana('hiragana') },
+  { id: 'kana-katakana', group: 'Kana', label: 'Katakana characters', route: '/katakana-practice', total: allKana('katakana') },
+  { id: 'kana-hiragana-listen', group: 'Kana', label: 'Hiragana listening', route: '/hiragana-listen', total: allKana('hiragana') },
+  { id: 'kana-katakana-listen', group: 'Kana', label: 'Katakana listening', route: '/katakana-listen', total: allKana('katakana') },
   { id: 'words-hiragana', group: 'Words', label: 'Hiragana words', route: '/hiragana-words', total: wordsData.filter(w => w.type === 'hiragana').length },
   { id: 'words-hiragana-meaning', group: 'Words', label: 'Hiragana words: meaning', route: '/hiragana-words', total: wordsData.filter(w => w.type === 'hiragana').length },
   { id: 'words-katakana', group: 'Words', label: 'Katakana words', route: '/katakana-words', total: wordsData.filter(w => w.type === 'katakana').length },

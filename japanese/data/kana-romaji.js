@@ -79,3 +79,72 @@ const BASE_KANA = {};
 for (const [base, voiced] of Object.entries({ ...DAKUTEN_MAP, ...HANDAKUTEN_MAP })) BASE_KANA[voiced] = base;
 for (const [base, voiced] of Object.entries(HANDAKUTEN_MAP)) BASE_KANA[voiced] = base;
 export const baseKana = ch => BASE_KANA[ch] || ch;
+
+
+// ---------------------------------------------------------------------------
+// Extra kana: dakuten, handakuten, sokuon and combos (kana practice, keyboard and listen)
+// ---------------------------------------------------------------------------
+
+// hiragana -> katakana for any kana (が -> ガ, ゃ -> ャ, ゔ -> ヴ); everything else is left as it is
+export const toKatakana = text => [...text].map(ch => {
+  const code = ch.charCodeAt(0);
+  return code >= 0x3041 && code <= 0x3096 ? String.fromCharCode(code + 0x60) : ch;
+}).join('');
+
+// katakana -> hiragana, 1:1 per character
+export const toHiraganaText = text => [...text].map(ch => {
+  const code = ch.charCodeAt(0);
+  return code >= 0x30A1 && code <= 0x30F6 ? String.fromCharCode(code - 0x60) : ch;
+}).join('');
+
+const EXTRA_HIRAGANA = {
+  dakuten: {
+    'が':'ga','ぎ':'gi','ぐ':'gu','げ':'ge','ご':'go',
+    'ざ':'za','じ':'ji','ず':'zu','ぜ':'ze','ぞ':'zo',
+    'だ':'da','ぢ':'ji','づ':'zu','で':'de','ど':'do',
+    'ば':'ba','び':'bi','ぶ':'bu','べ':'be','ぼ':'bo',
+  },
+  handakuten: {
+    'ぱ':'pa','ぴ':'pi','ぷ':'pu','ぺ':'pe','ぽ':'po',
+  },
+  sokuon: {
+    'っ':'small tsu',
+  },
+  combo: {
+    'きゃ':'kya','きゅ':'kyu','きょ':'kyo',
+    'しゃ':'sha','しゅ':'shu','しょ':'sho',
+    'ちゃ':'cha','ちゅ':'chu','ちょ':'cho',
+    'にゃ':'nya','にゅ':'nyu','にょ':'nyo',
+    'ひゃ':'hya','ひゅ':'hyu','ひょ':'hyo',
+    'みゃ':'mya','みゅ':'myu','みょ':'myo',
+    'りゃ':'rya','りゅ':'ryu','りょ':'ryo',
+    'ぎゃ':'gya','ぎゅ':'gyu','ぎょ':'gyo',
+    'じゃ':'ja','じゅ':'ju','じょ':'jo',
+    'びゃ':'bya','びゅ':'byu','びょ':'byo',
+    'ぴゃ':'pya','ぴゅ':'pyu','ぴょ':'pyo',
+  },
+};
+
+// The groups the kana practices can mix in (Basic is what the rest of the app uses)
+export const KANA_GROUPS = [
+  { key: 'basic', label: 'Basic' },
+  { key: 'dakuten', label: 'Dakuten ゛' },
+  { key: 'handakuten', label: 'Handakuten ゜' },
+  { key: 'sokuon', label: 'Sokuon っ' },
+  { key: 'combo', label: 'Combos きゃ' },
+];
+
+// { kana: romaji } for the chosen groups of a script, in a stable order
+export function kanaTable(script, groups = ['basic']) {
+  const katakanaScript = script === 'katakana';
+  const table = {};
+
+  for (const { key } of KANA_GROUPS) {
+    if (!groups.includes(key)) continue;
+    const source = key === 'basic' ? (katakanaScript ? katakana : hiragana) : EXTRA_HIRAGANA[key];
+    for (const [kana, romaji] of Object.entries(source)) {
+      table[key !== 'basic' && katakanaScript ? toKatakana(kana) : kana] = romaji;
+    }
+  }
+  return table;
+}

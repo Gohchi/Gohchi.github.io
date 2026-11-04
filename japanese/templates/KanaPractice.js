@@ -9,6 +9,13 @@ export default /*html*/`
     >
       <div class="keyboard-toolbar-buttons">
         <div class="toolbar-group">
+          <FilterMenu
+            label="Kana"
+            title="Which kana to practice: basic, dakuten, handakuten, sokuon, combos"
+            :options="groupOptions"
+            :modelValue="selectedGroups"
+            @update:modelValue="setGroups"
+          />
           <router-link v-if="siblingTo" :to="siblingTo" class="icon-button" :class="siblingIcon" :title="siblingTitle"></router-link>
           <div v-if="listen" class="icon-button" :class="{ 'check-icon': mode === 'type', 'keyboard-icon': mode === 'choice' }" :title="mode === 'type' ? 'Options mode (meaning)' : 'Type mode (reading)'" @click="toggleMode()"></div>
         </div>
@@ -37,6 +44,10 @@ export default /*html*/`
           <span v-for="n in MAX_MEMORY" :key="n" class="memory-dot" :class="{ filled: n <= kanaMemory }"></span>
         </div>
 
+        <!-- typing: what the keyboard has typed so far (は → ば → ぱ) and how to get the kana -->
+        <div v-if="mode === 'type'" class="typed-preview" :class="{ empty: !pending }" aria-live="polite">{{ pending || '・・・' }}</div>
+        <div v-if="hint" class="typing-hint">{{ hint }}</div>
+
         <div id="status" :class="statusClass">{{ status }}</div>
 
         <template v-if="mode === 'choice'">
@@ -52,13 +63,15 @@ export default /*html*/`
         <div class="row">
           <button @click="newTarget">Next</button>
           <button @click="resetScore">Reset</button>
+          <button v-if="mode === 'type' && pending" @click="submitTyped">Check</button>
           <button v-if="mode === 'type'" @click="focusInput">Focus</button>
         </div>
       </div>
 
       <input
         v-if="mode === 'type'"
-        ref="capture" autocomplete="off" v-model="inputValue" @input="onInput" id="capture"
+        ref="capture" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+        @input="onInput" @keydown.enter.prevent="submitTyped" id="capture"
       />
 
       <SessionHistory :entries="sessionHistory" />

@@ -1262,6 +1262,23 @@ body {
     text-align: center;
   }
 
+  /* what was typed so far while a modified kana is still being built */
+  .typed-preview {
+    min-height: 2.2rem;
+    text-align: center;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    letter-spacing: .15em;
+
+    &.empty { opacity: .3; }
+  }
+
+  .typing-hint {
+    text-align: center;
+    font-size: .8rem;
+    color: light-dark(#58635e, #b5bfba);
+  }
+
   /* listening: a big speaker instead of the kana */
   .listen-prompt {
     display: block;
