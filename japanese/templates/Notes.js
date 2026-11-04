@@ -54,21 +54,22 @@ export default /*html*/`
     <main>
       <!-- ================= LIST ================= -->
       <template v-if="!note">
-        <div class="topic-filters" role="tablist" aria-label="Folders">
-          <button
-            v-for="option in categoryOptions" :key="option.key"
-            type="button"
-            role="tab"
-            class="topic-chip"
-            :class="{ on: category === option.key }"
-            :aria-selected="category === option.key"
-            @click="category = option.key"
-          >
-            {{ option.label }}
-            <span class="count">{{ option.count }}</span>
-          </button>
+        <nav class="folder-path" aria-label="Folder">
+          <template v-for="(crumb, index) in [{ id: null, name: 'All notes' }, ...breadcrumb]" :key="crumb.id ?? 'root'">
+            <span v-if="index" class="crumb-sep" aria-hidden="true">›</span>
+            <button
+              type="button"
+              class="topic-chip crumb"
+              :class="[{ on: index === breadcrumb.length }, dropClass('crumb', crumb.id)]"
+              :title="dragging ? 'Drop here to move it into ' + crumb.name : crumb.name"
+              @click="openFolder(crumb.id)"
+              @dragover="onDragOver($event, 'crumb', crumb.id)"
+              @dragleave="onDragLeave($event, 'crumb', crumb.id)"
+              @drop="onDrop($event, 'crumb', crumb.id)"
+            ><template v-if="index">📁 </template>{{ crumb.name }}</button>
+          </template>
           <button type="button" class="topic-chip add-folder" title="New folder" @click="openFolderForm()">+ Folder</button>
-        </div>
+        </nav>
 
         <form v-if="folderFormOpen" class="folder-form" @submit.prevent="submitFolder()">
           <input
@@ -80,13 +81,22 @@ export default /*html*/`
             aria-label="Folder name"
             @keydown.esc="closeFolderForm()"
           />
+          <label v-if="renamingFolder" class="folder-parent">
+            <span>Inside</span>
+            <select v-model="folderParent" aria-label="Move the folder inside">
+              <option :value="null">All notes</option>
+              <option v-for="option in parentOptions" :key="option.id" :value="option.id" :disabled="currentFolder && option.id === currentFolder.id">{{ option.label }}</option>
+            </select>
+          </label>
           <button type="submit" class="action-pill">{{ renamingFolder ? 'Rename' : 'Create' }}</button>
           <button type="button" class="action-pill" @click="closeFolderForm()">Cancel</button>
         </form>
 
         <div class="topic-summary">
-          <span v-if="activeFilterCount">{{ filteredNotes.length }} / {{ allNotes.length }} notes</span>
-          <span v-else>{{ allNotes.length }} notes</span>
+          <span v-if="isFiltering">{{ filteredNotes.length }} / {{ allNotes.length }} notes</span>
+          <span v-else>
+            <template v-if="visibleFolders.length">{{ visibleFolders.length }} folders · </template>{{ filteredNotes.length }} notes
+          </span>
           <button
             v-if="tagFilter"
             type="button"
@@ -102,26 +112,63 @@ export default /*html*/`
           <button type="button" class="action-pill primary" @click="newNote()">+ New note</button>
         </div>
 
-        <article v-if="allNotes.length === 0" class="unknown">
+        <article v-if="allNotes.length === 0 && folders.length === 0" class="unknown">
           <h1 class="title">No notes yet</h1>
           <h2 class="subtitle">Notes are saved only in this browser.</h2>
           <button class="go-back" @click.prevent="newNote()">Write the first one</button>
         </article>
 
-        <article v-else-if="filteredNotes.length === 0" class="unknown">
-          <h1 class="title">Empty list</h1>
-          <h2 class="subtitle">Clear filters to see more items</h2>
-          <button class="go-back" @click.prevent="clearFilters()">Clear filters</button>
+        <article v-else-if="filteredNotes.length === 0 && visibleFolders.length === 0" class="unknown">
+          <template v-if="isFiltering">
+            <h1 class="title">Empty list</h1>
+            <h2 class="subtitle">Clear filters to see more items</h2>
+            <button class="go-back" @click.prevent="clearFilters()">Clear filters</button>
+          </template>
+          <template v-else>
+            <h1 class="title">This folder is empty</h1>
+            <h2 class="subtitle">Drop notes or folders here, or create a new note.</h2>
+          </template>
         </article>
 
         <ul class="topic-list">
           <li
-            v-for="card in cards" :key="card.id"
-            class="topic-preview"
+            v-for="folder in visibleFolders" :key="folder.id"
+            class="topic-preview folder-card"
+            :class="[dropClass('folder', folder.id), { dragging: dragging && dragging.id === folder.id }]"
             tabindex="0"
             role="link"
+            draggable="true"
+            @click="openFolder(folder.id)"
+            @keydown.enter="openFolder(folder.id)"
+            @dragstart="onDragStart($event, 'folder', folder.id)"
+            @dragend="onDragEnd()"
+            @dragover="onDragOver($event, 'folder', folder.id)"
+            @dragleave="onDragLeave($event, 'folder', folder.id)"
+            @drop="onDrop($event, 'folder', folder.id)"
+          >
+            <div class="topic-preview-top">
+              <span class="topic-kind">📁 Folder</span>
+            </div>
+            <h3 class="topic-preview-title note-title">{{ folder.name }}</h3>
+            <p class="topic-preview-subtitle">
+              {{ folder.counts.notes }} notes<template v-if="folder.counts.folders"> · {{ folder.counts.folders }} folders</template>
+            </p>
+          </li>
+
+          <li
+            v-for="card in cards" :key="card.id"
+            class="topic-preview"
+            :class="[dropClass('note', card.id), { dragging: dragging && dragging.id === card.id }]"
+            tabindex="0"
+            role="link"
+            draggable="true"
             @click="openNote(card.id)"
             @keydown.enter="openNote(card.id)"
+            @dragstart="onDragStart($event, 'note', card.id)"
+            @dragend="onDragEnd()"
+            @dragover="onDragOver($event, 'note', card.id)"
+            @dragleave="onDragLeave($event, 'note', card.id)"
+            @drop="onDrop($event, 'note', card.id)"
           >
             <div class="topic-preview-top">
               <span class="topic-kind">📝 Note<template v-if="card.folderName"> · {{ card.folderName }}</template></span>
@@ -186,7 +233,7 @@ export default /*html*/`
               <span>Folder</span>
               <select v-model="draft.folder" @change="dirty = true">
                 <option :value="null">No folder</option>
-                <option v-for="folder in folders" :key="folder.id" :value="folder.id">{{ folder.name }}</option>
+                <option v-for="option in folderOptions" :key="option.id" :value="option.id">{{ option.label }}</option>
               </select>
             </label>
 

@@ -5115,6 +5115,64 @@ html.keyboard-open .practice-sections {
     .spacer { flex: 1; }
   }
 
+  /* ---------- folders: path above the list, folder cards, drag and drop ---------- */
+  .folder-path {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .4rem;
+    width: 100%;
+    max-width: 56rem;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .crumb-sep { color: var(--muted); }
+
+  .topic-chip.crumb { text-transform: none; }
+
+  .folder-card {
+    border-left-color: var(--color-chopsticks);
+
+    .topic-preview-title { overflow-wrap: anywhere; }
+  }
+
+  .folder-parent {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .85rem;
+    color: var(--muted);
+
+    select {
+      height: 34px;
+      max-width: 14rem;
+      padding: 0 .6rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: inherit;
+      font: inherit;
+      font-size: 1rem;
+    }
+  }
+
+  [draggable="true"] { -webkit-user-drag: element; }
+
+  .topic-preview.dragging { opacity: .4; }
+
+  /* a note / folder dropped on a folder, or on a level of the path */
+  .topic-preview.drop-into,
+  .topic-chip.crumb.drop-into {
+    outline: 2px dashed var(--color-salmon);
+    outline-offset: 2px;
+    background-color: var(--surface-hover);
+  }
+
+  /* reorder: a bar where the item would land */
+  .topic-preview.drop-before { box-shadow: -6px 0 0 -1px var(--color-salmon), 0 -6px 0 -1px transparent; }
+  .topic-preview.drop-after { box-shadow: 6px 0 0 -1px var(--color-salmon); }
+
   .add-folder {
     flex: none;
     border-style: dashed;

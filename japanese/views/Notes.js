@@ -14,6 +14,16 @@ import {
   addFolder,
   renameFolder,
   deleteFolder,
+  moveNote,
+  moveFolder,
+  reorderNote,
+  reorderFolder,
+  getFolder,
+  childFolders,
+  folderPath,
+  folderTree,
+  folderCounts,
+  isInside,
   cleanTag,
 } from 'data/notes.js';
 
@@ -77,7 +87,7 @@ export default {
 
       query: '',
       searchOpen: false, // mobile only: panel under the header
-      category: 'all', // 'all' | 'none' (no folder) | a folder id
+      folderId: null, // folder being shown (null = top level)
       tagFilter: '',
       scopeOptions: SCOPES,
       searchScope: loadSelection(SCOPE_KEY, SCOPE_KEYS).filter(s => SCOPE_KEYS.includes(s)),
@@ -86,6 +96,11 @@ export default {
       folderFormOpen: false,
       folderName: '',
       renamingFolder: false,
+      folderParent: null, // 'inside' selector of the rename form
+
+      // drag and drop: what is being dragged and where it would land
+      dragging: null, // { type: 'note' | 'folder', id }
+      dropTarget: null, // { type: 'note' | 'folder' | 'crumb', id, mode: 'before' | 'after' | 'into' }
 
       // editor
       editing: false,
@@ -109,11 +124,47 @@ export default {
     zoomLevel() {
       return zoomStore.getZoomLevel();
     },
+    // the saved order is the displayed order
     allNotes() {
-      return [...notesStore.notes].sort((a, b) => b.createdAt - a.createdAt);
+      return notesStore.notes;
     },
     folders() {
       return notesStore.folders;
+    },
+    currentFolder() {
+      return this.folderId ? getFolder(this.folderId) : null;
+    },
+    activeFolderId() {
+      return this.currentFolder ? this.currentFolder.id : null;
+    },
+    // top level > Work > 2026
+    breadcrumb() {
+      return folderPath(this.activeFolderId);
+    },
+    // folders shown as cards: the ones inside the current folder (a search shows only notes)
+    visibleFolders() {
+      if (this.isFiltering) return [];
+      return childFolders(this.activeFolderId).map(folder => ({
+        folder,
+        id: folder.id,
+        name: folder.name,
+        counts: folderCounts(folder.id),
+      }));
+    },
+    // the folder select of the editor / rename form: every folder, indented by depth
+    folderOptions() {
+      return folderTree().map(({ folder, depth }) => ({
+        id: folder.id,
+        label: '\u00a0\u00a0'.repeat(depth) + (depth ? '↳ ' : '') + folder.name,
+      }));
+    },
+    // folders a folder can be moved into (not itself or its subfolders)
+    parentOptions() {
+      const folder = this.currentFolder;
+      return folder ? this.folderOptions.filter(option => !isInside(option.id, folder.id)) : this.folderOptions;
+    },
+    isFiltering() {
+      return !!(this.query.trim() || this.tagFilter);
     },
     knownTags() {
       return [...new Set(notesStore.notes.flatMap(note => note.tags || []))].sort();
@@ -129,10 +180,9 @@ export default {
     },
     activeFilterCount() {
       return (this.query.trim() ? 1 : 0)
-        + (this.category !== 'all' ? 1 : 0)
         + (this.tagFilter ? 1 : 0);
     },
-    // search + tag (the folder chips are applied on top of this, so they can show counts)
+    // search + tag
     matchedNotes() {
       const terms = normalize(this.query).split(/\s+/).filter(Boolean);
       // nothing selected in "Search in" behaves like everything selected
@@ -148,33 +198,13 @@ export default {
         })
         .map(({ note }) => note);
     },
-    categoryOptions() {
-      const count = predicate => this.matchedNotes.filter(predicate).length;
-      const folderIds = new Set(this.folders.map(folder => folder.id));
-
-      return [
-        { key: 'all', label: 'All', count: this.matchedNotes.length },
-        ...this.folders.map(folder => ({
-          key: folder.id,
-          label: '📁 ' + folder.name,
-          count: count(note => note.folder === folder.id),
-        })),
-        { key: 'none', label: 'No folder', count: count(note => !note.folder || !folderIds.has(note.folder)) },
-      ];
-    },
+    // Notes in the list: the current folder's notes, or every match while searching
     filteredNotes() {
-      if (this.category === 'all') return this.matchedNotes;
-      if (this.category === 'none') {
-        const folderIds = new Set(this.folders.map(folder => folder.id));
-        return this.matchedNotes.filter(note => !note.folder || !folderIds.has(note.folder));
-      }
-      return this.matchedNotes.filter(note => note.folder === this.category);
+      if (this.isFiltering) return this.matchedNotes;
+      return this.allNotes.filter(note => (getFolder(note.folder) ? note.folder : null) === this.activeFolderId);
     },
     cards() {
       return this.filteredNotes.map(note => this.describe(note));
-    },
-    currentFolder() {
-      return this.folders.find(folder => folder.id === this.category) || null;
     },
 
     // --- detail ---
@@ -209,7 +239,7 @@ export default {
   methods: {
     // --- helpers ---
     describe(note) {
-      const folder = this.folders.find(item => item.id === note.folder);
+      const path = folderPath(note.folder);
       return {
         note,
         id: note.id,
@@ -218,7 +248,7 @@ export default {
         content: note.content,
         excerpt: note.content.length > 140 ? note.content.slice(0, 140) + '…' : note.content,
         tags: note.tags || [],
-        folderName: folder ? folder.name : '',
+        folderName: path.map(folder => folder.name).join(' / '),
         date: this.formatDate(note.createdAt),
         dateTime: this.formatDate(note.createdAt, true),
         edited: note.updatedAt - note.createdAt > 60000 ? this.formatDate(note.updatedAt, true) : '',
@@ -259,7 +289,6 @@ export default {
     },
     clearFilters() {
       this.query = '';
-      this.category = 'all';
       this.tagFilter = '';
     },
     filterByTag(tag) {
@@ -297,6 +326,7 @@ export default {
       this.folderFormOpen = true;
       this.renamingFolder = true;
       this.folderName = this.currentFolder.name;
+      this.folderParent = this.currentFolder.parent ?? null;
       this.$nextTick(() => this.$refs.folderInput && this.$refs.folderInput.select());
     },
     closeFolderForm() {
@@ -308,18 +338,100 @@ export default {
       if (!this.folderName.trim()) return this.closeFolderForm();
       if (this.renamingFolder && this.currentFolder) {
         renameFolder(this.currentFolder.id, this.folderName);
+        moveFolder(this.currentFolder.id, this.folderParent);
       } else {
-        const folder = addFolder(this.folderName);
-        if (folder) this.category = folder.id;
+        // created inside the folder being shown, and opened
+        const folder = addFolder(this.folderName, this.activeFolderId);
+        if (folder) this.folderId = folder.id;
       }
       this.closeFolderForm();
     },
     removeFolder() {
       const folder = this.currentFolder;
       if (!folder) return;
-      if (!window.confirm(`Delete the folder "${folder.name}"? Its notes are kept, without a folder.`)) return;
+      if (!window.confirm(`Delete the folder "${folder.name}"? Its notes and folders move up one level.`)) return;
+      const parent = folder.parent ?? null;
       deleteFolder(folder.id);
-      this.category = 'all';
+      this.folderId = parent;
+    },
+    openFolder(id) {
+      this.folderId = id;
+      this.clearFilters();
+    },
+
+    // --- drag and drop: reorder notes / folders, drop them on a folder or on the path above the list ---
+    onDragStart(event, type, id) {
+      this.dragging = { type, id };
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', id); // Firefox needs some data to start a drag
+    },
+    onDragEnd() {
+      this.dragging = null;
+      this.dropTarget = null;
+    },
+    // Where would the dragged item land on this target?  -> mode, or null when it can't be dropped here
+    dropMode(event, type, id) {
+      const drag = this.dragging;
+      if (!drag || drag.id === id && drag.type === type) return null;
+
+      if (type === 'crumb') {
+        if (drag.type === 'folder' && id && isInside(id, drag.id)) return null;
+        return 'into';
+      }
+
+      const rect = event.currentTarget.getBoundingClientRect();
+      // cards in a column are stacked (before / after = top / bottom half), in a grid they sit side by side
+      const stacked = event.currentTarget.parentElement.clientWidth < rect.width * 1.5;
+      const ratio = stacked
+        ? (event.clientY - rect.top) / rect.height
+        : (event.clientX - rect.left) / rect.width;
+
+      if (type === 'note') {
+        return drag.type === 'note' ? (ratio < .5 ? 'before' : 'after') : null;
+      }
+
+      // a folder: notes go inside; another folder goes inside (middle) or next to it (edges)
+      if (drag.type === 'note') return 'into';
+      if (ratio < .25) return 'before';
+      if (ratio > .75) return 'after';
+      return isInside(id, drag.id) ? null : 'into';
+    },
+    onDragOver(event, type, id) {
+      const mode = this.dropMode(event, type, id);
+      if (!mode) {
+        if (this.dropTarget && this.dropTarget.type === type && this.dropTarget.id === id) this.dropTarget = null;
+        return;
+      }
+      event.preventDefault(); // allows the drop
+      event.dataTransfer.dropEffect = 'move';
+      const target = this.dropTarget;
+      if (!target || target.type !== type || target.id !== id || target.mode !== mode) {
+        this.dropTarget = { type, id, mode };
+      }
+    },
+    onDragLeave(event, type, id) {
+      if (event.currentTarget.contains(event.relatedTarget)) return;
+      if (this.dropTarget && this.dropTarget.type === type && this.dropTarget.id === id) this.dropTarget = null;
+    },
+    onDrop(event, type, id) {
+      const drag = this.dragging;
+      const mode = this.dropMode(event, type, id);
+      this.onDragEnd();
+      if (!drag || !mode) return;
+      event.preventDefault();
+
+      if (drag.type === 'note') {
+        if (type === 'note') reorderNote(drag.id, id, mode === 'after');
+        else moveNote(drag.id, id); // onto a folder or a level of the path (id null = top level)
+      } else if (type === 'folder' && mode !== 'into') {
+        reorderFolder(drag.id, id, mode === 'after');
+      } else {
+        moveFolder(drag.id, id);
+      }
+    },
+    dropClass(type, id) {
+      const target = this.dropTarget;
+      return target && target.type === type && target.id === id ? 'drop-' + target.mode : '';
     },
 
     // --- editor ---
@@ -334,7 +446,7 @@ export default {
       this.editing = true;
     },
     startNew() {
-      this.draft = emptyDraft(this.folders.some(f => f.id === this.category) ? this.category : null);
+      this.draft = emptyDraft(this.activeFolderId);
       this.tagInput = '';
       this.internals.caret = null;
       this.dirty = false;
