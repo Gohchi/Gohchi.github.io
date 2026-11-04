@@ -37,6 +37,34 @@ const SCOPES = [
 const SCOPE_KEYS = SCOPES.map(({ key }) => key);
 const SCOPE_KEY = 'notes-scope';
 
+const VIEWS = [
+  { key: 'folders', icon: '📁', label: 'Folders' },
+  { key: 'tree', icon: '🌳', label: 'Tree' },
+  { key: 'month', icon: '📅', label: 'Month' },
+  { key: 'week', icon: '🗓', label: 'Week' },
+];
+const VIEW_KEYS = VIEWS.map(({ key }) => key);
+const VIEW_KEY = 'notes-view';
+
+const SORTS = [
+  { key: 'manual', label: 'My order' },
+  { key: 'name-asc', label: 'Name ↑' },
+  { key: 'name-desc', label: 'Name ↓' },
+  { key: 'date-asc', label: 'Date ↑' },
+  { key: 'date-desc', label: 'Date ↓' },
+];
+const SORT_KEYS = SORTS.map(({ key }) => key);
+const SORT_KEY = 'notes-sort';
+const COLLAPSED_KEY = 'notes-tree-collapsed';
+
+const compareText = (a, b) => String(a).localeCompare(String(b), 'ja', { numeric: true, sensitivity: 'base' });
+
+// Monday of the week of a date
+const weekStart = ms => {
+  const date = new Date(ms);
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - ((date.getDay() + 6) % 7));
+};
+
 // Voice to text: browser speech recognition (Chrome / Edge / Safari; needs the microphone)
 const SpeechRecognitionAPI = typeof window !== 'undefined'
   ? (window.SpeechRecognition || window.webkitSpeechRecognition)
@@ -88,6 +116,11 @@ export default {
       query: '',
       searchOpen: false, // mobile only: panel under the header
       folderId: null, // folder being shown (null = top level)
+      viewOptions: VIEWS,
+      sortOptions: SORTS,
+      viewMode: VIEW_KEYS.includes(loadSelection(VIEW_KEY, [])[0]) ? loadSelection(VIEW_KEY, [])[0] : 'folders',
+      sortMode: SORT_KEYS.includes(loadSelection(SORT_KEY, [])[0]) ? loadSelection(SORT_KEY, [])[0] : 'manual',
+      collapsed: loadSelection(COLLAPSED_KEY, []), // tree: folders that are closed
       tagFilter: '',
       scopeOptions: SCOPES,
       searchScope: loadSelection(SCOPE_KEY, SCOPE_KEYS).filter(s => SCOPE_KEYS.includes(s)),
@@ -144,7 +177,7 @@ export default {
     // folders shown as cards: the ones inside the current folder (a search shows only notes)
     visibleFolders() {
       if (this.isFiltering) return [];
-      return childFolders(this.activeFolderId).map(folder => ({
+      return this.sortFolders(childFolders(this.activeFolderId)).map(folder => ({
         folder,
         id: folder.id,
         name: folder.name,
@@ -199,12 +232,83 @@ export default {
         .map(({ note }) => note);
     },
     // Notes in the list: the current folder's notes, or every match while searching
-    filteredNotes() {
-      if (this.isFiltering) return this.matchedNotes;
-      return this.allNotes.filter(note => (getFolder(note.folder) ? note.folder : null) === this.activeFolderId);
+    folderNotes() {
+      const notes = this.isFiltering
+        ? this.matchedNotes
+        : this.allNotes.filter(note => (getFolder(note.folder) ? note.folder : null) === this.activeFolderId);
+      return this.sortNotes(notes);
     },
     cards() {
-      return this.filteredNotes.map(note => this.describe(note));
+      return this.folderNotes.map(note => this.describe(note));
+    },
+
+    // Month / week view: notes grouped by the day they were created, newest group first
+    groups() {
+      if (this.viewMode !== 'month' && this.viewMode !== 'week') return [];
+      const weekly = this.viewMode === 'week';
+      const notes = this.isFiltering ? this.matchedNotes : this.allNotes;
+      const byKey = new Map();
+
+      notes.forEach(note => {
+        const date = new Date(note.createdAt);
+        const start = weekly ? weekStart(note.createdAt) : new Date(date.getFullYear(), date.getMonth(), 1);
+        const key = start.getTime();
+        if (!byKey.has(key)) byKey.set(key, { key, start, notes: [] });
+        byKey.get(key).notes.push(note);
+      });
+
+      const ascending = this.sortMode === 'date-asc';
+      return [...byKey.values()]
+        .sort((a, b) => (ascending ? a.key - b.key : b.key - a.key))
+        .map(group => ({
+          key: group.key,
+          label: weekly ? this.weekLabel(group.start) : this.monthLabel(group.start),
+          cards: this.sortNotes(group.notes).map(note => this.describe(note)),
+        }));
+    },
+
+    // Tree view: folders and notes as one indented list; closed folders hide their content.
+    // While searching only the matching notes (and the folders leading to them) are shown, all open.
+    treeRows() {
+      if (this.viewMode !== 'tree') return [];
+      const filtering = this.isFiltering;
+      const matched = new Set(this.matchedNotes.map(note => note.id));
+      const withMatches = new Set();
+      if (filtering) {
+        this.matchedNotes.forEach(note => folderPath(note.folder).forEach(folder => withMatches.add(folder.id)));
+      }
+
+      const rows = [];
+      const walk = (parent, depth) => {
+        const folders = this.sortFolders(childFolders(parent)).filter(folder => !filtering || withMatches.has(folder.id));
+        folders.forEach(folder => {
+          const closed = !filtering && this.collapsed.includes(folder.id);
+          rows.push({ kind: 'folder', id: folder.id, depth, name: folder.name, closed, counts: folderCounts(folder.id) });
+          if (!closed) walk(folder.id, depth + 1);
+        });
+
+        const notes = this.allNotes.filter(note => (getFolder(note.folder) ? note.folder : null) === parent
+          && (!filtering || matched.has(note.id)));
+        this.sortNotes(notes).forEach(note => rows.push({ kind: 'note', id: note.id, depth, note, card: this.describe(note) }));
+      };
+      walk(null, 0);
+      return rows;
+    },
+
+    // what the detail's previous / next buttons walk through = what the list shows, in order
+    filteredNotes() {
+      if (this.viewMode === 'tree') return this.treeRows.filter(row => row.kind === 'note').map(row => row.note);
+      if (this.viewMode === 'folders') return this.folderNotes;
+      return this.groups.flatMap(group => group.cards.map(card => card.note));
+    },
+    listIsEmpty() {
+      if (this.viewMode === 'tree') return this.treeRows.length === 0;
+      if (this.viewMode === 'folders') return this.folderNotes.length === 0 && this.visibleFolders.length === 0;
+      return this.groups.length === 0;
+    },
+    // where new notes / folders are created: in the folder being shown, else at the top level
+    createIn() {
+      return this.viewMode === 'folders' ? this.activeFolderId : null;
     },
 
     // --- detail ---
@@ -260,6 +364,50 @@ export default {
         ? { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }
         : { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(ms).toLocaleString('ja-JP', options);
+    },
+
+    monthLabel(date) {
+      return date.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' });
+    },
+    weekLabel(start) {
+      const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6);
+      const first = start.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+      const last = end.toLocaleDateString('ja-JP', start.getMonth() === end.getMonth()
+        ? { day: 'numeric' }
+        : { month: 'long', day: 'numeric' });
+      return `${first} – ${last}`;
+    },
+
+    // --- view and sort ---
+    setView(view) {
+      this.viewMode = view;
+      saveSelection(VIEW_KEY, [view]);
+    },
+    setSort(sort) {
+      this.sortMode = sort;
+      saveSelection(SORT_KEY, [sort]);
+    },
+    sortNotes(list) {
+      if (this.sortMode === 'manual') return list;
+      const sorted = [...list];
+      const direction = this.sortMode.endsWith('desc') ? -1 : 1;
+      if (this.sortMode.startsWith('name')) {
+        // untitled notes go last
+        return sorted.sort((a, b) => direction * compareText(a.title || '\uffff', b.title || '\uffff'));
+      }
+      return sorted.sort((a, b) => direction * (a.createdAt - b.createdAt));
+    },
+    // folders have no date: they follow the name sort, otherwise your order
+    sortFolders(list) {
+      if (!this.sortMode.startsWith('name')) return list;
+      const direction = this.sortMode.endsWith('desc') ? -1 : 1;
+      return [...list].sort((a, b) => direction * compareText(a.name, b.name));
+    },
+    toggleCollapsed(id) {
+      this.collapsed = this.collapsed.includes(id)
+        ? this.collapsed.filter(item => item !== id)
+        : [...this.collapsed, id];
+      saveSelection(COLLAPSED_KEY, this.collapsed);
     },
 
     // --- navigation ---
@@ -341,7 +489,7 @@ export default {
         moveFolder(this.currentFolder.id, this.folderParent);
       } else {
         // created inside the folder being shown; you stay in that folder
-        addFolder(this.folderName, this.activeFolderId);
+        addFolder(this.folderName, this.createIn);
       }
       this.closeFolderForm();
     },
@@ -385,14 +533,17 @@ export default {
         ? (event.clientY - rect.top) / rect.height
         : (event.clientX - rect.left) / rect.width;
 
+      // reordering only makes sense when the list is in "My order"
+      const manual = this.sortMode === 'manual';
+
       if (type === 'note') {
-        return drag.type === 'note' ? (ratio < .5 ? 'before' : 'after') : null;
+        return drag.type === 'note' && manual ? (ratio < .5 ? 'before' : 'after') : null;
       }
 
       // a folder: notes go inside; another folder goes inside (middle) or next to it (edges)
       if (drag.type === 'note') return 'into';
-      if (ratio < .25) return 'before';
-      if (ratio > .75) return 'after';
+      if (manual && ratio < .25) return 'before';
+      if (manual && ratio > .75) return 'after';
       return isInside(id, drag.id) ? null : 'into';
     },
     onDragOver(event, type, id) {
@@ -420,7 +571,11 @@ export default {
       event.preventDefault();
 
       if (drag.type === 'note') {
-        if (type === 'note') reorderNote(drag.id, id, mode === 'after');
+        if (type === 'note') {
+          // in the tree, dropping next to a note also puts it in that note's folder
+          if (this.viewMode === 'tree') moveNote(drag.id, getNote(id)?.folder ?? null);
+          reorderNote(drag.id, id, mode === 'after');
+        }
         else moveNote(drag.id, id); // onto a folder or a level of the path (id null = top level)
       } else if (type === 'folder' && mode !== 'into') {
         reorderFolder(drag.id, id, mode === 'after');
@@ -445,7 +600,7 @@ export default {
       this.editing = true;
     },
     startNew() {
-      this.draft = emptyDraft(this.activeFolderId);
+      this.draft = emptyDraft(this.createIn);
       this.tagInput = '';
       this.internals.caret = null;
       this.dirty = false;

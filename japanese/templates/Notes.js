@@ -54,7 +54,7 @@ export default /*html*/`
     <main>
       <!-- ================= LIST ================= -->
       <template v-if="!note">
-        <nav class="folder-path" aria-label="Folder">
+        <nav v-if="viewMode === 'folders'" class="folder-path" aria-label="Folder">
           <template v-for="(crumb, index) in [{ id: null, name: 'All notes' }, ...breadcrumb]" :key="crumb.id ?? 'root'">
             <span v-if="index" class="crumb-sep" aria-hidden="true">›</span>
             <button
@@ -68,7 +68,6 @@ export default /*html*/`
               @drop="onDrop($event, 'crumb', crumb.id)"
             ><template v-if="index">📁 </template>{{ crumb.name }}</button>
           </template>
-          <button type="button" class="topic-chip add-folder" title="New folder" @click="openFolderForm()">+ Folder</button>
         </nav>
 
         <form v-if="folderFormOpen" class="folder-form" @submit.prevent="submitFolder()">
@@ -92,10 +91,33 @@ export default /*html*/`
           <button type="button" class="action-pill" @click="closeFolderForm()">Cancel</button>
         </form>
 
+        <div class="view-bar">
+          <div class="view-group" role="group" aria-label="View">
+            <button
+              v-for="option in viewOptions" :key="option.key"
+              type="button"
+              class="topic-chip"
+              :class="{ on: viewMode === option.key }"
+              :aria-pressed="viewMode === option.key"
+              @click="setView(option.key)"
+            >{{ option.icon }} {{ option.label }}</button>
+          </div>
+          <div class="view-group" role="group" aria-label="Sort by">
+            <button
+              v-for="option in sortOptions" :key="option.key"
+              type="button"
+              class="topic-chip"
+              :class="{ on: sortMode === option.key }"
+              :aria-pressed="sortMode === option.key"
+              @click="setSort(option.key)"
+            >{{ option.label }}</button>
+          </div>
+        </div>
+
         <div class="topic-summary">
           <span v-if="isFiltering">{{ filteredNotes.length }} / {{ allNotes.length }} notes</span>
           <span v-else>
-            <template v-if="visibleFolders.length">{{ visibleFolders.length }} folders · </template>{{ filteredNotes.length }} notes
+            <template v-if="viewMode === 'folders' && visibleFolders.length">{{ visibleFolders.length }} folders · </template>{{ filteredNotes.length }} notes
           </span>
           <button
             v-if="tagFilter"
@@ -105,10 +127,11 @@ export default /*html*/`
             @click="tagFilter = ''"
           >#{{ tagFilter }} ✕</button>
           <span class="spacer"></span>
-          <template v-if="currentFolder">
+          <template v-if="currentFolder && viewMode === 'folders'">
             <button type="button" class="filter-link" @click="startRename()">Rename folder</button>
             <button type="button" class="filter-link danger" @click="removeFolder()">Delete folder</button>
           </template>
+          <button type="button" class="action-pill" title="New folder" @click="openFolderForm()">+ Folder</button>
           <button type="button" class="action-pill primary" @click="newNote()">+ New note</button>
         </div>
 
@@ -118,19 +141,24 @@ export default /*html*/`
           <button class="go-back" @click.prevent="newNote()">Write the first one</button>
         </article>
 
-        <article v-else-if="filteredNotes.length === 0 && visibleFolders.length === 0" class="unknown">
+        <article v-else-if="listIsEmpty" class="unknown">
           <template v-if="isFiltering">
             <h1 class="title">Empty list</h1>
             <h2 class="subtitle">Clear filters to see more items</h2>
             <button class="go-back" @click.prevent="clearFilters()">Clear filters</button>
           </template>
-          <template v-else>
+          <template v-else-if="viewMode === 'folders'">
             <h1 class="title">This folder is empty</h1>
             <h2 class="subtitle">Drop notes or folders here, or create a new note.</h2>
           </template>
+          <template v-else>
+            <h1 class="title">Nothing here</h1>
+            <h2 class="subtitle">Create a note or a folder to start.</h2>
+          </template>
         </article>
 
-        <ul class="topic-list">
+        <!-- folders view: subfolders as cards, then the notes of the folder -->
+        <ul v-if="viewMode === 'folders'" class="topic-list">
           <li
             v-for="folder in visibleFolders" :key="folder.id"
             class="topic-preview folder-card"
@@ -191,6 +219,83 @@ export default /*html*/`
                 @click.stop="filterByTag(tag)"
               >{{ tag }}</span>
             </div>
+          </li>
+        </ul>
+
+        <!-- month / week view: notes grouped by creation date -->
+        <template v-else-if="viewMode === 'month' || viewMode === 'week'">
+          <section v-for="group in groups" :key="group.key" class="note-group">
+            <h2 class="group-title">{{ group.label }} <span class="count">{{ group.cards.length }}</span></h2>
+            <ul class="topic-list">
+            <li
+                v-for="card in group.cards" :key="card.id"
+                class="topic-preview"
+                :class="[dropClass('note', card.id), { dragging: dragging && dragging.id === card.id }]"
+                tabindex="0"
+                role="link"
+                draggable="true"
+                @click="openNote(card.id)"
+                @keydown.enter="openNote(card.id)"
+                @dragstart="onDragStart($event, 'note', card.id)"
+                @dragend="onDragEnd()"
+                @dragover="onDragOver($event, 'note', card.id)"
+                @dragleave="onDragLeave($event, 'note', card.id)"
+                @drop="onDrop($event, 'note', card.id)"
+              >
+                <div class="topic-preview-top">
+                  <span class="topic-kind">📝 Note<template v-if="card.folderName"> · {{ card.folderName }}</template></span>
+                  <span class="note-date">{{ card.date }}</span>
+                </div>
+  
+                <h3 class="topic-preview-title note-title" :class="{ untitled: card.untitled }">
+                  <PhraseToRuby :text="card.title"></PhraseToRuby>
+                </h3>
+  
+                <p v-if="card.content" class="topic-preview-subtitle note-excerpt">
+                  <PhraseToRuby :text="card.excerpt"></PhraseToRuby>
+                </p>
+  
+                <div v-if="card.tags.length" class="tag-list">
+                  <span
+                    v-for="tag in card.tags.slice(0, 3)" :key="tag"
+                    class="tag"
+                    :class="{ on: tagFilter === tag }"
+                    @click.stop="filterByTag(tag)"
+                  >{{ tag }}</span>
+                </div>
+              </li>
+            </ul>
+          </section>
+        </template>
+
+        <!-- tree view -->
+        <ul v-else-if="viewMode === 'tree'" class="note-tree">
+          <li
+            v-for="row in treeRows" :key="row.kind + row.id"
+            class="tree-row"
+            :class="[row.kind, dropClass(row.kind, row.id), { dragging: dragging && dragging.id === row.id }]"
+            :style="{ '--depth': row.depth }"
+            tabindex="0"
+            role="treeitem"
+            draggable="true"
+            @click="row.kind === 'folder' ? toggleCollapsed(row.id) : openNote(row.id)"
+            @keydown.enter="row.kind === 'folder' ? toggleCollapsed(row.id) : openNote(row.id)"
+            @dragstart="onDragStart($event, row.kind, row.id)"
+            @dragend="onDragEnd()"
+            @dragover="onDragOver($event, row.kind, row.id)"
+            @dragleave="onDragLeave($event, row.kind, row.id)"
+            @drop="onDrop($event, row.kind, row.id)"
+          >
+            <template v-if="row.kind === 'folder'">
+              <span class="tree-toggle" aria-hidden="true">{{ row.closed ? '▸' : '▾' }}</span>
+              <span class="tree-name">📁 {{ row.name }}</span>
+              <span class="tree-meta">{{ row.counts.notes }}</span>
+            </template>
+            <template v-else>
+              <span class="tree-toggle" aria-hidden="true"></span>
+              <span class="tree-name" :class="{ untitled: row.card.untitled }">📝 <PhraseToRuby :text="row.card.title"></PhraseToRuby></span>
+              <span class="tree-meta">{{ row.card.date }}</span>
+            </template>
           </li>
         </ul>
       </template>

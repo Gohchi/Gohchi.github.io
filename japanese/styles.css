@@ -5157,6 +5157,96 @@ html.keyboard-open .practice-sections {
     }
   }
 
+  /* ---------- view and sort buttons ---------- */
+  .view-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.25rem;
+    width: 100%;
+    max-width: 56rem;
+    margin: .6rem auto 0;
+    box-sizing: border-box;
+  }
+
+  .view-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+
+  .view-group .topic-chip { text-transform: none; }
+
+  /* ---------- month / week groups ---------- */
+  .note-group {
+    width: 100%;
+    max-width: 56rem;
+    margin: 1rem auto 0;
+    box-sizing: border-box;
+  }
+
+  .group-title {
+    margin: 0 0 .5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    .count {
+      padding: .05rem .5rem;
+      border-radius: 999px;
+      background: light-dark(#e0e0e0, #303030);
+      font-size: .75rem;
+      font-weight: 500;
+    }
+  }
+
+  /* ---------- tree ---------- */
+  .note-tree {
+    list-style: none;
+    width: 100%;
+    max-width: 56rem;
+    margin: .75rem auto 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    box-sizing: border-box;
+  }
+
+  .tree-row {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .45rem .6rem .45rem calc(.6rem + var(--depth, 0) * 1.4rem);
+    border-radius: 8px;
+    cursor: pointer;
+    line-height: 1.9; /* leaves room for furigana */
+
+    &:hover,
+    &:focus-visible {
+      background: var(--surface-hover);
+      outline: none;
+    }
+
+    &.folder { font-weight: 600; }
+
+    &.drop-into {
+      outline: 2px dashed var(--color-salmon);
+      outline-offset: -2px;
+      background: var(--surface-hover);
+    }
+
+    &.drop-before { box-shadow: 0 -3px 0 0 var(--color-salmon); }
+    &.drop-after { box-shadow: 0 3px 0 0 var(--color-salmon); }
+    &.dragging { opacity: .4; }
+  }
+
+  .tree-toggle { width: 1rem; flex: none; text-align: center; color: var(--muted); }
+  .tree-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .tree-name.untitled { opacity: .6; font-style: italic; }
+  .tree-meta { flex: none; font-size: .75rem; font-weight: 400; color: var(--muted); }
+
   [draggable="true"] { -webkit-user-drag: element; }
 
   .topic-preview.dragging { opacity: .4; }
