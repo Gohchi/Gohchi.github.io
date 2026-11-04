@@ -91,7 +91,7 @@ export default /*html*/`
           <button type="button" class="action-pill" @click="closeFolderForm()">Cancel</button>
         </form>
 
-        <div class="view-bar">
+        <div v-if="viewBarOpen" class="view-bar">
           <div class="view-group" role="group" aria-label="View">
             <button
               v-for="option in viewOptions" :key="option.key"
@@ -131,6 +131,14 @@ export default /*html*/`
             <button type="button" class="filter-link" @click="startRename()">Rename folder</button>
             <button type="button" class="filter-link danger" @click="removeFolder()">Delete folder</button>
           </template>
+          <button
+            type="button"
+            class="action-pill"
+            :class="{ on: viewBarOpen }"
+            :aria-expanded="viewBarOpen"
+            title="Show or hide the view and sort buttons"
+            @click="toggleViewBar()"
+          >⚙ View</button>
           <button type="button" class="action-pill" title="New folder" @click="openFolderForm()">+ Folder</button>
           <button type="button" class="action-pill primary" @click="newNote()">+ New note</button>
         </div>

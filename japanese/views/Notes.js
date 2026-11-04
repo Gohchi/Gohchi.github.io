@@ -56,6 +56,7 @@ const SORTS = [
 const SORT_KEYS = SORTS.map(({ key }) => key);
 const SORT_KEY = 'notes-sort';
 const COLLAPSED_KEY = 'notes-tree-collapsed';
+const VIEWBAR_KEY = 'notes-viewbar-open';
 
 const compareText = (a, b) => String(a).localeCompare(String(b), 'ja', { numeric: true, sensitivity: 'base' });
 
@@ -121,6 +122,7 @@ export default {
       viewMode: VIEW_KEYS.includes(loadSelection(VIEW_KEY, [])[0]) ? loadSelection(VIEW_KEY, [])[0] : 'folders',
       sortMode: SORT_KEYS.includes(loadSelection(SORT_KEY, [])[0]) ? loadSelection(SORT_KEY, [])[0] : 'manual',
       collapsed: loadSelection(COLLAPSED_KEY, []), // tree: folders that are closed
+      viewBarOpen: loadSelection(VIEWBAR_KEY, [false])[0] === true, // view / sort buttons shown
       tagFilter: '',
       scopeOptions: SCOPES,
       searchScope: loadSelection(SCOPE_KEY, SCOPE_KEYS).filter(s => SCOPE_KEYS.includes(s)),
@@ -379,6 +381,10 @@ export default {
     },
 
     // --- view and sort ---
+    toggleViewBar() {
+      this.viewBarOpen = !this.viewBarOpen;
+      saveSelection(VIEWBAR_KEY, [this.viewBarOpen]);
+    },
     setView(view) {
       this.viewMode = view;
       saveSelection(VIEW_KEY, [view]);
