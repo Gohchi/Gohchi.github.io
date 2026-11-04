@@ -18,7 +18,7 @@ export default /*html*/`
             @update:modelValue="setGroups"
           />
           <router-link v-if="siblingTo" :to="siblingTo" class="icon-button" :class="siblingIcon" :title="siblingTitle"></router-link>
-          <div v-if="listen" class="icon-button words-toggle" :class="{ on: wordMode }" :title="wordMode ? 'Practicing words: back to single kana' : 'Practice words, kana by kana'" role="button" :aria-pressed="wordMode" @click="toggleUnit()">語</div>
+          <div v-if="listen" class="icon-button words-toggle" :class="{ on: wordMode }" :title="wordMode ? 'Practicing words: back to single kana' : 'Practice words, kana by kana'" role="button" :aria-pressed="wordMode" @click="toggleUnit()">Words</div>
           <div v-if="listen" class="icon-button" :class="{ 'check-icon': mode === 'type', 'keyboard-icon': mode === 'choice' }" :title="mode === 'type' ? 'Options mode (meaning)' : 'Type mode (reading)'" @click="toggleMode()"></div>
         </div>
       </div>

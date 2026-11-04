@@ -439,8 +439,12 @@ body {
   }
   .words-toggle {
     background-image: none;
-    font-size: 1rem;
+    width: auto;
+    padding: 0 .8rem;
+    border-radius: 999px;
+    font-size: .8rem;
     font-weight: 700;
+    white-space: nowrap;
     color: light-dark(#333333, #eeeeee);
 
     &.on { background-color: var(--color-chopsticks); color: black; }
@@ -2878,6 +2882,7 @@ body {
     }
   }
 
+  .settings-pools,
   .settings-voice {
     margin-bottom: 2.5rem;
 

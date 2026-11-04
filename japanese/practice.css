@@ -253,6 +253,15 @@
       }
     }
 
+    &:not(:has(.kanji-corner)) .info-icons {
+      padding-top: .5rem;
+      .mastered {
+        top: .5rem;
+      }
+      .memory-meter {
+        top: 2.25rem;
+      }
+    } /* below the kanji corner */
     /* reduced motion: no animation, the colours still tell right from wrong */
     @media (prefers-reduced-motion: reduce) {
       &,

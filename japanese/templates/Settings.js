@@ -2,18 +2,16 @@ export default /*html*/`
   <div class="settings">
     <MainHeader
       title="SETTINGS"
-      hideFurigana="true"
       hideZoom="true"
     />
 
     <main>
       <section class="settings-intro">
         <p class="eyebrow">設定 · Settings</p>
-        <h1>Practice pools</h1>
         <p class="lead">
-          Choose which words show up in each practice. Changes are saved right away and apply
-          the next time you open that practice. The Pool button inside each practice edits
-          the same lists.
+          These settings are saved in this browser. They control the behavior of the practices, the
+          voice used for listening, and which words show up in each practice. The Pool button inside
+          each practice edits the same lists.
         </p>
       </section>
 
@@ -97,6 +95,13 @@ export default /*html*/`
       </section>
 
       <section class="settings-pools">
+        <p class="eyebrow">漢字プール · Kanji pools</p>
+        <h2>Kanji listed in the practices</h2>
+        <p class="lead">
+          Choose which words show up in each practice. Changes are saved right away and apply
+          the next time you open that practice. The Pool button inside each practice edits
+          the same lists.
+        </p>
         <div class="chip-row" role="tablist" aria-label="Pool">
           <button
             v-for="chip in poolChips" :key="chip.id"
