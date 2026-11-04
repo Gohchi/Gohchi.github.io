@@ -139,6 +139,8 @@ export const kanjiTranslations = {
   "度": { eng: ["degree", "time"], esp: [] },
   "漢字": { eng: ["kanji", "Chinese character"], esp: [] },
   "晩御飯": { eng: ["dinner"], esp: [] },
+  "編集": { eng: ["edit", "editing"], esp: [] },
+  "作成": { eng: ["create", "make"], esp: [] },
   "上手": { eng: ["skilled", "good at"], esp: [] },
   "掃除": { eng: ["cleaning"], esp: [] },
   "作": { eng: ["make", "work"], esp: ["hacer", "crear"] },

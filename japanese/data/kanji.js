@@ -220,6 +220,8 @@ export const ruby = {
   "日本": { tags: ["places"], reading: "にほん", JLPT_level: "N5" },
   "日本語": { tags: ["description"], reading: "にほんご", JLPT_level: "N5" },
   "日本料理": { tags: ["food"], reading: "にほんりょうり", JLPT_level: "N4" },
+  "編集": { tags: ["description"], reading: "へんしゅう", JLPT_level: "N2" },
+  "作成": { tags: ["description"], reading: "さくせい", JLPT_level: "N2" },
   "翻訳": { tags: ["description"], reading: "ほにゃく", JLPT_level: "N2" },
   "授業": { tags: ["description"], reading: "じゅぎょう", JLPT_level: "N4" },
   "全然": { tags: ["description"], reading: "ぜんぜん", JLPT_level: "N4" },
