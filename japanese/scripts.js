@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory, useRouter } from 'vue-router';
 
 import Home from 'views/Home.js';
 import CommonPhrases from 'views/CommonPhrases.js';
+import Notes from 'views/Notes.js';
 import Translations from 'views/Translations.js';
 import HiraganaPractice from 'views/HiraganaPractice.js';
 import HiraganaKeyboard from 'views/HiraganaKeyboard.js';
@@ -40,6 +41,7 @@ const routes = [
   { path: '/progress', component: Progress, name: 'progress' },
   { path: '/profile', component: Profile, name: 'profile' },
   { path: '/common-phrases/:phrase?', component: CommonPhrases, name: 'common-phrases', props: true },
+  { path: '/notes/:note?', component: Notes, name: 'notes', props: true },
   { path: '/translations/:type?/:id?', component: Translations, name: 'translations', props: true },
   // one route per unit, so each can be unlocked on its own (see MENU in data/progression.js)
   { path: '/hiragana-practice', component: HiraganaPractice, name: 'hiragana-practice' },

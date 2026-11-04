@@ -175,6 +175,7 @@ export const MENU = [
       { id: 'topics', to: '/topics', label: 'TOPICS', practice: true, soft: true, requires: { hiragana: 2 } },
       { id: 'common-phrases', to: '/common-phrases', label: 'COMMON PHRASES', practice: true, soft: true, requires: { hiragana: 3 } },
       { id: 'translations', to: '/translations', label: 'TRANSLATIONS', soft: true, requires: { hiragana: 5 } },
+      { id: 'notes', to: '/notes', label: 'NOTES', soft: true },
     ],
   },
 
