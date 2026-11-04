@@ -324,6 +324,17 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
           input.value = value;
           if (!value) return;
           const tail = romajiTail(value);
+          // っ asked and "kk" typed: the っ is right and the second k already starts the next kana
+          if (toHiraganaText(this.target) === 'っ' && value.startsWith('っ') && tail && value.length === 1 + tail.length) {
+            const carry = this.wordMode ? tail : '';
+            this.clearTyped();
+            this.handleKana(this.target, true);
+            if (carry && this.$refs.capture && !this.finished) {
+              this.$refs.capture.value = carry;
+              this.pending = carry;
+            }
+            return;
+          }
           // a lone n is enough when ん is the answer; otherwise wait for the rest of the syllable
           const waiting = tail && !(tail === 'n' && toHiraganaText(this.target) === 'ん');
           if (waiting && !final) {
