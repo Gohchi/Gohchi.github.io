@@ -145,6 +145,11 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         if (listen) this.$nextTick(() => this.playTarget());
       },
       // listening: say the kana (again)
+      // listening: a click anywhere on the card replays the sound, except on buttons / fields / links
+      onCardClick(event) {
+        if (event.target.closest?.('button, a, input, textarea, select, label, .row, .choice-grid, .info-icons, .kanji-corner')) return;
+        this.playTarget();
+      },
       playTarget() {
         if (!this.target) return;
         window.speechSynthesis?.cancel();

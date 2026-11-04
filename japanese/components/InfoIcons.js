@@ -7,6 +7,8 @@ export default {
       type: Object, // { mastered, total }
       default: () => ({ mastered: 0, total: 0 }),
     },
+    memory: { type: Number, default: undefined }, // optional: memory stage of the current item, drawn as a small bar
+    memoryMax: { type: Number, default: 5 },
   },
   template: /*html*/`
     <div class="info-icons">
@@ -26,6 +28,15 @@ export default {
         <div class="icon mastered-mask"></div>
         {{ mastered.mastered }}/{{ mastered.total }}
       </div>
+      <div
+        v-if="memory !== undefined"
+        class="memory-meter"
+        role="meter"
+        :aria-valuenow="memory"
+        aria-valuemin="0"
+        :aria-valuemax="memoryMax"
+        :title="'Memory: ' + memory + '/' + memoryMax"
+      ><span :style="{ width: (memoryMax ? memory / memoryMax * 100 : 0) + '%' }"></span></div>
     </div>
   `,
 };

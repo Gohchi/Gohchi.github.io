@@ -23,16 +23,14 @@ export default /*html*/`
           :score="score"
           :last="last"
           :mastered="kanaStats"
+          :memory="kanaMemory"
+          :memory-max="MAX_MEMORY"
         />
 
         <div style="text-align:center">
           {{ inputMode === 'type' ? 'Type this kana:' : 'Which reading matches?' }}
         </div>
         <div id="prompt" class="prompt">{{ target }}</div>
-
-        <div class="memory-bar" :title="'Memory: ' + kanaMemory + '/' + MAX_MEMORY">
-          <span v-for="n in MAX_MEMORY" :key="n" class="memory-dot" :class="{ filled: n <= kanaMemory }"></span>
-        </div>
 
         <div id="status" :class="statusClass">{{ status }}</div>
 

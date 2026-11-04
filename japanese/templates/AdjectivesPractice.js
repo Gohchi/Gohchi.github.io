@@ -40,6 +40,8 @@ export default /*html*/`
             :streak="streak"
             :score="score"
             :mastered="adjStats"
+            :memory="adjMemory"
+            :memory-max="MAX_MEMORY"
           />
 
           <!-- the reading goes only over the kanji (okurigana stays plain).
@@ -56,10 +58,6 @@ export default /*html*/`
 
           <div class="verb-target-label">
             {{ typeLabel }} · {{ targetAdj.level }}<template v-if="targetAdj.tags?.length"> · {{ targetAdj.tags.join(', ') }}</template>
-          </div>
-
-          <div class="memory-bar" :title="'Memory: ' + adjMemory + '/' + MAX_MEMORY">
-            <span v-for="n in MAX_MEMORY" :key="n" class="memory-dot" :class="{ filled: n <= adjMemory }"></span>
           </div>
 
           <template v-if="inputMode === 'type'">

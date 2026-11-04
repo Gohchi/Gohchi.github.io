@@ -25,6 +25,7 @@ import Settings from 'views/Settings.js';
 import Donate from 'views/Donate.js';
 import Admin from 'views/Admin.js';
 import { isRouteUnlocked } from 'data/progression.js';
+import 'data/keyboard-open.js'; // <html class="keyboard-open"> while a phone keyboard is up
 
 const app = createApp({});
 

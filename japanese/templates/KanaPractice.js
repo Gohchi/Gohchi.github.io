@@ -23,7 +23,7 @@ export default /*html*/`
     </MainHeader>
 
     <main>
-      <div class="card choice-card" :class="feedbackClass">
+      <div class="card choice-card" :class="[feedbackClass, { 'listen-card': listen }]" @click="listen && onCardClick($event)">
         <WordCorner v-if="!listen" :word="target" />
 
         <InfoIcons
@@ -31,18 +31,16 @@ export default /*html*/`
           :score="score"
           :last="last"
           :mastered="kanaStats"
+          :memory="kanaMemory"
+          :memory-max="MAX_MEMORY"
         />
 
         <div style="text-align:center">
           <template v-if="listen">{{ mode === 'type' ? 'Listen and type the kana:' : 'Listen and pick the kana:' }}</template>
           <template v-else>{{ mode === 'type' ? 'Type this kana:' : 'Which reading matches?' }}</template>
         </div>
-        <button v-if="listen" type="button" id="prompt" class="listen-prompt" title="Play the sound again" aria-label="Play the sound again" @click="playTarget">🔊</button>
+        <div v-if="listen" id="prompt" class="listen-prompt" role="img" aria-label="Tap the card to play the sound again">🔊</div>
         <div v-else id="prompt" class="prompt">{{ target }}</div>
-
-        <div class="memory-bar" :title="'Memory: ' + kanaMemory + '/' + MAX_MEMORY">
-          <span v-for="n in MAX_MEMORY" :key="n" class="memory-dot" :class="{ filled: n <= kanaMemory }"></span>
-        </div>
 
         <!-- typing: what the keyboard has typed so far (は → ば → ぱ) and how to get the kana -->
         <div v-if="mode === 'type'" class="typed-preview" :class="{ empty: !pending }" aria-live="polite">{{ pending || '・・・' }}</div>
@@ -51,7 +49,7 @@ export default /*html*/`
         <div id="status" :class="statusClass">{{ status }}</div>
 
         <template v-if="mode === 'choice'">
-          <div class="choice-grid" :class="{ 'listen-mode': listen }">
+          <div class="choice-grid" :class="{ 'listen-mode': listen }" @click.stop>
             <button
               v-for="option in kanaOptions" :key="target + option.kana"
               class="choice-button"
@@ -60,12 +58,6 @@ export default /*html*/`
           </div>
         </template>
 
-        <div class="row">
-          <button @click="newTarget">Next</button>
-          <button @click="resetScore">Reset</button>
-          <button v-if="mode === 'type' && pending" @click="submitTyped">Check</button>
-          <button v-if="mode === 'type'" @click="focusInput">Focus</button>
-        </div>
       </div>
 
       <input
@@ -76,5 +68,15 @@ export default /*html*/`
 
       <SessionHistory :entries="sessionHistory" />
     </main>
+
+    <!-- actions live here so the card only keeps "listen" -->
+    <footer class="practice-footer">
+      <div class="row">
+        <button type="button" @click="newTarget">Next</button>
+        <button type="button" @click="resetScore">Reset</button>
+        <button type="button" v-if="mode === 'type' && pending" @click="submitTyped">Check</button>
+        <button type="button" v-if="mode === 'type'" @click="focusInput">Focus</button>
+      </div>
+    </footer>
   </div>
 `;
