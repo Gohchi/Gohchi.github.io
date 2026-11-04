@@ -192,6 +192,14 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
 
         if (this.index >= this.slots.length) {
           this.finished = true;
+          this.pushHistory({
+            type: 'kana',
+            prompt: this.word.word,
+            detail: this.word.meaning,
+            chosen: this.word.word,
+            correctAnswer: this.word.word,
+            isCorrect: true,
+          });
           this.status = `${this.word.word} = ${this.word.meaning}`;
           this.statusClass = 'status ok';
           this.clearTyped();
@@ -282,14 +290,17 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         this.flash(correct, correct ? this.streak + 1 : 0);
         this.progressVersion++;
 
-        this.pushHistory({
-          type: 'kana',
-          prompt: this.target,
-          detail: this.word ? this.word.word : '',
-          chosen: candidate,
-          correctAnswer: this.target,
-          isCorrect: correct,
-        });
+        // Words mode records the whole word once it is complete (see advanceWord), not every kana
+        if (!this.wordMode) {
+          this.pushHistory({
+            type: 'kana',
+            prompt: this.target,
+            detail: '',
+            chosen: candidate,
+            correctAnswer: this.target,
+            isCorrect: correct,
+          });
+        }
 
         if (correct) {
           this.score++;
