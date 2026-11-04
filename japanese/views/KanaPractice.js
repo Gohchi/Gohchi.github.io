@@ -16,8 +16,9 @@ import InfoIcons from 'components/InfoIcons.js';
 import template from 'templates/KanaPractice.js';
 
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
-import { KANA_GROUPS, kanaTable, toKatakana } from 'data/kana-romaji.js';
+import { KANA_GROUPS, kanaTable, toHiraganaText, toKatakana } from 'data/kana-romaji.js';
 import { typedVerdict, typingHint } from 'data/kana-input.js';
+import { romajiInput, romajiToKana, romajiTail } from 'data/romaji-input.js';
 import { feedbackMixin } from 'data/feedback.js';
 import { isRouteUnlocked } from 'data/progression.js';
 import { shuffle, speak } from 'tools';
@@ -81,6 +82,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         mistakes: 0, // Words mode: wrong answers in this word
         finished: false, // Words mode: the word is complete, the next one is about to come
         MAX_MEMORY,
+        romajiInput, // Settings > Typing: a QWERTY keyboard writes kana (sa -> さ)
         sessionHistory: [],
 
         groupOptions: KANA_GROUPS,
@@ -110,7 +112,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         return listen && this.unit === 'word';
       },
       hint() {
-        return !listen && this.mode === 'type' ? typingHint(this.target) : '';
+        return !listen && this.mode === 'type' && !romajiInput.on ? typingHint(this.target) : '';
       },
       title() {
         if (listen) return `${Script} LISTEN`;
@@ -314,8 +316,29 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         const input = this.$refs.capture;
         if (!input || !input.value || this.finished) return;
 
-        const { verdict, typed } = typedVerdict(input.value, this.target, {
-          final,
+        let value = input.value;
+        let done = final;
+        if (romajiInput.on) {
+          // letters become kana as they are typed; the ones that cannot be a kana yet wait at the end
+          value = romajiToKana(value, { final });
+          input.value = value;
+          if (!value) return;
+          const tail = romajiTail(value);
+          // a lone n is enough when ん is the answer; otherwise wait for the rest of the syllable
+          const waiting = tail && !(tail === 'n' && toHiraganaText(this.target) === 'ん');
+          if (waiting && !final) {
+            this.pending = value;
+            this.status = 'Keep going… (Enter to check what you typed)';
+            this.statusClass = 'status';
+            return;
+          }
+          if (tail === 'n') value = value.slice(0, -1) + 'ん';
+          input.value = value;
+          done = true; // the letters are kana now, nothing is on its way to another one
+        }
+
+        const { verdict, typed } = typedVerdict(value, this.target, {
+          final: done,
           // listening: a homophone is the same answer
           same: listen ? (a, b) => {
             const inScript = kana => (script === 'katakana' ? toKatakana(kana) : kana);

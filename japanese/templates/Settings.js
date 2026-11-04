@@ -74,6 +74,28 @@ export default /*html*/`
         </label>
       </section>
 
+      <section class="settings-typing">
+        <p class="eyebrow">入力 · Typing</p>
+        <h2>Kana from a QWERTY keyboard</h2>
+
+        <label class="settings-check">
+          <input
+            type="checkbox"
+            :checked="romajiInput.on"
+            @change="romajiInput.set($event.target.checked)"
+          />
+          <span>
+            <strong>Type kana with romaji letters</strong>
+            <small>
+              In the hiragana and katakana typing practices (keyboard and listen), letters turn into
+              kana as you type: "sa" becomes さ (サ in the katakana sections), "kyo" becomes きょ,
+              "kk" makes っ and "nn" makes ん. Turn it on if you use a standard keyboard instead of
+              a Japanese one.
+            </small>
+          </span>
+        </label>
+      </section>
+
       <section class="settings-pools">
         <div class="chip-row" role="tablist" aria-label="Pool">
           <button

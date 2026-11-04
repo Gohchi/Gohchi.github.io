@@ -1,6 +1,7 @@
 import MainHeader from 'components/MainHeader.js';
 import { voiceStore } from 'store';
 import { showLocked } from 'data/show-locked.js';
+import { romajiInput } from 'data/romaji-input.js';
 import { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import template from 'templates/Settings.js';
 
@@ -47,6 +48,7 @@ export default {
     return {
       voiceStore,
       showLocked,
+      romajiInput,
       voicesLoaded: false,
       MAX_MEMORY,
       PAGE_SIZE,

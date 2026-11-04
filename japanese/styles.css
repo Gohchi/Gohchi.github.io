@@ -2930,7 +2930,8 @@ body {
     }
   }
 
-  .settings-display {
+  .settings-display,
+  .settings-typing {
     margin-bottom: 2.5rem;
 
     h2 { margin: 0 0 .75rem; }
@@ -5035,14 +5036,6 @@ html.keyboard-open .practice-sections {
   .prompt {
     font-size: 44px;
     line-height: 1.1;
-  }
-
-  .listen-prompt {
-    width: 3.6rem;
-    height: 3.6rem;
-    margin: .2rem auto;
-    font-size: 1.8rem;
-    line-height: 3.6rem;
   }
 
   .word-slots { margin: 0 0 .25rem; gap: 4px; }
