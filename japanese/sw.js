@@ -1,4 +1,4 @@
-const CACHE_NAME = 'japanese-store-v1.21';
+const CACHE_NAME = 'japanese-store-v1.22';
 const CACHE_ASSETS = [
   '/common.js',
   '/japanese/',
@@ -54,6 +54,7 @@ const CACHE_ASSETS = [
   '/japanese/data/notes.js',
   '/japanese/data/feedback.js',
   '/japanese/data/firebase.js',
+  '/japanese/data/gachamon.js',
   '/japanese/data/kana-romaji.js',
   '/japanese/data/kana.js',
   '/japanese/data/kanji.js',
@@ -84,6 +85,7 @@ const CACHE_ASSETS = [
   '/japanese/templates/Admin.js',
   '/japanese/templates/CommonPhrases.js',
   '/japanese/templates/Donate.js',
+  '/japanese/templates/Gachamon.js',
   '/japanese/templates/Home.js',
   '/japanese/templates/Notes.js',
   '/japanese/templates/KanaPractice.js',
@@ -102,6 +104,7 @@ const CACHE_ASSETS = [
   '/japanese/views/Admin.js',
   '/japanese/views/CommonPhrases.js',
   '/japanese/views/Donate.js',
+  '/japanese/views/Gachamon.js',
   '/japanese/views/HiraganaPractice.js',
   '/japanese/views/HiraganaKeyboard.js',
   '/japanese/views/HiraganaListen.js',

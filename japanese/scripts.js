@@ -24,6 +24,7 @@ import Progress from 'views/Progress.js';
 import Profile from 'views/Profile.js';
 import Settings from 'views/Settings.js';
 import Donate from 'views/Donate.js';
+import Gachamon from 'views/Gachamon.js';
 import Admin from 'views/Admin.js';
 import { isRouteUnlocked } from 'data/progression.js';
 import 'data/keyboard-open.js'; // <html class="keyboard-open"> while a phone keyboard is up
@@ -64,6 +65,7 @@ const routes = [
   { path: '/speech-practice', component: SpeechPractice, name: 'speech-practice' },
   { path: '/settings', component: Settings, name: 'settings' },
   { path: '/admin', component: Admin, name: 'admin' },
+  { path: '/gacha', component: Gachamon, name: 'gacha' },
   { path: '/donate', component: Donate, name: 'donate' },
   { path: '/:pathMatch(.*)*', name: '404', component: NotFound }
 ];
