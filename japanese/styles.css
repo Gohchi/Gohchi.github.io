@@ -5610,6 +5610,7 @@ html.keyboard-open .practice-sections {
   }
   .gm-tile { cursor: pointer; &:hover { border-color: var(--color-salmon); } }
   .gm-banner-image { max-width: 100%; border-radius: 10px; }
+  .gm-layout-card { p { margin: .3rem 0 0; font-size: .85rem; text-align: center; } }
   .gm-foil { font-weight: 700; }
   .gm-odds, .gm-drops ul, .gm-inventory ul { padding-left: 1.2rem; line-height: 1.7; }
   .gm-drops ul { list-style: none; padding: 0; li { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .3rem 0; } }
