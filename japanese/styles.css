@@ -5519,3 +5519,99 @@ html.keyboard-open .practice-sections {
 @media (prefers-reduced-motion: reduce) {
   .notes .mic.pulse { animation: none; }
 }
+
+/* Gachamon page (MORE > GACHA) */
+.gachamon {
+  main {
+    max-width: 44rem;
+    margin: 5rem auto 3rem;
+    padding: 0 1rem;
+  }
+
+  .gm-hero {
+    text-align: center;
+
+    .eyebrow {
+      color: var(--color-salmon);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0 0 .5rem;
+    }
+
+    h1 {
+      font-family: "Zen Antique Soft", serif;
+      font-weight: 400;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin: 0 0 1rem;
+    }
+  }
+
+  h2, h3 { font-family: "Zen Antique Soft", serif; font-weight: 400; }
+  section { margin-top: 2rem; }
+
+  .gm-muted { color: light-dark(#58635e, #b5bfba); font-size: .9rem; }
+  .gm-message {
+    padding: .6rem .9rem;
+    border-radius: 8px;
+    border: 1px solid light-dark(#d0d0d0, #303030);
+  }
+  .gm-error { border-color: var(--color-salmon); color: var(--color-salmon); }
+  .gm-notice { border-color: #3a9b4f; }
+
+  .gm-account {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+    margin-top: 1rem;
+  }
+  .gm-pulls { font-weight: 700; }
+
+  .gm-button {
+    background: var(--color-salmon);
+    color: white;
+    border: 0;
+    border-radius: 999px;
+    padding: .45rem 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    &:disabled { background: var(--color-button-disabled); cursor: not-allowed; }
+  }
+  .gm-link {
+    background: none;
+    border: 0;
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+  .gm-actions { display: flex; gap: .8rem; margin: 1rem 0; }
+
+  .gm-grid, .gm-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .gm-tile, .gm-card {
+    text-align: left;
+    color: inherit;
+    font: inherit;
+    border: 1px solid light-dark(#d0d0d0, #303030);
+    border-radius: 10px;
+    padding: .7rem;
+    background: transparent;
+    h3, h4 { margin: .4rem 0 .2rem; font-size: 1rem; }
+    p { margin: 0; font-size: .85rem; color: light-dark(#58635e, #b5bfba); }
+    img { width: 100%; border-radius: 6px; display: block; }
+  }
+  .gm-tile { cursor: pointer; &:hover { border-color: var(--color-salmon); } }
+  .gm-banner-image { max-width: 100%; border-radius: 10px; }
+  .gm-foil { font-weight: 700; }
+  .gm-odds, .gm-drops ul, .gm-inventory ul { padding-left: 1.2rem; line-height: 1.7; }
+  .gm-drops ul { list-style: none; padding: 0; li { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .3rem 0; } }
+  .gm-code form { display: flex; gap: .6rem; input { flex: 1; padding: .45rem .7rem; border-radius: 8px; border: 1px solid light-dark(#d0d0d0, #303030); background: transparent; color: inherit; } }
+}
