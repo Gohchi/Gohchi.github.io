@@ -5,6 +5,7 @@ import {
   GachamonError,
   mediaUrl,
   pullSources,
+  loadCardStyles,
   watchGachamonAuth,
   signInGachamon,
   signOutGachamon,
@@ -138,6 +139,7 @@ export default {
   async mounted() {
     try {
       this.sources = await pullSources();
+      loadCardStyles().catch(() => {}); // without it cards still show, just unstyled
       await this.loadBanners();
       this.unwatch = await watchGachamonAuth(async user => {
         this.user = user;

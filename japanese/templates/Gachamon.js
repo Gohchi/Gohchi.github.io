@@ -48,12 +48,15 @@ export default /*html*/`
           <div v-if="results.length" class="gm-results">
             <h3>You got</h3>
             <div class="gm-cards">
-              <article v-for="(item, i) in results" :key="i" class="gm-card" :class="'rarity-' + item.rarity.toLowerCase()">
-                <img v-if="item.image" :src="mediaUrl(item.image)" :alt="item.name" loading="lazy" />
-                <h4>{{ item.name }}</h4>
-                <p class="gm-rarity">{{ item.rarity }} <span v-if="item.foil" class="gm-foil" :style="{ color: item.foil.color }">{{ foilLabel(item) }}</span></p>
-                <p v-if="item.description" class="gm-desc">{{ item.description }}</p>
-              </article>
+              <template v-for="(item, i) in results" :key="i">
+                <div v-if="item.card_html" class="gm-layout-card" v-html="item.card_html"></div>
+                <article v-else class="gm-card">
+                  <img v-if="item.image" :src="mediaUrl(item.image)" :alt="item.name" loading="lazy" />
+                  <h4>{{ item.name }}</h4>
+                  <p class="gm-rarity">{{ item.rarity }} <span v-if="item.foil" class="gm-foil" :style="{ color: item.foil.color }">{{ foilLabel(item) }}</span></p>
+                  <p v-if="item.description" class="gm-desc">{{ item.description }}</p>
+                </article>
+              </template>
             </div>
           </div>
 
@@ -64,11 +67,17 @@ export default /*html*/`
 
           <h3>Items</h3>
           <div class="gm-cards">
-            <article v-for="item in banner.items" :key="item.id" class="gm-card gm-card-small">
-              <img v-if="item.image" :src="mediaUrl(item.image)" :alt="item.name" loading="lazy" />
-              <h4>{{ item.name }}</h4>
-              <p class="gm-rarity">{{ item.rarity }} · {{ chance(item.chance) }}</p>
-            </article>
+            <template v-for="item in banner.items" :key="item.id">
+              <div v-if="item.card_html" class="gm-layout-card">
+                <div v-html="item.card_html"></div>
+                <p class="gm-rarity">{{ item.rarity }} · {{ chance(item.chance) }}</p>
+              </div>
+              <article v-else class="gm-card gm-card-small">
+                <img v-if="item.image" :src="mediaUrl(item.image)" :alt="item.name" loading="lazy" />
+                <h4>{{ item.name }}</h4>
+                <p class="gm-rarity">{{ item.rarity }} · {{ chance(item.chance) }}</p>
+              </article>
+            </template>
           </div>
         </section>
 
@@ -109,12 +118,19 @@ export default /*html*/`
         <section v-if="canPlay" class="gm-inventory">
           <h2>Your collection</h2>
           <p v-if="!inventory.length" class="gm-muted">Nothing yet. Make your first pull!</p>
-          <ul>
-            <li v-for="row in inventory" :key="row.id + '-' + (row.foil || '')">
-              {{ row.name }} <span class="gm-rarity">({{ row.rarity }}<template v-if="row.foil"> · ✦ {{ row.foil }}</template>)</span>
-              <strong v-if="row.copies > 1"> ×{{ row.copies }}</strong>
-            </li>
-          </ul>
+          <div class="gm-cards">
+            <template v-for="row in inventory" :key="row.id + '-' + (row.foil || '')">
+              <div v-if="row.card_html" class="gm-layout-card">
+                <div v-html="row.card_html"></div>
+                <p class="gm-rarity">{{ row.name }}<strong v-if="row.copies > 1"> ×{{ row.copies }}</strong></p>
+              </div>
+              <article v-else class="gm-card gm-card-small">
+                <img v-if="row.image" :src="mediaUrl(row.image)" :alt="row.name" loading="lazy" />
+                <h4>{{ row.name }}<strong v-if="row.copies > 1"> ×{{ row.copies }}</strong></h4>
+                <p class="gm-rarity">{{ row.rarity }}<template v-if="row.foil"> · ✦ {{ row.foil }}</template></p>
+              </article>
+            </template>
+          </div>
         </section>
       </template>
     </main>

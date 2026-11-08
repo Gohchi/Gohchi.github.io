@@ -22,7 +22,7 @@ export class GachamonError extends Error {
 // Media paths come back relative ("/media/x.png"): point them at the Gachamon host.
 export const mediaUrl = path => (path ? (/^https?:/.test(path) ? path : GACHAMON_URL + path) : '');
 
-async function request(path, { method = 'GET', body, token } = {}) {
+async function request(path, { method = 'GET', body, token, text = false } = {}) {
   const headers = { 'X-API-Key': GACHAMON_KEY };
   if (token) headers.Authorization = `Bearer ${token}`;
   if (body) headers['Content-Type'] = 'application/json';
@@ -33,6 +33,7 @@ async function request(path, { method = 'GET', body, token } = {}) {
   } catch {
     throw new GachamonError('Could not reach Gachamon. Are you offline?', 0);
   }
+  if (text && response.ok) return response.text();
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new GachamonError(data.error || `Request failed (${response.status})`, response.status);
   return data;
@@ -93,12 +94,29 @@ const idToken = async () => {
 // ---------------------------------------------------------------------------
 
 export const listBanners = () => request('/api/banners');
-export const getBanner = id => request(`/api/banners/${id}`);
+// `?cards=html`: each item also carries `card_html`, the card drawn by Gachamon with its layout and foil
+// (null for items that use the standard card, which the page draws itself).
+export const getBanner = id => request(`/api/banners/${id}?cards=html`);
+
+// The styles for that HTML. A <link> can't send the API key header, so fetch it and inject a <style>, once.
+let cardStyles = null;
+export function loadCardStyles() {
+  if (!cardStyles) {
+    cardStyles = request('/api/card.css', { text: true }).then(css => {
+      const style = document.createElement('style');
+      style.id = 'gachamon-card-css';
+      style.textContent = css;
+      document.head.appendChild(style);
+    });
+    cardStyles.catch(() => { cardStyles = null; });
+  }
+  return cardStyles;
+}
 
 export const getMe = async () => request('/api/me', { token: await idToken() });
-export const getInventory = async () => request('/api/me/inventory', { token: await idToken() });
+export const getInventory = async () => request('/api/me/inventory?cards=html', { token: await idToken() });
 export const pullBanner = async (bannerId, count = 1) =>
-  request(`/api/banners/${bannerId}/pull`, { method: 'POST', body: { count }, token: await idToken() });
+  request(`/api/banners/${bannerId}/pull?cards=html`, { method: 'POST', body: { count }, token: await idToken() });
 export const listDrops = async () => request('/api/me/drops', { token: await idToken() });
 export const claimDrop = async id =>
   request(`/api/me/drops/${id}/claim`, { method: 'POST', token: await idToken() });
