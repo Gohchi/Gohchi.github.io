@@ -3,6 +3,121 @@ const defaultValues = { type: 'standard' };
 export const topics = [
   {
     ...defaultValues,
+    title: 'Grab someone’s attention',
+    subtitle: 'These expressions are used to get someone’s attention in Japanese.',
+    content: [
+      {
+        heading: 'ねえ / ねぇ / ねー',
+        text: 'A casual attention-getter used to call someone’s attention, usually before asking a question or making a comment. It can sound friendly, impatient, or dramatic depending on tone.',
+        example: 'ねえ、今何してる？ (Hey, what are you doing right now?)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: 'あの / あのう / あのね / あのさ',
+        text: 'A filler phrase used to get attention, soften a request, or begin a sentence when the speaker is thinking. あのさ is especially common in casual spoken Japanese.',
+        example: 'あの、ちょっといいですか。 (Um, can I ask you something?) | あのさ、さっきの話なんだけど… (Hey, about what we were talking about earlier…)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: 'さあ',
+        text: 'Used to encourage action, begin something, or mark a sudden shift. It can mean “come on,” “well then,” or “let’s do it,” depending on context.',
+        example: 'さあ、始めましょう。 (Alright, let’s begin.)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: 'ちょっとさ',
+        text: 'A casual conversational filler used to preface a complaint, explanation, or a request. It often adds a slightly casual or exasperated tone.',
+        example: 'ちょっとさ、待ってよ。 (Hey, wait a second.)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: 'ていうか',
+        text: 'A colloquial way of saying “I mean,” “like,” or “rather than that,” often used to correct, clarify, or emphasize what someone is saying.',
+        example: 'ていうか、行きたくない。 (I mean, I don’t want to go.)',
+        JLPT_level: 'N5'
+      }
+    ],
+  },
+  {
+    ...defaultValues,
+    title: 'ところで',
+    subtitle: 'ところで is a Japanese expression used to change the topic of conversation or introduce a new subject. It can be translated as "by the way" or "incidentally."',
+    JLPT_level: 'N3',
+    content: [
+      {
+        heading: 'Changing the Topic',
+        text: 'It is placed at the beginning of a sentence or clause to abruptly or smoothly shift the conversation to an unrelated new topic, question, or thought.'
+      },
+      {
+        heading: 'Not for Related Additions',
+        text: 'Unlike ちなみに (which means "by the way" in the sense of adding extra details to the current topic), tokorode pivots away from what you were just talking about.'
+      },
+      {
+        heading: '〜たところで',
+        text: 'When combined with the past tense of a verb, 〜たところで expresses that even if something has just happened, it will not change the outcome or situation. It can be translated as "even if" or "even though."',
+        example: '今さら謝ったところで、もう遅い。 (Even if you apologize now, it’s already too late.)',
+      }
+    ]
+  },
+  {
+    ...defaultValues,
+    title: 'KOSOADO',
+    subtitle: 'こそあど — (this / that / over there / which) words are Japanese demonstratives used to point to things, places, or directions relative to the speaker, listener, or a third person.',
+    JLPT_level: 'N5',
+    content: [
+      {
+        heading: 'これ, それ, あれ, and どれ',
+        text: 'These are demonstrative pronouns for “this,” “that,” “that over there,” and “which.” They point to objects or people depending on distance and context.',
+        example: 'これをください。 (Please give me this.) | それは高いですね。 (That is expensive.) | あれは何ですか。 (What is that over there?) | どれが好きですか。 (Which one do you like?)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: 'ここ, そこ, あそこ, and どこ',
+        text: 'These are demonstrative words for places: “here,” “there,” “over there,” and “where.” They are used to indicate location or ask about location.',
+        example: 'ここは駅です。 (This is the station.) | そこに座ってください。 (Please sit there.) | あそこにレストランがあります。 (There is a restaurant over there.) | どこに行きますか。 (Where are you going?)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: 'こちら, そちら, あちら, and どちら',
+        text: 'These are the polite and formal versions of the kosoado set, often used with people, places, or directions in respectful speech. They can also mean “this way” or “that way” in a more formal tone.',
+        example: 'こちらが私の家です。 (This is my house.) | そちらへ行きましょう。 (Let’s go that way.) | あちらは駅です。 (Over there is the station.) | どちらに行きますか。 (Which way are you going?)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: 'こっち, そっち, あっち, and どっち',
+        text: 'These are the casual spoken forms of the same ideas, usually used in everyday conversation for directions and choices. They can mean “this way,” “that way,” “over there,” or “which way / which one.”',
+        example: 'こっちに来て。 (Come this way.) | そっちのほうが早い。 (That way is faster.) | あっちにあるよ。 (It’s over there.) | どっちがいい？ (Which one is better?)',
+        JLPT_level: 'N5'
+      }
+    ],
+  },
+  {
+    ...defaultValues,
+    title: 'なんか, なんて and など',
+    subtitle: 'These expressions are used to indicate examples, emphasis, or a sense of "such as" in Japanese. They can be used in various contexts to convey different nuances.',
+    content: [
+      {
+        heading: 'なんか (casual / spoken) — Attaches to Nouns or acts as a sentence-starter',
+        text: 'なんか is often used to give examples or to express a casual or dismissive tone. It can be used to indicate that something is not particularly important or to downplay the significance of what is being mentioned.',
+        example: '映画なんか見ない。 (I don’t watch movies.)',
+        JLPT_level: 'N3'
+      },
+      {
+        heading: 'なんて (casual / spoken) — Attaches to Nouns, Verbs, or full clauses',
+        text: 'なんて is used to express surprise, disbelief, or emphasis. It can also be used to introduce an example in a more formal or literary context.',
+        example: '彼がそんなことを言うなんて信じられない。 (I can’t believe he would say such a thing.)',
+        JLPT_level: 'N3'
+      },
+      {
+        heading: 'など (formal / written) — Attaches to Nouns',
+        text: 'など is used to indicate that there are other similar items or examples, often in a more formal or written context. It can be used to list items or to suggest that the list is not exhaustive.',
+        example: '本や雑誌などを読む。 (I read books, magazines, and so on.)',
+        JLPT_level: 'N4'
+      }
+    ],
+  },
+  {
+    ...defaultValues,
     title: 'Honorifics — 敬語',
     subtitle: '敬語 is a system of honorific speech in Japanese that shows respect and politeness. It is used to convey social hierarchy, humility, and formality in communication.',
     content: [

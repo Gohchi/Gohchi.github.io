@@ -84,7 +84,7 @@ function parseExamples(example) {
 function describe(topic, read) {
   const tags = topic.tags || [];
   const category = tags.find(tag => CATEGORY_KEYS.includes(tag)) || 'other';
-  const level = tags.find(tag => LEVEL_RE.test(tag)) || '';
+  const level = topic.JLPT_level || tags.find(tag => LEVEL_RE.test(tag)) || '';
   const type = TYPES[topic.type] || TYPES.standard;
   const { main, alt } = splitDash(topic.title);
 
