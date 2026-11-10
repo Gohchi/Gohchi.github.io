@@ -7,25 +7,31 @@
 // Hiragana (or katakana) choice and typing share the progress category, so XP is never counted twice.
 // Listening has its own category (`kana-<script>-listen`): what you can hear is not what you can read.
 // It keeps its own memory for picking the next kana, and it counts for the daily streak, but not for XP.
+//
+// The Pool (header) lists every kana by group (voiceless, voiced, semi-voiced, sokuon, combos).
+// A group opens when enough of the previous ones is mastered: the rule lives in data/progression.js.
 
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import InfoIcons from 'components/InfoIcons.js';
+import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 
 import template from 'templates/KanaPractice.js';
 
-import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
+import { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import { KANA_GROUPS, kanaTable, toHiraganaText, toKatakana } from 'data/kana-romaji.js';
 import { typedVerdict, typingHint } from 'data/kana-input.js';
 import { romajiInput, romajiToKana, romajiTail } from 'data/romaji-input.js';
 import { feedbackMixin } from 'data/feedback.js';
-import { isRouteUnlocked } from 'data/progression.js';
+import { isRouteUnlocked, kanaGroupStatus } from 'data/progression.js';
+import { notificationStore } from 'data/notifications.js';
 import { shuffle, speak } from 'tools';
 import wordsData from 'data/words.js';
 import {
   MAX_MEMORY,
   getEntry,
+  getCategoryEntries,
   recordAnswer,
   getStats,
   resetProgress,
@@ -53,22 +59,38 @@ export const kanaUnits = word => {
 
 const soundOf = (table, kana) => (/^[をヲ]$/.test(kana) ? 'o' : table[kana]);
 
+const NOT_HEARD = /^[ぢづヂヅ]$/; // listening: they sound like じ / ず, so they are never asked
+
 export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
   // every kana of the script with its romaji (basic + extras), to look readings up
   const table = { ...kanaTable(script, GROUP_KEYS), 'ー': 'long vowel' };
   // every kana-only word of this script (たまご, コーヒー): what the Words mode speaks
   const WORDS = wordsData.filter(item => item.type === script);
-  // the kana a wrong option can come from in Words mode, whatever the Kana filter says
-  const ALL_KANA = Object.keys(kanaTable(script, GROUP_KEYS)).filter(kana => !/^[ぢづヂヅ]$/.test(kana));
+  // the kana a wrong option can come from in Words mode, whatever the Pool says
+  const ALL_KANA = Object.keys(kanaTable(script, GROUP_KEYS)).filter(kana => !NOT_HEARD.test(kana));
   const category = listen ? `kana-${script}-listen` : `kana-${script}`;
   const Script = script === 'hiragana' ? 'HIRAGANA' : 'KATAKANA';
 
   // the other way to practice the same kana: shown only when that route is unlocked
   const siblingRoute = `/${script}-${mode === 'type' ? 'practice' : 'keyboard'}`;
 
+  // Kana the person turned OFF in the pool. Stored as "excluded", so kana that open later are in the pool by default.
+  const EXCLUDED_KEY = `kana-pool-excluded-${script}`;
+  const LEGACY_GROUPS_KEY = `kana-groups-${script}`; // the old "Kana" filter
+  const loadExcluded = () => {
+    const saved = loadSelection(EXCLUDED_KEY, null);
+    if (saved) return saved;
+    // first time with the pool: keep what the old filter had selected
+    const legacy = loadSelection(LEGACY_GROUPS_KEY, null);
+    if (!legacy) return [];
+    return GROUP_KEYS
+      .filter(key => !legacy.includes(key))
+      .flatMap(key => Object.keys(kanaTable(script, [key])));
+  };
+
   return {
     mixins: [feedbackMixin],
-    components: { MainHeader, SessionHistory, WordCorner, InfoIcons, FilterMenu },
+    components: { MainHeader, SessionHistory, WordCorner, InfoIcons, KanjiPoolMenu },
     data() {
       return {
         // listen: 'choice' (pick among 4) or 'type', remembered; the other routes are fixed
@@ -85,9 +107,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         romajiInput, // Settings > Typing: a QWERTY keyboard writes kana (sa -> さ)
         sessionHistory: [],
 
-        groupOptions: KANA_GROUPS,
-        // Basic is the default: dakuten, sokuon and combos are added from the Kana filter
-        selectedGroups: loadSelection(`kana-groups-${script}`, ['basic']).filter(key => GROUP_KEYS.includes(key)),
+        excludedKana: loadExcluded(),
         target: '',
         pending: '', // typed so far, on its way to the answer (は -> ば -> ぱ)
         kanaOptions: [],
@@ -101,12 +121,44 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
       };
     },
     computed: {
-      // the kana practiced: the groups chosen in the toolbar (never empty)
+      // voiceless, voiced...: which are open, which are locked and why (rule in data/progression.js)
+      groupStatus() {
+        this.progressVersion; // reactive dependency, progress lives in localStorage
+        return kanaGroupStatus(script);
+      },
+      excludedSet() {
+        return new Set(this.excludedKana);
+      },
+      // every kana of the groups that are open (listening: the ones that sound the same as another are never asked)
+      openKana() {
+        return this.groupStatus
+          .filter(group => !group.locked)
+          .flatMap(group => group.kana)
+          .filter(kana => !(listen && NOT_HEARD.test(kana)));
+      },
+      // the kana practiced: the open groups minus what the pool turned off (never empty)
       KANA() {
-        const groups = this.selectedGroups.length ? this.selectedGroups : ['basic'];
-        const pool = Object.keys(kanaTable(script, groups));
-        // listening: kana that sound the same as another one are never asked (づ/ず, ぢ/じ)
-        return listen ? pool.filter(kana => !/^[ぢづヂヅ]$/.test(kana)) : pool;
+        const pool = this.openKana.filter(kana => !this.excludedSet.has(kana));
+        return pool.length ? pool : this.openKana;
+      },
+      // what the Pool matrix shows
+      poolSections() {
+        return this.groupStatus.map(({ key, label, locked, note }) => ({ key, label, locked, note }));
+      },
+      poolItems() {
+        this.progressVersion; // reactive dependency
+        const entries = Object.fromEntries(getCategoryEntries(category));
+        return this.groupStatus.flatMap(group => group.kana
+          .filter(kana => !(listen && NOT_HEARD.test(kana)))
+          .map(kana => ({
+            word: kana,
+            reading: table[kana],
+            meaning: '',
+            section: group.key,
+            locked: group.locked,
+            needs: group.note,
+            memory: entries[kana]?.memory ?? 0,
+          })));
       },
       wordMode() {
         return listen && this.unit === 'word';
@@ -137,6 +189,18 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         return getStats(category, this.KANA);
       },
     },
+    watch: {
+      // a group that just opened: say it in the notifications (profile icon)
+      groupStatus(now, before) {
+        now
+          .filter((group, i) => !group.locked && before[i]?.locked)
+          .forEach(group => notificationStore.add({
+            icon: '🔓',
+            text: `Kana group unlocked: ${group.label}`,
+            to: this.$route?.path || '',
+          }));
+      },
+    },
     methods: {
       pushHistory(entry) {
         this.sessionHistory.unshift({ ...entry, id: Date.now() + '-' + Math.random() });
@@ -155,10 +219,11 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         }
         return shuffle([correctKana, ...wrongs]).map(k => ({ kana: k, romaji: table[k] }));
       },
-      setGroups(groups) {
-        this.selectedGroups = groups;
-        saveSelection(`kana-groups-${script}`, groups);
-        this.newTarget();
+      // the pool changed: a new kana only when the current one left it
+      setExcluded(list) {
+        this.excludedKana = list;
+        saveSelection(EXCLUDED_KEY, list);
+        if (!this.wordMode && !this.KANA.includes(this.target)) this.newTarget();
       },
       // Words mode: pick a word (the ones with weaker kana come more often) and start at its first kana
       newWord() {

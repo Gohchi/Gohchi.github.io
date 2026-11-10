@@ -9,7 +9,7 @@
 // so a wrong answer never takes XP away, and retuning the numbers below re-levels everybody.
 
 import { getAllProgress } from 'data/progress.js';
-import { hiragana, katakana, baseKana } from 'data/kana-romaji.js';
+import { hiragana, katakana, baseKana, kanaTable } from 'data/kana-romaji.js';
 import { ruby } from 'data/kanji.js';
 import verbsData from 'data/verbs.js';
 import adjectivesData from 'data/adjectives.js';
@@ -611,4 +611,52 @@ export function pendingSummary(words = [], ctx = unlockContext()) {
         .sort((a, b) => b.count - a.count),
     },
   };
+}
+
+// ---------------------------------------------------------------------------
+// 8. Kana pool groups (voiceless, voiced...): a group opens when enough of the previous ones is mastered
+// ---------------------------------------------------------------------------
+
+// Order = unlock order. `key` is the group key of kanaTable() in data/kana-romaji.js.
+export const KANA_POOL_GROUPS = [
+  { key: 'basic', label: 'Voiceless', name: 'voiceless' },
+  { key: 'dakuten', label: 'Voiced ゛', name: 'voiced' },
+  { key: 'handakuten', label: 'Semi-voiced ゜', name: 'semi-voiced' },
+  { key: 'sokuon', label: 'Sokuon っ', name: 'sokuon' },
+  { key: 'combo', label: 'Combos きゃ', name: 'combo' },
+];
+
+export const KANA_GROUP_PASS_SHARE = 0.75;       // share of ALL the previous groups that must be mastered...
+export const KANA_GROUP_PASS_STAGE = MAX_STAGE;  // ...mastered = best memory stage reached (5)
+
+// script: 'hiragana' | 'katakana'. Progress is read from the reading practice (`kana-<script>`),
+// the same one that gives XP, so the groups open the same way in every kana section (practice, keyboard, listen).
+// -> [{ key, label, kana: [...], locked, note }]  `note` explains the condition of a locked group.
+export function kanaGroupStatus(script, all = getAllProgress()) {
+  const bucket = all[`kana-${script}`] || {};
+  const unlockAll = isUnlockAll();
+  const before = []; // names of the groups already passed
+  let total = 0;
+  let mastered = 0;
+
+  return KANA_POOL_GROUPS.map(({ key, label, name }) => {
+    const kana = Object.keys(kanaTable(script, [key]));
+    const need = Math.ceil(total * KANA_GROUP_PASS_SHARE);
+    const locked = !unlockAll && total > 0 && mastered < need;
+
+    const group = {
+      key,
+      label,
+      kana,
+      locked,
+      note: locked
+        ? `Locked: master ${need} of the ${total} ${before.join(' + ')} kana first (${mastered} so far)`
+        : '',
+    };
+
+    before.push(name);
+    total += kana.length;
+    mastered += kana.filter(k => bestStage(bucket[k]) >= KANA_GROUP_PASS_STAGE).length;
+    return group;
+  });
 }
