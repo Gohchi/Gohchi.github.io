@@ -9,16 +9,18 @@ export default /*html*/`
     >
       <div class="keyboard-toolbar-buttons">
         <div class="toolbar-group">
-          <FilterMenu
+          <KanjiPoolMenu
             v-if="!wordMode"
-            label="Kana"
-            title="Which kana to practice: basic, dakuten, handakuten, sokuon, combos"
-            :options="groupOptions"
-            :modelValue="selectedGroups"
-            @update:modelValue="setGroups"
+            label="Pool"
+            title="Choose which kana to practice. A group opens when 75% of the previous ones is mastered."
+            emptyText="No kana available."
+            :items="poolItems"
+            :sections="poolSections"
+            :excluded="excludedKana"
+            @update:excluded="setExcluded"
           />
           <router-link v-if="siblingTo" :to="siblingTo" class="icon-button" :class="siblingIcon" :title="siblingTitle"></router-link>
-          <div v-if="listen" class="icon-button words-toggle" :class="{ on: wordMode }" :title="wordMode ? 'Practicing words: back to single kana' : 'Practice words, kana by kana'" role="button" :aria-pressed="wordMode" @click="toggleUnit()">Words</div>
+          <div v-if="listen" class="icon-button words-toggle" :class="{ on: wordMode }" :title="wordMode ? 'Practicing words: back to single kana' : 'Practice words, kana by kana'" role="button" :aria-pressed="wordMode" @click="toggleUnit()">{{ wordMode ? 'Kana' : 'Words' }}</div>
           <div v-if="listen" class="icon-button" :class="{ 'check-icon': mode === 'type', 'keyboard-icon': mode === 'choice' }" :title="mode === 'type' ? 'Options mode (meaning)' : 'Type mode (reading)'" @click="toggleMode()"></div>
         </div>
       </div>

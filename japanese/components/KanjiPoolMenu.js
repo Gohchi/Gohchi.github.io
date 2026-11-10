@@ -1,6 +1,9 @@
-// Header button that opens a matrix of words (kanji) to include in / exclude from the practice pool.
-//   items:    [{ word, reading, meaning, memory, level?, tags?, locked?, needs? }]  words visible with the current JLPT filter
+// Header button that opens a matrix of words (kanji, kana...) to include in / exclude from the practice pool.
+//   items:    [{ word, reading, meaning, memory, level?, tags?, section?, locked?, needs? }]  words visible with the current filters
 //             `level` (N5..N1) groups the matrix under "— N5 ———" separators, `tags` become chips that select by tag
+//   sections: [{ key, label, locked, note }]  optional. When given, the matrix is grouped by `item.section` in this
+//             order instead of by JLPT level. A locked section is always listed (grayed out) with its `note`,
+//             which explains how to open it.
 //   excluded: [word, ...]                           words the user turned OFF (v-model:excluded)
 //
 // The list stores EXCLUDED words, so new words added to the data are in the pool by default.
@@ -16,6 +19,10 @@ export default {
     },
     title: String,
     items: {
+      type: Array,
+      default: () => [],
+    },
+    sections: {
       type: Array,
       default: () => [],
     },
@@ -40,9 +47,10 @@ export default {
     },
   },
   computed: {
-    // locked words are listed (grayed out) unless Settings > Display hides them
+    // locked words are listed (grayed out) unless Settings > Display hides them.
+    // Locked sections are always listed: they say what is needed to open them.
     shownItems() {
-      return showLocked.on ? this.items : this.items.filter(({ locked }) => !locked);
+      return showLocked.on || this.sections.length ? this.items : this.items.filter(({ locked }) => !locked);
     },
     excludedSet() {
       return new Set(this.excluded);
@@ -53,9 +61,26 @@ export default {
     openItems() {
       return this.items.filter(({ locked }) => !locked);
     },
-    // JLPT sections in N5 -> N1 order; words without a level go last. No separators when no word has a level.
+    // what the counters compare against: with sections, only what can be picked now
+    totalCount() {
+      return this.sections.length ? this.openItems.length : this.shownItems.length;
+    },
+    // Sections in the order given; otherwise JLPT sections in N5 -> N1 order (words without a level go last).
+    // No separators when no word has a level.
     groups() {
-      if (!this.shownItems.some(({ level }) => level)) return [{ level: '', items: this.shownItems }];
+      if (this.sections.length) {
+        return this.sections
+          .map(section => ({
+            key: section.key,
+            level: section.label,
+            note: section.note,
+            locked: Boolean(section.locked),
+            items: this.shownItems.filter(item => item.section === section.key),
+          }))
+          .filter(group => group.items.length);
+      }
+
+      if (!this.shownItems.some(({ level }) => level)) return [{ key: 'all', level: '', items: this.shownItems }];
       const order = ['N5', 'N4', 'N3', 'N2', 'N1'];
       const byLevel = new Map();
       this.shownItems.forEach(item => {
@@ -66,7 +91,7 @@ export default {
       const rank = level => (order.includes(level) ? order.indexOf(level) : order.length);
       return [...byLevel.entries()]
         .sort(([a], [b]) => rank(a) - rank(b))
-        .map(([level, items]) => ({ level, items }));
+        .map(([level, items]) => ({ key: level || 'none', level, items }));
     },
     // one chip per tag, counting only the words that can be picked (not locked)
     tagList() {
@@ -157,12 +182,12 @@ export default {
         @click="open = !open"
       >
         <span>{{ label }}</span>
-        <span class="filter-count">{{ includedCount }}/{{ shownItems.length }}</span>
+        <span class="filter-count">{{ includedCount }}/{{ totalCount }}</span>
       </button>
 
       <div v-if="open" class="filter-popover pool-popover" role="group" :aria-label="title || label">
         <div class="filter-popover-actions pool-actions">
-          <span class="pool-summary">{{ includedCount }} of {{ shownItems.length }} selected</span>
+          <span class="pool-summary">{{ includedCount }} of {{ totalCount }} selected</span>
           <button type="button" class="filter-link" @click="selectAll">All</button>
           <button type="button" class="filter-link" @click="selectNone">None</button>
           <button type="button" class="filter-link" @click="invert">Invert</button>
@@ -180,8 +205,9 @@ export default {
         </div>
 
         <div v-if="shownItems.length" class="pool-groups">
-          <section v-for="group in groups" :key="group.level" class="pool-group">
+          <section v-for="group in groups" :key="group.key" class="pool-group" :class="{ locked: group.locked }">
             <div v-if="group.level" class="pool-level">{{ group.level }}</div>
+            <div v-if="group.note" class="pool-note">{{ group.note }}</div>
             <div class="pool-grid">
               <button
                 v-for="item in group.items" :key="item.word"

@@ -4462,6 +4462,17 @@ body header > .title > .keyboard-toolbar-buttons {
   }
 }
 
+.pool-popover .pool-note {
+  margin: -.1rem 0 .4rem;
+  font-size: .72rem;
+  line-height: 1.35;
+  opacity: .8;
+}
+
+.pool-popover .pool-group.locked .pool-level {
+  opacity: .45;
+}
+
 .pool-popover .pool-group:first-child .pool-level {
   margin-top: .1rem;
 }
