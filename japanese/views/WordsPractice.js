@@ -3,13 +3,14 @@
 //   makeWordsPractice({ script: 'katakana' })  words written in katakana, answer: the reading in hiragana
 // A word is practiced only once every kana it needs was answered correctly at least once
 // (rules in data/progression.js, splitWords()); locked words are listed as teasers.
+// Type mode: the reading is spelled kana by kana (components/KanaSpellInput.js), like hiragana-listen in Words mode.
 
 import MainHeader from 'components/MainHeader.js';
 import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import InfoIcons from 'components/InfoIcons.js';
-import KanaTypeInput from 'components/KanaTypeInput.js';
+import KanaSpellInput from 'components/KanaSpellInput.js';
 
 import template from 'templates/WordsPractice.js';
 
@@ -17,7 +18,7 @@ import wordsData from 'data/words.js';
 import { feedbackMixin } from 'data/feedback.js';
 import { splitWords, markKana } from 'data/progression.js';
 import { showLocked } from 'data/show-locked.js';
-import { shuffle, normalizeReading } from 'tools';
+import { shuffle } from 'tools';
 import {
   MAX_MEMORY,
   getEntry,
@@ -40,7 +41,7 @@ export function makeWordsPractice({ script }) {
 
   return {
     mixins: [feedbackMixin],
-    components: { MainHeader, SessionHistory, WordCorner, FilterMenu, InfoIcons, KanaTypeInput },
+    components: { MainHeader, SessionHistory, WordCorner, FilterMenu, InfoIcons, KanaSpellInput },
     data() {
       const { unlocked, locked } = splitWords(wordsData.filter(({ type }) => type === script));
 
@@ -60,7 +61,7 @@ export function makeWordsPractice({ script }) {
         targetWord: null,
         wordOptions: [], // meanings shown in choice mode
         wrongOptions: [], // meanings already tried wrong for the current word
-        wordInputValue: '',
+        spellRound: 0, // new value = the spelling input starts over
         wordStatus: '',
         wordStatusClass: 'status',
         wordScore: 0,
@@ -98,7 +99,7 @@ export function makeWordsPractice({ script }) {
       },
       inputLabel() {
         if (this.inputMode === 'choice') return 'Pick the meaning';
-        return script === 'hiragana' ? 'Write the word in hiragana' : 'Write the reading in hiragana';
+        return script === 'hiragana' ? 'Spell the word in hiragana, kana by kana' : 'Spell the reading in hiragana, kana by kana';
       },
     },
     methods: {
@@ -137,7 +138,7 @@ export function makeWordsPractice({ script }) {
 
         const word = weightedPick(this.category, pool, item => item.word);
 
-        this.wordInputValue = '';
+        this.spellRound++;
         this.wordOptions = [];
         this.wrongOptions = [];
         this.wordRevealed = false;
@@ -158,30 +159,24 @@ export function makeWordsPractice({ script }) {
           this.wordOptions = this.buildMeaningOptions(word);
           this.wordStatus = 'Pick the meaning of this word.';
         } else {
-          this.wordStatus = 'Type the answer and press Enter.';
+          this.wordStatus = 'Type the word, kana by kana.';
         }
         this.wordStatusClass = 'status';
         this.$nextTick(() => this.focusInput());
       },
-      onWordEnter(e) {
-        // Enter that confirms an IME composition must not check the answer
-        if (e.isComposing || e.keyCode === 229) return;
-        this.checkWordAnswer();
+
+      // --- type mode: the spelling input reports every wrong kana and the finished word ---
+      onMistake(typed) {
+        this.wordStatus = `Wrong: "${typed}"`;
+        this.wordStatusClass = 'status bad';
+        this.flash(false, 0);
       },
-      checkWordAnswer() {
-        if (!this.targetWord || this.wordLocked) return;
-
-        // answer was revealed: Enter moves on
-        if (this.wordRevealed) {
-          this.newWordTarget();
-          return;
-        }
-
-        const value = this.wordInputValue.trim();
-        if (!value) return;
+      // one answer per word: right when no kana needed a second try
+      onSpelled({ mistakes }) {
+        if (!this.targetWord || this.wordLocked || this.wordRevealed) return;
 
         const { word, reading, meaning } = this.targetWord;
-        const correct = normalizeReading(value) === normalizeReading(reading);
+        const correct = mistakes === 0;
 
         recordAnswer(CATEGORY_TYPE, word, correct);
         this.flash(correct, correct ? this.wordStreak + 1 : 0);
@@ -191,25 +186,23 @@ export function makeWordsPractice({ script }) {
           type: 'word',
           prompt: word,
           detail: meaning,
-          chosen: value,
+          chosen: correct ? reading : `${mistakes} wrong ${mistakes === 1 ? 'kana' : 'kana'}`,
           correctAnswer: reading,
           isCorrect: correct,
         });
 
-        if (correct) {
-          this.wordScore++;
-          this.wordStreak++;
-          this.wordStatus = 'Correct! ' + reading;
-          this.wordStatusClass = 'status ok';
-          this.wordLocked = true;
-          this.wordTimer = setTimeout(() => this.newWordTarget(), WORD_CORRECT_DELAY);
-        } else {
-          this.wordStreak = 0;
-          this.wordStatus = 'Not quite, try again.';
-          this.wordStatusClass = 'status bad';
-          this.$nextTick(() => this.$refs.wordInput && this.$refs.wordInput.select());
-        }
+        this.wordScore++;
+        this.wordStreak = correct ? this.wordStreak + 1 : 0;
+        this.wordStatus = `${correct ? 'Correct!' : 'Done.'} ${reading} = ${meaning}`;
+        this.wordStatusClass = correct ? 'status ok' : 'status bad';
+        this.wordLocked = true;
+        this.wordTimer = setTimeout(() => this.newWordTarget(), WORD_CORRECT_DELAY * 2);
       },
+      // the Check button
+      checkWordAnswer() {
+        if (this.$refs.wordInput) this.$refs.wordInput.submit();
+      },
+
       chooseMeaning(option) {
         if (!this.targetWord || this.wordLocked || this.wordRevealed) return;
         if (this.wrongOptions.includes(option)) return;
@@ -266,6 +259,7 @@ export function makeWordsPractice({ script }) {
         }
 
         this.wordRevealed = true;
+        if (!isChoice && this.$refs.wordInput) this.$refs.wordInput.reveal();
         this.wordStatus = isChoice
           ? `Answer: ${meaning} (${reading}). Press Skip for the next word.`
           : `Answer: ${reading}. Press Enter for the next word.`;
