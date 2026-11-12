@@ -52,18 +52,12 @@ export default /*html*/`
           </div>
 
           <template v-if="inputMode === 'type'">
-            <input
+            <KanaTypeInput
               ref="wordInput"
               v-model="wordInputValue"
-              @keydown.enter="onWordEnter"
               :readonly="wordLocked"
-              autofocus
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              lang="ja"
-              class="type-input"
               placeholder="ひらがな or 漢字で入力..."
+              @submit="onWordEnter"
             />
           </template>
           <template v-else>

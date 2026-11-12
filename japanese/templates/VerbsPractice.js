@@ -69,13 +69,11 @@ export default /*html*/`
           <div class="verb-target-label">{{ formLabel }} · Group {{ targetVerb.group }} · {{ targetVerb.level }}</div>
 
           <template v-if="inputMode === 'type'">
-            <input
+            <KanaTypeInput
               ref="verbInput"
               v-model="verbInputValue"
-              @keyup.enter="checkVerbAnswer"
-              autocomplete="off"
-              class="type-input"
               placeholder="Kanji or hiragana, either works..."
+              @submit="checkVerbAnswer"
             />
           </template>
           <template v-else>

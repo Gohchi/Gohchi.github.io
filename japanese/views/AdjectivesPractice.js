@@ -5,6 +5,7 @@ import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.
 import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import InfoIcons from 'components/InfoIcons.js';
 import template from 'templates/AdjectivesPractice.js';
+import KanaTypeInput from 'components/KanaTypeInput.js';
 
 import adjectivesData from 'data/adjectives.js';
 import { feedbackMixin } from 'data/feedback.js';
@@ -43,6 +44,7 @@ export default {
     FilterMenu,
     KanjiPoolMenu,
     InfoIcons,
+    KanaTypeInput,
   },
   data() {
     const inputMode = localStorage.getItem('adjectives-practice-input-mode') || 'choice';
