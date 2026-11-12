@@ -31,6 +31,7 @@ const CACHE_ASSETS = [
   '/japanese/images/sushi.svg',
   '/japanese/components/FilterMenu.js',
   '/japanese/components/InfoIcons.js',
+  '/japanese/components/KanaTypeInput.js',
   '/japanese/components/KanjiPoolMenu.js',
   '/japanese/components/KanjiWithRuby.js',
   '/japanese/components/ListOfItems.js',

@@ -9,6 +9,7 @@ import SessionHistory from 'components/SessionHistory.js';
 import WordCorner from 'components/WordCorner.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import InfoIcons from 'components/InfoIcons.js';
+import KanaTypeInput from 'components/KanaTypeInput.js';
 
 import template from 'templates/WordsPractice.js';
 
@@ -39,7 +40,7 @@ export function makeWordsPractice({ script }) {
 
   return {
     mixins: [feedbackMixin],
-    components: { MainHeader, SessionHistory, WordCorner, FilterMenu, InfoIcons },
+    components: { MainHeader, SessionHistory, WordCorner, FilterMenu, InfoIcons, KanaTypeInput },
     data() {
       const { unlocked, locked } = splitWords(wordsData.filter(({ type }) => type === script));
 

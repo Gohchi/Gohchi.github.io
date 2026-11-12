@@ -5,6 +5,7 @@ import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.
 import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import template from 'templates/VerbsPractice.js';
 import InfoIcons from 'components/InfoIcons.js';
+import KanaTypeInput from 'components/KanaTypeInput.js';
 
 import verbsData from 'data/verbs.js';
 import { conjugateVerb, buildVerbDistractors, VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
@@ -51,6 +52,7 @@ export default {
     KanjiPoolMenu,
     WordCorner,
     InfoIcons,
+    KanaTypeInput,
   },
   setup() {
     return {};

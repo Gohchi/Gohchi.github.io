@@ -5,6 +5,7 @@ import PhraseToRuby from 'components/PhraseToRuby.js';
 import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.js';
 import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import InfoIcons from 'components/InfoIcons.js';
+import KanaTypeInput from 'components/KanaTypeInput.js';
 
 import template from 'templates/KanjiPractice.js';
 
@@ -48,6 +49,7 @@ export default {
     FilterMenu,
     KanjiPoolMenu,
     InfoIcons,
+    KanaTypeInput,
   },
   data() {
     const ctx = unlockContext();

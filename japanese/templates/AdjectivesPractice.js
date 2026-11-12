@@ -61,13 +61,11 @@ export default /*html*/`
           </div>
 
           <template v-if="inputMode === 'type'">
-            <input
+            <KanaTypeInput
               ref="typeInput"
               v-model="typeInputValue"
-              @keyup.enter="checkTypeAnswer"
-              autocomplete="off"
-              class="type-input"
               placeholder="Type the reading in hiragana..."
+              @submit="checkTypeAnswer"
             />
           </template>
           <template v-else>
