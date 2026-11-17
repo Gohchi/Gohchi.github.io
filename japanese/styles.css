@@ -1389,6 +1389,11 @@ body {
       font-weight: 600;
     }
   }
+  
+  .word-slot.revealed {
+    border-color: var(--color-chopsticks);
+    color: var(--color-chopsticks);
+  }
 
   .status {
     text-align: center;

@@ -186,7 +186,7 @@ export function makeWordsPractice({ script }) {
           type: 'word',
           prompt: word,
           detail: meaning,
-          chosen: correct ? reading : `${mistakes} wrong ${mistakes === 1 ? 'kana' : 'kana'}`,
+          chosen: correct ? reading : `${mistakes} wrong kana`,
           correctAnswer: reading,
           isCorrect: correct,
         });
