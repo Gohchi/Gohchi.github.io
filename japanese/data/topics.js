@@ -282,7 +282,8 @@ export const topics = [
       {
         heading: 'Nの後 — after',
         text: 'Nの後 means "after N," especially when talking about time or events.',
-        example: '学校の後で勉強します。 (I study after school.)'
+        example: '学校の後で勉強します。 (I study after school.)',
+        notes: 'It also can be used as "behind" pronouncing it as "のうしろ" instead'
       },
       {
         heading: 'Nの近く — near',

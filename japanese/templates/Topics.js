@@ -215,6 +215,11 @@ export default /*html*/`
                   </li>
                 </ul>
               </template>
+
+              <aside v-if="content.notes" class="topic-notes">
+                <span class="notes-label">Note</span>
+                <p><PhraseToRuby :text="content.notes"></PhraseToRuby></p>
+              </aside>
             </section>
           </template>
 

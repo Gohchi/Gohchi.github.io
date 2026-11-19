@@ -1788,7 +1788,10 @@ body {
   --surface: light-dark(#ffffff, #1c1c1c);
   --surface-hover: light-dark(#f0f0f0, #1c1c1c);
 
-  .cat-grammar { --accent: var(--cat-grammar); }
+  .cat-grammar {
+    --accent: var(--cat-grammar);
+    --notes: var(--cat-vocabulary);
+  }
   .cat-vocabulary { --accent: var(--cat-vocabulary); }
   .cat-kanji { --accent: var(--cat-kanji); }
   .cat-resource { --accent: var(--cat-resource); }
@@ -2133,6 +2136,28 @@ body {
 
   .topic-text {
     margin: .25rem 0 .75rem;
+  }
+
+  .topic-notes {
+    margin-top: .5rem;
+    padding: .55rem .75rem;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--notes, var(--cat-other));
+    border-radius: 0 8px 8px 0;
+    background: light-dark(#f7f7f7, #101010);
+
+    .notes-label {
+      display: block;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin: .25rem 0 0;
+    }
   }
 
   .example-label {
