@@ -3,6 +3,50 @@ const defaultValues = { type: 'standard' };
 export const topics = [
   {
     ...defaultValues,
+    title: 'Adverbs — 副詞',
+    subtitle: '副詞(ふくし) are words that modify verbs, adjectives, or other adverbs. They describe how, when, how much, or how often an action or state occurs.',
+    JLPT_level: 'N5',
+    content: [
+      {
+        heading: '副詞とは',
+        text: 'An adverb adds detail to a verb, adjective, or another adverb. Unlike adjectives, Japanese adverbs do not conjugate, and they can usually be placed before the word or clause they modify.',
+        example: '彼はゆっくり歩きます。 (He walks slowly.)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: '程度 — Degree',
+        text: 'Degree adverbs show how much or how strong something is.',
+        example: 'とても暑いです。 (It is very hot.) | 少し寒いです。 (It is a little cold.) | 全然おいしくないです。 (It is not delicious at all.)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: '頻度 — Frequency',
+        text: 'Frequency adverbs describe how often something happens.',
+        example: 'いつもバスで学校へ行きます。 (I always go to school by bus.) | 時々映画を見ます。 (I sometimes watch movies.)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: '時間 — Time',
+        text: 'Time adverbs describe when or in what stage an action happens.',
+        example: '今帰ります。 (I am going home now.) | もう食べました。 (I have already eaten.) | まだ準備ができません。 (I am not ready yet.)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: '様態・方法 — Manner',
+        text: 'Manner adverbs describe how an action is performed. Many end in 〜く or 〜に.',
+        example: 'ゆっくり話してください。 (Please speak slowly.) | 静かにドアを閉めます。 (I close the door quietly.)',
+        JLPT_level: 'N5'
+      },
+      {
+        heading: '否定の副詞 — Negative adverbs',
+        text: 'あまり and 全然 are commonly used with negative forms to express “not much” or “not at all.”',
+        example: 'あまり食べません。 (I do not eat much.) | 全然分かりません。 (I do not understand at all.)',
+        JLPT_level: 'N5'
+      }
+    ]
+  },
+  {
+    ...defaultValues,
     title: 'Grab someone’s attention',
     subtitle: 'These expressions are used to get someone’s attention in Japanese.',
     content: [
@@ -710,28 +754,33 @@ export const topics = [
 // Route slug + relation tags for each topic, in the same order they appear above.
 // Tags double as JLPT level markers (N5–N1) and as the grouping used for "related topics".
 const TOPIC_META = [
-  { id: 'honorifics',           tags: ['grammar', 'keigo', 'politeness', 'N4'] },
-  { id: 'time',                 tags: ['grammar', 'time', 'vocabulary', 'N5'] },
-  { id: 'am-pm',                tags: ['grammar', 'time', 'N5'] },
-  { id: 'duration',             tags: ['grammar', 'time', 'particles', 'N4'] },
-  { id: 'from-to',              tags: ['grammar', 'particles', 'time', 'N5'] },
-  { id: 'location',             tags: ['grammar', 'particles', 'location', 'N5'] },
-  { id: 'ago',                  tags: ['grammar', 'time', 'particles', 'N4'] },
-  { id: 'existence',            tags: ['grammar', 'verbs', 'N5'] },
-  { id: 'good',                 tags: ['grammar', 'adjectives', 'N5'] },
-  { id: 'also-too',             tags: ['grammar', 'particles', 'N5'] },
-  { id: 'nominalizing-actions', tags: ['grammar', 'verbs', 'N4'] },
-  { id: 'kanji-basics',         tags: ['kanji', 'writing', 'vocabulary', 'N5'] },
-  { id: 'colors',                tags: ['vocabulary', 'list', 'N5'] },
-  { id: 'counters',              tags: ['vocabulary', 'list', 'grammar', 'N5'] },
-  { id: 'numbers',               tags: ['vocabulary', 'list', 'N5'] },
-  { id: 'days-of-week',          tags: ['vocabulary', 'list', 'time', 'N5'] },
-  { id: 'months-of-year',        tags: ['vocabulary', 'list', 'time', 'N5'] },
-  { id: 'kai-vs-kaime',          tags: ['grammar', 'counters', 'nuance', 'N3'] },
-  { id: 'hitoshii-vs-onaji',     tags: ['grammar', 'nuance', 'N3'] },
-  { id: 'sake-vs-shake',         tags: ['vocabulary', 'nuance', 'N3'] },
-  { id: 'rtk-deck',              tags: ['resource', 'kanji'] },
-  { id: 'onomatopoeia',          tags: ['resource', 'vocabulary', 'N2'] },
+  { id: 'adverbs',               tags: ['grammar', 'adverbs', 'vocabulary', 'N5'] },
+  { id: 'grab-attention',        tags: ['grammar', 'conversation', 'N5'] },
+  { id: 'tokorode',              tags: ['grammar', 'conversation', 'N3'] },
+  { id: 'kosoado',               tags: ['grammar', 'demonstratives', 'N5'] },
+  { id: 'nanka-nante-nado',      tags: ['grammar', 'nuance', 'N3'] },
+  { id: 'honorifics',            tags: ['grammar', 'keigo', 'politeness', 'N4'] },
+  { id: 'time',                  tags: ['grammar', 'time', 'vocabulary', 'N5'] },
+  { id: 'am-pm',                 tags: ['grammar', 'time', 'N5'] },
+  { id: 'duration',              tags: ['grammar', 'time', 'particles', 'N4'] },
+  { id: 'from-to',               tags: ['grammar', 'particles', 'time', 'N5'] },
+  { id: 'location',              tags: ['grammar', 'particles', 'location', 'N5'] },
+  { id: 'ago',                   tags: ['grammar', 'time', 'particles', 'N4'] },
+  { id: 'existence',             tags: ['grammar', 'verbs', 'N5'] },
+  { id: 'good',                  tags: ['grammar', 'adjectives', 'N5'] },
+  { id: 'also-too',              tags: ['grammar', 'particles', 'N5'] },
+  { id: 'nominalizing-actions',  tags: ['grammar', 'verbs', 'N4'] },
+  { id: 'kanji-basics',          tags: ['kanji', 'writing', 'vocabulary', 'N5'] },
+  { id: 'colors',                 tags: ['vocabulary', 'list', 'N5'] },
+  { id: 'counters',               tags: ['vocabulary', 'list', 'grammar', 'N5'] },
+  { id: 'numbers',                tags: ['vocabulary', 'list', 'N5'] },
+  { id: 'days-of-week',           tags: ['vocabulary', 'list', 'time', 'N5'] },
+  { id: 'months-of-year',         tags: ['vocabulary', 'list', 'time', 'N5'] },
+  { id: 'kai-vs-kaime',           tags: ['grammar', 'counters', 'nuance', 'N3'] },
+  { id: 'hitoshii-vs-onaji',      tags: ['grammar', 'nuance', 'N3'] },
+  { id: 'sake-vs-shake',          tags: ['vocabulary', 'nuance', 'N3'] },
+  { id: 'rtk-deck',               tags: ['resource', 'kanji'] },
+  { id: 'onomatopoeia',           tags: ['resource', 'vocabulary', 'N2'] },
 ];
 
 // Mutate the array entries in place (const only locks the binding, not the contents),
