@@ -42,6 +42,7 @@ export default /*html*/`
             :mastered="adjStats"
             :memory="adjMemory"
             :memory-max="MAX_MEMORY"
+            :info="targetAdj.tags?.length ? [typeLabel, ...targetAdj.tags] : typeLabel"
           />
 
           <!-- the reading goes only over the kanji (okurigana stays plain).
@@ -56,16 +57,14 @@ export default /*html*/`
             <template v-else>{{ targetAdj.dictionary }}</template>
           </div>
 
-          <div class="verb-target-label">
-            {{ typeLabel }} · {{ targetAdj.level }}<template v-if="targetAdj.tags?.length"> · {{ targetAdj.tags.join(', ') }}</template>
-          </div>
-
           <template v-if="inputMode === 'type'">
-            <KanaTypeInput
+            <KanaSpellInput
               ref="typeInput"
-              v-model="typeInputValue"
-              placeholder="Type the reading in hiragana..."
-              @submit="checkTypeAnswer"
+              :key="spellRound"
+              :answer="targetAdj.reading"
+              @mistake="onMistake"
+              @done="onSpelled"
+              @next="newTarget"
             />
           </template>
           <template v-else>

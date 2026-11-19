@@ -31,22 +31,20 @@ export default /*html*/`
             :mastered="wordStats"
             :memory="wordMemory"
             :memory-max="MAX_MEMORY"
+            :info="inputMode === 'type' ? targetWord.meaning.split(', ') : null"
           />
 
-          <!-- the meaning is the answer in choice mode, so it is hidden there -->
-          <div class="verb-meaning" v-if="inputMode === 'type'">{{ targetWord.meaning }}</div>
           <div class="prompt" :style="wordPromptStyle">{{ targetWord.word }}</div>
-          <div class="verb-target-label">
-            {{ inputLabel }}
-          </div>
 
           <template v-if="inputMode === 'type'">
-            <KanaTypeInput
+            <KanaSpellInput
               ref="wordInput"
-              v-model="wordInputValue"
+              :key="spellRound"
+              :answer="targetWord.reading"
               :readonly="wordLocked"
-              placeholder="ひらがなで入力..."
-              @submit="onWordEnter"
+              @mistake="onMistake"
+              @done="onSpelled"
+              @next="newWordTarget"
             />
           </template>
           <template v-else>

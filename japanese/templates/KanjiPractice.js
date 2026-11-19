@@ -37,27 +37,25 @@ export default /*html*/`
             :mastered="wordStats"
             :memory="wordMemory"
             :memory-max="MAX_MEMORY"
+            :info="inputMode === 'type' ? targetWord.meaning.split(', ') : null"
           />
 
-          <!-- the meaning is the answer in choice mode, so it is hidden there -->
-          <div class="verb-meaning" v-if="inputMode === 'type'">{{ targetWord.meaning }}</div>
           <template v-if="inputMode === 'type'">
             <div class="prompt" :style="wordPromptStyle">{{ targetWord.word }}</div>
           </template>
           <template v-else>
             <PhraseToRuby class="prompt" :style="wordPromptStyle" :text="targetWord.word" />
           </template>
-          <div class="verb-target-label">
-            {{ inputMode === 'choice' ? 'Pick the meaning' : 'Write the reading in hiragana, or the word in kanji' }}
-          </div>
 
           <template v-if="inputMode === 'type'">
-            <KanaTypeInput
+            <KanaSpellInput
               ref="wordInput"
-              v-model="wordInputValue"
+              :key="spellRound"
+              :answer="targetWord.reading"
               :readonly="wordLocked"
-              placeholder="ひらがな or 漢字で入力..."
-              @submit="onWordEnter"
+              @mistake="onMistake"
+              @done="onSpelled"
+              @next="newWordTarget"
             />
           </template>
           <template v-else>

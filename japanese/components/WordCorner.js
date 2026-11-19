@@ -13,6 +13,7 @@ export default {
     level: String, // optional: the badge is hidden when there is no level
     tags: { type: Array, default: () => [] }, // optional: kanji groups, shown as #hashtags
     speech: String, // optional: text to read aloud, defaults to `word`
+    info: String, // optional: extra info
   },
   data() {
     return { autoListen };

@@ -194,9 +194,9 @@ export default {
 
       if (this.inputMode === 'choice') {
         this.wordOptions = this.buildMeaningOptions(word);
-        this.wordStatus = 'Pick the meaning of this word.';
+        this.wordStatus = 'Pick the meaning of this word';
       } else {
-        this.wordStatus = 'Type the reading, kana by kana.';
+        this.wordStatus = 'Spell the reading in hiragana, kana by kana';
       }
       this.wordStatusClass = 'status';
       this.$nextTick(() => this.focusInput());

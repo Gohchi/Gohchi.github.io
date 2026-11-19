@@ -97,10 +97,6 @@ export function makeWordsPractice({ script }) {
         if (this.selectedLevels.length === LEVELS.length) return this.words;
         return this.words.filter(({ level }) => this.selectedLevels.includes(level));
       },
-      inputLabel() {
-        if (this.inputMode === 'choice') return 'Pick the meaning';
-        return script === 'hiragana' ? 'Spell the word in hiragana, kana by kana' : 'Spell the reading in hiragana, kana by kana';
-      },
     },
     methods: {
       markKana,
@@ -157,9 +153,9 @@ export function makeWordsPractice({ script }) {
 
         if (this.inputMode === 'choice') {
           this.wordOptions = this.buildMeaningOptions(word);
-          this.wordStatus = 'Pick the meaning of this word.';
+          this.wordStatus = 'Pick the meaning of this word';
         } else {
-          this.wordStatus = 'Type the word, kana by kana.';
+          this.wordStatus = 'Spell the word kana by kana';
         }
         this.wordStatusClass = 'status';
         this.$nextTick(() => this.focusInput());
