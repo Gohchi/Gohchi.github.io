@@ -5,7 +5,7 @@ import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.
 import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import InfoIcons from 'components/InfoIcons.js';
 import template from 'templates/AdjectivesPractice.js';
-import KanaTypeInput from 'components/KanaTypeInput.js';
+import KanaSpellInput from 'components/KanaSpellInput.js';
 
 import adjectivesData from 'data/adjectives.js';
 import { feedbackMixin } from 'data/feedback.js';
@@ -44,13 +44,13 @@ export default {
     FilterMenu,
     KanjiPoolMenu,
     InfoIcons,
-    KanaTypeInput,
+    KanaSpellInput,
   },
   data() {
     const inputMode = localStorage.getItem('adjectives-practice-input-mode') || 'choice';
 
     return {
-      inputMode, // 'choice' | 'type'
+      inputMode, // 'choice' | 'type' (spell the reading kana by kana)
       MAX_MEMORY,
       sessionHistory: [],
 
@@ -63,7 +63,7 @@ export default {
 
       targetAdj: null,
       choiceOptions: [],
-      typeInputValue: '',
+      spellRound: 0, // new value = the spelling input starts over
       status: '',
       statusClass: 'status',
       score: 0,
@@ -167,8 +167,11 @@ export default {
       return shuffle([adj.meaning, ...distractors]);
     },
     newTarget() {
+      clearTimeout(this.nextTimer);
       const adj = weightedPick('adjectives', this.filteredAdjectives, a => a.dictionary)
         || this.filteredAdjectives[Math.floor(Math.random() * this.filteredAdjectives.length)];
+
+      this.spellRound++;
 
       if (!adj) {
         this.targetAdj = null;
@@ -179,21 +182,52 @@ export default {
 
       this.targetAdj = adj;
       this.choiceOptions = this.inputMode === 'choice' ? this.buildChoiceOptions(adj) : [];
-      this.typeInputValue = '';
       this.status = this.inputMode === 'type'
-        ? 'Type the reading in hiragana.'
+        ? 'Type the reading in hiragana, kana by kana.'
         : 'Pick the correct meaning.';
       this.statusClass = 'status';
       if (this.inputMode === 'type') {
         this.$nextTick(() => this.focusInput());
       }
     },
-    checkTypeAnswer() {
-      if (!this.targetAdj) return;
-      const value = this.typeInputValue.trim();
-      if (!value) return;
-      this.gradeAnswer(value === this.targetAdj.reading, value);
+
+    // --- type mode: the spelling input reports every wrong kana and the finished word ---
+    onMistake(typed) {
+      this.status = `Wrong: "${typed}"`;
+      this.statusClass = 'status bad';
+      this.flash(false, 0);
     },
+    // one answer per adjective: right when no kana needed a second try
+    onSpelled({ mistakes }) {
+      if (!this.targetAdj) return;
+      const adj = this.targetAdj;
+      const correct = mistakes === 0;
+
+      recordAnswer('adjectives', adj.dictionary, correct);
+      this.progressVersion++;
+      this.flash(correct, correct ? this.streak + 1 : 0);
+
+      this.pushHistory({
+        type: 'adjective',
+        prompt: adj.dictionary,
+        detail: 'reading',
+        chosen: correct ? adj.reading : `${mistakes} wrong kana`,
+        correctAnswer: adj.reading,
+        isCorrect: correct,
+      });
+
+      this.score++;
+      this.streak = correct ? this.streak + 1 : 0;
+      this.status = `${correct ? 'Correct!' : 'Done.'} ${adj.reading} = ${adj.meaning}`;
+      this.statusClass = correct ? 'status ok' : 'status bad';
+      this.nextTimer = setTimeout(() => this.newTarget(), 1400);
+    },
+    // the Check button
+    checkTypeAnswer() {
+      if (this.$refs.typeInput) this.$refs.typeInput.submit();
+    },
+
+    // --- choice mode ---
     chooseOption(meaning) {
       if (!this.targetAdj) return;
       this.gradeAnswer(meaning === this.targetAdj.meaning, meaning);
@@ -207,9 +241,9 @@ export default {
       this.pushHistory({
         type: 'adjective',
         prompt: adj.dictionary,
-        detail: this.inputMode === 'type' ? 'reading' : 'meaning',
+        detail: 'meaning',
         chosen: chosenDisplay,
-        correctAnswer: this.inputMode === 'type' ? adj.reading : adj.meaning,
+        correctAnswer: adj.meaning,
         isCorrect: correct,
       });
 
@@ -218,7 +252,8 @@ export default {
         this.streak++;
         this.status = 'Correct!';
         this.statusClass = 'status ok';
-        setTimeout(() => this.newTarget(), this.inputMode === 'choice' ? 500 : 700);
+        clearTimeout(this.nextTimer);
+        this.nextTimer = setTimeout(() => this.newTarget(), 500);
       } else {
         this.streak = 0;
         this.status = 'Not quite, try another one.';
@@ -227,6 +262,7 @@ export default {
     },
     revealAnswer() {
       if (!this.targetAdj) return;
+      if (this.inputMode === 'type' && this.$refs.typeInput) this.$refs.typeInput.reveal();
       this.status = this.inputMode === 'type'
         ? 'Answer: ' + this.targetAdj.reading
         : 'Answer: ' + this.targetAdj.meaning;
@@ -245,6 +281,9 @@ export default {
   },
   mounted() {
     this.newTarget();
+  },
+  beforeUnmount() {
+    clearTimeout(this.nextTimer);
   },
   template,
 };

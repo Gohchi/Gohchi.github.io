@@ -1389,6 +1389,11 @@ body {
       font-weight: 600;
     }
   }
+  
+  .word-slot.revealed {
+    border-color: var(--color-chopsticks);
+    color: var(--color-chopsticks);
+  }
 
   .status {
     text-align: center;
@@ -1582,22 +1587,8 @@ body {
     }
   }
 
-  .verb-meaning {
-    text-align: center;
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-
   .verb-prompt {
     font-size: 56px;
-  }
-
-  .verb-target-label {
-    text-align: center;
-    font-size: 13px;
-    color: #999;
-    margin-bottom: 12px;
   }
 
   .type-input {
@@ -5111,7 +5102,6 @@ html.keyboard-open .practice-sections {
   .choice-button { padding: 8px; }
 
   /* nice to have, not while typing */
-  .verb-target-label,
   .memory-stats { display: none; }
 }
 

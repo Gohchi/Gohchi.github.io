@@ -36,18 +36,19 @@ export default /*html*/`
     <main>
       <div class="card choice-card" :class="feedbackClass">
         <template v-if="target">
-          <WordCorner :word="target.word" :speech="target.reading" :level="target.level" />
+          <WordCorner
+            :word="target.word"
+            :speech="target.reading"
+            :level="target.level"
+          />
 
           <InfoIcons
             :streak="streak"
             :score="score"
+            :info="target.meaning.split(', ')"
           />
 
-          <div class="verb-meaning">{{ target.meaning }}</div>
           <div class="prompt">{{ target.word }}</div>
-          <div class="verb-target-label">
-            {{ supported ? 'Say this word out loud' : 'Type this word (microphone not available)' }}
-          </div>
 
           <!-- microphone -->
           <button

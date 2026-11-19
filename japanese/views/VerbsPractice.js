@@ -5,7 +5,7 @@ import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.
 import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import template from 'templates/VerbsPractice.js';
 import InfoIcons from 'components/InfoIcons.js';
-import KanaTypeInput from 'components/KanaTypeInput.js';
+import KanaSpellInput from 'components/KanaSpellInput.js';
 
 import verbsData from 'data/verbs.js';
 import { conjugateVerb, buildVerbDistractors, VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
@@ -52,7 +52,7 @@ export default {
     KanjiPoolMenu,
     WordCorner,
     InfoIcons,
-    KanaTypeInput,
+    KanaSpellInput,
   },
   setup() {
     return {};
@@ -61,7 +61,7 @@ export default {
     const inputMode = localStorage.getItem('verbs-practice-input-mode') || 'type';
 
     return {
-      inputMode, // 'type' | 'choice'
+      inputMode, // 'type' (spell the hiragana form kana by kana) | 'choice'
       MAX_MEMORY,
       sessionHistory: [],
 
@@ -79,7 +79,7 @@ export default {
       verbAnswer: '',
       verbAnswerKana: '',
       verbOptions: [],
-      verbInputValue: '',
+      spellRound: 0, // new value = the spelling input starts over
       verbStatus: '',
       verbStatusClass: 'status',
       verbScore: 0,
@@ -198,7 +198,10 @@ export default {
       return shuffle([correctAnswer, ...distractors]);
     },
     newVerbTarget() {
+      clearTimeout(this.nextTimer);
       const pick = weightedPick('verbs', this.candidates, c => `${c.verb.dictionary}:${c.form}`);
+
+      this.spellRound++;
 
       if (!pick) {
         this.targetVerb = null;
@@ -218,28 +221,18 @@ export default {
       this.verbOptions = this.inputMode === 'choice'
         ? this.buildVerbOptions(verb, form, this.verbAnswer)
         : [];
-      this.verbInputValue = '';
       this.verbStatus = this.inputMode === 'type'
-        ? 'Type the ' + this.formLabel + ' (kanji or hiragana are both fine).'
+        ? 'Type the ' + this.formLabel + ' in hiragana, kana by kana.'
         : 'Pick the ' + this.formLabel + ' of this verb.';
       this.verbStatusClass = 'status';
       if (this.inputMode === 'type') {
         this.$nextTick(() => this.focusVerbInput());
       }
     },
-    checkVerbAnswer() {
-      if (!this.targetVerb) return;
-      const value = this.verbInputValue.trim();
-      if (!value) return;
-      this.gradeVerbAnswer(value);
-    },
-    chooseVerbOption(option) {
-      this.gradeVerbAnswer(option);
-    },
-    gradeVerbAnswer(value) {
-      if (!this.targetVerb) return;
+
+    // saves the answer, flashes and writes the history (both modes)
+    logVerbAnswer(correct, chosen) {
       const { dictionary, reading } = this.targetVerb;
-      const correct = value === this.verbAnswer || value === this.verbAnswerKana;
       recordAnswer('verbs', this.verbMemoryKey, correct);
       this.progressVersion++;
       this.flash(correct, correct ? this.verbStreak + 1 : 0);
@@ -248,24 +241,60 @@ export default {
         type: 'verb',
         prompt: dictionary,
         detail: reading + ' | ' + this.formLabel,
-        chosen: value,
+        chosen,
         correctAnswer: this.formattedAnswer(),
         isCorrect: correct,
       });
+    },
+    // Auto listen: say the right answer (the hiragana reading is the safest for the voice),
+    // and leave it time to finish before the next verb is presented (and read) itself
+    goToNextVerb() {
+      if (autoListen.on) {
+        window.speechSynthesis?.cancel();
+        speak(this.verbAnswerKana);
+      }
+      clearTimeout(this.nextTimer);
+      this.nextTimer = setTimeout(() => this.newVerbTarget(), autoListen.on ? 1600 : 700);
+    },
+
+    // --- type mode: the spelling input reports every wrong kana and the finished word ---
+    onMistake(typed) {
+      this.verbStatus = `Wrong: "${typed}"`;
+      this.verbStatusClass = 'status bad';
+      this.flash(false, 0);
+    },
+    // one answer per verb form: right when no kana needed a second try
+    onSpelled({ mistakes }) {
+      if (!this.targetVerb) return;
+      const correct = mistakes === 0;
+
+      this.logVerbAnswer(correct, correct ? this.verbAnswerKana : `${mistakes} wrong kana`);
+      this.verbScore++;
+      this.verbStreak = correct ? this.verbStreak + 1 : 0;
+      this.verbStatus = `${correct ? 'Correct!' : 'Done.'} ${this.formattedAnswer()}`;
+      this.verbStatusClass = correct ? 'status ok' : 'status bad';
+      this.goToNextVerb();
+    },
+    // the Check button
+    checkVerbAnswer() {
+      if (this.$refs.verbInput) this.$refs.verbInput.submit();
+    },
+
+    // --- choice mode ---
+    chooseVerbOption(option) {
+      this.gradeVerbAnswer(option);
+    },
+    gradeVerbAnswer(value) {
+      if (!this.targetVerb) return;
+      const correct = value === this.verbAnswer || value === this.verbAnswerKana;
+      this.logVerbAnswer(correct, value);
 
       if (correct) {
         this.verbScore++;
         this.verbStreak++;
         this.verbStatus = 'Correct! ' + this.formattedAnswer();
         this.verbStatusClass = 'status ok';
-
-        // Auto listen: say the right answer (the hiragana reading is the safest for the voice),
-        // and leave it time to finish before the next verb is presented (and read) itself
-        if (autoListen.on) {
-          window.speechSynthesis?.cancel();
-          speak(this.verbAnswerKana);
-        }
-        setTimeout(() => this.newVerbTarget(), autoListen.on ? 1600 : 700);
+        this.goToNextVerb();
       } else {
         this.verbStreak = 0;
         this.verbStatus = 'Not quite, try another one.';
@@ -279,6 +308,7 @@ export default {
     },
     revealAnswer() {
       if (!this.targetVerb) return;
+      if (this.inputMode === 'type' && this.$refs.verbInput) this.$refs.verbInput.reveal();
       this.verbStatus = 'Answer: ' + this.formattedAnswer();
       this.verbStatusClass = 'status';
     },
@@ -295,6 +325,9 @@ export default {
   },
   mounted() {
     this.newVerbTarget();
+  },
+  beforeUnmount() {
+    clearTimeout(this.nextTimer);
   },
   template
 }

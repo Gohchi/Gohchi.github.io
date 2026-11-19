@@ -44,7 +44,10 @@ export default /*html*/`
     <main>
       <div class="card choice-card" :class="feedbackClass">
         <template v-if="targetVerb">
-          <WordCorner :word="targetVerb.dictionary" :level="targetVerb.level" />
+          <WordCorner
+            :word="targetVerb.dictionary"
+            :level="targetVerb.level"
+          />
 
           <InfoIcons
             :streak="verbStreak"
@@ -52,9 +55,8 @@ export default /*html*/`
             :mastered="verbStats"
             :memory="verbMemory"
             :memory-max="MAX_MEMORY"
+            :info="['Group ' + targetVerb.group, targetVerb.meaning]"
           />
-
-          <div class="verb-meaning">{{ targetVerb.meaning }}</div>
 
           <div class="prompt verb-prompt">
             <template v-if="furiganaStore.showFurigana">
@@ -66,14 +68,14 @@ export default /*html*/`
             <template v-else>{{ targetVerb.dictionary }}</template>
           </div>
 
-          <div class="verb-target-label">{{ formLabel }} · Group {{ targetVerb.group }} · {{ targetVerb.level }}</div>
-
           <template v-if="inputMode === 'type'">
-            <KanaTypeInput
+            <KanaSpellInput
               ref="verbInput"
-              v-model="verbInputValue"
-              placeholder="Kanji or hiragana, either works..."
-              @submit="checkVerbAnswer"
+              :key="spellRound"
+              :answer="verbAnswerKana"
+              @mistake="onMistake"
+              @done="onSpelled"
+              @next="newVerbTarget"
             />
           </template>
           <template v-else>

@@ -9,6 +9,7 @@ export default {
     },
     memory: { type: Number, default: undefined }, // optional: memory stage of the current item, drawn as a small bar
     memoryMax: { type: Number, default: 5 },
+    info: String, // optional: extra info
   },
   template: /*html*/`
     <div class="info-icons">
@@ -37,6 +38,14 @@ export default {
         :aria-valuemax="memoryMax"
         :title="'Memory: ' + memory + '/' + memoryMax"
       ><span :style="{ width: (memoryMax ? memory / memoryMax * 100 : 0) + '%' }"></span></div>
+      <div v-if="info" class="extra-info-text">
+        <template v-if="Array.isArray(info)">
+          <template v-for="(item, index) in info" :key="index">
+            <span class="info-item">{{ item }}</span>
+          </template>
+        </template>
+        <template v-else>{{ info }}</template>
+      </div>
     </div>
   `,
 };
