@@ -225,6 +225,7 @@ export const ruby = {
   "翻訳": { tags: ["description"], reading: "ほにゃく", JLPT_level: "N2" },
   "授業": { tags: ["description"], reading: "じゅぎょう", JLPT_level: "N4" },
   "全然": { tags: ["description"], reading: "ぜんぜん", JLPT_level: "N4" },
+  "場所": { tags: ["places"], reading: "ばしょ", JLPT_level: "N4" },
   "困": { tags: ["description"], reading: "こま", JLPT_level: "N4" },
   "今日": { tags: ["time"], reading: "きょう", JLPT_level: "N5" },
   "明日": { reading: "あした", JLPT_level: "N5" },

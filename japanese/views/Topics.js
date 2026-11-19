@@ -110,7 +110,7 @@ function contentText(topic) {
   if (typeof topic.content === 'string') {
     parts.push(topic.content);
   } else if (Array.isArray(topic.content)) {
-    topic.content.forEach(({ heading, text, example }) => parts.push(heading, text, example));
+    topic.content.forEach(({ heading, text, example, notes }) => parts.push(heading, text, example, notes));
   }
 
   if (Array.isArray(topic.items)) {
