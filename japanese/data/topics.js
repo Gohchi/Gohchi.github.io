@@ -3,6 +3,51 @@ const defaultValues = { type: 'standard' };
 export const topics = [
   {
     ...defaultValues,
+    title: 'Rendaku — 連濁',
+    subtitle: '連濁 (rendaku) is the voicing of the initial consonant of the second element in a Japanese compound.',
+    JLPT_level: 'N2',
+    content: [
+      {
+        heading: 'What is rendaku?',
+        text: 'Rendaku changes an unvoiced consonant in the middle of a compound to its voiced counterpart. It mostly affects the first consonant of the second element.',
+        example: '雨 + 傘 → あま + かさ → あまがさ (rain umbrella) | 青 + 空 → あお + そら → あおぞら (blue sky)'
+      },
+      {
+        heading: 'Common changes',
+        text: 'The usual changes are k → g, s → z, t → d, and h → b. The second element may begin with a kana in the か-, さ-, た-, or は-row.',
+        example: '雨 + 傘 → あまがさ (rain umbrella) | 青 + 空 → あおぞら (blue sky) | 本 +棚 → ほんだな (bookcase)'
+      },
+      {
+        heading: 'は-row',
+        text: 'Voicing changes ひ to び and ふ to ぶ. In some compounds, a は-row consonant may become ぱ, ば, or remain unvoiced, depending on the word; rendaku cannot be predicted from phonetics alone.',
+        example: '花びら (petal) | 手袋 (てぶくろ, gloves)',
+        notes: 'A は-row kana can have several possible outcomes, so check the full compound when using a word for the first time.'
+      },
+      {
+        heading: 'Compound patterns',
+        text: 'Rendaku commonly appears in native Japanese compounds, especially when the second element is a noun or suffix. Reading the whole compound aloud is usually more useful than trying to apply a rule to each kanji separately.',
+        example: '友 + 達 → ともだち (friend) | 本 +棚 → ほんだな (bookcase)',
+        notes: 'These readings depend on the complete word, not on the individual kanji readings: 友 may use とも, 達 may become だち, 本 may use ほん, and棚 may become だな.'
+      },
+      {
+        heading: 'Not every compound voices',
+        text: 'Rendaku has many lexical exceptions. Some compounds keep the unvoiced consonant, and some patterns never voice a particular second element.',
+        example: '足袋 (たび, tabi) | 浴衣 (ゆかた, yukata) | 木の葉 (このは, konoha)',
+        notes: 'Do not assume that all compounds follow rendaku. Learn the actual spoken form of common words, and use a dictionary to confirm unfamiliar ones.'
+      },
+      {
+        heading: 'Examples to remember',
+        text: 'Notice the voiced second consonant in these common compounds.',
+        example: '手袋 (てぶくろ, gloves) | 金魚 (きんぎょ, goldfish) | 本棚 (ほんだな, bookcase)',
+        notes: 'Reading an isolated second kanji with a voiced value is not always correct. The voicing may appear only in the complete compound.'
+      }
+    ],
+    sources: [
+      { title: 'Dictionaries and Japanese phonology references', url: 'https://en.wikipedia.org/wiki/Rendaku' }
+    ]
+  },
+  {
+    ...defaultValues,
     title: 'Adverbs — 副詞',
     subtitle: '副詞(ふくし) are words that modify verbs, adjectives, or other adverbs. They describe how, when, how much, or how often an action or state occurs.',
     JLPT_level: 'N5',
@@ -755,6 +800,7 @@ export const topics = [
 // Route slug + relation tags for each topic, in the same order they appear above.
 // Tags double as JLPT level markers (N5–N1) and as the grouping used for "related topics".
 const TOPIC_META = [
+  { id: 'rendaku',               tags: ['phonology', 'pronunciation', 'vocabulary', 'N2'] },
   { id: 'adverbs',               tags: ['grammar', 'adverbs', 'vocabulary', 'N5'] },
   { id: 'grab-attention',        tags: ['grammar', 'conversation', 'N5'] },
   { id: 'tokorode',              tags: ['grammar', 'conversation', 'N3'] },
@@ -775,6 +821,7 @@ const TOPIC_META = [
   { id: 'colors',                 tags: ['vocabulary', 'list', 'N5'] },
   { id: 'counters',               tags: ['vocabulary', 'list', 'grammar', 'N5'] },
   { id: 'numbers',                tags: ['vocabulary', 'list', 'N5'] },
+  { id: 'slang',                 tags: ['vocabulary', 'slang', 'N3'] },
   { id: 'days-of-week',           tags: ['vocabulary', 'list', 'time', 'N5'] },
   { id: 'months-of-year',         tags: ['vocabulary', 'list', 'time', 'N5'] },
   { id: 'kai-vs-kaime',           tags: ['grammar', 'counters', 'nuance', 'N3'] },

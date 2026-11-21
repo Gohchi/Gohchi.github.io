@@ -333,6 +333,25 @@ const KANJI_CHAR = /[\u3400-\u9fff々]/;
 const EXTRA = '*'; // kanji without a group tag
 
 const groupOfKanji = ch => ruby[ch]?.tags?.[0] ?? EXTRA;
+const groupIndexOf = group => KANJI_GROUPS.indexOf(group);
+
+// Highest group a word needs (-1 = it has no grouped kanji, so it only opens after every group)
+const highestGroupNeeded = key => {
+  let highest = -1;
+  for (const ch of [...key].filter(c => KANJI_CHAR.test(c))) {
+    const group = groupOfKanji(ch);
+    if (group !== EXTRA) highest = Math.max(highest, groupIndexOf(group));
+  }
+  return highest;
+};
+
+// Tagged kanji that belong to `group` AND are reachable once that group is open.
+// Compounds like 田中 (needs #nature) can't count toward #people, or the chain deadlocks.
+const groupMembers = group => TAGGED_KANJI.filter(key => {
+  if (groupOfKanji(key) !== group) return false;
+  const needed = highestGroupNeeded(key);
+  return needed >= 0 && needed <= groupIndexOf(group);
+});
 
 const kanjiBest = (all, key) => Math.max(...KANJI_STORES.map(store => bestStage(all[store]?.[key])));
 
@@ -341,7 +360,7 @@ const kanjiBest = (all, key) => Math.max(...KANJI_STORES.map(store => bestStage(
 function kanjiChain(all) {
   let chain = 1;
   while (chain < KANJI_GROUPS.length) {
-    const members = TAGGED_KANJI.filter(key => groupOfKanji(key) === KANJI_GROUPS[chain - 1]);
+    const members = groupMembers(KANJI_GROUPS[chain - 1]);
     const passed = members.filter(key => kanjiBest(all, key) >= GROUP_PASS_STAGE).length;
     if (!members.length || passed / members.length < GROUP_PASS_SHARE) break;
     chain++;
@@ -557,7 +576,7 @@ export function pendingSummary(words = [], ctx = unlockContext()) {
       kanji.next = { group, kind: 'level', level: cap ? cap[0] : null };
     } else {
       const prev = KANJI_GROUPS[chain - 1];
-      const members = TAGGED_KANJI.filter(key => groupOfKanji(key) === prev);
+      const members = groupMembers(prev);
       const passed = members.filter(key => kanjiBest(all, key) >= GROUP_PASS_STAGE).length;
       kanji.next = {
         group,
