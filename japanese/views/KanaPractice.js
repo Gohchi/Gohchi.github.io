@@ -59,6 +59,9 @@ export const kanaUnits = word => {
 
 const soundOf = (table, kana) => (/^[をヲ]$/.test(kana) ? 'o' : table[kana]);
 
+// ぢ/じ and づ/ず sound the same: typing "ji" / "zu" on a QWERTY keyboard must match both
+const mergeHomophones = text => text.replace(/ぢ/g, 'じ').replace(/づ/g, 'ず');
+
 const NOT_HEARD = /^[ぢづヂヅ]$/; // listening: they sound like じ / ず, so they are never asked
 
 export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
@@ -400,8 +403,9 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
 
         let value = input.value;
         let done = final;
+        let typedLetters = false;
         if (romajiInput.on) {
-          const typedLetters = /[a-z]/i.test(value); // qwerty letters; kana typed on a kana keyboard are left alone
+          typedLetters = /[a-z]/i.test(value); // qwerty letters; kana typed on a kana keyboard are left alone
           // letters become kana as they are typed; the ones that cannot be a kana yet wait at the end
           value = romajiToKana(value, { final });
           input.value = value;
@@ -435,11 +439,17 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         const { verdict, typed } = typedVerdict(value, this.target, {
           final: done,
           // listening: a homophone is the same answer
-          same: listen ? (a, b) => {
-            const inScript = kana => (script === 'katakana' ? toKatakana(kana) : kana);
-            const sound = soundOf(table, inScript(a));
-            return sound !== undefined && sound === soundOf(table, inScript(b));
-          } : undefined,
+          same: (a, b) => {
+            // NEW: typed with letters, so ji = じ = ぢ and zu = ず = づ
+            if (typedLetters && mergeHomophones(a) === mergeHomophones(b)) return true;
+            // listening: a homophone is the same answer (unchanged)
+            if (listen) {
+              const inScript = kana => (script === 'katakana' ? toKatakana(kana) : kana);
+              const sound = soundOf(table, inScript(a));
+              return sound !== undefined && sound === soundOf(table, inScript(b));
+            }
+            return false;
+          },
         });
 
         if (verdict === 'pending') {
