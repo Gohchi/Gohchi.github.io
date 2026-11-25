@@ -385,6 +385,7 @@ export const kanjiTranslations = {
   "南": { eng: ["south"], esp: ["sur"] },
   "北": { eng: ["north"], esp: ["norte"] },
   "来": { eng: ["come"], esp: ["venir"] },
+  "帰": { eng: ["go back (home)"], esp: ["volver (a casa)"]},
   "聞": { eng: ["hear", "listen", "ask"], esp: ["oír", "escuchar", "preguntar"] },
   "書": { eng: ["write"], esp: ["escribir"] },
   "高": { eng: ["expensive", "high"], esp: ["caro", "alto"] },

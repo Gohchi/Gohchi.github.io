@@ -161,8 +161,8 @@ export default {
   computed: {
     // something is still closed (sections, kanji groups or words)
     hasPending() {
-      const { sections, kanji, words } = this.pending;
-      return Boolean(sections.length || kanji.next || words.locked);
+      const { sections, words } = this.pending;
+      return Boolean(sections.length || words.locked);
     },
     groups() {
       const groups = [];

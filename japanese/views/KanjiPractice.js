@@ -185,7 +185,7 @@ export default {
         this.targetWord = null;
         this.wordStatus = this.openWords.length
           ? 'No kanji words in the selected pool.'
-          : 'No kanji open yet. Answer more hiragana and the first kanji group opens here.';
+          : 'No kanji open yet. Answer more hiragana and kanji will open here.';
         this.wordStatusClass = 'status bad';
         return;
       }
