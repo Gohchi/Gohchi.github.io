@@ -316,64 +316,7 @@ export function totalXp(snapshot) {
 // 5. Kanji groups (#tags): which kanji may be practiced
 // ---------------------------------------------------------------------------
 
-export const KANJI_GROUPS = [
-  'numbers', 'week', 'time', 'people', 'body', 'direction', 'nature',
-  'motion', 'daily', 'description', 'colors', 'school', 'places', 'things',
-  'animals-plants', 'misc',
-];
-
-// Kana cap: how many groups the player may open, by hiragana level. [min hiragana level, groups allowed]
-export const KANJI_GROUP_CAP = [[6, 2], [7, 4], [8, 8], [9, 12], [10, 16]];
-
-export const GROUP_PASS_SHARE = 0.7; // the next group opens when 70% of the previous one...
-export const GROUP_PASS_STAGE = 3;   // ...reached memory stage 3 (best stage, in either mode)
-
-const KANJI_STORES = ['words-kanji', 'words-kanji-meaning'];
-const KANJI_CHAR = /[\u3400-\u9fff々]/;
-const EXTRA = '*'; // kanji without a group tag
-
-const groupOfKanji = ch => ruby[ch]?.tags?.[0] ?? EXTRA;
-
-const kanjiBest = (all, key) => Math.max(...KANJI_STORES.map(store => bestStage(all[store]?.[key])));
-
-// Group ids that are open: the 70% chain, limited by the hiragana level (kana cap).
-// How many groups the 70% chain has opened so far (1 = only the first), ignoring the kana cap.
-function kanjiChain(all) {
-  let chain = 1;
-  while (chain < KANJI_GROUPS.length) {
-    const members = TAGGED_KANJI.filter(key => groupOfKanji(key) === KANJI_GROUPS[chain - 1]);
-    const passed = members.filter(key => kanjiBest(all, key) >= GROUP_PASS_STAGE).length;
-    if (!members.length || passed / members.length < GROUP_PASS_SHARE) break;
-    chain++;
-  }
-  return chain;
-}
-
-export function availableKanjiGroups(snapshot = getSnapshot(), all = getAllProgress()) {
-  if (snapshot.unlockAll) return [...KANJI_GROUPS];
-
-  const chain = kanjiChain(all);
-
-  const level = snapshot.categories.hiragana?.level ?? 1;
-  const allowed = KANJI_GROUP_CAP.reduce((n, [min, groups]) => (level >= min ? groups : n), 0);
-  return KANJI_GROUPS.slice(0, Math.min(chain, allowed));
-}
-
-// Why a group is closed, for the dimmed cells of the pool.
-export function describeGroupLock(group, snapshot = getSnapshot(), all = getAllProgress()) {
-  const index = KANJI_GROUPS.indexOf(group);
-  if (index <= 0) return '';
-  const open = availableKanjiGroups(snapshot, all);
-  if (open.includes(group)) return '';
-
-  const level = snapshot.categories.hiragana?.level ?? 1;
-  const allowed = KANJI_GROUP_CAP.reduce((n, [min, groups]) => (level >= min ? groups : n), 0);
-  if (index >= allowed) {
-    const needed = KANJI_GROUP_CAP.find(([, groups]) => groups > index);
-    return needed ? `Hiragana Lv ${needed[0]}` : '';
-  }
-  return `70% of #${KANJI_GROUPS[index - 1]} at stage ${GROUP_PASS_STAGE}`;
-}
+// REMOVED
 
 // ---------------------------------------------------------------------------
 // 6. Words unlock by the kana already answered correctly
@@ -397,50 +340,28 @@ const missingKana = (text, script, all) => {
 // Everything the practice pages need to filter words, from ONE read of the progress store.
 export function unlockContext() {
   const all = getAllProgress();
-  const snapshot = getSnapshot(all);
-  return { all, snapshot, openGroups: new Set(availableKanjiGroups(snapshot, all)) };
+  return { all, snapshot: getSnapshot(all) };
 }
 
-// Readable version of what a locked word needs (Settings table): "Learn kana: し, か · Kanji group #3"
-export function requirementText({ missing = [], groups = [] }) {
-  return [
-    missing.length ? `Learn kana: ${missing.join(', ')}` : '',
-    ...groups.map(group => (group === EXTRA ? 'Open every kanji group first' : `Kanji group #${group}`)),
-  ].filter(Boolean).join(' · ');
-}
+// Readable version of what a locked word needs: "Learn kana: し, か"
+export const requirementText = ({ missing = [] }) =>
+  missing.length ? `Learn kana: ${missing.join(', ')}` : '';
 
-// word: an entry of data/words.js ({ word, reading, type: 'hiragana' | 'katakana' | 'kanji' })
-// -> { locked, missing: [kana], groups: [closed #groups], needs: 'text for the dimmed cell' }
+// word: an entry of data/words.js ({ word, reading, type })
+// -> { locked, missing: [kana], needs }
 export function wordStatus({ word, reading, type }, ctx = unlockContext()) {
-  if (ctx.snapshot.unlockAll) return { locked: false, missing: [], groups: [], needs: '' };
+  if (ctx.snapshot.unlockAll) return { locked: false, missing: [], needs: '' };
 
   // katakana words are read from the katakana, hiragana and kanji words from the hiragana reading
   const missing = type === 'katakana'
     ? missingKana(word, 'katakana', ctx.all)
     : missingKana(reading, 'hiragana', ctx.all);
 
-  const groups = [];
-  if (type === 'kanji') {
-    // A word needs every GROUPED kanji it contains to be open. Words made only of kanji without a
-    // group (text-specific vocabulary) open once every group is open.
-    const chars = [...word].filter(c => KANJI_CHAR.test(c));
-    const grouped = chars.filter(c => groupOfKanji(c) !== EXTRA);
-    if (grouped.length) {
-      for (const c of grouped) {
-        const group = groupOfKanji(c);
-        if (!ctx.openGroups.has(group) && !groups.includes(group)) groups.push(group);
-      }
-    } else if (chars.length && ctx.openGroups.size < KANJI_GROUPS.length) {
-      groups.push(EXTRA);
-    }
-  }
-
-  const needs = [
-    missing.length ? `needs: ${missing.join(', ')}` : '',
-    ...groups.map(group => (group === EXTRA ? 'after every kanji group' : `#${group} locked`)),
-  ].filter(Boolean).join(' · ');
-
-  return { locked: Boolean(missing.length || groups.length), missing, groups, needs };
+  return {
+    locked: missing.length > 0,
+    missing,
+    needs: missing.length ? `needs: ${missing.join(', ')}` : '',
+  };
 }
 
 // Splits a word into characters flagged as missing (red) or not (green) for the locked-words list.
@@ -544,36 +465,11 @@ export function pendingSummary(words = [], ctx = unlockContext()) {
   ));
 
   // --- kanji groups ---
-  const open = availableKanjiGroups(snapshot, all);
-  const kanji = { open: open.length, total: KANJI_GROUPS.length, next: null };
-  if (open.length < KANJI_GROUPS.length) {
-    const group = KANJI_GROUPS[open.length];
-    const hiragana = levelOf('hiragana');
-    const allowed = KANJI_GROUP_CAP.reduce((n, [min, groups]) => (hiragana >= min ? groups : n), 0);
-    const chain = kanjiChain(all);
-
-    if (allowed <= open.length) {
-      const cap = KANJI_GROUP_CAP.find(([, groups]) => groups > open.length);
-      kanji.next = { group, kind: 'level', level: cap ? cap[0] : null };
-    } else {
-      const prev = KANJI_GROUPS[chain - 1];
-      const members = TAGGED_KANJI.filter(key => groupOfKanji(key) === prev);
-      const passed = members.filter(key => kanjiBest(all, key) >= GROUP_PASS_STAGE).length;
-      kanji.next = {
-        group,
-        kind: 'chain',
-        prev,
-        passed,
-        members: members.length,
-        needPassed: Math.ceil(members.length * GROUP_PASS_SHARE),
-      };
-    }
-  }
+  // REMOVED
 
   // --- words ---
   const byType = { hiragana: 0, katakana: 0, kanji: 0 };
   const kanaTally = new Map();
-  const groupTally = new Map();
   let locked = 0;
 
   for (const item of words) {
@@ -587,17 +483,13 @@ export function pendingSummary(words = [], ctx = unlockContext()) {
       const key = `${script}:${kana}`;
       const entry = kanaTally.get(key) || { kana, script, opens: 0, blocks: 0 };
       entry.blocks++;
-      if (status.missing.length === 1 && !status.groups.length) entry.opens++;
+      if (status.missing.length === 1) entry.opens++;
       kanaTally.set(key, entry);
-    }
-    for (const group of status.groups) {
-      groupTally.set(group, (groupTally.get(group) || 0) + 1);
     }
   }
 
   return {
     sections,
-    kanji,
     words: {
       locked,
       total: words.length,
@@ -606,9 +498,6 @@ export function pendingSummary(words = [], ctx = unlockContext()) {
       kana: [...kanaTally.values()]
         .sort((a, b) => b.opens - a.opens || b.blocks - a.blocks)
         .slice(0, TOP_KANA),
-      groups: [...groupTally.entries()]
-        .map(([group, count]) => ({ group: group === EXTRA ? 'the rest' : group, count }))
-        .sort((a, b) => b.count - a.count),
     },
   };
 }
