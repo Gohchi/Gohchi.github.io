@@ -69,10 +69,7 @@ export default /*html*/`
                 <template v-if="locked || revealed">{{ answerText }}</template>
               </span>
               <template v-else-if="token.reading">
-                <template v-for="(part, j) in rubyParts(token.text, token.reading)" :key="j">
-                  <ruby v-if="part.rt && furiganaStore.showFurigana">{{ part.text }}<rp>(</rp><rt>{{ part.rt }}</rt><rp>)</rp></ruby>
-                  <template v-else>{{ part.text }}</template>
-                </template>
+                <PhraseToRuby :text="token.text"></PhraseToRuby>
               </template>
               <template v-else>{{ token.text }}</template>
             </template>

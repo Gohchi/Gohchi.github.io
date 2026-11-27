@@ -12,6 +12,7 @@ import FilterMenu, { loadSelection, saveSelection } from 'components/FilterMenu.
 import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import InfoIcons from 'components/InfoIcons.js';
 import KanaSpellInput from 'components/KanaSpellInput.js';
+import PhraseToRuby from 'components/PhraseToRuby.js';
 
 import template from 'templates/LocationPractice.js';
 
@@ -53,6 +54,7 @@ export default {
     KanjiPoolMenu,
     InfoIcons,
     KanaSpellInput,
+    PhraseToRuby,
   },
   data() {
     return {
