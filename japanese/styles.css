@@ -17,6 +17,10 @@
   --color-level-N3: #e8ff7c;
   --color-level-N2: #ffc87c;
   --color-level-N1: #ff7c7c;
+
+  --color-ok: #0a7;
+  --color-bad: #c33;
+  --color-fair: #ffc310;
 }
 
 body {
@@ -1401,9 +1405,9 @@ body {
     min-height: 1.5em;
   }
 
-  .ok { color: #0a7; font-weight: 600; }
-  .bad { color: #c33; font-weight: 600; }
-  .fair { color: #ffc310; font-weight: 600; }
+  .ok { color: var(--color-ok); font-weight: 600; }
+  .bad { color: var(--color-bad); font-weight: 600; }
+  .fair { color: var(--color-fair); font-weight: 600; }
 
   /* Next / Reset / Check / Focus ...: one slim line of small buttons */
   .row {
@@ -1770,7 +1774,7 @@ body {
     }
 
     .history-correct {
-      color: #c33;
+      color: var(--color-ok);
       font-weight: 600;
     }
   }
