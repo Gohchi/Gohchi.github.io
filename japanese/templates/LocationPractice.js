@@ -37,8 +37,7 @@ export default /*html*/`
     <main>
       <div class="card choice-card" :class="feedbackClass">
         <template v-if="target">
-          <!-- the word is the answer, so Listen / Jisho only appear once it is known -->
-          <WordCorner v-if="locked || revealed" :word="target.word" :speech="target.reading" :level="target.level" />
+          <WordCorner :word="target.word" :speech="target.reading" :level="target.level" />
 
           <InfoIcons
             :streak="streak"

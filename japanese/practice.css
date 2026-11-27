@@ -6,6 +6,7 @@
 .practice-sections {
   --fb-ok: #1fb57a;
   --fb-bad: #e5484d;
+  --fb-fair: #ffc310;
   --fb-gold: #f5a623;
   --card-bg: light-dark(#ffffff, #151515);
   --card-border: light-dark(#e2e2e2, #2a2a2a);
@@ -58,6 +59,12 @@
 
       &.ok {
         background: color-mix(in srgb, var(--fb-ok) 16%, transparent);
+        animation: fb-pop .35s ease-out;
+
+        &::before { content: "✓"; }
+      }
+      &.fair {
+        background: color-mix(in srgb, var(--fb-fair) 16%, transparent);
         animation: fb-pop .35s ease-out;
 
         &::before { content: "✓"; }
