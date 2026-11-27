@@ -11,6 +11,7 @@ import { VERB_FORMS } from 'data/conjugate.js';
 import { getFavorites } from 'data/favorites.js';
 import { getSnapshot, pendingSummary, totalXp } from 'data/progression.js';
 import { getCompleted } from 'data/roadmap-progress.js';
+import { LOCATIONS } from 'data/locations.js';
 import {
   MAX_MEMORY,
   dateKey,
@@ -42,8 +43,8 @@ const CATEGORIES = [
   { id: 'words-kanji-meaning', group: 'Kanji', label: 'Kanji: meaning', route: '/kanji-meaning', total: wordsData.filter(w => w.type === 'kanji').length },
   { id: 'verbs', group: 'Grammar', label: 'Verb conjugation', route: '/verbs-practice', total: verbsData.length * VERB_FORMS.length },
   { id: 'adjectives', group: 'Grammar', label: 'Adjectives', route: '/adjectives-practice', total: adjectivesData.length },
+  { id: 'location', group: 'Grammar', label: 'Location words', route: '/location-practice', total: LOCATIONS.length },
 ];
-
 function summarize(category) {
   const entries = getCategoryEntries(category.id).filter(([, e]) => e.correct + e.wrong > 0);
   const correct = entries.reduce((sum, [, e]) => sum + e.correct, 0);

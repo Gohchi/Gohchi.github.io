@@ -57,11 +57,12 @@ let reverseMap = null;
 function getReverseMap() {
   if (!reverseMap) {
     reverseMap = (async () => {
-      const [{ default: words }, { default: verbs }, { default: adjectives }, { hiragana, katakana }] = await Promise.all([
+      const [{ default: words }, { default: verbs }, { default: adjectives }, { hiragana, katakana }, { LOCATIONS }] = await Promise.all([
         import('./words.js'),
         import('./verbs.js'),
         import('./adjectives.js'),
         import('./kana-romaji.js'),
+        import('./locations.js'),
       ]);
 
       const known = [
@@ -70,6 +71,7 @@ function getReverseMap() {
         ...words.map(({ word }) => word),
         ...verbs.map(({ dictionary }) => dictionary),
         ...adjectives.map(({ dictionary }) => dictionary),
+        ...LOCATIONS.map(({ word }) => word),
       ];
 
       const map = new Map();

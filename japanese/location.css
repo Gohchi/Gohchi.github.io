@@ -1,0 +1,100 @@
+/* Location practice (/location-practice). Loaded AFTER practice.css (see index.html).
+   The scene is a 5 x 5 grid: every icon sits in a cell given by --c (column) and --r (row). */
+
+.location-practice {
+  .loc-scene {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: min(100%, 17rem);
+    aspect-ratio: 1;
+    margin: .5rem auto;
+    border: 2px dashed light-dark(#cfcfcf, #3a3a3a);
+    border-radius: 14px;
+    background: light-dark(#f6f6f6, #1a1a1a);
+    overflow: hidden;
+  }
+
+  .loc-item {
+    grid-column: var(--c);
+    grid-row: var(--r);
+    place-self: center;
+    z-index: 1;
+    font-size: clamp(1.6rem, 9vw, 2.3rem);
+    line-height: 1;
+    user-select: none;
+    transition: transform .2s ease;
+  }
+
+  .loc-sub { z-index: 3; }
+
+  .loc-viewer {
+    font-size: 1.4rem;
+    opacity: .6;
+  }
+
+  /* 中 / 外: the reference is the big faded container behind the subject */
+  .loc-box,
+  .loc-ring,
+  .loc-ref.big {
+    grid-area: 2 / 2 / 5 / 5;
+  }
+
+  .loc-box {
+    border: 3px solid var(--color-chopsticks);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--color-chopsticks) 14%, transparent);
+  }
+
+  .loc-ref.big {
+    font-size: clamp(3.5rem, 20vw, 5.5rem);
+    opacity: .5;
+  }
+
+  /* 近く: the area around the reference */
+  .loc-ring {
+    border: 2px dashed var(--color-salmon);
+    border-radius: 50%;
+    opacity: .6;
+  }
+
+  /* 前 / 後ろ: both icons share the center cell and overlap */
+  .depth-front {
+    .loc-sub { transform: translate(.7em, .7em) scale(1.1); z-index: 3; }
+    .loc-ref { transform: translate(-.45em, -.45em) scale(.9); z-index: 1; }
+  }
+
+  .depth-behind {
+    .loc-sub { transform: translate(-.45em, -.45em) scale(.75); z-index: 1; }
+    .loc-ref { transform: translate(.6em, .6em) scale(1.25); z-index: 3; }
+  }
+
+  .loc-sentence {
+    margin: .25rem 0 .1rem;
+    font-size: 1.15rem;
+    line-height: 2.1; /* leaves room for furigana */
+    text-align: center;
+  }
+
+  .loc-blank {
+    display: inline-block;
+    min-width: 3.5em;
+    border-bottom: 2px solid currentColor;
+    text-align: center;
+    transition: color .2s ease, border-color .2s ease;
+
+    &.filled {
+      color: var(--fb-ok);
+      border-bottom-color: var(--fb-ok);
+      font-weight: 600;
+    }
+  }
+
+  .choice-button ruby { font-size: 1.15rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .location-practice .loc-item,
+  .location-practice .loc-blank { transition: none; }
+}

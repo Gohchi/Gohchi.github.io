@@ -116,6 +116,10 @@ export default /*html*/`
             <h3>Adjective Practice</h3>
             <p>Multiple-choice meanings and hiragana typing drills for い and な adjectives, by JLPT level.</p>
           </router-link>
+          <router-link to="/location-practice" class="section-card">
+            <h3>Location Practice</h3>
+            <p>See where an icon is and pick (or type) the word: 上, 下, 隣, 後ろ, 中...</p>
+          </router-link>
           <router-link to="/speech-practice" class="section-card">
             <h3>Speech Practice</h3>
             <p>Say a word out loud and check your pronunciation with your browser's speech recognition. A small test for now.</p>

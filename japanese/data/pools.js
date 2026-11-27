@@ -14,6 +14,8 @@ import adjectivesData from 'data/adjectives.js';
 import { VERB_FORMS, FORM_LABELS } from 'data/conjugate.js';
 import { MAX_MEMORY, getCategoryEntries } from 'data/progress.js';
 import { unlockContext, wordStatus, requirementText } from 'data/progression.js';
+import { LOCATIONS, LOCATION_GROUPS } from 'data/locations.js';
+
 import { loadSelection, saveSelection } from 'components/FilterMenu.js';
 
 const entriesOf = category => Object.fromEntries(getCategoryEntries(category));
@@ -131,6 +133,22 @@ export const POOLS = [
         facet: type,
         facets: ADJECTIVE_TYPES,
         parts: [['memory', entries[dictionary]]],
+      }));
+    },
+  },
+  {
+    id: 'location',
+    label: 'Location',
+    route: '/location-practice',
+    storageKey: 'location-practice-excluded',
+    facetLabel: 'Type',
+    facets: LOCATION_GROUPS,
+    getItems() {
+      const entries = entriesOf('location');
+      return LOCATIONS.map(({ word, reading, meaning, level, group }) => makeItem({
+        key: word, word, reading, meaning, level,
+        facet: group, facets: LOCATION_GROUPS,
+        parts: [['memory', entries[word]]],
       }));
     },
   },
