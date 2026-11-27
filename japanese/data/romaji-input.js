@@ -9,9 +9,9 @@ const KEY = 'romaji-input';
 export const romajiInput = reactive({
   on: (() => {
     try {
-      return localStorage.getItem(KEY) === 'true';
+      return localStorage.getItem(KEY) == null || localStorage.getItem(KEY) === 'true';
     } catch {
-      return false;
+      return true;
     }
   })(),
 
