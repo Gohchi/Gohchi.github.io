@@ -250,10 +250,10 @@ export default {
         this.status = `Correct! ${word} (${reading}) = ${meaning}`;
         this.statusClass = 'status ok';
         this.locked = true;
+        } else {
+            this.streak = 0;
+        }
         this.timer = setTimeout(() => this.newTarget(), CORRECT_DELAY);
-      } else {
-        this.streak = 0;
-      }
     },
     chooseOption(option) {
       if (!this.target || this.locked || this.revealed) return;
@@ -282,7 +282,7 @@ export default {
       const correct = mistakes === 0;
       this.grade(correct, correct ? reading : `${mistakes} wrong kana`, reading);
       this.status = `${correct ? 'Correct!' : 'Done.'} ${reading} = ${meaning}`;
-      this.statusClass = correct ? 'status ok' : 'status bad';
+      this.statusClass = correct ? 'status ok' : 'status fair';
     },
     checkTyped() {
       if (this.$refs.wordInput) this.$refs.wordInput.submit();

@@ -190,7 +190,7 @@ export function makeWordsPractice({ script }) {
         this.wordScore++;
         this.wordStreak = correct ? this.wordStreak + 1 : 0;
         this.wordStatus = `${correct ? 'Correct!' : 'Done.'} ${reading} = ${meaning}`;
-        this.wordStatusClass = correct ? 'status ok' : 'status bad';
+        this.wordStatusClass = correct ? 'status ok' : 'status fair';
         this.wordLocked = true;
         this.wordTimer = setTimeout(() => this.newWordTarget(), WORD_CORRECT_DELAY * 2);
       },

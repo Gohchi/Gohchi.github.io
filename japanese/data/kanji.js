@@ -28,7 +28,7 @@ export const ruby = {
   "子": { tags: ["people", "chibariyo-week-1"], reading: "こ", JLPT_level: "N5" },
   "友": { tags: ["people", "chibariyo-week-1"], reading: "とも", JLPT_level: "N5" },
   "国": { tags: ["school", "chibariyo-week-1"], reading: "くに", JLPT_level: "N5" },
-  "学": { tags: ["school", "chibariyo-week-1"], reading: "まな", JLPT_level: "N5" },
+  "学": { tags: ["school", "chibariyo-week-1"], reading: "がく", JLPT_level: "N5" },
   "校": { tags: ["school"], reading: "こう", JLPT_level: "N5" },
   "小": { tags: ["description"], reading: "ちい", JLPT_level: "N5" },
   "大": { tags: ["description"], reading: "おお", JLPT_level: "N5" },

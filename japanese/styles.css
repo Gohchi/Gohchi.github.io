@@ -1403,6 +1403,7 @@ body {
 
   .ok { color: #0a7; font-weight: 600; }
   .bad { color: #c33; font-weight: 600; }
+  .fair { color: #ffc310; font-weight: 600; }
 
   /* Next / Reset / Check / Focus ...: one slim line of small buttons */
   .row {
