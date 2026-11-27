@@ -139,14 +139,18 @@ export default {
       const entries = Object.fromEntries(getCategoryEntries('verbs'));
       const forms = this.selectedForms.length ? this.selectedForms : VERB_FORMS;
 
-      return this.levelGroupVerbs.map(({ dictionary, reading, meaning, level, group }) => {
+      return this.levelGroupVerbs.map(({ dictionary, reading, meaning, level, group, tags }) => {
         const total = forms.reduce((sum, form) => sum + (entries[`${dictionary}:${form}`]?.memory ?? 0), 0);
+        let totalTags = [VERB_GROUP_TAGS[group] || `group ${group}`];
+        if (tags) {
+          totalTags = [...totalTags, ...tags];
+        }
         return {
           word: dictionary,
           reading,
           meaning,
           level,
-          tags: [VERB_GROUP_TAGS[group] || `group ${group}`],
+          tags: totalTags,
           memory: Math.round(total / forms.length),
         };
       });
