@@ -165,6 +165,12 @@ export const MENU = [
       { id: 'adjectives-practice', to: '/adjectives-practice', label: 'PRACTICE', primary: true },
     ],
   },
+  {
+    id: 'location', label: 'LOCATION', practice: true, requires: { hiragana: 6 },
+    children: [
+      { id: 'location-practice', to: '/location-practice', label: 'PRACTICE', primary: true },
+    ],
+  },
   { id: 'speech', to: '/speech-practice', label: 'SPEECH', practice: true, requires: { hiragana: 4 } },
   { id: 'print', to: '/print-practice', label: 'PRINT', practice: true },
 

@@ -16,6 +16,7 @@ import KatakanaListen from 'views/KatakanaListen.js';
 import KanjiPractice from 'views/KanjiPractice.js';
 import VerbsPractice from 'views/VerbsPractice.js';
 import AdjectivesPractice from 'views/AdjectivesPractice.js';
+import LocationPractice from 'views/LocationPractice.js';
 import Topics from 'views/Topics.js';
 import PrintPractice from 'views/PrintPractice.js';
 import SpeechPractice from 'views/SpeechPractice.js';
@@ -60,6 +61,7 @@ const routes = [
   { path: '/kanji-practice', redirect: '/kanji-meaning' },
   { path: '/verbs-practice', component: VerbsPractice, name: 'verbs-practice' },
   { path: '/adjectives-practice', component: AdjectivesPractice, name: 'adjectives-practice' },
+  { path: '/location-practice', component: LocationPractice, name: 'location-practice' },
   { path: '/topics/:topic?', component: Topics, name: 'topics', props: true },
   { path: '/print-practice', component: PrintPractice, name: 'print-practice' },
   { path: '/speech-practice', component: SpeechPractice, name: 'speech-practice' },

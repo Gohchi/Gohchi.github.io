@@ -87,6 +87,12 @@ export const roadmap = [
           { label: 'Adjectives Practice', route: { name: 'adjectives-practice' } },
         ],
       },
+      {
+        id: 'location-words',
+        title: 'Practice location words',
+        description: 'Above, below, next to, behind, inside: say where things are.',
+        links: [{ label: 'Location Practice', route: { name: 'location-practice' } }],
+      },
     ],
   },
   {
