@@ -8,6 +8,8 @@ import KanjiPoolMenu from 'components/KanjiPoolMenu.js';
 import template from 'templates/SpeechPractice.js';
 
 import speechWords from 'data/speech-words.js';
+import { unlockContext, wordStatus } from 'data/progression.js';
+import { getCategoryEntries } from 'data/progress.js';
 import { ruby } from 'data/kanji.js';
 import { words as wordForms } from 'data/words.js';
 import { feedbackMixin } from 'data/feedback.js';
@@ -76,7 +78,11 @@ export default {
     KanjiPoolMenu,
   },
   data() {
+    const ctx = unlockContext();
+    const status = Object.fromEntries(speechWords.map(item => [item.word, wordStatus(item, ctx)]));
+
     return {
+      status, // word -> { locked, needs }
       supported: !!SpeechRecognitionAPI,
       listening: false,
 
@@ -114,18 +120,35 @@ export default {
     excludedSet() {
       return new Set(this.excludedWords);
     },
-    // The practice pool: JLPT + type filters AND not turned off in the pool matrix
+    // The practice pool: JLPT + type filters AND open AND not turned off in the pool matrix
     filteredWords() {
-      return this.levelTypeWords.filter(({ word }) => !this.excludedSet.has(word));
+      return this.levelTypeWords.filter(({ word }) =>
+        !this.status[word]?.locked && !this.excludedSet.has(word));
+    },
+    // word -> memory, read once per type from the same progress the practices use
+    memoryMap() {
+      const map = {};
+      for (const [type, category] of [
+        ['hiragana', 'words-hiragana'],
+        ['katakana', 'words-katakana'],
+        ['kanji', 'words-kanji'],
+      ]) {
+        getCategoryEntries(category).forEach(([word, entry]) => {
+          map[type + ':' + word] = entry.memory;
+        });
+      }
+      return map;
     },
     poolItems() {
-      return this.levelTypeWords.map(({ word, reading, meaning, level, type }) => ({
+      return this.levelTypeWords.map(({ word, reading, meaning, level, type, tags }) => ({
         word,
         reading,
         meaning,
         level,
-        tags: [type],
-        memory: 0, // no progress is saved for speech practice yet
+        tags: [type, ...(tags || [])],
+        locked: this.status[word]?.locked || false,
+        needs: this.status[word]?.needs || '',
+        memory: this.memoryMap[type + ':' + word] ?? 0,
       }));
     },
     // Everything that counts as a correct answer for the current word, already normalized
@@ -192,7 +215,7 @@ export default {
       if (!this.target) {
         this.statusClass = 'status bad';
         this.status = this.levelTypeWords.length
-          ? 'Every word is turned off in the pool.'
+          ? 'Every open word is turned off in the pool (or still locked).'
           : 'No words match the selected filters.';
         return;
       }
