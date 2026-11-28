@@ -23,8 +23,8 @@ export const typeOf = word => (
 );
 
 // data/words.js default export (hiragana, katakana, and the kanji dictionary)
-const fromWordsList = wordsData.map(({ word, reading, meaning, level, type }) => ({
-  word, reading, meaning, level, type,
+const fromWordsList = wordsData.map(({ word, reading, meaning, level, type, tags }) => ({
+  word, reading, meaning, level, type, tags,
 }));
 
 // data/words.js `words` export (full forms with okurigana / prefixes)
