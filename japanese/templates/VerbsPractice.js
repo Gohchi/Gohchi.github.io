@@ -83,6 +83,8 @@ export default /*html*/`
               <button
                 v-for="option in verbOptions" :key="verbMemoryKey + option"
                 class="choice-button"
+                :class="{ correct: verbLocked && option === verbAnswer, wrong: wrongOptions.includes(option) }"
+                :disabled="verbLocked || wrongOptions.includes(option)"
                 @click="chooseVerbOption(option)"
               >{{ option }}</button>
             </div>

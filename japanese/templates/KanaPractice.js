@@ -62,6 +62,8 @@ export default /*html*/`
             <button
               v-for="option in kanaOptions" :key="target + option.kana"
               class="choice-button"
+              :class="{ wrong: wrongOptions.includes(option.kana) }"
+              :disabled="wrongOptions.includes(option.kana)"
               @click="chooseKanaOption(option)"
             >{{ listen ? option.kana : option.romaji }}</button>
           </div>

@@ -252,10 +252,15 @@ export default {
         this.status = `Correct! ${word} (${reading}) = ${meaning}`;
         this.statusClass = 'status ok';
         this.locked = true;
-        } else {
-            this.streak = 0;
-        }
+      } else {
+        this.streak = 0;
+      }
+
+      // choice mode: only a correct answer moves on (a wrong one stays so you can pick again).
+      // type mode: the word is already finished when this runs, so it always moves on.
+      if (correct || this.inputMode === 'type') {
         this.timer = setTimeout(() => this.newTarget(), CORRECT_DELAY);
+      }
     },
     chooseOption(option) {
       if (!this.target || this.locked || this.revealed) return;

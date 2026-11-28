@@ -63,6 +63,8 @@ export default {
 
       targetAdj: null,
       choiceOptions: [],
+      wrongOptions: [], // meanings already tried wrong for the current adjective
+      locked: false, // correct answer shown, waiting for the next adjective
       spellRound: 0, // new value = the spelling input starts over
       status: '',
       statusClass: 'status',
@@ -172,6 +174,8 @@ export default {
         || this.filteredAdjectives[Math.floor(Math.random() * this.filteredAdjectives.length)];
 
       this.spellRound++;
+      this.wrongOptions = [];
+      this.locked = false;
 
       if (!adj) {
         this.targetAdj = null;
@@ -229,7 +233,7 @@ export default {
 
     // --- choice mode ---
     chooseOption(meaning) {
-      if (!this.targetAdj) return;
+      if (!this.targetAdj || this.locked || this.wrongOptions.includes(meaning)) return;
       this.gradeAnswer(meaning === this.targetAdj.meaning, meaning);
     },
     gradeAnswer(correct, chosenDisplay) {
@@ -250,12 +254,14 @@ export default {
       if (correct) {
         this.score++;
         this.streak++;
+        this.locked = true;
         this.status = 'Correct!';
         this.statusClass = 'status ok';
         clearTimeout(this.nextTimer);
         this.nextTimer = setTimeout(() => this.newTarget(), 500);
       } else {
         this.streak = 0;
+        this.wrongOptions.push(chosenDisplay);
         this.status = 'Not quite, try another one.';
         this.statusClass = 'status bad';
       }

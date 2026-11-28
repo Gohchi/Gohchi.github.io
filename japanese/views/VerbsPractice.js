@@ -79,6 +79,8 @@ export default {
       verbAnswer: '',
       verbAnswerKana: '',
       verbOptions: [],
+      wrongOptions: [], // options already tried wrong for the current verb
+      verbLocked: false, // correct answer shown, waiting for the next verb
       spellRound: 0, // new value = the spelling input starts over
       verbStatus: '',
       verbStatusClass: 'status',
@@ -206,6 +208,8 @@ export default {
       const pick = weightedPick('verbs', this.candidates, c => `${c.verb.dictionary}:${c.form}`);
 
       this.spellRound++;
+      this.wrongOptions = [];
+      this.verbLocked = false;
 
       if (!pick) {
         this.targetVerb = null;
@@ -286,6 +290,7 @@ export default {
 
     // --- choice mode ---
     chooseVerbOption(option) {
+      if (this.verbLocked || this.wrongOptions.includes(option)) return;
       this.gradeVerbAnswer(option);
     },
     gradeVerbAnswer(value) {
@@ -296,11 +301,13 @@ export default {
       if (correct) {
         this.verbScore++;
         this.verbStreak++;
+        this.verbLocked = true;
         this.verbStatus = 'Correct! ' + this.formattedAnswer();
         this.verbStatusClass = 'status ok';
         this.goToNextVerb();
       } else {
         this.verbStreak = 0;
+        this.wrongOptions.push(value);
         this.verbStatus = 'Not quite, try another one.';
         this.verbStatusClass = 'status bad';
       }
