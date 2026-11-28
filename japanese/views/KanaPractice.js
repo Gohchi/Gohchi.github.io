@@ -114,6 +114,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         target: '',
         pending: '', // typed so far, on its way to the answer (は -> ば -> ぱ)
         kanaOptions: [],
+        wrongOptions: [], // kana already tried wrong for the current target (choice mode)
         score: 0,
         streak: 0,
         last: '-',
@@ -244,6 +245,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         this.finished = false;
         this.target = this.slots[0].char;
         this.kanaOptions = this.buildKanaOptions(this.target, ALL_KANA);
+        this.wrongOptions = [];
         this.status = this.mode === 'type' ? 'Listen and type the word, kana by kana.' : 'Listen and pick each kana of the word.';
         this.statusClass = 'status';
         this.inputValue = '';
@@ -281,6 +283,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         }
         this.target = this.slots[this.index].char;
         this.kanaOptions = this.buildKanaOptions(this.target, ALL_KANA);
+        this.wrongOptions = [];
         this.status = 'Correct!';
         this.statusClass = 'status ok';
         this.inputValue = '';
@@ -301,6 +304,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         this.finished = false;
         this.target = weightedPick(category, this.KANA, k => k);
         this.kanaOptions = this.buildKanaOptions(this.target);
+        this.wrongOptions = [];
         if (listen) {
           this.status = this.mode === 'type' ? 'Listen and type the kana.' : 'Listen and pick the kana.';
         } else {
@@ -389,6 +393,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
           }
         } else {
           if (!this.wordMode) this.streak = 0;
+          if (this.mode === 'choice' && !this.wrongOptions.includes(candidate)) this.wrongOptions.push(candidate);
           this.status = `Wrong: "${candidate}"`;
           this.statusClass = 'status bad';
           if (this.wordMode) this.markWrong(candidate);
@@ -472,7 +477,7 @@ export function makeKanaPractice({ script, mode = 'choice', listen = false }) {
         this.judgeTyped(true);
       },
       chooseKanaOption(option) {
-        if (this.finished) return;
+        if (this.finished || this.wrongOptions.includes(option.kana)) return;
         this.handleKana(option.kana);
       },
       focusInput() {

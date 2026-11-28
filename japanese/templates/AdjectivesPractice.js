@@ -72,6 +72,8 @@ export default /*html*/`
               <button
                 v-for="option in choiceOptions" :key="targetAdj.dictionary + option"
                 class="choice-button"
+                :class="{ correct: locked && option === targetAdj.meaning, wrong: wrongOptions.includes(option) }"
+                :disabled="locked || wrongOptions.includes(option)"
                 @click="chooseOption(option)"
               >{{ option }}</button>
             </div>
